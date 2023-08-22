@@ -1,0 +1,5 @@
+@include('admin.layouts.auth.header') 
+@include('admin.layouts.auth.sidebar') 
+@yield('content')
+@include('admin.layouts.auth.footer')
+@stack('scripts')
