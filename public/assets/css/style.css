@@ -1,0 +1,12 @@
+.image-input-wrapper {
+    background-image: url('/dasalon/admin/assets/media/svg/avatars/blank.svg');
+}
+.select2-selection.form-select {
+    padding-top: 0.775rem !important;
+}
+.w-30 {
+    width: 30%;
+}
+.error{
+	color:red;
+}
