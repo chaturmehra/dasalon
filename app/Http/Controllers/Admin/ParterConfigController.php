@@ -4,13 +4,17 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Admin\Role;
 use Illuminate\Http\Request;
-
+use App\Models\Admin\PartnerTypeProperty;
+use App\Models\Admin\PartnerType;
 class ParterConfigController extends Controller
 {
    
     public function index()
     {
-        return view('admin/setting/partner_config/index');
+        $showallp=PartnerTypeProperty::all();
+        $showall=PartnerType::all();
+        return view('admin/setting/partner_config/index', compact('showallp','showall')); 
+       
     }
 
     public function saveRole(Request $request)
@@ -88,4 +92,25 @@ class ParterConfigController extends Controller
          
          return true;
      }
+
+     public function savepartnertypeProperty(Request $request)
+     {
+ 
+        PartnerTypeProperty::create([
+             'property' => $request->property,
+             'remark' => $request->remark,
+             'option' => $request->option,
+         ]);
+         
+         return true;
+     }
+
+
+public function changeSalonStatus($id,$statussalon){
+    $statusupdate = PartnerTypeProperty::where('id', $id)->update([
+     'Salon_status' => $statussalon,
+     ]);
+     
+     return true;
+ }
 }
