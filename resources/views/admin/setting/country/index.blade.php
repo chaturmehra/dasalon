@@ -949,7 +949,7 @@ $('#search_country').keyup(function(){
         .then((willDelete) => {
           if(willDelete){
             $.ajax({
-            url:'https://webpristine.co.in/admin/setting/edit-country-status/' + id+'/'+data_id,
+            url:'{{ url('admin/setting/edit-country-status')}}'+'/' + id+'/'+data_id,
             type:'GET',
                 beforeSend:function(){
                   $('.spinner-cls').show();

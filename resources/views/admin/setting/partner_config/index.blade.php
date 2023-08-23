@@ -125,7 +125,7 @@
 
 																	            <div class="modal-body">
 																	                <!--begin::Form-->
-																					<form class="form">
+																					<form class="form" name="partnertypeproperty_form" method="post" action="">
 																						<!--begin::Scroll-->
 																						<div class="d-flex flex-column scroll-y me-n7 pe-7">
 
@@ -135,7 +135,7 @@
 																								<label class="required fw-semibold fs-6 mb-2">Property name</label>
 																								<!--end::Label-->
 																								<!--begin::Input-->
-																								<input type="text" name="" class="form-control mb-3 mb-lg-0" placeholder="Property name"/>
+																								<input type="text" name="property" id="property" class="form-control mb-3 mb-lg-0" placeholder="Property name" required/>
 																								<!--end::Input-->
 																							</div>
 																							<!--end::Input group-->
@@ -146,10 +146,29 @@
 																								<label class="required fw-semibold fs-6 mb-2">Remarks</label>
 																								<!--end::Label-->
 																								<!--begin::Input-->
-																								<input type="text" name="" class="form-control mb-3 mb-lg-0" placeholder="Remarks"/>
+																								<input type="text" name="remark" id="remark" class="form-control mb-3 mb-lg-0" placeholder="Remarks" required/>
 																								<!--end::Input-->
 																							</div>
 																							<!--end::Input group-->
+																							
+																							
+																							
+																							<div class="fv-row mb-7">
+																								<!--begin::Label-->
+																								<label class="required fw-semibold fs-6 mb-2">Options</label>
+																								<!--end::Label-->
+																								<!--begin::Input-->
+																								<select name="option" id="option" aria-label="Select an Option" data-control="select2" data-placeholder="Select a Option..." class="form-select mb-2" required>
+																								<option></option>
+																								<option value="no-option">No-Option</option>
+																								<option value="dropdown">Dropdown </option>
+																								<option value="checkbox">Checkbox</option>																					
+																							</select>
+																								<!--end::Input-->
+																							</div>
+
+
+
 
 																						</div>
 																						<!--end::Scroll-->
@@ -185,167 +204,55 @@
 														<!--begin::Card body-->
 														<div class="card-body pt-0">
 															<!--begin::Table-->
-															<table class="table align-middle table-row-dashed fs-6 gy-5" id="kt_datatable_example1">
+															<table class="table align-middle table-row-dashed fs-6 gy-5" id="partnertypeproperties-table">
 																<thead>
+																
 																	<tr class="text-start text-muted fw-bold fs-7 text-uppercase gs-0">
 																		<th class="min-w-125px">Properties</th>
 																		<th class="min-w-125px">Remarks</th>
-																		<th class="min-w-125px">Salon</th>
-																		<th class="min-w-125px">Freelancer</th>
-																		<th class="min-w-125px">Salon with home service</th>
+																		@foreach($showall as $show)
+																		<th class="min-w-125px">{{$show->partner_name}}</th>
+																		@endforeach 
 																	</tr>
+																		 
 																</thead>
 																<tbody class="text-gray-600 fw-semibold">
-																	<tr>
-																		<td>Gender restriction</td>
-																		<td>Male / Female / Unisex</td>
-																		<td>
-																			<div class="form-check form-switch form-check-custom form-check-solid me-10">
+																@foreach($showallp as $showp)
+																<tr>
+																
+																<td>{{$showp->property}}</td>  
+                                                                <td>@if($showp->option=='checkbox')
+																	<div class="form-check form-switch form-check-custom form-check-solid me-10">
 																				<input class="form-check-input h-25px w-50px" name="" type="checkbox" value="" id="status" checked="checked" />
 																				<label class="form-check-label" for="status"></label>
 																			</div>
-																		</td>
-																		<td>
-																			<div class="form-check form-switch form-check-custom form-check-solid me-10">
-																				<input class="form-check-input h-25px w-50px" name="" type="checkbox" value="" id="status" checked="checked" />
-																				<label class="form-check-label" for="status"></label>
-																			</div>
-																		</td>
-																		<td>
-																			<div class="form-check form-switch form-check-custom form-check-solid me-10">
-																				<input class="form-check-input h-25px w-50px" name="" type="checkbox" value="" id="status" checked="checked" />
-																				<label class="form-check-label" for="status"></label>
-																			</div>
-																		</td>
-																	</tr>
-																	<tr>
-																		<td>Service at venue</td>
-																		<td></td>
-																		<td>
-																			<div class="form-check form-switch form-check-custom form-check-solid me-10">
-																				<input class="form-check-input h-25px w-50px" name="" type="checkbox" value="" id="status" checked="checked" />
-																				<label class="form-check-label" for="status"></label>
-																			</div>
-																		</td>
-																		<td>
-																			<div class="form-check form-switch form-check-custom form-check-solid me-10">
-																				<input class="form-check-input h-25px w-50px" name="" type="checkbox" value="" id="status" checked="checked" />
-																				<label class="form-check-label" for="status"></label>
-																			</div>
-																		</td>
-																		<td>
-																			<div class="form-check form-switch form-check-custom form-check-solid me-10">
-																				<input class="form-check-input h-25px w-50px" name="" type="checkbox" value="" id="status" checked="checked" />
-																				<label class="form-check-label" for="status"></label>
-																			</div>
-																		</td>
-																	</tr>
-																	<tr>
-																		<td>Service at home</td>
-																		<td></td>
-																		<td>
-																			<div class="form-check form-switch form-check-custom form-check-solid me-10">
-																				<input class="form-check-input h-25px w-50px" name="" type="checkbox" value="" id="status" checked="checked" />
-																				<label class="form-check-label" for="status"></label>
-																			</div>
-																		</td>
-																		<td>
-																			<div class="form-check form-switch form-check-custom form-check-solid me-10">
-																				<input class="form-check-input h-25px w-50px" name="" type="checkbox" value="" id="status" checked="checked" />
-																				<label class="form-check-label" for="status"></label>
-																			</div>
-																		</td>
-																		<td>
-																			<div class="form-check form-switch form-check-custom form-check-solid me-10">
-																				<input class="form-check-input h-25px w-50px" name="" type="checkbox" value="" id="status" checked="checked" />
-																				<label class="form-check-label" for="status"></label>
-																			</div>
-																		</td>
-																	</tr>
-																	<tr>
-																		<td>Area of service</td>
-																		<td>
-																			<select class="form-select" data-control="select2" data-placeholder="Select an option">
+																
+																@elseif($showp->option=='dropdown')
+																
+																	<select class="form-select" data-control="select2" data-placeholder="Select an option">
 																			    <option></option>
 																			    <option value="1">within 5KM</option>
 																			    <option value="2">within 10KM</option>
 																			    <option value="3">within 20KM</option>
 																			    <option value="4">within city</option>
 																			</select>
-																		</td>
-																		<td>
-																			<div class="form-check form-switch form-check-custom form-check-solid me-10">
+																
+																@else  {{$showp->remark}}
+																@endif
+																</td>  
+                                                                @foreach($showall as $show)
+																<td>
+																	@if($show->partner_name)
+																 <div class="form-check form-switch form-check-custom form-check-solid me-10">
 																				<input class="form-check-input h-25px w-50px" name="" type="checkbox" value="" id="status" checked="checked" />
 																				<label class="form-check-label" for="status"></label>
 																			</div>
-																		</td>
-																		<td>
-																			<div class="form-check form-switch form-check-custom form-check-solid me-10">
-																				<input class="form-check-input h-25px w-50px" name="" type="checkbox" value="" id="status" checked="checked" />
-																				<label class="form-check-label" for="status"></label>
-																			</div>
-																		</td>
-																		<td>
-																			<div class="form-check form-switch form-check-custom form-check-solid me-10">
-																				<input class="form-check-input h-25px w-50px" name="" type="checkbox" value="" id="status" checked="checked" />
-																				<label class="form-check-label" for="status"></label>
-																			</div>
-																		</td>
+ 																	@endif
+																 </td>  
+																 @endforeach
+																  
 																	</tr>
-																	<tr>
-																		<td>Multiple locations</td>
-																		<td>
-																			<div class="form-check form-switch form-check-custom form-check-solid me-10">
-																				<input class="form-check-input h-25px w-50px" name="" type="checkbox" value="" id="status" checked="checked" />
-																				<label class="form-check-label" for="status"></label>
-																			</div>
-																		</td>
-																		<td>
-																			<div class="form-check form-switch form-check-custom form-check-solid me-10">
-																				<input class="form-check-input h-25px w-50px" name="" type="checkbox" value="" id="status" checked="checked" />
-																				<label class="form-check-label" for="status"></label>
-																			</div>
-																		</td>
-																		<td>
-																			<div class="form-check form-switch form-check-custom form-check-solid me-10">
-																				<input class="form-check-input h-25px w-50px" name="" type="checkbox" value="" id="status" checked="checked" />
-																				<label class="form-check-label" for="status"></label>
-																			</div>
-																		</td>
-																		<td>
-																			<div class="form-check form-switch form-check-custom form-check-solid me-10">
-																				<input class="form-check-input h-25px w-50px" name="" type="checkbox" value="" id="status" checked="checked" />
-																				<label class="form-check-label" for="status"></label>
-																			</div>
-																		</td>
-																	</tr>
-																	<tr>
-																		<td>Franchise (Y/N)</td>
-																		<td>
-																			<div class="form-check form-switch form-check-custom form-check-solid me-10">
-																				<input class="form-check-input h-25px w-50px" name="" type="checkbox" value="" id="status" checked="checked" />
-																				<label class="form-check-label" for="status"></label>
-																			</div>
-																		</td>
-																		<td>
-																			<div class="form-check form-switch form-check-custom form-check-solid me-10">
-																				<input class="form-check-input h-25px w-50px" name="" type="checkbox" value="" id="status" checked="checked" />
-																				<label class="form-check-label" for="status"></label>
-																			</div>
-																		</td>
-																		<td>
-																			<div class="form-check form-switch form-check-custom form-check-solid me-10">
-																				<input class="form-check-input h-25px w-50px" name="" type="checkbox" value="" id="status" checked="checked" />
-																				<label class="form-check-label" for="status"></label>
-																			</div>
-																		</td>
-																		<td>
-																			<div class="form-check form-switch form-check-custom form-check-solid me-10">
-																				<input class="form-check-input h-25px w-50px" name="" type="checkbox" value="" id="status" checked="checked" />
-																				<label class="form-check-label" for="status"></label>
-																			</div>
-																		</td>
-																	</tr>
+																	@endforeach 	 
 																</tbody>
 															</table>
 															<!--end::Table-->
@@ -714,7 +621,7 @@ $('#search_role').keyup(function(){
     };
 	console.log(formData);
 	  $.ajax({
-				url:'https://webpristine.co.in/admin/save_role',
+				url:'{{ url('admin/save_role')}}',
 				data: formData,
 				type: "POST",
 				success:function(data)
@@ -744,7 +651,7 @@ $('#search_role').keyup(function(){
         .then((willDelete) => {
           if(willDelete){
             $.ajax({
-            url:'https://webpristine.co.in/admin/setting/edit-role-status/' + id+'/'+data_id,
+            url:'{{ url('admin/setting/edit-role-status')}}'+'/' + id+'/'+data_id,
             type:'GET',
                 beforeSend:function(){
                   $('.spinner-cls').show();
@@ -761,6 +668,48 @@ $('#search_role').keyup(function(){
           }
           });
         });
+    </script>
+
+<script>
+// Wait for the DOM to be ready
+$(function() {
+	
+oTable2 = $('#partnertypeproperties-table').DataTable();   //pay attention to capital D, which is mandatory to retrieve "api" datatables' object, as @Lionel said
+$('#search_partnertypeproperty').keyup(function(){
+      oTable2.search($(this).val()).draw() ;
+})
+  $("form[name='partnertypeproperty_form']").validate({
+    rules: {
+      property: "required",
+	  remark: "required",
+	  option: "required",
+	},
+   
+    submitHandler: function(form) {
+     var formData = {
+      property: $("#property").val(),
+	  remark: $("#remark").val(),
+	  option: $("#option").val(),
+    };
+	console.log(formData);
+	  $.ajax({
+				url:'{{ url('admin/save_partnertypeproperty')}}',
+				data: formData,
+				type: "POST",
+				success:function(data)
+				{
+				  document.partnertypeproperty_form.reset();
+				  $('#kt_modal_scrollable_2').modal('hide');
+				  $('#partnertypeproperties-table').DataTable().ajax.reload();
+				  swal("Your partner type property created successfully!", {
+					icon: "success",
+				  });
+				}
+				});
+		}
+  });
+});
+
     </script>
 	@endpush
 	
