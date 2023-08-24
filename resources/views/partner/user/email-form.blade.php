@@ -86,7 +86,7 @@
 								<!--begin::Col-->
 								<div class="col-md-12">
 									<!--begin::Google link=-->
-									<a href="#" class="btn btn-flex btn-outline btn-text-gray-700 btn-active-color-primary bg-state-light flex-center text-nowrap w-100">
+									<a href="{{ route('social.login', 'facebook') }}" class="btn btn-flex btn-outline btn-text-gray-700 btn-active-color-primary bg-state-light flex-center text-nowrap w-100">
 									<img alt="Logo" src="{{ asset('partner/assets/media/svg/brand-logos/facebook-4.svg') }}" class="h-15px me-3" />Continue with Facebook</a>
 									<!--end::Google link=-->
 								</div>
@@ -94,7 +94,7 @@
 								<!--begin::Col-->
 								<div class="col-md-12">
 									<!--begin::Google link=-->
-									<a href="#" class="btn btn-flex btn-outline btn-text-gray-700 btn-active-color-primary bg-state-light flex-center text-nowrap w-100">
+									<a href="{{ route('social.login', 'google') }}" class="btn btn-flex btn-outline btn-text-gray-700 btn-active-color-primary bg-state-light flex-center text-nowrap w-100">
 									<img alt="Logo" src="{{ asset('partner/assets/media/svg/brand-logos/google-icon.svg') }}" class="h-15px me-3" />Continue with Google</a>
 									<!--end::Google link=-->
 								</div>
@@ -102,7 +102,7 @@
 								<!--begin::Col-->
 								<div class="col-md-12">
 									<!--begin::Google link=-->
-									<a href="#" class="btn btn-flex btn-outline btn-text-gray-700 btn-active-color-primary bg-state-light flex-center text-nowrap w-100">
+									<a href="{{ route('social.login', 'apple') }}" class="btn btn-flex btn-outline btn-text-gray-700 btn-active-color-primary bg-state-light flex-center text-nowrap w-100">
 									<img alt="Logo" src="{{ asset('partner/assets/media/svg/brand-logos/apple-black.svg') }}" class="h-15px me-3" />Continue with Apple</a>
 									<!--end::Google link=-->
 								</div>
