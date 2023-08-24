@@ -9,7 +9,7 @@
 				<!--begin::Navbar item-->
 				<li class="nav-item py-1">
 					<!--begin::Navbar link-->
-					<a href="/dasalon/admin/home.php" class="nav-link py-4 px-1 btn asidenav active">
+					<a href="{{ url('/admin/dashboard') }}" class="nav-link py-4 px-1 btn asidenav active">
 						<i class="ki-outline ki-questionnaire-tablet fs-1"></i>
 						<span class="pt-2 fs-9 fs-lg-7 fw-bold">Home</span>
 					</a>
@@ -19,7 +19,7 @@
 				<!--begin::Navbar item-->
 				<li class="nav-item py-1">
 					<!--begin::Navbar link-->
-					<a href="/dasalon/admin/services-order-management.php" class="nav-link py-4 px-1 btn asidenav">
+					<a href="{{ url('/admin/services') }}" class="nav-link py-4 px-1 btn asidenav">
 						<i class="ki-outline ki-abstract-26 fs-1"></i>
 						<span class="pt-2 fs-9 fs-lg-7 fw-bold">Services</span>
 					</a>
@@ -102,7 +102,7 @@
 				<!--begin::Navbar item-->
 				<li class="nav-item py-1">
 					<!--begin::Navbar link-->
-					<a href="{{route('settings.index')}}" class="nav-link py-4 px-1 btn asidenav">
+					<a href="{{ url('/admin/settings') }}" class="nav-link py-4 px-1 btn asidenav">
 						<i class="ki-outline ki-chart-line fs-1"></i>
 						<span class="pt-2 fs-9 fs-lg-7 fw-bold">Settings</span>
 					</a>

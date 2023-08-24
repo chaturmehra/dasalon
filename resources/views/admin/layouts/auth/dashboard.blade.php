@@ -27,7 +27,7 @@
 							        <a href="#" class="btn btn-sm btn-flex align-self-center px-3 justify-content-center bg-white">Book Appointment with our expert</a>
 					        	</div>
 					        	<div class="col-md-3">
-					        		<img src="assets/media/illustrations/misc/upgrade.svg" width="150">
+					        		<img src="{{ asset('/assets/media/illustrations/misc/upgrade.svg') }}" width="150">
 					        	</div>
 					        </div>
 					    </div>
@@ -346,7 +346,7 @@
 														<td>
 															<div class="d-flex align-items-center">
 																<div class="symbol symbol-40px me-3">
-																	<img src="assets/media/avatars/300-1.jpg" class="" alt="" />
+																	<img src="{{ asset('/assets/media/avatars/300-1.jpg') }}" class="" alt="" />
 																</div>
 																<div class="d-flex justify-content-start flex-column">
 																	<a href="#" class="text-dark fw-bold text-hover-primary mb-1 fs-6">Brooklyn Simmons</a>
@@ -392,7 +392,7 @@
 														<td>
 															<div class="d-flex align-items-center">
 																<div class="symbol symbol-40px me-3">
-																	<img src="assets/media/avatars/300-2.jpg" class="" alt="" />
+																	<img src="{{ asset('/assets/media/avatars/300-2.jpg') }}" class="" alt="" />
 																</div>
 																<div class="d-flex justify-content-start flex-column">
 																	<a href="#" class="text-dark fw-bold text-hover-primary mb-1 fs-6">Annette Black</a>
@@ -438,7 +438,7 @@
 														<td>
 															<div class="d-flex align-items-center">
 																<div class="symbol symbol-40px me-3">
-																	<img src="assets/media/avatars/300-12.jpg" class="" alt="" />
+																	<img src="{{ asset('/assets/media/avatars/300-12.jpg') }}" class="" alt="" />
 																</div>
 																<div class="d-flex justify-content-start flex-column">
 																	<a href="#" class="text-dark fw-bold text-hover-primary mb-1 fs-6">Esther Howard</a>
@@ -484,7 +484,7 @@
 														<td>
 															<div class="d-flex align-items-center">
 																<div class="symbol symbol-40px me-3">
-																	<img src="assets/media/avatars/300-11.jpg" class="" alt="" />
+																	<img src="{{ asset('/assets/media/avatars/300-11.jpg') }}" class="" alt="" />
 																</div>
 																<div class="d-flex justify-content-start flex-column">
 																	<a href="#" class="text-dark fw-bold text-hover-primary mb-1 fs-6">Guy Hawkins</a>
@@ -530,7 +530,7 @@
 														<td>
 															<div class="d-flex align-items-center">
 																<div class="symbol symbol-40px me-3">
-																	<img src="assets/media/avatars/300-13.jpg" class="" alt="" />
+																	<img src="{{ asset('/assets/media/avatars/300-13.jpg') }}" class="" alt="" />
 																</div>
 																<div class="d-flex justify-content-start flex-column">
 																	<a href="#" class="text-dark fw-bold text-hover-primary mb-1 fs-6">Marvin McKinney</a>
@@ -602,7 +602,7 @@
 														<td>
 															<div class="d-flex align-items-center">
 																<div class="symbol symbol-40px me-3">
-																	<img src="assets/media/avatars/300-11.jpg" class="" alt="" />
+																	<img src="{{ asset('/assets/media/avatars/300-11.jpg') }}" class="" alt="" />
 																</div>
 																<div class="d-flex justify-content-start flex-column">
 																	<a href="#" class="text-dark fw-bold text-hover-primary mb-1 fs-6">Guy Hawkins</a>
@@ -648,7 +648,7 @@
 														<td>
 															<div class="d-flex align-items-center">
 																<div class="symbol symbol-40px me-3">
-																	<img src="assets/media/avatars/300-13.jpg" class="" alt="" />
+																	<img src="{{ asset('/assets/media/avatars/300-13.jpg') }}" class="" alt="" />
 																</div>
 																<div class="d-flex justify-content-start flex-column">
 																	<a href="#" class="text-dark fw-bold text-hover-primary mb-1 fs-6">Marvin McKinney</a>
@@ -694,7 +694,7 @@
 														<td>
 															<div class="d-flex align-items-center">
 																<div class="symbol symbol-40px me-3">
-																	<img src="assets/media/avatars/300-1.jpg" class="" alt="" />
+																	<img src="{{ asset('/assets/media/avatars/300-1.jpg') }}" class="" alt="" />
 																</div>
 																<div class="d-flex justify-content-start flex-column">
 																	<a href="#" class="text-dark fw-bold text-hover-primary mb-1 fs-6">Brooklyn Simmons</a>
@@ -740,7 +740,7 @@
 														<td>
 															<div class="d-flex align-items-center">
 																<div class="symbol symbol-40px me-3">
-																	<img src="assets/media/avatars/300-2.jpg" class="" alt="" />
+																	<img src="{{ asset('/assets/media/avatars/300-2.jpg') }}" class="" alt="" />
 																</div>
 																<div class="d-flex justify-content-start flex-column">
 																	<a href="#" class="text-dark fw-bold text-hover-primary mb-1 fs-6">Annette Black</a>
@@ -786,7 +786,7 @@
 														<td>
 															<div class="d-flex align-items-center">
 																<div class="symbol symbol-40px me-3">
-																	<img src="assets/media/avatars/300-12.jpg" class="" alt="" />
+																	<img src="{{ asset('/assets/media/avatars/300-12.jpg') }}" class="" alt="" />
 																</div>
 																<div class="d-flex justify-content-start flex-column">
 																	<a href="#" class="text-dark fw-bold text-hover-primary mb-1 fs-6">Esther Howard</a>
@@ -858,7 +858,7 @@
 														<td>
 															<div class="d-flex align-items-center">
 																<div class="symbol symbol-40px me-3">
-																	<img src="assets/media/avatars/300-1.jpg" class="" alt="" />
+																	<img src="{{ asset('/assets/media/avatars/300-1.jpg') }}" class="" alt="" />
 																</div>
 																<div class="d-flex justify-content-start flex-column">
 																	<a href="#" class="text-dark fw-bold text-hover-primary mb-1 fs-6">Brooklyn Simmons</a>
@@ -904,7 +904,7 @@
 														<td>
 															<div class="d-flex align-items-center">
 																<div class="symbol symbol-40px me-3">
-																	<img src="assets/media/avatars/300-11.jpg" class="" alt="" />
+																	<img src="{{ asset('/assets/media/avatars/300-11.jpg') }}" class="" alt="" />
 																</div>
 																<div class="d-flex justify-content-start flex-column">
 																	<a href="#" class="text-dark fw-bold text-hover-primary mb-1 fs-6">Guy Hawkins</a>
@@ -950,7 +950,7 @@
 														<td>
 															<div class="d-flex align-items-center">
 																<div class="symbol symbol-40px me-3">
-																	<img src="assets/media/avatars/300-13.jpg" class="" alt="" />
+																	<img src="{{ asset('/assets/media/avatars/300-13.jpg') }}" class="" alt="" />
 																</div>
 																<div class="d-flex justify-content-start flex-column">
 																	<a href="#" class="text-dark fw-bold text-hover-primary mb-1 fs-6">Marvin McKinney</a>
@@ -996,7 +996,7 @@
 														<td>
 															<div class="d-flex align-items-center">
 																<div class="symbol symbol-40px me-3">
-																	<img src="assets/media/avatars/300-12.jpg" class="" alt="" />
+																	<img src="{{ asset('/assets/media/avatars/300-12.jpg') }}" class="" alt="" />
 																</div>
 																<div class="d-flex justify-content-start flex-column">
 																	<a href="#" class="text-dark fw-bold text-hover-primary mb-1 fs-6">Esther Howard</a>
@@ -1042,7 +1042,7 @@
 														<td>
 															<div class="d-flex align-items-center">
 																<div class="symbol symbol-40px me-3">
-																	<img src="assets/media/avatars/300-2.jpg" class="" alt="" />
+																	<img src="{{ asset('/assets/media/avatars/300-2.jpg') }}" class="" alt="" />
 																</div>
 																<div class="d-flex justify-content-start flex-column">
 																	<a href="#" class="text-dark fw-bold text-hover-primary mb-1 fs-6">Annette Black</a>
@@ -1118,8 +1118,8 @@
 									<!--end::Title-->
 									<!--begin::Illustration-->
 									<div class="py-10 text-center">
-										<img src="assets/media/svg/illustrations/easy/2.svg" class="theme-light-show w-200px" alt="" />
-										<img src="assets/media/svg/illustrations/easy/2-dark.svg" class="theme-dark-show w-200px" alt="" />
+										<img src="{{ asset('/assets/media/svg/illustrations/easy/2.svg') }}" class="theme-light-show w-200px" alt="" />
+										<img src="{{ asset('/assets/media/svg/illustrations/easy/2-dark.svg') }}" class="theme-dark-show w-200px" alt="" />
 									</div>
 									<!--end::Illustration-->
 								</div>
