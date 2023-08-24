@@ -76,14 +76,13 @@ Route::middleware(['auth'])->group(function()
 	Route::get('admin/settings/country-config',[CountryController::class,'index'])->name('settings.country');
 	Route::get('admin/settings/partner-config',[ParterConfigController::class,'index'])->name('settings.role');
 
-
     Route::post('admin/save_country',[CountryController::class,'saveCountry'])->name('settings.saveCountry');
     Route::post('admin/save_franchise',[CountryController::class,'saveFranchise'])->name('settings.saveFranchise');
     Route::post('admin/save_partnertype',[CountryController::class,'savePartnerType'])->name('settings.savePartnerType');
     Route::post('admin/save_partnerdetails',[CountryController::class,'savePartnerDetails'])->name('settings.savePartnerDetails');
     Route::post('admin/save_disablecity',[CountryController::class,'saveDisableCity'])->name('settings.saveDisableCity');
     Route::post('admin/save_role',[ParterConfigController::class,'saveRole'])->name('settings.saveRole');
-
+    Route::post('admin/save_partnertypeproperty',[ParterConfigController::class,'savepartnertypeProperty'])->name('settings.savepartnertypeProperty');
 
     Route::get('country-list',[CountryController::class,'getAjaxList'])->name('country.getAjaxList');
     Route::get('franchise-list',[CountryController::class,'getFranchiseAjaxList'])->name('franchise.getAjaxList');
@@ -92,13 +91,14 @@ Route::middleware(['auth'])->group(function()
     Route::get('disablecity-list',[CountryController::class,'getDisableCityAjaxList'])->name('disablecity.getAjaxList');
     Route::get('role-list',[ParterConfigController::class,'getAjaxList'])->name('role.getAjaxList');
 
-
     Route::get('admin/setting/edit-country-status/{id}/{status}', [CountryController::class,'changeCountryStatus']);
     Route::get('admin/setting/edit-franchise-status/{id}/{status}', [CountryController::class,'changeFranchiseStatus']);
     Route::get('admin/setting/edit-partnertype-status/{id}/{status}', [CountryController::class,'changePartnerTypeStatus']);
     Route::get('admin/setting/edit-partnerdetails-status/{id}/{status}', [CountryController::class,'changePartnerDetailsStatus']);
     Route::get('admin/setting/edit-disablecity-status/{id}/{status}', [CountryController::class,'changeDisableCityStatus']);
     Route::get('admin/setting/edit-role-status/{id}/{status}', [ParterConfigController::class,'changeRoleStatus']);
+
+    Route::get('admin/setting/edit-salon-status/{id}/{statussalon}', [ParterConfigController::class,'changeSalonStatus']);	
 
     Route::get('partner/settings',[PartnerSettingController::class,'index'])->name('settings.index');
     Route::get('partner/venue-setting',[VenueController::class,'index'])->name('venue.index');
