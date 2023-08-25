@@ -11,11 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('partner_type_properties', function (Blueprint $table) {
+        Schema::create('partner_type_property_permissions', function (Blueprint $table) {
             $table->id();
-            $table->string('property');
-            $table->string('remark');
-            $table->string('option');
+            $table->integer('partner_type_id');
+            $table->integer('partner_type_property_id');
+            $table->string('property_value');
+            $table->string('remark')->nullable();
             $table->timestamps();
         });
     }
@@ -25,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('partner_type_properties');
+        Schema::dropIfExists('partner_type_property_permissions');
     }
 };
