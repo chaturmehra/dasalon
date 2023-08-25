@@ -7,7 +7,7 @@
 
 <div class="d-flex flex-column flex-root" id="kt_app_root">
 	<!--begin::Page bg image-->
-	<style>body { background-image: url('/dasalon/partners/assets/media/auth/bg10.jpeg'); } [data-bs-theme="dark"] body { background-image: url('/dasalon/partners/assets/media/auth/bg10-dark.jpeg'); }</style>
+	<style>body { background-image: url("{{ asset('/assets/media/auth/bg10.jpeg') }}"); } [data-bs-theme="dark"] body { background-image: url("{{ asset('/assets/media/auth/bg10-dark.jpeg') }}"); }</style>
 	<!--end::Page bg image-->
 	<!--begin::Authentication - Sign-in -->
 	<div class="d-flex flex-column flex-lg-row flex-column-fluid">
@@ -16,8 +16,8 @@
 			<!--begin::Content-->
 			<div class="d-flex flex-column flex-center pb-0 pb-lg-10 p-10 w-100">
 				<!--begin::Image-->
-				<img class="theme-light-show mx-auto mw-100 w-150px w-lg-300px mb-10 mb-lg-20" src="{{ asset('partner/assets/media/auth/agency.png') }}" alt="" />
-				<img class="theme-dark-show mx-auto mw-100 w-150px w-lg-300px mb-10 mb-lg-20" src="{{ asset('partner/assets/media/auth/agency-dark.png') }}" alt="" />
+				<img class="theme-light-show mx-auto mw-100 w-150px w-lg-300px mb-10 mb-lg-20" src="{{ asset('/assets/media/auth/agency.png') }}" alt="" />
+				<img class="theme-dark-show mx-auto mw-100 w-150px w-lg-300px mb-10 mb-lg-20" src="{{ asset('/assets/media/auth/agency-dark.png') }}" alt="" />
 				<!--end::Image-->
 				<!--begin::Title-->
 				<h1 class="text-gray-800 fs-2qx fw-bold text-center mb-7">Fast, Efficient and Productive</h1>
@@ -42,39 +42,73 @@
 					<!--begin::Wrapper-->
 					<div class="d-flex flex-center flex-column flex-column-fluid pb-15 pb-lg-20">
 						<!--begin::Form-->
-						<form class="form w-100" novalidate="novalidate" id="kt_sign_in_form" data-kt-redirect-url="" action="#">
+						<!-- <form class="form w-100" novalidate="novalidate" id="kt_sign_in_form" data-kt-redirect-url="" action="#"> -->
 							<!--begin::Heading-->
 							<div class="text-center mb-11">
 								<!--begin::Title-->
-								<h1 class="text-dark fw-bolder mb-3">da Salon for business</h1>
+								@php $service_provided = Session::get('service_provided_id'); 
+								@endphp
+								<h1 class="text-dark fw-bolder mb-3">da Salon for @if($service_provided) {{ "business" }} @else {{ "customer "}} @endif</h1>
 								<!--end::Title-->
 								<!--begin::Subtitle-->
-								<div class="text-gray-500 fw-semibold fs-6">Create an account or log in to manage your business</div>
+								<div class="text-gray-500 fw-semibold fs-6">
+									@if($service_provided)
+										Create an account or log in to manage your business
+									@else
+										Create an account or log in to book and manage your appointments.
+									@endif
+								</div>
 								<!--end::Subtitle=-->
 							</div>
 							<!--begin::Heading-->
-
-							<!--begin::Input group=-->
-							<div class="fv-row mb-8">
-								<!--begin::Email-->
-								<input type="text" placeholder="Email" name="email" autocomplete="off" class="form-control bg-transparent" />
-								<!--end::Email-->
+							@if(session()->has('success'))
+							<div class="card-header display-message">
+								<div class="alert alert-success">
+									{{ session()->get('success') }}
+								</div>
 							</div>
-
-							<!--begin::Submit button-->
-							<div class="d-grid mb-10">
-								<button type="submit" id="kt_sign_in_submit" class="btn btn-primary">
-									<!--begin::Indicator label-->
-									<span class="indicator-label">Continue</span>
-									<!--end::Indicator label-->
-									<!--begin::Indicator progress-->
-									<span class="indicator-progress">Please wait...
-									<span class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
-									<!--end::Indicator progress-->
-								</button>
+							@endif
+							@if(session()->has('error'))
+							<div class="card-header display-message">
+								<div class="alert alert-danger">
+									{{ session()->get('error') }}
+								</div>
 							</div>
-							<!--end::Submit button-->
+							@endif
+							@if ($errors->any())
+							<div class="card-header display-message">
+								<div class="alert alert-danger">
+									<ul>
+										@foreach ($errors->all() as $error)
+										<li>{{ $error }}</li>
+										@endforeach
+									</ul>
+								</div>
+							</div>
+							@endif
+							<form class="form w-100" novalidate="novalidate" action="{{ route('sign-up-email') }}" method="post">
+								@csrf
+								<!--begin::Input group=-->
+								<div class="fv-row mb-8">
+									<!--begin::Email-->
+									<input type="email" placeholder="Email" name="email" autocomplete="off" class="form-control bg-transparent" />
+									<!--end::Email-->
+								</div>
 
+								<!--begin::Submit button-->
+								<div class="d-grid mb-10">
+									<button type="submit" id="kt_sign_in_submits" class="btn btn-primary">
+										<!--begin::Indicator label-->
+										<span class="indicator-label">Continue</span>
+										<!--end::Indicator label-->
+										<!--begin::Indicator progress-->
+										<span class="indicator-progress">Please wait...
+										<span class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
+										<!--end::Indicator progress-->
+									</button>
+								</div>
+								<!--end::Submit button-->
+							</form>
 							<!--begin::Separator-->
 							<div class="separator separator-content my-14">
 								<span class="w-125px text-gray-500 fw-semibold fs-7">Or</span>
@@ -116,7 +150,7 @@
 								<a href="#" class="link-primary">Sign up as a customer</a>
 							</div>
 
-						</form>
+						<!-- </form> -->
 						<!--end::Form-->
 					</div>
 					<!--end::Wrapper-->

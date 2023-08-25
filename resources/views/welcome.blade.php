@@ -49,7 +49,13 @@
 								<!--end::Title-->
 							</div>
 							<!--begin::Heading-->
-
+							@if(session()->has('success'))
+							<div class="card-header display-message">
+								<div class="alert alert-success">
+									{{ session()->get('success') }}
+								</div>
+							</div>
+							@endif
 							<!--begin::Input group=-->
 							<div class="fv-row mb-8">
 								<!--begin::Email-->

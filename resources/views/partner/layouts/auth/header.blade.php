@@ -25,19 +25,20 @@ License: For each use you must have a valid license purchased only from above li
 		<meta property="og:url" content="https://keenthemes.com/metronic" />
 		<meta property="og:site_name" content="Keenthemes | Metronic" />
 		<link rel="canonical" href="https://preview.keenthemes.com/metronic8" />
-		<link rel="shortcut icon" href="/dasalon/admin/assets/media/logos/favicon.ico" />
+		<link rel="shortcut icon" href="{{asset('/partner/assets/media/logos/favicon.ico')}}" />
 		<!--begin::Fonts(mandatory for all pages)-->
 		<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inter:300,400,500,600,700" />
 		<!--end::Fonts-->
 		<!--begin::Vendor Stylesheets(used for this page only)-->
 		<link rel="canonical" href="https://preview.keenthemes.com/metronic8" />
-		<link rel="shortcut icon" href="assets/media/logos/logo1.png" />
+		<link rel="shortcut icon" href="{{asset('/partner/assets/media/logos/logo1.png')}}" />
 		<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inter:300,400,500,600,700" />
 		<link href="{{asset('/partner/assets/plugins/custom/fullcalendar/fullcalendar.bundle')}}" rel="stylesheet" type="text/css" />
 		<link href="{{asset('/partner/assets/plugins/custom/datatables/datatables.bundle')}}" rel="stylesheet" type="text/css" />
 		<link href="{{asset('/partner/assets/css/assets/plugins/global/plugins.bundle.css')}}" rel="stylesheet" type="text/css" />
 		<link href="{{asset('/partner/assets/css/style.bundle.css')}}" rel="stylesheet" type="text/css" />
 		<link href="{{asset('/partner/assets/css/style.css')}}" rel="stylesheet" type="text/css" />
+		<link href="{{ asset('/assets/css/custom.css') }}" rel="stylesheet" type="text/css" />
 
 
 		

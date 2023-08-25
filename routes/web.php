@@ -41,6 +41,9 @@ Route::get('/', function () {
 Auth::routes();
 Route::get("user-flow",[UserController::class,'index'])->name('register');
 Route::get("user/signin",[UserController::class,'signinForm'])->name('email-form');
+Route::get("user/book-a-service",[UserController::class,'bookService'])->name('book-a-service');
+Route::get("user/signin/{id}",[UserController::class,'signinFormProvided'])->name('service-provided');
+Route::get("user/signup-service-provided",[UserController::class,'signupServiceProvided'])->name('signup-service-provided');
 Route::middleware(['auth','user-role:partner,admin'])->group(function()
 {
  Route::get("/admin/dashboard",[HomeController::class,'userHome'])->name('home');
@@ -120,7 +123,14 @@ Route::middleware(['auth'])->group(function()
 /*Partner Route*/
 
 Route::post('register-partner',  [PartnerController::class,'registerParter'])->name('partner.register');
+Route::post('user/partner-business-detail',  [PartnerController::class,'storeBusinessDetail'])->name('partner.partner-business-detail');
+Route::post('user/customer-detail',  [PartnerController::class,'storeCustomerDetail'])->name('customer.customer-detail');
 Route::get('account/verify/{token}',  [PartnerController::class,'verifyAccount'])->name('partner.verify');
+Route::get('account/reset/{token}',  [PartnerController::class,'resetPassword'])->name('partner.reset');
 
 Route::get('login/{provider}', [PartnerController::class,'redirectToProvider'])->name('social.login');
 Route::get('login/{provider}/callback', [PartnerController::class,'handleProviderCallback']);
+Route::post('sign-up-email', [PartnerController::class, 'signupWithEmail'])->name('sign-up-email');
+Route::post('account/create-password', [PartnerController::class, 'createPassword'])->name('create-password');
+
+Route::post('sendSMS', [TwilioSMSController::class, 'index']);
