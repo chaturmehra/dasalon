@@ -65,6 +65,7 @@ Route::get('partnerdetails-list',[CountryController::class,'getPartnerDetailsAja
 Route::get('disablecity-list',[CountryController::class,'getDisableCityAjaxList'])->name('disablecity.getAjaxList');
 Route::get('role-list',[ParterConfigController::class,'getAjaxList'])->name('role.getAjaxList');
 
+Route::get('admin/setting/edit-property-status', [ParterConfigController::class,'changePropertypermission']);
 Route::get('admin/setting/edit-country-status/{id}/{status}', [CountryController::class,'changeCountryStatus']);
 Route::get('admin/setting/edit-franchise-status/{id}/{status}', [CountryController::class,'changeFranchiseStatus']);
 Route::get('admin/setting/edit-partnertype-status/{id}/{status}', [CountryController::class,'changePartnerTypeStatus']);
@@ -72,7 +73,6 @@ Route::get('admin/setting/edit-partnerdetails-status/{id}/{status}', [CountryCon
 Route::get('admin/setting/edit-disablecity-status/{id}/{status}', [CountryController::class,'changeDisableCityStatus']);
 Route::get('admin/setting/edit-role-status/{id}/{status}', [ParterConfigController::class,'changeRoleStatus']);
 
-Route::get('admin/setting/edit-salon-status/{id}/{statussalon}', [ParterConfigController::class,'changeSalonStatus']);	
 
 Route::get('partner/settings',[PartnerSettingController::class,'index'])->name('settings.index');
 Route::get('partner/venue-setting',[VenueController::class,'index'])->name('venue.index');

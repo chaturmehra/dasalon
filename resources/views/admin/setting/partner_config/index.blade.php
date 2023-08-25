@@ -47,7 +47,7 @@
 							<div id="kt_app_content" class="app-content flex-column-fluid">
 								<!--begin::Content container-->
 								<div id="kt_app_content_container" class="app-container container-fluid">
-						@include('admin.setting.tab')
+									@include('admin.setting.tab')
 									<!--end::Navbar-->
 
 									<div class="">
@@ -222,29 +222,43 @@
 																
 																<td>{{$showp->property}}</td>  
                                                                 <td>@if($showp->option=='checkbox')
-																	<div class="form-check form-switch form-check-custom form-check-solid me-10">
-																				<input class="form-check-input h-25px w-50px" name="" type="checkbox" value="" id="status" checked="checked" />
+																	<div class="form-check form-switch form-check-custom form-check-solid me-10 remark">
+																				<input class="form-check-input h-25px w-50px remark" name="remark" type="checkbox" value="checkbox" id="status" checked="checked" />
 																				<label class="form-check-label" for="status"></label>
 																			</div>
 																
 																@elseif($showp->option=='dropdown')
 																
-																	<select class="form-select" data-control="select2" data-placeholder="Select an option">
+																	<select class="form-select remark" name="remark" data-control="select2" data-placeholder="Select an option">
 																			    <option></option>
 																			    <option value="1">within 5KM</option>
 																			    <option value="2">within 10KM</option>
 																			    <option value="3">within 20KM</option>
 																			    <option value="4">within city</option>
 																			</select>
-																
-																@else  {{$showp->remark}}
+																@else <div class="remark">
+																	<input type="hidden" class="remark" name="remark" value="{{ $showp->remark }}"/>
+																	 {{$showp->remark}}
+																	</div>
 																@endif
 																</td>  
                                                                 @foreach($showall as $show)
+
+																@php //echo $show->id; 
+																		//echo $showp->partner_type_id;
+																//die; @endphp
 																<td>
 																	@if($show->partner_name)
-																 <div class="form-check form-switch form-check-custom form-check-solid me-10">
-																				<input class="form-check-input h-25px w-50px" name="" type="checkbox" value="" id="status" checked="checked" />
+																 <div class="form-check form-switch form-check-custom form-check-solid me-10 checkbox-value">
+																				<input 
+																				class="form-check-input h-25px w-50px permission-status" 
+																				name="status" 
+																				type="checkbox" 
+																				value="1" 
+																				@if($showp->property_value && $show->id == $showp->partner_type_id) checked={{ "checked" }} @endif
+																				partner_type_id="{{ $show->id }}"
+																				property_id="{{ $showp->id }}"
+																				/>
 																				<label class="form-check-label" for="status"></label>
 																			</div>
  																	@endif
@@ -709,7 +723,73 @@ $('#search_partnertypeproperty').keyup(function(){
 		}
   });
 });
+$(document).ready(function() {
+	//console.log("1");
+  $('.checkbox-value').on('click', '.permission-status', function() {
+	var $this = $(this);
+	var partner_type_id = $(this).attr('partner_type_id');
+	var property_id = $(this).attr('property_id');
+	console.log($(this));
 
+	$tr = $this.parents('tr');
+
+	var remark = "";
+
+	if( $tr.find('td:nth-child(2) input.remark' ).length && $tr.find('td:nth-child(2) input.remark' ).is("[type='hidden']") ) {
+		remark = $tr.find('td:nth-child(2) input.remark' ).val();
+	} else if ( $tr.find('td:nth-child(2) input.remark' ).length && $tr.find('td:nth-child(2) input.remark' ).is("[type='checkbox']") ) {
+		remark = $tr.find('td:nth-child(2) input.remark' ).is(":checked");
+	} else if ( $tr.find('td:nth-child(2) input.remark' ).length && $tr.find('td:nth-child(2) input.remark' ).is("[type='radio']") ) {
+		remark = $tr.find('td:nth-child(2) input:checked .remark' ).val();
+	} else if ( $tr.find('td:nth-child(2) select.remark' ).length ) {
+		remark = $tr.find('td:nth-child(2) select.remark' ).val();
+	}
+	
+	// if($('input:checkbox .remark').prop("checked")){
+	// 	remark=$('input:checkbox .remark').prop("checked");
+	// }
+	// else if("select" : $('.remark').val()){
+	// 	remark="select" : $('.remark').val()
+	// }
+	// else {
+	//  var remark=$('input.remark').val();
+	// }
+	alert(remark);
+
+	alert(property_id);
+    if ($(this).prop("checked")) {
+      status = 1;
+    } else {
+		status = 0;
+    }
+	//var property_value: status,
+	
+	var formData = {
+		property_id: property_id,
+		partner_type_id: partner_type_id,
+		remark: remark,
+		property_value: status,
+	}
+	
+	$.ajax({
+		url:'{{ url('admin/setting/edit-property-status')}}',
+		data: formData,
+		type:'GET',
+			beforeSend:function(){
+				$('.spinner-cls').show();
+		},
+			success:function(data)
+			{
+				$('.spinner-cls').hide();
+				swal("Your property status has been changed!", {
+					icon: "success",
+				});
+				$('#partnertypeproperties-table').DataTable().ajax.reload();
+			}
+	});
+})
+          
+});
     </script>
 	@endpush
 	
