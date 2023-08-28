@@ -56,6 +56,7 @@ Route::post('admin/save_partnerdetails',[CountryController::class,'savePartnerDe
 Route::post('admin/save_disablecity',[CountryController::class,'saveDisableCity'])->name('settings.saveDisableCity');
 Route::post('admin/save_role',[ParterConfigController::class,'saveRole'])->name('settings.saveRole');
 Route::post('admin/save_partnertypeproperty',[ParterConfigController::class,'savepartnertypeProperty'])->name('settings.savepartnertypeProperty');
+Route::post('admin/save_profilefeature',[ParterConfigController::class,'saveprofileFeature'])->name('settings.saveprofilefeature');
 
 
 Route::get('country-list',[CountryController::class,'getAjaxList'])->name('country.getAjaxList');
@@ -65,6 +66,7 @@ Route::get('partnerdetails-list',[CountryController::class,'getPartnerDetailsAja
 Route::get('disablecity-list',[CountryController::class,'getDisableCityAjaxList'])->name('disablecity.getAjaxList');
 Route::get('role-list',[ParterConfigController::class,'getAjaxList'])->name('role.getAjaxList');
 
+Route::get('admin/setting/edit-profilefeature-status', [ParterConfigController::class,'changeProfilefeaturepermission']);
 Route::get('admin/setting/edit-property-status', [ParterConfigController::class,'changePropertypermission']);
 Route::get('admin/setting/edit-country-status/{id}/{status}', [CountryController::class,'changeCountryStatus']);
 Route::get('admin/setting/edit-franchise-status/{id}/{status}', [CountryController::class,'changeFranchiseStatus']);
