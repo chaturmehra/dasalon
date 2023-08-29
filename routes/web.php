@@ -66,7 +66,7 @@ Route::get('partnerdetails-list',[CountryController::class,'getPartnerDetailsAja
 Route::get('disablecity-list',[CountryController::class,'getDisableCityAjaxList'])->name('disablecity.getAjaxList');
 Route::get('role-list',[ParterConfigController::class,'getAjaxList'])->name('role.getAjaxList');
 
-Route::get('admin/setting/edit-profilefeature-status', [ParterConfigController::class,'changeProfilefeaturepermission']);
+Route::post('admin/settings/edit-profilefeature-status', [ParterConfigController::class,'changeProfilefeaturepermission']);
 Route::get('admin/setting/edit-property-status', [ParterConfigController::class,'changePropertypermission']);
 Route::get('admin/setting/edit-country-status/{id}/{status}', [CountryController::class,'changeCountryStatus']);
 Route::get('admin/setting/edit-franchise-status/{id}/{status}', [CountryController::class,'changeFranchiseStatus']);

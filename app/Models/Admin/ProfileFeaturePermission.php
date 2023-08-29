@@ -8,4 +8,5 @@ use Illuminate\Database\Eloquent\Model;
 class ProfileFeaturePermission extends Model
 {
     use HasFactory;
+    protected $primaryKey = 'profilefeaturepermission_id';
 }

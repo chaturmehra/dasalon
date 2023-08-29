@@ -76,27 +76,11 @@
 $(document).ready(function() {
 	//console.log("1");
   $('.checkbox-value1').on('click', '.permission-on', function() {
-	var $this = $(this);
+	
 	var role_id = $(this).attr('role_id');
 	var profilefeature_id = $(this).attr('profilefeature_id');
 	console.log($(this));
 
-	// $tr = $this.parents('tr');
-
-	// var feature= $('input.feature').val();
-	
-	// if($('input:checkbox .remark').prop("checked")){
-	// 	remark=$('input:checkbox .remark').prop("checked");
-	// }
-	// else if("select" : $('.remark').val()){
-	// 	remark="select" : $('.remark').val()
-	// }
-	// else {
-	//  var remark=$('input.remark').val();
-	// }
-	alert(feature);
-
-	alert(profilefeature_id);
     if ($(this).prop("checked")) {
       status = 1;
     } else {
@@ -104,16 +88,18 @@ $(document).ready(function() {
     }
 	//var property_value: status,
 	
+    let request_url = 'edit-profilefeature-status';
+    
 	var formData = {
 		profilefeature_id: profilefeature_id,
 		role_id: role_id,
 		property_value: status,
 	}
-	
+	debugger;
 	$.ajax({
-		url:'{{ url('/admin/setting/edit-profilefeature-status/')}}',
+		url: request_url,
 		data: formData,
-		type:'GET',
+		type:'POST',
 			beforeSend:function(){
 				$('.spinner-cls').show();
 		},

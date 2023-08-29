@@ -508,7 +508,7 @@
 																	</tr>
 																</thead>
 																<tbody class="text-gray-600 fw-semibold">
-																@foreach($showallpfp as $pfp)
+																@foreach($showpfp as $pfp)
 																<tr>
 																<td>{{$pfp->id}}</td>
 																<td>
