@@ -15,12 +15,13 @@ class ParterConfigController extends Controller
     public function index()
     {
         $showallp = PartnerTypePropertyPermission::leftJoin('partner_type_properties', 'partner_type_properties.id', '=', 'partner_type_property_permissions.partner_type_property_id')->get();
-        $showallpfp = ProfileFeaturePermission::leftJoin('profile_features', 'profile_features.id', '=', 'profile_feature_permissions.profilefeature_id')->get();
-        //$showallpfp = $showallpfp->toArray();
-        //echo "<pre>";print_r($showallpfp);die;
+        $showpfp = ProfileFeature::leftJoin('profile_feature_permissions', 'profile_features.id', '=', 'profile_feature_permissions.profilefeature_id')->get();
+        // $showpfp = $showpfp->toArray();
+        // echo "<pre>";print_r($showpfp);die;
+
         $showall=PartnerType::all();
         $roleall=Role::all();
-        return view('admin/setting/partner_config/index', compact('showallp','showall','showallpfp','roleall')); 
+        return view('admin/setting/partner_config/index', compact('showallp','showall','showpfp','roleall')); 
        
     }
 
@@ -150,18 +151,20 @@ class ParterConfigController extends Controller
      }
 
      public function changeProfilefeaturepermission(Request $request){
+
         $profilefeature_id =  $request->get('profilefeature_id');  
         $role_id =  $request->get('role_id');  
+
         $getRecord = ProfileFeaturePermission::where('profilefeature_id', $profilefeature_id)->where('role_id', $role_id)->first();
        
         if($getRecord){
-            ProfileFeaturePermission::where('id', $getRecord->id)->
+            ProfileFeaturePermission::where('profilefeaturepermission_id', $getRecord->profilefeaturepermission_id)->
             update([
                'profilefeature_id' =>$getRecord->profilefeature_id,  
                'role_id' => $getRecord->role_id,  
               'property_value' => $request->property_value,   
             ]);
-             }
+        }
            else{
              $perm = new ProfileFeaturePermission;  
              $perm->profilefeature_id =  $request->get('profilefeature_id');  
