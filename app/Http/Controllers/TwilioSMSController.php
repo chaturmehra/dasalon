@@ -14,11 +14,12 @@ class TwilioSMSController extends Controller
      *
      * @return response()
      */
-    public function index(Request $Request)
+    public function index(Request $request)
     {
     	$otp = random_int(100000, 999999);
 
-    	$receiverNumber = $request->phone;
+    	//$receiverNumber = $request->phone;
+    	$receiverNumber = "+917827881909";
     	$message 		= "Your Daslon OTP is: ".$otp;
 
     	try {
@@ -35,8 +36,28 @@ class TwilioSMSController extends Controller
     			'body' => $message
     		]);
 
-    		return redirect()->back()->with('success', 'SMS sent successfully on your given mobile number.');
+    		//return redirect()->back()->with('success', 'SMS sent successfully on your given mobile number.');
     		//dd('SMS Sent Successfully.');
+
+    		return response()->json(['status' => true]);
+
+    	} catch (Exception $e) {
+    		dd("Error: ". $e->getMessage());
+    	}
+    }
+
+    public function verify_otp(Request $request)
+    {
+    	$otp 	= $request->otp;
+
+    	try {
+
+    		$signin_otp = Session::get('signin_otp');
+    		if ($otp == $signin_otp) {
+    			return response()->json(['status' => true]);
+    		}else{
+    			return response()->json(['status' => false]);
+    		}
 
     	} catch (Exception $e) {
     		dd("Error: ". $e->getMessage());

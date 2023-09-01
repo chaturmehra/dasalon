@@ -167,6 +167,21 @@ class PartnerController extends Controller
     public function storeBusinessDetail(Request $request)
     {
 
+        $validator = Validator::make($request->all(), [
+            'businessname'  => 'required|max:30',
+            'phone'         => 'required|max:15',
+            'otp'           => 'required|min:6|max:6',
+        ]);
+ 
+        if ($validator->fails()) {
+            return redirect()->back()->withErrors($validator)->withInput();
+        }
+
+        $signin_otp = Session::get('signin_otp');
+        if ($signin_otp != $request->otp) {
+            return redirect()->back()->with('error', 'OTP not match.');
+        }
+
         $service_provided   = Session::get('service_provided_id');
         $user_detail_data   = Session::get('user_detail_data');
 
@@ -194,7 +209,7 @@ class PartnerController extends Controller
 
             $this->createPasswordLinkEmail($email, $request->businessname, $user->id);
 
-            return redirect('/')->with('success', 'We have sent to a create password link you mail. Please check.');
+            return redirect('/')->with('success', 'We have sent to a create password link in your mail. Please check.');
 
         }else{
 
@@ -220,10 +235,36 @@ class PartnerController extends Controller
         }
     }
 
+    public function signupReturnWithEmail()
+    {
+        $service_provided   = Session::get('service_provided_id');
+
+        if ($service_provided) {
+            return view('partner/user/signup-mobile-verification');
+        }else{
+            return view('partner/user/customer-signup-mobile-verification');
+        }
+    }
+
     public function storeCustomerDetail(Request $request)
     {
 
         $email   = Session::get('email');
+
+        $validator = Validator::make($request->all(), [
+            'name'      => 'required|max:30',
+            'phone'     => 'required|max:15',
+            'otp'       => 'required|min:6|max:6',
+        ]);
+ 
+        if ($validator->fails()) {
+            return redirect()->back()->withErrors($validator)->withInput();
+        }
+
+        $signin_otp = Session::get('signin_otp');
+        if ($signin_otp != $request->otp) {
+            return redirect()->back()->with('error', 'OTP not match.');
+        }
 
         $user = User::create([
             'name'      => $request->name,
@@ -233,7 +274,7 @@ class PartnerController extends Controller
             'is_active' => 1,
         ]);
 
-        $this->createPasswordLinkEmail($email, "CSM Dasalonn", "30");
+        $this->createPasswordLinkEmail($email, $request->name, $user->id);
 
         return redirect('/')->with('success', 'We have sent to a create password link you mail. Please check.');
 
@@ -267,7 +308,7 @@ class PartnerController extends Controller
             'is_active'  => 1,
         ]);
 
-        return redirect('/')->with('success', 'Your have successfully created password. Please login now.');
+        return redirect('/')->with('success', 'You have successfully created password. Please login now.');
 
     }
 
@@ -298,6 +339,7 @@ class PartnerController extends Controller
             Session::forget('user_detail_data');
             Session::forget('service_provided_id');
             Session::forget('email');
+            Session::forget('signin_otp');
 
             return true;
             //return view('partner/user/signup-mobile-verification');

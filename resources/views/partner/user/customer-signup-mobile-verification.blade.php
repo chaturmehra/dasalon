@@ -3,9 +3,10 @@
 @section('content')
 
 <!--begin::Root-->
+<meta name="csrf-token" content="{{ csrf_token() }}" />
 <div class="d-flex flex-column flex-root" id="kt_app_root">
 	<!--begin::Page bg image-->
-	<style>body { background-image: url("{{ asset('/assets/media/auth/bg10.jpeg') }}"); } [data-bs-theme="dark"] body { background-image: url("{{ asset('/assets/media/auth/bg10-dark.jpeg') }}"); }</style>
+	<style>body { background-image: url("{{ asset('/public/assets/media/auth/bg10.jpeg') }}"); } [data-bs-theme="dark"] body { background-image: url("{{ asset('/public/assets/media/auth/bg10-dark.jpeg') }}"); }</style>
 	<!--end::Page bg image-->
 	<!--begin::Authentication - Sign-in -->
 	<div class="d-flex flex-column flex-lg-row flex-column-fluid">
@@ -14,8 +15,8 @@
 			<!--begin::Content-->
 			<div class="d-flex flex-column flex-center pb-0 pb-lg-10 p-10 w-100">
 				<!--begin::Image-->
-				<img class="theme-light-show mx-auto mw-100 w-150px w-lg-300px mb-10 mb-lg-20" src="{{ asset('/assets/media/auth/agency.png') }}" alt="" />
-				<img class="theme-dark-show mx-auto mw-100 w-150px w-lg-300px mb-10 mb-lg-20" src="{{ asset('/assets/media/auth/agency-dark.png') }}" alt="" />
+				<img class="theme-light-show mx-auto mw-100 w-150px w-lg-300px mb-10 mb-lg-20" src="{{ asset('/public/assets/media/auth/agency.png') }}" alt="" />
+				<img class="theme-dark-show mx-auto mw-100 w-150px w-lg-300px mb-10 mb-lg-20" src="{{ asset('/public/assets/media/auth/agency-dark.png') }}" alt="" />
 				<!--end::Image-->
 				<!--begin::Title-->
 				<h1 class="text-gray-800 fs-2qx fw-bold text-center mb-7">Fast, Efficient and Productive</h1>
@@ -82,29 +83,29 @@
 							<!--begin::Input group=-->
 							<div class="fv-row mb-8">
 								<!--begin::Email-->
-								<input type="text" placeholder="Name" name="name" autocomplete="off" class="form-control bg-transparent" required="required" />
+								<input type="text" placeholder="Name" name="name" autocomplete="off" class="form-control bg-transparent" required="required" value="{{ old('name') }}" />
 								<!--end::Email-->
 							</div>
 
 							<!--begin::Input group=-->
 							<div class="fv-row mb-8">
-								<input type="text" placeholder="Mobile Number" name="phone" autocomplete="off" class="form-control bg-transparent" required="required" />								
+								<input type="text" placeholder="Mobile Number" name="phone" autocomplete="off" class="form-control bg-transparent" id="signup_mobile" required="required" value="{{ old('phone') }}"/>								
 							</div>
 
 							<div class="d-flex flex-stack flex-wrap gap-3 fs-base fw-semibold mb-8">
 								<div></div>
 								<!--begin::Link-->
-								<a href="#" class="link-primary send_otp">Send OTP</a>
+								<a href="javascript:void(0)" class="link-primary signup_send_otp">Send OTP</a>
 								<!--end::Link-->
 							</div>
 
 							<div class="fv-row mb-8">
-								<input type="text" placeholder="Enter OTP" name="otp" autocomplete="off" class="form-control bg-transparent" />
+								<input type="text" placeholder="Enter OTP" name="otp" id="signup_otp" autocomplete="off" required="required" class="form-control bg-transparent" value="{{ old('otp') }}"/>
 							</div>
 
 							<div class="d-flex flex-stack flex-wrap gap-3 fs-base fw-semibold mb-8">
 								<div></div>
-								<a href="#" class="link-primary verify_otp">Verify OTP</a>
+								<a href="javascript:void(0)" class="link-primary signup_verify_otp">Verify OTP</a>
 							</div>
 
 							<!--begin::Submit button-->
@@ -136,5 +137,12 @@
 	<!--end::Authentication - Sign-in-->
 </div>
 <!--end::Root-->
+<!-- @php
+
+loadScript("public/partner/assets/js/custom/signin_otp.js");
+
+@php -->
+
+{{-- App\Helpers\helpers::loadScript("public/partner/assets/js/custom/signin_otp.js") --}}
 
 @endsection

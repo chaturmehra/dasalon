@@ -13,19 +13,19 @@
 		<meta property="og:url" content="{{ Request::url() }}" />
 		<meta property="og:site_name" content="Dasalon" />
 		<link rel="canonical" href="{{ Request::url() }}" />
-		<link rel="shortcut icon" href="{{ asset('/assets/media/logos/logo1.png') }}" />
+		<link rel="shortcut icon" href="{{ asset('/public/assets/media/logos/logo1.png') }}" />
 		<!--begin::Fonts(mandatory for all pages)-->
 		<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inter:300,400,500,600,700" />
 		<!--end::Fonts-->
 		<!--begin::Vendor Stylesheets(used for this page only)-->
-		<link href="{{ asset('/assets/plugins/custom/fullcalendar/fullcalendar.bundle.css') }}" rel="stylesheet" type="text/css" />
-		<link href="{{ asset('/assets/plugins/custom/datatables/datatables.bundle.css') }}" rel="stylesheet" type="text/css" />
+		<link href="{{ asset('/public/assets/plugins/custom/fullcalendar/fullcalendar.bundle.css') }}" rel="stylesheet" type="text/css" />
+		<link href="{{ asset('/public/assets/plugins/custom/datatables/datatables.bundle.css') }}" rel="stylesheet" type="text/css" />
 		<!--end::Vendor Stylesheets-->
 		<!--begin::Global Stylesheets Bundle(mandatory for all pages)-->
-		<link href="{{ asset('/assets/plugins/global/plugins.bundle.css') }}" rel="stylesheet" type="text/css" />
-		<link href="{{ asset('/assets/css/style.bundle.css') }}" rel="stylesheet" type="text/css" />
-		<link href="{{ asset('/assets/css/style.css') }}" rel="stylesheet" type="text/css" />
-		<link href="{{ asset('/assets/css/custom.css') }}" rel="stylesheet" type="text/css" />
+		<link href="{{ asset('/public/assets/plugins/global/plugins.bundle.css') }}" rel="stylesheet" type="text/css" />
+		<link href="{{ asset('/public/assets/css/style.bundle.css') }}" rel="stylesheet" type="text/css" />
+		<link href="{{ asset('/public/assets/css/style.css') }}" rel="stylesheet" type="text/css" />
+		<link href="{{ asset('/public/assets/css/custom.css') }}" rel="stylesheet" type="text/css" />
 		<!--end::Global Stylesheets Bundle-->
 	</head>
 	<!--end::Head-->
@@ -55,7 +55,7 @@
 							<!--end::Mobile toggle-->
 							<!--begin::Logo image-->
 							<a href="{{ url('/') }}">
-								<img alt="Logo" src="{{ asset('/assets/media/logos/logo3.png') }}" class="h-60px" />
+								<img alt="Logo" src="{{ asset('/public/assets/media/logos/logo3.png') }}" class="h-60px" />
 							</a>
 							<!--end::Logo image-->
 						</div>
@@ -180,7 +180,7 @@
 															<!--begin::Col-->
 															<div class="col-4">
 																<a href="#" class="d-flex flex-column flex-center text-center text-gray-800 text-hover-primary bg-hover-light rounded py-4 px-3 mb-3">
-																	<img src="{{ asset('/assets/media/svg/brand-logos/amazon.svg') }}" class="w-25px h-25px mb-2" alt="" />
+																	<img src="{{ asset('/public/assets/media/svg/brand-logos/amazon.svg') }}" class="w-25px h-25px mb-2" alt="" />
 																	<span class="fw-semibold">AWS</span>
 																</a>
 															</div>
@@ -188,7 +188,7 @@
 															<!--begin::Col-->
 															<div class="col-4">
 																<a href="#" class="d-flex flex-column flex-center text-center text-gray-800 text-hover-primary bg-hover-light rounded py-4 px-3 mb-3">
-																	<img src="{{ asset('/assets/media/svg/brand-logos/angular-icon-1.svg') }}" class="w-25px h-25px mb-2" alt="" />
+																	<img src="{{ asset('/public/assets/media/svg/brand-logos/angular-icon-1.svg') }}" class="w-25px h-25px mb-2" alt="" />
 																	<span class="fw-semibold">AngularJS</span>
 																</a>
 															</div>
@@ -196,7 +196,7 @@
 															<!--begin::Col-->
 															<div class="col-4">
 																<a href="#" class="d-flex flex-column flex-center text-center text-gray-800 text-hover-primary bg-hover-light rounded py-4 px-3 mb-3">
-																	<img src="{{ asset('/assets/media/svg/brand-logos/atica.svg') }}" class="w-25px h-25px mb-2" alt="" />
+																	<img src="{{ asset('/public/assets/media/svg/brand-logos/atica.svg') }}" class="w-25px h-25px mb-2" alt="" />
 																	<span class="fw-semibold">Atica</span>
 																</a>
 															</div>
@@ -204,7 +204,7 @@
 															<!--begin::Col-->
 															<div class="col-4">
 																<a href="#" class="d-flex flex-column flex-center text-center text-gray-800 text-hover-primary bg-hover-light rounded py-4 px-3 mb-3">
-																	<img src="{{ asset('/assets/media/svg/brand-logos/beats-electronics.svg') }}" class="w-25px h-25px mb-2" alt="" />
+																	<img src="{{ asset('/public/assets/media/svg/brand-logos/beats-electronics.svg') }}" class="w-25px h-25px mb-2" alt="" />
 																	<span class="fw-semibold">Music</span>
 																</a>
 															</div>
@@ -212,7 +212,7 @@
 															<!--begin::Col-->
 															<div class="col-4">
 																<a href="#" class="d-flex flex-column flex-center text-center text-gray-800 text-hover-primary bg-hover-light rounded py-4 px-3 mb-3">
-																	<img src="{{ asset('/assets/media/svg/brand-logos/codeigniter.svg') }}" class="w-25px h-25px mb-2" alt="" />
+																	<img src="{{ asset('/public/assets/media/svg/brand-logos/codeigniter.svg') }}" class="w-25px h-25px mb-2" alt="" />
 																	<span class="fw-semibold">Codeigniter</span>
 																</a>
 															</div>
@@ -220,7 +220,7 @@
 															<!--begin::Col-->
 															<div class="col-4">
 																<a href="#" class="d-flex flex-column flex-center text-center text-gray-800 text-hover-primary bg-hover-light rounded py-4 px-3 mb-3">
-																	<img src="{{ asset('/assets/media/svg/brand-logos/bootstrap-4.svg') }}" class="w-25px h-25px mb-2" alt="" />
+																	<img src="{{ asset('/public/assets/media/svg/brand-logos/bootstrap-4.svg') }}" class="w-25px h-25px mb-2" alt="" />
 																	<span class="fw-semibold">Bootstrap</span>
 																</a>
 															</div>
@@ -228,7 +228,7 @@
 															<!--begin::Col-->
 															<div class="col-4">
 																<a href="#" class="d-flex flex-column flex-center text-center text-gray-800 text-hover-primary bg-hover-light rounded py-4 px-3 mb-3">
-																	<img src="{{ asset('/assets/media/svg/brand-logos/google-tag-manager.svg') }}" class="w-25px h-25px mb-2" alt="" />
+																	<img src="{{ asset('/public/assets/media/svg/brand-logos/google-tag-manager.svg') }}" class="w-25px h-25px mb-2" alt="" />
 																	<span class="fw-semibold">GTM</span>
 																</a>
 															</div>
@@ -236,7 +236,7 @@
 															<!--begin::Col-->
 															<div class="col-4">
 																<a href="#" class="d-flex flex-column flex-center text-center text-gray-800 text-hover-primary bg-hover-light rounded py-4 px-3 mb-3">
-																	<img src="{{ asset('/assets/media/svg/brand-logos/disqus.svg') }}" class="w-25px h-25px mb-2" alt="" />
+																	<img src="{{ asset('/public/assets/media/svg/brand-logos/disqus.svg') }}" class="w-25px h-25px mb-2" alt="" />
 																	<span class="fw-semibold">Disqus</span>
 																</a>
 															</div>
@@ -244,7 +244,7 @@
 															<!--begin::Col-->
 															<div class="col-4">
 																<a href="#" class="d-flex flex-column flex-center text-center text-gray-800 text-hover-primary bg-hover-light rounded py-4 px-3 mb-3">
-																	<img src="{{ asset('/assets/media/svg/brand-logos/dribbble-icon-1.svg') }}" class="w-25px h-25px mb-2" alt="" />
+																	<img src="{{ asset('/public/assets/media/svg/brand-logos/dribbble-icon-1.svg') }}" class="w-25px h-25px mb-2" alt="" />
 																	<span class="fw-semibold">Dribble</span>
 																</a>
 															</div>
@@ -252,7 +252,7 @@
 															<!--begin::Col-->
 															<div class="col-4">
 																<a href="#" class="d-flex flex-column flex-center text-center text-gray-800 text-hover-primary bg-hover-light rounded py-4 px-3 mb-3">
-																	<img src="{{ asset('/assets/media/svg/brand-logos/google-play-store.svg') }}" class="w-25px h-25px mb-2" alt="" />
+																	<img src="{{ asset('/public/assets/media/svg/brand-logos/google-play-store.svg') }}" class="w-25px h-25px mb-2" alt="" />
 																	<span class="fw-semibold">Play Store</span>
 																</a>
 															</div>
@@ -260,7 +260,7 @@
 															<!--begin::Col-->
 															<div class="col-4">
 																<a href="#" class="d-flex flex-column flex-center text-center text-gray-800 text-hover-primary bg-hover-light rounded py-4 px-3 mb-3">
-																	<img src="{{ asset('/assets/media/svg/brand-logos/google-podcasts.svg') }}" class="w-25px h-25px mb-2" alt="" />
+																	<img src="{{ asset('/public/assets/media/svg/brand-logos/google-podcasts.svg') }}" class="w-25px h-25px mb-2" alt="" />
 																	<span class="fw-semibold">Podcasts</span>
 																</a>
 															</div>
@@ -268,7 +268,7 @@
 															<!--begin::Col-->
 															<div class="col-4">
 																<a href="#" class="d-flex flex-column flex-center text-center text-gray-800 text-hover-primary bg-hover-light rounded py-4 px-3 mb-3">
-																	<img src="{{ asset('/assets/media/svg/brand-logos/figma-1.svg') }}" class="w-25px h-25px mb-2" alt="" />
+																	<img src="{{ asset('/public/assets/media/svg/brand-logos/figma-1.svg') }}" class="w-25px h-25px mb-2" alt="" />
 																	<span class="fw-semibold">Figma</span>
 																</a>
 															</div>
@@ -276,7 +276,7 @@
 															<!--begin::Col-->
 															<div class="col-4">
 																<a href="#" class="d-flex flex-column flex-center text-center text-gray-800 text-hover-primary bg-hover-light rounded py-4 px-3 mb-3">
-																	<img src="{{ asset('/assets/media/svg/brand-logos/github.svg') }}" class="w-25px h-25px mb-2" alt="" />
+																	<img src="{{ asset('/public/assets/media/svg/brand-logos/github.svg') }}" class="w-25px h-25px mb-2" alt="" />
 																	<span class="fw-semibold">Github</span>
 																</a>
 															</div>
@@ -284,7 +284,7 @@
 															<!--begin::Col-->
 															<div class="col-4">
 																<a href="#" class="d-flex flex-column flex-center text-center text-gray-800 text-hover-primary bg-hover-light rounded py-4 px-3 mb-3">
-																	<img src="{{ asset('/assets/media/svg/brand-logos/gitlab.svg') }}" class="w-25px h-25px mb-2" alt="" />
+																	<img src="{{ asset('/public/assets/media/svg/brand-logos/gitlab.svg') }}" class="w-25px h-25px mb-2" alt="" />
 																	<span class="fw-semibold">Gitlab</span>
 																</a>
 															</div>
@@ -292,7 +292,7 @@
 															<!--begin::Col-->
 															<div class="col-4">
 																<a href="#" class="d-flex flex-column flex-center text-center text-gray-800 text-hover-primary bg-hover-light rounded py-4 px-3 mb-3">
-																	<img src="{{ asset('/assets/media/svg/brand-logos/instagram-2-1.svg') }}" class="w-25px h-25px mb-2" alt="" />
+																	<img src="{{ asset('/public/assets/media/svg/brand-logos/instagram-2-1.svg') }}" class="w-25px h-25px mb-2" alt="" />
 																	<span class="fw-semibold">Instagram</span>
 																</a>
 															</div>
@@ -300,7 +300,7 @@
 															<!--begin::Col-->
 															<div class="col-4">
 																<a href="#" class="d-flex flex-column flex-center text-center text-gray-800 text-hover-primary bg-hover-light rounded py-4 px-3 mb-3">
-																	<img src="{{ asset('/assets/media/svg/brand-logos/pinterest-p.svg') }}" class="w-25px h-25px mb-2" alt="" />
+																	<img src="{{ asset('/public/assets/media/svg/brand-logos/pinterest-p.svg') }}" class="w-25px h-25px mb-2" alt="" />
 																	<span class="fw-semibold">Pinterest</span>
 																</a>
 															</div>
@@ -328,7 +328,7 @@
 										<!--begin::Menu-->
 										<div class="menu menu-sub menu-sub-dropdown menu-column w-350px w-lg-375px" data-kt-menu="true" id="kt_menu_notifications">
 											<!--begin::Heading-->
-											<div class="d-flex flex-column bgi-no-repeat rounded-top" style="background-image:url({{ asset('/assets/media/misc/menu-header-bg.jpg') }}">
+											<div class="d-flex flex-column bgi-no-repeat rounded-top" style="background-image:url({{ asset('/public/assets/media/misc/menu-header-bg.jpg') }}">
 												<!--begin::Title-->
 												<h3 class="text-white fw-semibold px-9 mt-10 mb-6">Notifications
 												<span class="fs-8 opacity-75 ps-3">24 reports</span></h3>
@@ -553,7 +553,7 @@
 														<!--end::Section-->
 														<!--begin::Illustration-->
 														<div class="text-center px-4">
-															<img class="mw-100 mh-200px" alt="image" src="{{ asset('/assets/media/illustrations/sketchy-1/1.png') }}" />
+															<img class="mw-100 mh-200px" alt="image" src="{{ asset('/public/assets/media/illustrations/sketchy-1/1.png') }}" />
 														</div>
 														<!--end::Illustration-->
 													</div>
@@ -789,7 +789,7 @@
 									<div class="app-navbar-item ms-3 ms-md-6" id="kt_header_user_menu_toggle">
 										<!--begin::Menu wrapper-->
 										<div class="cursor-pointer symbol symbol-30px symbol-md-35px" data-kt-menu-trigger="{default: 'click', lg: 'hover'}" data-kt-menu-attach="parent" data-kt-menu-placement="bottom-end">
-											<img class="symbol symbol-circle symbol-30px symbol-md-35px" src="{{ asset('/assets/media/avatars/300-1.jpg') }}" alt="user" />
+											<img class="symbol symbol-circle symbol-30px symbol-md-35px" src="{{ asset('/public/assets/media/avatars/300-1.jpg') }}" alt="user" />
 										</div>
 										<!--begin::User account menu-->
 										<div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-800 menu-state-bg menu-state-color fw-semibold py-4 fs-6 w-275px" data-kt-menu="true">
@@ -798,7 +798,7 @@
 												<div class="menu-content d-flex align-items-center px-3">
 													<!--begin::Avatar-->
 													<div class="symbol symbol-50px me-5">
-														<img alt="Logo" src="{{ asset('/assets/media/avatars/300-1.jpg') }}" />
+														<img alt="Logo" src="{{ asset('/public/assets/media/avatars/300-1.jpg') }}" />
 													</div>
 													<!--end::Avatar-->
 													<!--begin::Username-->

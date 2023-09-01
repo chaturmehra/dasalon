@@ -7,7 +7,7 @@
 
 <div class="d-flex flex-column flex-root" id="kt_app_root">
 	<!--begin::Page bg image-->
-	<style>body { background-image: url("{{ asset('/assets/media/auth/bg10.jpeg') }}"); } [data-bs-theme="dark"] body { background-image: url("{{ asset('/assets/media/auth/bg10-dark.jpeg') }}"); }</style>
+	<style>body { background-image: url("{{ asset('/public/assets/media/auth/bg10.jpeg') }}"); } [data-bs-theme="dark"] body { background-image: url("{{ asset('/public/assets/media/auth/bg10-dark.jpeg') }}"); }</style>
 	<!--end::Page bg image-->
 	<!--begin::Authentication - Sign-in -->
 	<div class="d-flex flex-column flex-lg-row flex-column-fluid">
@@ -16,8 +16,8 @@
 			<!--begin::Content-->
 			<div class="d-flex flex-column flex-center pb-0 pb-lg-10 p-10 w-100">
 				<!--begin::Image-->
-				<img class="theme-light-show mx-auto mw-100 w-150px w-lg-300px mb-10 mb-lg-20" src="{{ asset('/assets/media/auth/agency.png') }}" alt="" />
-				<img class="theme-dark-show mx-auto mw-100 w-150px w-lg-300px mb-10 mb-lg-20" src="{{ asset('/assets/media/auth/agency-dark.png') }}" alt="" />
+				<img class="theme-light-show mx-auto mw-100 w-150px w-lg-300px mb-10 mb-lg-20" src="{{ asset('/public/assets/media/auth/agency.png') }}" alt="" />
+				<img class="theme-dark-show mx-auto mw-100 w-150px w-lg-300px mb-10 mb-lg-20" src="{{ asset('/public/assets/media/auth/agency-dark.png') }}" alt="" />
 				<!--end::Image-->
 				<!--begin::Title-->
 				<h1 class="text-gray-800 fs-2qx fw-bold text-center mb-7">Fast, Efficient and Productive</h1>
@@ -91,7 +91,7 @@
 								<!--begin::Input group=-->
 								<div class="fv-row mb-8">
 									<!--begin::Email-->
-									<input type="email" placeholder="Email" name="email" autocomplete="off" class="form-control bg-transparent" />
+									<input type="email" placeholder="Email" name="email" autocomplete="off" required="required" class="form-control bg-transparent" />
 									<!--end::Email-->
 								</div>
 
@@ -121,7 +121,7 @@
 								<div class="col-md-12">
 									<!--begin::Google link=-->
 									<a href="{{ route('social.login', 'facebook') }}" class="btn btn-flex btn-outline btn-text-gray-700 btn-active-color-primary bg-state-light flex-center text-nowrap w-100">
-									<img alt="Logo" src="{{ asset('partner/assets/media/svg/brand-logos/facebook-4.svg') }}" class="h-15px me-3" />Continue with Facebook</a>
+									<img alt="Logo" src="{{ asset('/public/assets/media/svg/brand-logos/facebook-4.svg') }}" class="h-15px me-3" />Continue with Facebook</a>
 									<!--end::Google link=-->
 								</div>
 								<!--end::Col-->
@@ -129,7 +129,7 @@
 								<div class="col-md-12">
 									<!--begin::Google link=-->
 									<a href="{{ route('social.login', 'google') }}" class="btn btn-flex btn-outline btn-text-gray-700 btn-active-color-primary bg-state-light flex-center text-nowrap w-100">
-									<img alt="Logo" src="{{ asset('partner/assets/media/svg/brand-logos/google-icon.svg') }}" class="h-15px me-3" />Continue with Google</a>
+									<img alt="Logo" src="{{ asset('/public/assets/media/svg/brand-logos/google-icon.svg') }}" class="h-15px me-3" />Continue with Google</a>
 									<!--end::Google link=-->
 								</div>
 								<!--end::Col-->
@@ -137,7 +137,7 @@
 								<div class="col-md-12">
 									<!--begin::Google link=-->
 									<a href="{{ route('social.login', 'apple') }}" class="btn btn-flex btn-outline btn-text-gray-700 btn-active-color-primary bg-state-light flex-center text-nowrap w-100">
-									<img alt="Logo" src="{{ asset('partner/assets/media/svg/brand-logos/apple-black.svg') }}" class="h-15px me-3" />Continue with Apple</a>
+									<img alt="Logo" src="{{ asset('/public/assets/media/svg/brand-logos/apple-black.svg') }}" class="h-15px me-3" />Continue with Apple</a>
 									<!--end::Google link=-->
 								</div>
 								<!--end::Col-->

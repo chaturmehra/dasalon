@@ -21,6 +21,7 @@ use App\Http\Controllers\Admin\ServicesConfigController;
 use App\Http\Controllers\Admin\PartnerMappingController;
 use App\Http\Controllers\Admin\RecommendationsController;
 use App\Http\Controllers\Admin\OffersManagementController;
+use App\Http\Controllers\TwilioSMSController;
 
 
 /*
@@ -130,7 +131,9 @@ Route::get('account/reset/{token}',  [PartnerController::class,'resetPassword'])
 
 Route::get('login/{provider}', [PartnerController::class,'redirectToProvider'])->name('social.login');
 Route::get('login/{provider}/callback', [PartnerController::class,'handleProviderCallback']);
+Route::get('sign-up-email', [PartnerController::class, 'signupReturnWithEmail']);
 Route::post('sign-up-email', [PartnerController::class, 'signupWithEmail'])->name('sign-up-email');
 Route::post('account/create-password', [PartnerController::class, 'createPassword'])->name('create-password');
 
 Route::post('sendSMS', [TwilioSMSController::class, 'index']);
+Route::post('sendOTP', [TwilioSMSController::class, 'verify_otp']);

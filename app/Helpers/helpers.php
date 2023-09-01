@@ -21,4 +21,19 @@ function getCountryConfigList(){
 	return $countryList;
 }
 
+if (!function_exists('loadScript')) {
+    function loadScript( $src = "" ) {
+        global $footerScripts;
+        if( !empty( $src ) ) {
+            $footerScripts[] = $src;
+        } else {
+            if( !empty( $footerScripts ) ) {
+                foreach($footerScripts as $key => $script ) {
+                    echo '<script src="'. url() . $script .'"></script>';
+                }
+            }
+        }
+    } 
+}
+
 ?>

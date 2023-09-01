@@ -1,5 +1,5 @@
 .image-input-wrapper {
-    background-image: url('/dasalon/admin/assets/media/svg/avatars/blank.svg');
+    background-image: url('public/assets/media/svg/avatars/blank.svg');
 }
 .select2-selection.form-select {
     padding-top: 0.775rem !important;
