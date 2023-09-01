@@ -40,7 +40,7 @@ Route::get('/', function () {
 });
 
 Auth::routes();
-Route::get("user-flow",[UserController::class,'index'])->name('register');
+Route::get("user-flow",[UserController::class,'index']);
 Route::get("user/signin",[UserController::class,'signinForm'])->name('email-form');
 Route::get("user/book-a-service",[UserController::class,'bookService'])->name('book-a-service');
 Route::get("user/signin/{id}",[UserController::class,'signinFormProvided'])->name('service-provided');
