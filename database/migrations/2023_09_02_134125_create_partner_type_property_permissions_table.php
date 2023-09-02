@@ -12,11 +12,11 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('partner_type_property_permissions', function (Blueprint $table) {
-            $table->id();
+            $table->id('partnertypepropertypermission_id');
             $table->integer('partner_type_id');
             $table->integer('partner_type_property_id');
             $table->string('property_value');
-            $table->string('remark')->nullable();
+            $table->string('remarkpermission')->nullable();
             $table->timestamps();
         });
     }

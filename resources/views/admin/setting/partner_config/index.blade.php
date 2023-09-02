@@ -236,9 +236,9 @@
 																			    <option value="3">within 20KM</option>
 																			    <option value="4">within city</option>
 																			</select>
-																@else <div class="remark">
+																 <div class="remark">
 																	<input type="hidden" class="remark" name="remark" value="{{ $showp->remark }}"/>
-																	 {{$showp->remark}}
+																	@else {{$showp->remark}}
 																	</div>
 																@endif
 																</td>  
@@ -704,7 +704,7 @@ $(document).ready(function() {
 	var partner_type_id = $(this).attr('partner_type_id');
 	var property_id = $(this).attr('property_id');
 	console.log($(this));
-
+	console.log($(this));
 	$tr = $this.parents('tr');
 
 	var remark = "";

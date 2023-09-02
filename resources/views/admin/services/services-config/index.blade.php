@@ -465,7 +465,7 @@
                                           </div>
                                           <div class="modal-body">
                                              <!--begin::Form-->
-                                             <form class="form">
+                                             <form class="form" action = "{{ url('admin/services/servicesubcategory')}}" method = "post" >
                                                 <!--begin::Scroll-->
                                                 <div class="d-flex flex-column scroll-y me-n7 pe-7">
                                                    <!--begin::Input group-->
@@ -474,7 +474,7 @@
                                                       <label class="required fw-semibold fs-6 mb-2">Category</label>
                                                       <!--end::Label-->
                                                       <!--begin::Input-->
-                                                      <select class="form-select mb-2" data-control="select2" data-placeholder="Select a Category...">
+                                                      <select class="form-select mb-2" name="category" data-control="select2" data-placeholder="Select a Category...">
                                                          <option></option>
                                                          <option value="1">Hair</option>
                                                          <option value="2">Face Care</option>
@@ -489,7 +489,7 @@
                                                       <label class="required fw-semibold fs-6 mb-2">Sub Category</label>
                                                       <!--end::Label-->
                                                       <!--begin::Input-->
-                                                      <input type="text" name="" class="form-control form-control-solid mb-3 mb-lg-0" placeholder="Sub Category"/>
+                                                      <input type="text" name="subcategory" class="form-control form-control-solid mb-3 mb-lg-0" placeholder="Sub Category"/>
                                                       <!--end::Input-->
                                                    </div>
                                                    <!--end::Input group-->

@@ -11,11 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('profile_feature_permissions', function (Blueprint $table) {
+        Schema::create('service_sub_categories', function (Blueprint $table) {
             $table->id();
-            $table->integer('role_id');
-            $table->integer('profilefeature_id');
-            $table->string('property_value');
+            $table->string('category');
+            $table->string('subcategory');
             $table->timestamps();
         });
     }
@@ -25,6 +24,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('profile_feature_permissions');
+        Schema::dropIfExists('service_sub_categories');
     }
 };
