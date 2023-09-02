@@ -17,6 +17,7 @@ Use Response;
 use Validator;
 use Imagick;
 use DB;
+use Laravel\Socialite\Facades\Socialite;
 
 class PartnerController extends Controller
 {
@@ -26,10 +27,10 @@ class PartnerController extends Controller
 
         //dd($request);
         $user = User::create([
-            'name'=>$request->name,
-            'email'=>$request->email,
-            'password' => Hash::make($request->password),
-            'role'=>1,
+            'name'      => $request->name,
+            'email'     => $request->email,
+            'password'  => Hash::make($request->password),
+            'role'      =>  1,
         ]);
                 
         $userDetails = UserDetails::create([
@@ -78,5 +79,16 @@ class PartnerController extends Controller
         return redirect('/');
         //return redirect()->route('front.thank-you',compact('adored_listing'));
 
+    }
+
+    public function redirectToProvider($provider)
+    {
+        return Socialite::driver($provider)->redirect();
+    }
+
+    public function handleProviderCallback($provider)
+    {
+        $user = Socialite::driver($provider)->user();
+        // Use $user to authenticate the user in your application or perform other actions
     }
 }

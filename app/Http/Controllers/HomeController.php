@@ -23,13 +23,13 @@ class HomeController extends Controller
      */
     public function index()
     {
-      
         return view('home');
     }
+
     public function userHome()
-    { 
-        if(Auth::user()->role =="admin"){
-        return view('admin/layouts/auth/dashboard');
+    {
+        if(Auth::user()->role == "admin"){
+            return view('admin/layouts/auth/dashboard');
         }else{
             return view('partner/layouts/auth/dashboard');
         }
