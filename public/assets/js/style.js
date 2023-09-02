@@ -222,12 +222,12 @@ var KTDatatablesExample4 = function () {
 
 
     // Search Datatable --- official docs reference: https://datatables.net/reference/api/search()
-    var handleSearchDatatable = () => {
-        const filterSearch = document.querySelector('[data-kt-filter4="search"]');
-        filterSearch.addEventListener('keyup', function (e) {
-            datatable.search(e.target.value).draw();
-        });
-    }
+    // var handleSearchDatatable = () => {
+    //     const filterSearch = document.querySelector('[data-kt-filter4="search"]');
+    //     filterSearch.addEventListener('keyup', function (e) {
+    //         datatable.search(e.target.value).draw();
+    //     });
+    // }
 
     // Public methods
     return {
@@ -239,7 +239,7 @@ var KTDatatablesExample4 = function () {
             }
 
             initDatatable();
-            handleSearchDatatable();
+            // handleSearchDatatable();
         }
     };
 }();

@@ -36,6 +36,7 @@ class ComposerStaticInita7e6e912c444d5f00f3b93afaa5dd747
         '320163ac6b93aebe3dc25b60a0533d56' => __DIR__ . '/..' . '/spatie/laravel-ignition/src/helpers.php',
         '377b22b161c09ed6e5152de788ca020a' => __DIR__ . '/..' . '/spatie/laravel-permission/src/helpers.php',
         'd21d43db5f6e840ee7b10744ec7fdf66' => __DIR__ . '/../..' . '/app/Helpers/helpers.php',
+        'e2a538285cf59c83c7c8cbd273e0fcf6' => __DIR__ . '/../..' . '/app/Helpers/CustomHelper.php',
     );
 
     public static $prefixLengthsPsr4 = array (
@@ -587,8 +588,11 @@ class ComposerStaticInita7e6e912c444d5f00f3b93afaa5dd747
         'App\\Models\\Admin\\PartnerDetails' => __DIR__ . '/../..' . '/app/Models/Admin/PartnerDetails.php',
         'App\\Models\\Admin\\PartnerType' => __DIR__ . '/../..' . '/app/Models/Admin/PartnerType.php',
         'App\\Models\\Admin\\PartnerTypeProperty' => __DIR__ . '/../..' . '/app/Models/Admin/PartnerTypeProperty.php',
+        'App\\Models\\Admin\\ProfileFeaturePermission' => __DIR__ . '/../..' . '/app/Models/Admin/ProfileFeaturePermission.php',
         'App\\Models\\Admin\\Role' => __DIR__ . '/../..' . '/app/Models/Admin/Role.php',
         'App\\Models\\Admin\\States' => __DIR__ . '/../..' . '/app/Models/Admin/States.php',
+        'App\\Models\\PartnerTypePropertyPermission' => __DIR__ . '/../..' . '/app/Models/PartnerTypePropertyPermission.php',
+        'App\\Models\\ProfileFeature' => __DIR__ . '/../..' . '/app/Models/ProfileFeature.php',
         'App\\Models\\Token' => __DIR__ . '/../..' . '/app/Models/Token.php',
         'App\\Models\\User' => __DIR__ . '/../..' . '/app/Models/User.php',
         'App\\Models\\UserDetails' => __DIR__ . '/../..' . '/app/Models/UserDetails.php',
