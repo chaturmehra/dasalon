@@ -4,7 +4,7 @@
 
 <div class="d-flex flex-column flex-root" id="kt_app_root">
 	<!--begin::Page bg image-->
-	<style>body { background-image: url('/dasalon/admin/assets/media/auth/bg10.jpeg'); } [data-bs-theme="dark"] body { background-image: url('/dasalon/admin/assets/media/auth/bg10-dark.jpeg'); }</style>
+	<style>body { background-image: url("{{ asset('/assets/media/auth/bg10.jpeg') }}"); } [data-bs-theme="dark"] body { background-image: url("{{ asset('/assets/media/auth/bg10-dark.jpeg') }}"); }</style>
 	<!--end::Page bg image-->
 	<!--begin::Authentication - Sign-in -->
 	<div class="d-flex flex-column flex-lg-row flex-column-fluid">
@@ -86,14 +86,14 @@
 							<div class="d-grid mb-10">
 								<button type="submit" id="kt_sign_in_submit" class="btn btn-primary">
 									<!--begin::Indicator label-->
-									<span class="indicator-label">{{ __('Register') }}</span>
+									<span class="indicator-label">{{ __('Sign In') }}</span>
 									<!--end::Indicator label-->
 									<!--begin::Indicator progress-->
 									<span class="indicator-progress">Please wait...
 									<span class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
 									<!--end::Indicator progress-->
 								</button>
-							</div><
+							</div>
 							<!--end::Submit button-->
 
 						</form>
