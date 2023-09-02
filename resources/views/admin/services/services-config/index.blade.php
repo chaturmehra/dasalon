@@ -77,6 +77,20 @@
                         <div class="card-header">
                            <h2 class="page-heading d-flex text-dark fw-bold fs-3 flex-column justify-content-center my-0">Category</h2>
                         </div>
+                        @if(session()->has('message'))
+               <div class="card-header display-message">
+                  <div class="alert alert-success">
+                     {{ session()->get('message') }}
+                  </div>
+               </div>
+               @endif
+               @if(session()->has('error'))
+               <div class="card-header display-message">
+                  <div class="alert alert-danger">
+                     {{ session()->get('error') }}
+                  </div>
+               </div>
+               @endif
                         <!--begin::Card header-->
                         <div class="card-header align-items-center pb-5 gap-2 gap-md-5 pt-5">
                            <!--begin::Card title-->
@@ -116,15 +130,16 @@
                                           </div>
                                           <div class="modal-body">
                                              <!--begin::Form-->
-                                             <form class="form">
-                                                <!--begin::Scroll-->
+                                             <form class="form" action = "{{ url('admin/services/servicecategory')}}" method = "post" >
+                                             @csrf   
+                                             <!--begin::Scroll-->
                                                 <div class="d-flex flex-column scroll-y me-n7 pe-7">
                                                    <!--begin::Input group-->
                                                    <div class="fv-row mb-7">
                                                       <!--begin::Label-->
                                                       <label for="kt_docs_select2_country" class="form-label">Select a country</label>
                                                       <div class="form-floating border rounded">
-                                                         <select class="form-select" placeholder="..." id="kt_docs_select2_country">
+                                                         <select class="form-select" name="country" placeholder="..." id="kt_docs_select2_country">
                                                             <option></option>
                                                             <option value="AF" data-kt-select2-country="/dasalon-html/admin/assets/media/flags/afghanistan.svg">Afghanistan</option>
                                                             <option value="AX" data-kt-select2-country="/dasalon-html/admin/assets/media/flags/aland-islands.svg">Aland Islands</option>
@@ -361,7 +376,7 @@
                                                       <label class="required fw-semibold fs-6 mb-2">Category</label>
                                                       <!--end::Label-->
                                                       <!--begin::Input-->
-                                                      <input type="text" name="" class="form-control form-control-solid mb-3 mb-lg-0" placeholder="Category"/>
+                                                      <input type="text" name="category" class="form-control form-control-solid mb-3 mb-lg-0" placeholder="Category"/>
                                                       <!--end::Input-->
                                                    </div>
                                                    <!--end::Input group-->
@@ -380,7 +395,7 @@
                                                             title="Change avatar">
                                                             <i class="ki-duotone ki-pencil fs-6"><span class="path1"></span><span class="path2"></span></i>
                                                             <!--begin::Inputs-->
-                                                            <input type="file" name="avatar" accept=".png, .jpg, .jpeg" />
+                                                            <input type="file" name="icon" accept=".png, .jpg, .jpeg" />
                                                             <input type="hidden" name="avatar_remove" />
                                                             <!--end::Inputs-->
                                                          </label>
@@ -524,47 +539,37 @@
                               <!--end::Table head-->
                               <!--begin::Table body-->
                               <tbody class="fw-bold text-gray-600">
-                                 <!--begin::SubTable template-->
-                                 <tr data-kt-docs-datatable-subtable="subtable_template" class="d-none">
-                                    <td></td>
-                                    <td></td>
-                                    <td>
+                              @if( !empty($sercat) )
+                        @foreach($sercat as $key => $ser)
+                           @php 
+                              $status = $ser->is_active;
+                              if($status == 1 ){
+                                 $status = "Enabled";
+                                 $class 	= "success";
+                              }else{
+                                 $status = "Disabled";
+                                 $class 	= "danger";
+                              }
+                           @endphp
+                         <!--begin::SubTable template-->
+                         <tr data-kt-docs-datatable-subtable="subtable_template">
+                           <td>{{ $key+1 }}</td>
+                           <td>{{ $ser->country }}</td>
+                           <td>{{ $ser->category }}</td>
+                                
+                                    
+                                    <!-- <td>
                                        <div class="d-flex align-items-center gap-3">
                                           <div class="d-flex flex-column text-muted">
                                              <a href="#" class="text-dark text-hover-primary fw-bold" data-kt-docs-datatable-subtable="subcat_name">Sub category name</a>
                                           </div>
                                        </div>
-                                    </td>
-                                    <td></td>
+                                    </td> -->
+                                    <td>{{ $ser->icon }}</td>
                                     <td>
-                                       <div class="badge badge-light-success fw-bold" data-kt-docs-datatable-subtable="subcat_status">status</div>
+                                       <div class="badge badge-light-{{ $class }} fw-bold" data-kt-docs-datatable-subtable="subcat_status">{{ $status }}</div>
                                     </td>
-                                    <td class="text-end">
-                                       <a href="#" class="btn btn-light btn-active-light-primary btn-flex btn-center btn-sm" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end">Actions
-                                       <i class="ki-duotone ki-down fs-5 ms-1"></i></a>
-                                       <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-600 menu-state-bg-light-primary fw-semibold fs-7 w-125px py-4" data-kt-menu="true">
-                                          <div class="menu-item px-3">
-                                             <a href="" class="menu-link px-3">Enable</a>
-                                          </div>
-                                          <div class="menu-item px-3">
-                                             <a href="" class="menu-link px-3">Disable</a>
-                                          </div>
-                                          <div class="menu-item px-3">
-                                             <a href="" data-bs-toggle="modal" data-bs-target="#kt_modal_subcat" class="menu-link px-3">Edit</a>
-                                          </div>
-                                       </div>
-                                    </td>
-                                    <td></td>
-                                 </tr>
-                                 <!--end::SubTable template-->
-                                 <tr>
-                                    <td>1</td>
-                                    <td>America</td>
-                                    <td>Hair</td>
-                                    <td><img src="/dasalon-html/admin/assets/media/svg/avatars/blank.svg" width="50"></td>
-                                    <td>
-                                       <div class="badge badge-light-success fw-bold">Enabled</div>
-                                    </td>
+                                 
                                     <td class="text-end">
                                        <a href="#" class="btn btn-light btn-active-light-primary btn-flex btn-center btn-sm" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end">Actions
                                        <i class="ki-duotone ki-down fs-5 ms-1"></i></a>
@@ -572,12 +577,12 @@
                                        <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-600 menu-state-bg-light-primary fw-semibold fs-7 w-125px py-4" data-kt-menu="true">
                                           <!--begin::Menu item-->
                                           <div class="menu-item px-3">
-                                             <a href="" class="menu-link px-3">Enable</a>
+                                             <a href="{{ url('/admin/add-servicecategory/enable-status/'.$ser->id) }}" class="menu-link px-3">Enable</a>
                                           </div>
                                           <!--end::Menu item-->
                                           <!--begin::Menu item-->
                                           <div class="menu-item px-3">
-                                             <a href="" class="menu-link px-3">Disable</a>
+                                             <a href="{{ url('/admin/add-servicecategory/disable-status/'.$ser->id) }}" class="menu-link px-3">Disable</a>
                                           </div>
                                           <!--end::Menu item-->
                                           <div class="menu-item px-3">
@@ -593,78 +598,8 @@
                                        </button>
                                     </td>
                                  </tr>
-                                 <tr>
-                                    <td>2</td>
-                                    <td>India</td>
-                                    <td>Face Care</td>
-                                    <td><img src="/dasalon-html/admin/assets/media/svg/avatars/blank.svg" width="50"></td>
-                                    <td>
-                                       <div class="badge badge-light-success fw-bold">Enabled</div>
-                                    </td>
-                                    <td class="text-end">
-                                       <a href="#" class="btn btn-light btn-active-light-primary btn-flex btn-center btn-sm" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end">Actions
-                                       <i class="ki-duotone ki-down fs-5 ms-1"></i></a>
-                                       <!--begin::Menu-->
-                                       <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-600 menu-state-bg-light-primary fw-semibold fs-7 w-125px py-4" data-kt-menu="true">
-                                          <!--begin::Menu item-->
-                                          <div class="menu-item px-3">
-                                             <a href="" class="menu-link px-3">Enable</a>
-                                          </div>
-                                          <!--end::Menu item-->
-                                          <!--begin::Menu item-->
-                                          <div class="menu-item px-3">
-                                             <a href="" class="menu-link px-3">Disable</a>
-                                          </div>
-                                          <!--end::Menu item-->
-                                          <div class="menu-item px-3">
-                                             <a href="" data-bs-toggle="modal" data-bs-target="#kt_modal_cat" class="menu-link px-3">Edit</a>
-                                          </div>
-                                       </div>
-                                       <!--end::Menu-->
-                                    </td>
-                                    <td>
-                                       <button type="button" class="btn btn-sm btn-icon btn-light btn-active-light-primary toggle h-25px w-25px" data-kt-docs-datatable-subtable="expand_row">
-                                       <span class="svg-icon fs-3 m-0 toggle-off">...</span>
-                                       <span class="svg-icon fs-3 m-0 toggle-on">...</span>
-                                       </button>
-                                    </td>
-                                 </tr>
-                                 <tr>
-                                    <td>3</td>
-                                    <td>America</td>
-                                    <td>Nail</td>
-                                    <td><img src="/dasalon-html/admin/assets/media/svg/avatars/blank.svg" width="50"></td>
-                                    <td>
-                                       <div class="badge badge-light-success fw-bold">Enabled</div>
-                                    </td>
-                                    <td class="text-end">
-                                       <a href="#" class="btn btn-light btn-active-light-primary btn-flex btn-center btn-sm" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end">Actions
-                                       <i class="ki-duotone ki-down fs-5 ms-1"></i></a>
-                                       <!--begin::Menu-->
-                                       <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-600 menu-state-bg-light-primary fw-semibold fs-7 w-125px py-4" data-kt-menu="true">
-                                          <!--begin::Menu item-->
-                                          <div class="menu-item px-3">
-                                             <a href="" class="menu-link px-3">Enable</a>
-                                          </div>
-                                          <!--end::Menu item-->
-                                          <!--begin::Menu item-->
-                                          <div class="menu-item px-3">
-                                             <a href="" class="menu-link px-3">Disable</a>
-                                          </div>
-                                          <!--end::Menu item-->
-                                          <div class="menu-item px-3">
-                                             <a href="" data-bs-toggle="modal" data-bs-target="#kt_modal_cat" class="menu-link px-3">Edit</a>
-                                          </div>
-                                       </div>
-                                       <!--end::Menu-->
-                                    </td>
-                                    <td>
-                                       <button type="button" class="btn btn-sm btn-icon btn-light btn-active-light-primary toggle h-25px w-25px" data-kt-docs-datatable-subtable="expand_row">
-                                       <span class="svg-icon fs-3 m-0 toggle-off">...</span>
-                                       <span class="svg-icon fs-3 m-0 toggle-on">...</span>
-                                       </button>
-                                    </td>
-                                 </tr>
+                                 @endforeach
+                        @endif
                               </tbody>
                               <!--end::Table body-->
                            </table>
