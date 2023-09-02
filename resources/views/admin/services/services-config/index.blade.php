@@ -466,6 +466,7 @@
                                           <div class="modal-body">
                                              <!--begin::Form-->
                                              <form class="form" action = "{{ url('admin/services/servicesubcategory')}}" method = "post" >
+                                              @csrf
                                                 <!--begin::Scroll-->
                                                 <div class="d-flex flex-column scroll-y me-n7 pe-7">
                                                    <!--begin::Input group-->
