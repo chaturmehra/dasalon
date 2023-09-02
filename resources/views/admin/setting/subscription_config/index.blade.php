@@ -1578,6 +1578,20 @@
                   <div class="tab-pane fade" id="subscriptioinconfig2" role="tab-panel">
                      <!--begin::Products-->
                      <div class="card card-flush">
+                     @if(session()->has('message'))
+               <div class="card-header display-message">
+                  <div class="alert alert-success">
+                     {{ session()->get('message') }}
+                  </div>
+               </div>
+               @endif
+               @if(session()->has('error'))
+               <div class="card-header display-message">
+                  <div class="alert alert-danger">
+                     {{ session()->get('error') }}
+                  </div>
+               </div>
+               @endif
                         <!--begin::Card header-->
                         <div class="card-header align-items-center py-5 gap-2 gap-md-5">
                            <!--begin::Card title-->
@@ -1617,8 +1631,9 @@
                                           </div>
                                           <div class="modal-body">
                                              <!--begin::Form-->
-                                             <form class="form">
-                                                <!--begin::Scroll-->
+                                             <form class="form" action = "{{ url('admin/settings/subscriptionplan')}}" method = "post">
+                                             @csrf  
+                                             <!--begin::Scroll-->
                                                 <div class="d-flex flex-column scroll-y me-n7 pe-7">
                                                    <!--begin::Input group-->
                                                    <div class="fv-row mb-7">
@@ -1626,7 +1641,7 @@
                                                       <label class="required fw-semibold fs-6 mb-2">Plan name</label>
                                                       <!--end::Label-->
                                                       <!--begin::Input-->
-                                                      <input type="text" name="" class="form-control form-control-solid mb-3 mb-lg-0" placeholder="Plan name"/>
+                                                      <input type="text" name="planname" class="form-control form-control-solid mb-3 mb-lg-0" placeholder="Plan name"/>
                                                       <!--end::Input-->
                                                    </div>
                                                    <!--end::Input group-->
@@ -1636,7 +1651,7 @@
                                                       <label class="required fw-semibold fs-6 mb-2">Cost</label>
                                                       <!--end::Label-->
                                                       <!--begin::Input-->
-                                                      <input type="number" name="" class="form-control form-control-solid mb-3 mb-lg-0" placeholder="Cost"/>
+                                                      <input type="number" name="cost" class="form-control form-control-solid mb-3 mb-lg-0" placeholder="Cost"/>
                                                       <!--end::Input-->
                                                    </div>
                                                    <!--end::Input group-->
@@ -1645,7 +1660,7 @@
                                                       <!--begin::Label-->
                                                       <label for="kt_docs_select2_country4" class="form-label">Select a country</label>
                                                       <div class="form-floating border rounded">
-                                                         <select class="form-select" placeholder="..." id="kt_docs_select2_country4">
+                                                         <select class="form-select" name="country" placeholder="..." id="kt_docs_select2_country4">
                                                             <option></option>
                                                             <option value="AF" data-kt-select2-country="{{ asset('/public/assets/media/flags/afghanistan.svg') }}">Afghanistan</option>
                                                             <option value="AX" data-kt-select2-country="{{ asset('/public/assets/media/flags/aland-islands.svg') }}">Aland Islands</option>
@@ -1882,7 +1897,7 @@
                                                       <label class="required fw-semibold fs-6 mb-2">Frequency</label>
                                                       <!--end::Label-->
                                                       <!--begin::Input-->
-                                                      <select aria-label="Frequency" data-control="select2" data-placeholder="Frequency..." class="form-select mb-2">
+                                                      <select aria-label="Frequency" name="frequency" data-control="select2" data-placeholder="Frequency..." class="form-select mb-2">
                                                          <option></option>
                                                          <option>Monthly</option>
                                                          <option>Quarterly</option>
@@ -1935,15 +1950,27 @@
                                  </tr>
                               </thead>
                               <tbody class="text-gray-600 fw-semibold">
-                                 <tr>
-                                    <td>1</td>
-                                    <td>Basic</td>
-                                    <td>Rs 500</td>
-                                    <td>Monthly</td>
-                                    <td>America</td>
-                                    <td>
-                                       <div class="badge badge-light-success fw-bold">Enabled</div>
-                                    </td>
+                              @if( !empty($subc) )
+                        @foreach($subc as $key => $sub)
+                           @php
+                              $status = $sub->is_active;
+                              if($status == 1 ){
+                                 $status = "Enabled";
+                                 $class 	= "success";
+                              }else{
+                                 $status = "Disabled";
+                                 $class 	= "danger";
+                              }
+                           @endphp
+                        <tr>
+                           <td>{{ $key+1 }}</td>
+                           <td>{{ $sub->planname }}</td>
+                           <td>{{ $sub->cost }}</td>
+                           <td>{{ $sub->frequency }}</td>
+                           <td>{{ $sub->country }}</td>
+                           <td>
+                              <div class="badge badge-light-{{ $class }} fw-bold">{{ $status }}</div>
+                           </td>
                                     <td class="text-end">
                                        <a href="#" class="btn btn-light btn-active-light-primary btn-flex btn-center btn-sm" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end">Actions
                                        <i class="ki-duotone ki-down fs-5 ms-1"></i></a>
@@ -1951,130 +1978,20 @@
                                        <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-600 menu-state-bg-light-primary fw-semibold fs-7 w-125px py-4" data-kt-menu="true">
                                           <!--begin::Menu item-->
                                           <div class="menu-item px-3">
-                                             <a href="" class="menu-link px-3">Enable</a>
+                                             <a href="{{ url('/admin/add-sub/enable-status/'.$sub->id) }}" class="menu-link px-3">Enable</a>
                                           </div>
                                           <!--end::Menu item-->
                                           <!--begin::Menu item-->
                                           <div class="menu-item px-3">
-                                             <a href="" class="menu-link px-3">Disable</a>
+                                             <a href="{{ url('/admin/add-sub/disable-status/'.$sub->id) }}" class="menu-link px-3">Disable</a>
                                           </div>
                                           <!--end::Menu item-->
                                        </div>
                                        <!--end::Menu-->
                                     </td>
                                  </tr>
-                                 <tr>
-                                    <td>2</td>
-                                    <td>Advanced</td>
-                                    <td>Rs 1000</td>
-                                    <td>Yearly</td>
-                                    <td>India</td>
-                                    <td>
-                                       <div class="badge badge-light-success fw-bold">Enabled</div>
-                                    </td>
-                                    <td class="text-end">
-                                       <a href="#" class="btn btn-light btn-active-light-primary btn-flex btn-center btn-sm" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end">Actions
-                                       <i class="ki-duotone ki-down fs-5 ms-1"></i></a>
-                                       <!--begin::Menu-->
-                                       <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-600 menu-state-bg-light-primary fw-semibold fs-7 w-125px py-4" data-kt-menu="true">
-                                          <!--begin::Menu item-->
-                                          <div class="menu-item px-3">
-                                             <a href="" class="menu-link px-3">Enable</a>
-                                          </div>
-                                          <!--end::Menu item-->
-                                          <!--begin::Menu item-->
-                                          <div class="menu-item px-3">
-                                             <a href="" class="menu-link px-3">Disable</a>
-                                          </div>
-                                          <!--end::Menu item-->
-                                       </div>
-                                       <!--end::Menu-->
-                                    </td>
-                                 </tr>
-                                 <tr>
-                                    <td>3</td>
-                                    <td>Basic</td>
-                                    <td>Rs 500</td>
-                                    <td>Quarterly</td>
-                                    <td>America</td>
-                                    <td>
-                                       <div class="badge badge-light-success fw-bold">Enabled</div>
-                                    </td>
-                                    <td class="text-end">
-                                       <a href="#" class="btn btn-light btn-active-light-primary btn-flex btn-center btn-sm" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end">Actions
-                                       <i class="ki-duotone ki-down fs-5 ms-1"></i></a>
-                                       <!--begin::Menu-->
-                                       <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-600 menu-state-bg-light-primary fw-semibold fs-7 w-125px py-4" data-kt-menu="true">
-                                          <!--begin::Menu item-->
-                                          <div class="menu-item px-3">
-                                             <a href="" class="menu-link px-3">Enable</a>
-                                          </div>
-                                          <!--end::Menu item-->
-                                          <!--begin::Menu item-->
-                                          <div class="menu-item px-3">
-                                             <a href="" class="menu-link px-3">Disable</a>
-                                          </div>
-                                          <!--end::Menu item-->
-                                       </div>
-                                       <!--end::Menu-->
-                                    </td>
-                                 </tr>
-                                 <tr>
-                                    <td>4</td>
-                                    <td>Advanced</td>
-                                    <td>Rs 750</td>
-                                    <td>One time</td>
-                                    <td>Argentina</td>
-                                    <td>
-                                       <div class="badge badge-light-success fw-bold">Enabled</div>
-                                    </td>
-                                    <td class="text-end">
-                                       <a href="#" class="btn btn-light btn-active-light-primary btn-flex btn-center btn-sm" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end">Actions
-                                       <i class="ki-duotone ki-down fs-5 ms-1"></i></a>
-                                       <!--begin::Menu-->
-                                       <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-600 menu-state-bg-light-primary fw-semibold fs-7 w-125px py-4" data-kt-menu="true">
-                                          <!--begin::Menu item-->
-                                          <div class="menu-item px-3">
-                                             <a href="" class="menu-link px-3">Enable</a>
-                                          </div>
-                                          <!--end::Menu item-->
-                                          <!--begin::Menu item-->
-                                          <div class="menu-item px-3">
-                                             <a href="" class="menu-link px-3">Disable</a>
-                                          </div>
-                                          <!--end::Menu item-->
-                                       </div>
-                                       <!--end::Menu-->
-                                    </td>
-                                 </tr>
-                                 <tr>
-                                    <td>5</td>
-                                    <td>Basic</td>
-                                    <td>Rs 500</td>
-                                    <td>Monthly</td>
-                                    <td>America</td>
-                                    <td>
-                                       <div class="badge badge-light-success fw-bold">Enabled</div>
-                                    </td>
-                                    <td class="text-end">
-                                       <a href="#" class="btn btn-light btn-active-light-primary btn-flex btn-center btn-sm" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end">Actions
-                                       <i class="ki-duotone ki-down fs-5 ms-1"></i></a>
-                                       <!--begin::Menu-->
-                                       <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-600 menu-state-bg-light-primary fw-semibold fs-7 w-125px py-4" data-kt-menu="true">
-                                          <!--begin::Menu item-->
-                                          <div class="menu-item px-3">
-                                             <a href="" class="menu-link px-3">Enable</a>
-                                          </div>
-                                          <!--end::Menu item-->
-                                          <!--begin::Menu item-->
-                                          <div class="menu-item px-3">
-                                             <a href="" class="menu-link px-3">Disable</a>
-                                          </div>
-                                          <!--end::Menu item-->
-                                       </div>
-                                       <!--end::Menu-->
-                                    </td>
-                                 </tr>
+                                 @endforeach
+                        @endif
                               </tbody>
                            </table>
                            <!--end::Table-->
