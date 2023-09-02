@@ -9,15 +9,19 @@ use App\Models\Admin\PartnerType;
 use App\Models\ProfileFeature;
 use App\Models\PartnerTypePropertyPermission;
 use App\Models\Admin\ProfileFeaturePermission;
+use DB;
 class ParterConfigController extends Controller
 {
    
     public function index()
     {
-        $showallp = PartnerTypePropertyPermission::leftJoin('partner_type_properties', 'partner_type_properties.id', '=', 'partner_type_property_permissions.partner_type_property_id')->get();
+      // DB::enableQueryLog();
+        $showallp = PartnerTypeProperty::leftJoin('partner_type_property_permissions', 'partner_type_properties.id', '=', 'partner_type_property_permissions.partner_type_property_id')->get();
+        // $querylog =  DB::getQueryLog();
+        // dd($querylog);
         $showpfp = ProfileFeature::leftJoin('profile_feature_permissions', 'profile_features.id', '=', 'profile_feature_permissions.profilefeature_id')->get();
         // $showpfp = $showpfp->toArray();
-        // echo "<pre>";print_r($showpfp);die;
+        //  echo "<pre>";print_r($showallp);die;
 
         $showall=PartnerType::all();
         $roleall=Role::all();
@@ -125,7 +129,7 @@ class ParterConfigController extends Controller
            'partner_type_property_id' =>$getRecord->partner_type_property_id,  
            'partner_type_id' => $getRecord->partner_type_id,  
           'property_value' => $request->property_value,  
-           'remark' => $request->remark, 
+           'remarkpermission' => $request->remark, 
             
         ]);
          }
@@ -134,7 +138,7 @@ class ParterConfigController extends Controller
          $permission->partner_type_property_id =  $request->get('property_id');  
          $permission->partner_type_id = $request->get('partner_type_id');  
          $permission->property_value = $request->get('property_value');  
-         $permission->remark = $request->get('remark');  
+         $permission->remarkpermission = $request->get('remark');  
          $permission->save();
        }
        return true; 
