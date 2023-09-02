@@ -2,9 +2,10 @@
 
 namespace App\Http\Controllers\Admin;
 use App\Models\Admin\ServiceCategory;
+use App\Models\Admin\ServiceSubCategory;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use Illuminate\Http\RedirectResconse;
+use Illuminate\Http\RedirectResponse;
 class ServicesConfigController extends Controller
 {
     public function index()
@@ -29,7 +30,7 @@ class ServicesConfigController extends Controller
         return redirect()->back()->with('message', 'Service Category created successfully.');
     }
 
-    public function enabled($id): RedirectResconse
+    public function enabled($id): RedirectResponse
     {
         if($id){
             $sc = new ServiceCategory;
@@ -47,7 +48,7 @@ class ServicesConfigController extends Controller
         }
     }
 
-    public function disabled($id): RedirectResconse
+    public function disabled($id): RedirectResponse
     {
     	if($id){
 	        $sc = new ServiceCategory;
@@ -63,5 +64,15 @@ class ServicesConfigController extends Controller
 	    }else{
 	    	return redirect()->back()->with('error', 'Please select Service Category.');
 	    }
+    }
+
+    public function store(Request $request)
+    {
+    	
+        $ssc = new ServiceSubCategory;  
+        $ssc->category =  $request->get('category');  
+        $ssc->subcategory = $request->get('subcategory');  
+        $ssc->save();
+        return redirect()->back()->with('message', 'Service SubCategory created successfully.');
     }
 }

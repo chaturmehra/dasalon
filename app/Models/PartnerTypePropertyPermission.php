@@ -8,4 +8,5 @@ use Illuminate\Database\Eloquent\Model;
 class PartnerTypePropertyPermission extends Model
 {
     use HasFactory;
+    protected $primaryKey = 'partnertypepropertypermission_id';
 }

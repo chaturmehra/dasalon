@@ -68,6 +68,11 @@ Route::middleware(['auth'])->group(function () {
     Route::get('admin/system-admin-manage/{id}', [SystemAdminController::class, 'edit_view']);
     Route::post('admin/update-system-admin-manage/{id}', [SystemAdminController::class, 'update']);
 
+
+    Route::get('admin/add-sub/enable-status/{id}', [SubscriptionController::class, 'enabled']);
+    Route::get('admin/add-sub/disable-status/{id}', [SubscriptionController::class, 'disabled']);
+    Route::post('admin/settings/subscriptionplan', [SubscriptionController::class, 'create']);
+
     Route::get('admin/add-system-manager', [SystemManagerController::class, 'index']);
     Route::get('admin/edit-system-manager/{id}', [SystemManagerController::class, 'edit']);
     Route::post('admin/add-system-manager', [SystemManagerController::class, 'store']);
@@ -148,6 +153,29 @@ Route::middleware(['auth'])->group(function () {
 
     Route::get('partner/settings', [PartnerSettingController::class, 'index'])->name('settings.indexp');
     Route::get('partner/venue-setting', [VenueController::class, 'index'])->name('venue.index');
+    Route::get('partner/settings', [PartnerSettingController::class, 'index'])->name('settings.index');
+    Route::get('partner/venue-setting', [VenueController::class, 'index'])->name('venue.index');
+
+    Route::get('admin/settings/appointment', [AppointmentController::class, 'index'])->name('settings.appointment');
+    Route::post('admin/settings/appointment', [AppointmentController::class, 'create']);
+    Route::get('admin/settings/subscription', [SubscriptionController::class, 'index'])->name('settings.subscription');
+
+    Route::get('admin/settings/payment-gateway', [PaymentGatewayController::class, 'index'])->name('settings.payment-gateway');
+
+    Route::get('admin/services', [ServiceController::class, 'index'])->name('services.index');
+    Route::get('admin/services/order-management', [OrderManagementController::class, 'index'])->name('services.order-management');
+    Route::get('admin/services/services-config', [ServicesConfigController::class, 'index'])->name('services.services-config');
+    Route::get('admin/services/partner-mapping', [PartnerMappingController::class, 'index'])->name('services.partner-mapping');
+    Route::get('admin/services/recommendations', [RecommendationsController::class, 'index'])->name('services.recommendations');
+    Route::get('admin/services/offers-management', [OffersManagementController::class, 'index'])->name('services.offers-management');
+
+    Route::post('admin/services/servicecategory', [ServicesConfigController::class, 'create']);
+
+    Route::get('admin/add-servicecategory/enable-status/{id}', [ServicesConfigController::class, 'enabled']);
+    Route::get('admin/add-servicecategory/disable-status/{id}', [ServicesConfigController::class, 'disabled']);
+
+
+    Route::post('admin/services/servicesubcategory', [ServicesConfigController::class, 'store']);
 });
 
 /*Partner Route*/
