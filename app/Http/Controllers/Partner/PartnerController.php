@@ -73,7 +73,7 @@ class PartnerController extends Controller
         
         $adored_listing = User::leftjoin('user_details', 'users.id', '=', 'user_details.user_id')->where('role_id', '3')->get(['users.id','user_details.profile_image','user_details.cover_image','users.name','users.username','user_details.docs_verification as verified']);
         
-        return redirect('/');
+        return redirect('/partner/login');
         //return redirect()->route('front.thank-you',compact('adored_listing'));
 
     }
@@ -88,7 +88,7 @@ class PartnerController extends Controller
             $user_id   = $verifyUser[0]->id;
             return view('partner/user/signup-create-password', compact('email', 'name', 'user_id'));
         }else{
-            return view('/');
+            return view('/partner/login');
         }
         //return redirect()->route('front.thank-you',compact('adored_listing'));
 
@@ -102,7 +102,7 @@ class PartnerController extends Controller
     public function handleProviderCallback($provider)
     {
         $response = Socialite::driver($provider)->user();
-        // echo "<pre>"; print_r($response); die;
+        
         $name   = $response->name;
         $email  = $response->email;
         $check_record = User::whereEmail($email)->first();
@@ -129,7 +129,19 @@ class PartnerController extends Controller
             return view('partner/user/signup-mobile-verification');
 
         }else{
-            return redirect('/user/signin')->with('error', 'Email already exists.');
+            $check_status = isset($check_record->is_active) ? $check_record->is_active : "";
+            if ($check_record) {
+                $check_role = isset($check_record->role) ? $check_record->role : "";
+
+                Auth::login($check_record);
+                if ($check_role) {
+                    return redirect()->intended('/partner/dashboard');   
+                }else{
+                    return redirect()->intended('/admin/dashboard');
+                }
+            }else{
+                return redirect('/user/signup')->with('error', 'Email already exists.');
+            }
         }
     }
 
@@ -209,7 +221,7 @@ class PartnerController extends Controller
 
             $this->createPasswordLinkEmail($email, $request->businessname, $user->id);
 
-            return redirect('/')->with('success', 'We have sent to a create password link in your mail. Please check.');
+            return redirect('/partner/login')->with('success', 'We have sent to a create password link in your mail. Please check.');
 
         }else{
 
@@ -276,7 +288,7 @@ class PartnerController extends Controller
 
         $this->createPasswordLinkEmail($email, $request->name, $user->id);
 
-        return redirect('/')->with('success', 'We have sent to a create password link you mail. Please check.');
+        return redirect('/partner/login')->with('success', 'We have sent to a create password link you mail. Please check.');
 
         //return view('/');
     }
@@ -308,7 +320,7 @@ class PartnerController extends Controller
             'is_active'  => 1,
         ]);
 
-        return redirect('/')->with('success', 'You have successfully created password. Please login now.');
+        return redirect('/partner/login')->with('success', 'You have successfully created password. Please login now.');
 
     }
 

@@ -27,10 +27,16 @@ class UserController extends Controller
         return view('partner/user/index');
     }
 
-    public function signinForm()
+    public function signupForm()
     {
     	
         return view('partner/user/email-form');
+    }
+
+    public function signinForm()
+    {
+        
+        return view('partner/user/sign-in');
     }
 
     public function signupServiceProvided()
@@ -43,7 +49,7 @@ class UserController extends Controller
     {
     	Session::put('service_provided_id', $id);
 
-        return redirect('/user/signin');
+        return redirect('/user/signup');
     }
 
     public function bookService()
@@ -52,7 +58,8 @@ class UserController extends Controller
         Session::forget('user_detail_data');
         Session::forget('service_provided_id');
         Session::forget('email');
+        Session::forget('signin_otp');
 
-        return redirect('/user/signin');
+        return redirect('/user/signup');
     }
 }

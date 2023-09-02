@@ -49,7 +49,7 @@
 								<h1 class="text-dark fw-bolder mb-3">What's your business name</h1>
 								<!--end::Title-->
 								<!--begin::Subtitle-->
-								<div class="text-gray-500 fw-semibold fs-6">This is the brand name client will see. Your </div>
+								<div class="text-gray-500 fw-semibold fs-6">This is the brand name your clients will see. </div>
 								<!--end::Subtitle=-->
 							</div>
 							<!--begin::Heading-->

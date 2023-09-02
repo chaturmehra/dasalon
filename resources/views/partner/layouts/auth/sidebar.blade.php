@@ -9,7 +9,7 @@
 				<!--begin::Navbar item-->
 				<li class="nav-item py-1">
 					<!--begin::Navbar link-->
-					<a href="/dasalon/admin/home.php" class="nav-link py-4 px-1 btn asidenav active">
+					<a href="/dasalon-html/partners/home.html" class="nav-link py-4 px-1 btn asidenav active">
 						<i class="ki-outline ki-questionnaire-tablet fs-1"></i>
 						<span class="pt-2 fs-9 fs-lg-7 fw-bold">Home</span>
 					</a>
@@ -19,31 +19,19 @@
 				<!--begin::Navbar item-->
 				<li class="nav-item py-1">
 					<!--begin::Navbar link-->
-					<a href="/dasalon/admin/services-order-management.php" class="nav-link py-4 px-1 btn asidenav">
+					<a href="/dasalon-html/partners/calender.html" class="nav-link py-4 px-1 btn asidenav">
 						<i class="ki-outline ki-abstract-26 fs-1"></i>
-						<span class="pt-2 fs-9 fs-lg-7 fw-bold">Services</span>
+						<span class="pt-2 fs-9 fs-lg-7 fw-bold">Calender</span>
 					</a>
 					<!--end::Navbar link-->
 				</li>
 				<!--end::Navbar item-->
-
 				<!--begin::Navbar item-->
 				<li class="nav-item py-1">
 					<!--begin::Navbar link-->
-					<a href="/dasalon/admin/services-order-management.php" class="nav-link py-4 px-1 btn asidenav">
-						<i class="ki-outline ki-abstract-26 fs-1"></i>
-						<span class="pt-2 fs-9 fs-lg-7 fw-bold">Partners</span>
-					</a>
-					<!--end::Navbar link-->
-				</li>
-				<!--end::Navbar item-->
-
-				<!--begin::Navbar item-->
-				<li class="nav-item py-1">
-					<!--begin::Navbar link-->
-					<a href="#" class="nav-link py-4 px-1 btn asidenav">
+					<a href="/dasalon-html/partners/appointments.html" class="nav-link py-4 px-1 btn asidenav">
 						<i class="ki-outline ki-notification-status fs-1"></i>
-						<span class="pt-2 fs-9 fs-lg-7 fw-bold">Notifications</span>
+						<span class="pt-2 fs-9 fs-lg-7 fw-bold">Appointments</span>
 					</a>
 					<!--end::Navbar link-->
 				</li>
@@ -51,9 +39,9 @@
 				<!--begin::Navbar item-->
 				<li class="nav-item py-1">
 					<!--begin::Navbar link-->
-					<a href="#" class="nav-link py-4 px-1 btn asidenav">
+					<a href="/dasalon-html/partners/clients.html" class="nav-link py-4 px-1 btn asidenav">
 						<i class="ki-outline ki-message-notif fs-1"></i>
-						<span class="pt-2 fs-9 fs-lg-7 fw-bold">Digital Promotions</span>
+						<span class="pt-2 fs-9 fs-lg-7 fw-bold">Clients</span>
 					</a>
 					<!--end::Navbar link-->
 				</li>
@@ -61,9 +49,19 @@
 				<!--begin::Navbar item-->
 				<li class="nav-item py-1">
 					<!--begin::Navbar link-->
-					<a href="#" class="nav-link py-4 px-1 btn asidenav">
+					<a href="/dasalon-html/partners/services.html" class="nav-link py-4 px-1 btn asidenav">
 						<i class="ki-outline ki-rocket fs-1"></i>
-						<span class="pt-2 fs-9 fs-lg-7 fw-bold">Integrations</span>
+						<span class="pt-2 fs-9 fs-lg-7 fw-bold">Catalog</span>
+					</a>
+					<!--end::Navbar link-->
+				</li>
+				<!--end::Navbar item-->
+				<!--begin::Navbar item-->
+				<li class="nav-item py-1">
+					<!--begin::Navbar link-->
+					<a href="/dasalon-html/partners/promote.html" class="nav-link py-4 px-1 btn asidenav">
+						<i class="ki-outline ki-chart-line fs-1"></i>
+						<span class="pt-2 fs-9 fs-lg-7 fw-bold">Promote</span>
 					</a>
 					<!--end::Navbar link-->
 				</li>
@@ -72,9 +70,9 @@
 				<!--begin::Navbar item-->
 				<li class="nav-item py-1">
 					<!--begin::Navbar link-->
-					<a href="#" class="nav-link py-4 px-1 btn asidenav">
+					<a href="/dasalon-html/partners/reports.html" class="nav-link py-4 px-1 btn asidenav">
 						<i class="ki-outline ki-chart-line fs-1"></i>
-						<span class="pt-2 fs-9 fs-lg-7 fw-bold">Market Place</span>
+						<span class="pt-2 fs-9 fs-lg-7 fw-bold">Reports</span>
 					</a>
 					<!--end::Navbar link-->
 				</li>
@@ -82,27 +80,7 @@
 				<!--begin::Navbar item-->
 				<li class="nav-item py-1">
 					<!--begin::Navbar link-->
-					<a href="#" class="nav-link py-4 px-1 btn asidenav">
-						<i class="ki-outline ki-chart-line fs-1"></i>
-						<span class="pt-2 fs-9 fs-lg-7 fw-bold">Hiring Center</span>
-					</a>
-					<!--end::Navbar link-->
-				</li>
-				<!--end::Navbar item-->
-				<!--begin::Navbar item-->
-				<li class="nav-item py-1">
-					<!--begin::Navbar link-->
-					<a href="#" class="nav-link py-4 px-1 btn asidenav">
-						<i class="ki-outline ki-chart-line fs-1"></i>
-						<span class="pt-2 fs-9 fs-lg-7 fw-bold">Support</span>
-					</a>
-					<!--end::Navbar link-->
-				</li>
-				<!--end::Navbar item-->
-				<!--begin::Navbar item-->
-				<li class="nav-item py-1">
-					<!--begin::Navbar link-->
-					<a href="{{route('settings.index')}}" class="nav-link py-4 px-1 btn asidenav">
+					<a href="/dasalon-html/partners/settings.html" class="nav-link py-4 px-1 btn asidenav">
 						<i class="ki-outline ki-chart-line fs-1"></i>
 						<span class="pt-2 fs-9 fs-lg-7 fw-bold">Settings</span>
 					</a>

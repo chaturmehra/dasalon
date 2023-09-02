@@ -54,7 +54,7 @@ class SystemAdminController extends Controller
         $user->email 		= $request->email;
         $user->password 	= Hash::make($request->password);
         $user->phone 		= $request->phone;
-        //$user->country 		= $request->country;
+        $user->country 		= $request->country;
         $user->is_active 	= 1;
         $user->role 		= "0";
 
@@ -101,7 +101,7 @@ class SystemAdminController extends Controller
             $user->password     = Hash::make($request->new_password);
         }
         $user->phone        = $request->phone;
-        //$user->country      = $request->country;
+        $user->country      = $request->country;
 
         $user->save();
 

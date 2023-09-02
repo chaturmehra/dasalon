@@ -38,15 +38,23 @@ use App\Http\Controllers\TwilioSMSController;
 Route::get('/', function () {
     return view('welcome');
 });
+Route::get('/admin/login', function () {
+    return view('welcome');
+});
+
+Route::get("/partner/login", [UserController::class, 'signinForm']);
 
 Auth::routes();
 Route::get("user-flow", [UserController::class, 'index']);
-Route::get("user/signin", [UserController::class, 'signinForm'])->name('email-form');
+Route::get("user/signup", [UserController::class, 'signupForm'])->name('email-form');
 Route::get("user/book-a-service", [UserController::class, 'bookService'])->name('book-a-service');
-Route::get("user/signin/{id}", [UserController::class, 'signinFormProvided'])->name('service-provided');
+Route::get("user/signup/{id}", [UserController::class, 'signinFormProvided'])->name('service-provided');
 Route::get("user/signup-service-provided", [UserController::class, 'signupServiceProvided'])->name('signup-service-provided');
-Route::middleware(['auth', 'user-role:partner,admin'])->group(function () {
+Route::middleware(['auth', 'user-role:admin'])->group(function () {
     Route::get("/admin/dashboard", [HomeController::class, 'userHome'])->name('home');
+});
+Route::middleware(['auth', 'user-role:partner'])->group(function () {
+    Route::get("/partner/dashboard", [HomeController::class, 'userHome'])->name('home');
 });
 
 Route::middleware(['auth'])->group(function () {
@@ -69,8 +77,8 @@ Route::middleware(['auth'])->group(function () {
     Route::get('admin/system-manager/disable-status/{id}', [SystemManagerController::class, 'disabled']);
 
     // Route::get('admin/settings',[SettingController::class,'showall'])->name('settings.showall');
-    Route::get('admin/settings', [SettingController::class, 'index'])->name('settings.index');
-    Route::post('admin/settings', [SettingController::class, 'create']);
+    /*Route::get('admin/settings', [SettingController::class, 'index'])->name('settings.index');
+    Route::post('admin/settings', [SettingController::class, 'create']);*/
     Route::get('admin/settings/amenity', [AmenityController::class, 'index'])->name('settings.amenity');
     Route::post('admin/settings/saveamenity', [AmenityController::class, 'storeAmenity'])->name('settings.saveAmenity');
     Route::get('amenity-list', [AmenityController::class, 'getAjaxAmenityList'])->name('amenity.getAjaxList');

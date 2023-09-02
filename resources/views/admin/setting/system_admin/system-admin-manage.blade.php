@@ -70,6 +70,20 @@
 									<input type="email" class="form-control form-control-solid" placeholder="" name="email" value="{{ $user_detail->email }}" />
 									<!--end::Input-->
 								</div>
+
+								<div class="col-md-6 fv-row mb-7">
+                                    <!--begin::Label-->
+                                    <label for="kt_docs_select2_country" class="fs-5 fw-semibold mb-2">Select a country</label>
+                                    <div class="form-floating border rounded">
+                                    	<select class="form-select" name="country" placeholder="..." id="kt_docs_select2_country" required>
+                                    		<option value="">Select Country</option>
+                                    		@foreach(getCountryList() as $con_val)
+                                    		<option value="{{$con_val->id}}" data-kt-select2-country="{{asset('/public/assets/media/flags/'.strtolower(str_replace(' ','-',$con_val->name.'.svg')))}}">{{$con_val->name}}</option>
+                                    		@endforeach
+                                    	</select>
+                                    </div>
+                                    <!--end::Input-->
+                                </div>
 								<!--end::Col-->
 								<!--begin::Input group-->
 								<div class="col-md-6 fv-row mb-7">

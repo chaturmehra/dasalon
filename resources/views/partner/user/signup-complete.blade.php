@@ -57,7 +57,7 @@
 
 							<!--begin::Submit button-->
 							<div class="d-grid mb-10">
-								<a href="{{ url('/') }}" id="kt_sign_in_submits" class="btn btn-primary">
+								<a href="{{ url('/partner/login') }}" id="kt_sign_in_submits" class="btn btn-primary">
 									<!--begin::Indicator label-->
 									<span class="indicator-label">Partner login</span>
 									<!--end::Indicator label-->
