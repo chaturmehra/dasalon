@@ -55,7 +55,7 @@
 								                <!--end::Nav item-->
 								                            <!--begin::Nav item-->
 								                <li class="nav-item mt-2">
-								                    <a class="nav-link text-active-primary ms-0 me-10 py-5 {{ Request::is('admin/settings/role-config') ? 'active' : '' }}" href="{{route('settings.role')}}">
+								                    <a class="nav-link text-active-primary ms-0 me-10 py-5 {{ Request::is('admin/settings/partner-config') ? 'active' : '' }}" href="{{route('settings.role')}}">
 								                        Partner Config                   
 								                    </a>
 								                </li>

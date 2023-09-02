@@ -36,6 +36,7 @@ Route::middleware(['auth','user-role:partner,admin'])->group(function()
 
 Route::middleware(['auth'])->group(function()
 {
+    // Route::get('admin/settings',[SettingController::class,'showall'])->name('settings.showall');
     Route::get('admin/settings',[SettingController::class,'index'])->name('settings.index');
     Route::post('admin/settings',[SettingController::class,'create']);
     Route::get('admin/settings/amenity',[AmenityController::class,'index'])->name('settings.amenity');
@@ -76,7 +77,7 @@ Route::get('admin/setting/edit-disablecity-status/{id}/{status}', [CountryContro
 Route::get('admin/setting/edit-role-status/{id}/{status}', [ParterConfigController::class,'changeRoleStatus']);
 
 
-Route::get('partner/settings',[PartnerSettingController::class,'index'])->name('settings.index');
+Route::get('partner/settings',[PartnerSettingController::class,'index'])->name('settings.indexp');
 Route::get('partner/venue-setting',[VenueController::class,'index'])->name('venue.index');
 });
 
