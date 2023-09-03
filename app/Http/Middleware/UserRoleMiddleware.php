@@ -14,10 +14,10 @@ class UserRoleMiddleware
      *
      * @param  \Closure(\Illuminate\Http\Request): (\Symfony\Component\HttpFoundation\Response)  $next
      */
-    public function handle(Request $request, Closure $next,$role1,$role2): Response
+    public function handle(Request $request, Closure $next,$role): Response
     {
-        if(Auth::check() &&(Auth::user()->role == $role1 || Auth::user()->role == $role2)){
-        return $next($request);
+        if( Auth::check() && (Auth::user()->role == $role) ){
+            return $next($request);
         }
         return response()->json(["You don't have permission to access this page"]);
     }

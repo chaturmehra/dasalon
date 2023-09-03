@@ -17,6 +17,7 @@ Use Response;
 use Validator;
 use Imagick;
 use DB;
+use App\Models\Admin\PartnerType;
 
 class UserController extends Controller
 {
@@ -26,8 +27,39 @@ class UserController extends Controller
         return view('partner/user/index');
     }
 
+    public function signupForm()
+    {
+    	
+        return view('partner/user/email-form');
+    }
+
     public function signinForm()
     {
-        return view('partner/user/email-form');
+        
+        return view('partner/user/sign-in');
+    }
+
+    public function signupServiceProvided()
+    {
+    	$partnerType = PartnerType::where('status', 1)->get();
+        return view('partner/user/signup-service-provided', compact('partnerType'));
+    }
+
+    public function signinFormProvided(Request $request, $id)
+    {
+    	Session::put('service_provided_id', $id);
+
+        return redirect('/user/signup');
+    }
+
+    public function bookService()
+    {
+        
+        Session::forget('user_detail_data');
+        Session::forget('service_provided_id');
+        Session::forget('email');
+        Session::forget('signin_otp');
+
+        return redirect('/user/signup');
     }
 }

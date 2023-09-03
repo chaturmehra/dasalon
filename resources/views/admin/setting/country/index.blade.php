@@ -146,7 +146,7 @@
 																							    <select class="form-select" placeholder="..." id="kt_docs_select2_country" name="country">
 																							        <option value="">Select Country</option>
 																									@foreach(getCountryList() as $con_val)
-																	                                <option value="{{$con_val->id}}" data-kt-select2-country="{{asset('/assets/media/flags/'.strtolower(str_replace(' ','-',$con_val->name.'.svg')))}}">{{$con_val->name}}</option>
+																	                                <option value="{{$con_val->id}}" data-kt-select2-country="{{asset('/public/assets/media/flags/'.strtolower(str_replace(' ','-',$con_val->name.'.svg')))}}">{{$con_val->name}}</option>
 																									@endforeach
 																	                               
 																							    </select>
@@ -282,7 +282,7 @@
 																							<label class="required fw-semibold fs-6 mb-2">Status</label>
 																							<!--end::Label-->
 																							<div class="form-check form-switch form-check-custom form-check-solid me-10">
-																								<input class="form-check-input h-30px w-50px" name="status" type="checkbox" value="1" id="status" checked="checked" />
+																								<input class="form-check-input h-30px w-50px" name="status" type="checkbox" value="1" id="status" checked="checked"/>
 																								<label class="form-check-label" for="status">Status</label>
 																							</div>
 																						</div>
@@ -518,7 +518,7 @@
 																							    <select class="form-select" placeholder="..." id="kt_docs_select2_country2" name="country_prdtl">
 																								<option value="">Select Country</option>
 																							       @foreach(getCountryConfigList() as $con_val)
-																	                                <option value="{{$con_val->id}}" data-kt-select2-country="{{asset('/assets/media/flags/'.strtolower(str_replace(' ','-',$con_val->name.'.svg')))}}">{{$con_val->name}}</option>
+																	                                <option value="{{$con_val->id}}" data-kt-select2-country="{{asset('/public/assets/media/flags/'.strtolower(str_replace(' ','-',$con_val->name.'.svg')))}}">{{$con_val->name}}</option>
 																									@endforeach
 																							    </select>
 																							</div>
@@ -619,7 +619,7 @@
 																	    <select class="form-select select_country" placeholder="..." name="dis_country" id="kt_docs_select2_country3">
 																	      <option value="">Select Country</option>
 																			@foreach(getCountryConfigList() as $con_val)
-																			<option value="{{$con_val->id}}" data-kt-select2-country="{{asset('/assets/media/flags/'.strtolower(str_replace(' ','-',$con_val->name.'.svg')))}}">{{$con_val->name}}</option>
+																			<option value="{{$con_val->id}}" data-kt-select2-country="{{asset('/public/assets/media/flags/'.strtolower(str_replace(' ','-',$con_val->name.'.svg')))}}">{{$con_val->name}}</option>
 																			@endforeach
 																	    </select>
 																	</div>
@@ -768,7 +768,7 @@
 																							    <select class="form-select" placeholder="..." id="kt_docs_select2_country4" name="franchise_country">
 																							        <option value="">Select Country</option>
 																									@foreach(getCountryConfigList() as $con_val)
-																	                                <option value="{{$con_val->id}}" data-kt-select2-country="{{asset('/assets/media/flags/'.strtolower(str_replace(' ','-',$con_val->name.'.svg')))}}">{{$con_val->name}}</option>
+																	                                <option value="{{$con_val->id}}" data-kt-select2-country="{{asset('/public/assets/media/flags/'.strtolower(str_replace(' ','-',$con_val->name.'.svg')))}}">{{$con_val->name}}</option>
 																									@endforeach
 																							    </select>
 																							</div>
@@ -904,19 +904,26 @@ $('#search_country').keyup(function(){
 	  no_lenght: "required",
       pin: "required",
 	},
-   
+	
     submitHandler: function(form) {
-     var formData = {
-      country: $("#kt_docs_select2_country").val(),
-      country_code: $("#country_code").val(),
-      currency_code: $("#currency_code").val(),
-	  currency_sign: $("#currency_sign").val(),
-      short_name: $("#short_name").val(),
-      language: $("#language").val(),
-	  no_lenght: $("#no_lenght").val(),
-      pin: $("#pin").val(),
-	  status: $("#status").val(),
-    };
+		let getstatus;
+		if ($("#status").prop("checked")) {
+			getstatus = 1;
+		}else{
+			getstatus = 0;
+		}
+		
+		var formData = {
+		country: $("#kt_docs_select2_country").val(),
+		country_code: $("#country_code").val(),
+		currency_code: $("#currency_code").val(),
+		currency_sign: $("#currency_sign").val(),
+		short_name: $("#short_name").val(),
+		language: $("#language").val(),
+		no_lenght: $("#no_lenght").val(),
+		pin: $("#pin").val(),
+		status: getstatus,	  
+		};
 	console.log(formData);
 	  $.ajax({
 				url:'{{ url('admin/save_country')}}',
@@ -1032,7 +1039,7 @@ $('#search_franchise').keyup(function(){
         .then((willDelete) => {
           if(willDelete){
             $.ajax({
-            url:'https://webpristine.co.in/admin/setting/edit-franchise-status/' + id+'/'+data_id,
+            url:'{{ url('admin/setting/edit-franchise-status')}}'+'/' + id+'/'+data_id,
             type:'GET',
                 beforeSend:function(){
                   $('.spinner-cls').show();
@@ -1112,7 +1119,7 @@ $('#search_partnertype').keyup(function(){
         .then((willDelete) => {
           if(willDelete){
             $.ajax({
-            url:'https://webpristine.co.in/admin/setting/edit-partnertype-status/' + id+'/'+data_id,
+            url:'{{ url('admin/setting/edit-partnertype-status')}}'+'/' + id+'/'+data_id,
             type:'GET',
                 beforeSend:function(){
                   $('.spinner-cls').show();
@@ -1199,7 +1206,7 @@ $('#search_partnerdetails').keyup(function(){
         .then((willDelete) => {
           if(willDelete){
             $.ajax({
-            url:'https://webpristine.co.in/admin/setting/edit-partnerdetails-status/' + id+'/'+data_id,
+            url:'{{ url('admin/setting/edit-partnerdetails-status')}}'+'/' + id+'/'+data_id,
             type:'GET',
                 beforeSend:function(){
                   $('.spinner-cls').show();
@@ -1285,7 +1292,7 @@ $('#search_disablecity').keyup(function(){
         .then((willDelete) => {
           if(willDelete){
             $.ajax({
-            url:'https://webpristine.co.in/admin/setting/edit-disablecity-status/' + id+'/'+data_id,
+            url:'{{ url('admin/setting/edit-disablecity-status')}}'+'/' + id+'/'+data_id,
             type:'GET',
                 beforeSend:function(){
                   $('.spinner-cls').show();

@@ -16,9 +16,6 @@ return new class extends Migration
             $table->string('property');
             $table->string('remark');
             $table->string('option');
-            $table->integer('Salon_status')->default(0);
-            $table->integer('Freelancer_status')->default(0);
-            $table->integer('Salon_with_home_service_status')->default(0);
             $table->timestamps();
         });
     }

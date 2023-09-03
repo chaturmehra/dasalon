@@ -25,7 +25,7 @@ class CountryController extends Controller
     }
 	
  	public function saveCountry(Request $request){
-		
+    //    echo "<pre>"; print_r($request->status); die;
 		 CountryConfig::create([
             'country_id' => $request->country,
 			'country_code' => $request->country_code,
