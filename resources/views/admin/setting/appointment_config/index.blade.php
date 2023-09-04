@@ -79,14 +79,17 @@
                                        <label class="required fw-semibold fs-6 mb-2">Define time least count</label>
                                        <!--end::Label-->
                                        <!--begin::Input-->
+                                       @php 
+                                       $time_least_count = isset($task->time_least_count) ? $task->time_least_count : "";
+                                       @endphp
                                        <select aria-label="Leastcouunt" name="time_least_count" data-control="select2" data-placeholder="Least count..." class="form-select mb-2">
-                                          <option value="" {{ ( $task->time_least_count=="") ? 'selected' : '' }}></option>
-                                          <option value="15 mins" {{ ( $task->time_least_count=="15 mins") ? 'selected' : '' }}>15 mins</option>
-                                          <option value="30 mins" {{ ( $task->time_least_count=="30 mins") ? 'selected' : '' }}>30 mins</option>
-                                          <option value="45 mins" {{ ( $task->time_least_count=="45 mins") ? 'selected' : '' }}>45 mins</option>
-                                          <option value="1 hour" {{ ( $task->time_least_count=="1 hour") ? 'selected' : '' }}>1 hour</option>
-                                          <option value="1 hour 30 mins" {{ ( $task->time_least_count=="1 hour 30 mins") ? 'selected' : '' }}>1 hour 30 mins</option>
-                                          <option value="2 hour" {{ ( $task->time_least_count=="2 hour") ? 'selected' : '' }}>2 hour</option>
+                                          <option value="" {{ ( $time_least_count == "" ) ? 'selected' : '' }}></option>
+                                          <option value="15 mins" {{ ( $time_least_count=="15 mins") ? 'selected' : '' }}>15 mins</option>
+                                          <option value="30 mins" {{ ( $time_least_count=="30 mins") ? 'selected' : '' }}>30 mins</option>
+                                          <option value="45 mins" {{ ( $time_least_count=="45 mins") ? 'selected' : '' }}>45 mins</option>
+                                          <option value="1 hour" {{ ( $time_least_count=="1 hour") ? 'selected' : '' }}>1 hour</option>
+                                          <option value="1 hour 30 mins" {{ ( $time_least_count=="1 hour 30 mins") ? 'selected' : '' }}>1 hour 30 mins</option>
+                                          <option value="2 hour" {{ ( $time_least_count=="2 hour") ? 'selected' : '' }}>2 hour</option>
                                        </select>
                                        <!--end::Input-->
                                     </div>
@@ -97,35 +100,38 @@
                                        <label class="required fw-semibold fs-6 mb-2">Define Soonest Appointment booking time</label>
                                        <!--end::Label-->
                                        <!--begin::Input-->
+                                       @php 
+                                       $soonest_appointment_booking_time = isset($task->soonest_appointment_booking_time) ? $task->soonest_appointment_booking_time : "";
+                                       @endphp
                                        <select aria-label="Soonest Appointment booking time" name="soonest_appointment_booking_time" data-control="select2" data-placeholder="Soonest Appointment booking time..." class="form-select mb-2">
-                                          <option value="" {{ ( $task->soonest_appointment_booking_time=="") ? 'selected' : '' }}></option>
-                                          <option value="Upto 15 mins before start time" {{ ( $task->soonest_appointment_booking_time=="Upto 15 mins before start time") ? 'selected' : '' }}>Upto 15 mins before start time</option>
-                                          <option value="Upto 30 mins before start time" {{ ( $task->soonest_appointment_booking_time=="Upto 30 mins before start time") ? 'selected' : '' }}>Upto 30 mins before start time</option>
-                                          <option value="Upto 1 hour before start time" {{ ( $task->soonest_appointment_booking_time=="Upto 1 hour before start time") ? 'selected' : '' }}>Upto 1 hour before start time</option>
-                                          <option value="Upto 2 hours before start time" {{ ( $task->soonest_appointment_booking_time=="Upto 2 hours before start time") ? 'selected' : '' }}>Upto 2 hours before start time</option>
-                                          <option value="Upto 3 hours before start time" {{ ( $task->soonest_appointment_booking_time=="Upto 3 hours before start time") ? 'selected' : '' }}>Upto 3 hours before start time</option>
-                                          <option value="Upto 4 hours before start time" {{ ( $task->soonest_appointment_booking_time=="Upto 4 hours before start time") ? 'selected' : '' }}>Upto 4 hours before start time</option>
-                                          <option value="Upto 5 hours before start time" {{ ( $task->soonest_appointment_booking_time=="Upto 5 hours before start time") ? 'selected' : '' }}>Upto 5 hours before start time</option>
-                                          <option value="Upto 6 hours before start time" {{ ( $task->soonest_appointment_booking_time=="Upto 6 hours before start time") ? 'selected' : '' }}>Upto 6 hours before start time</option>
-                                          <option value="Upto 7 hours before start time" {{ ( $task->soonest_appointment_booking_time=="Upto 7 hours before start time") ? 'selected' : '' }}>Upto 7 hours before start time</option>
-                                          <option value="Upto 8 hours before start time" {{ ( $task->soonest_appointment_booking_time=="Upto 8 hours before start time") ? 'selected' : '' }}>Upto 8 hours before start time</option>
-                                          <option value="Upto 9 hours before start time" {{ ( $task->soonest_appointment_booking_time=="Upto 9 hours before start time") ? 'selected' : '' }}>Upto 9 hours before start time</option>
-                                          <option value="Upto 10 hours before start time" {{ ( $task->soonest_appointment_booking_time=="Upto 10 hours before start time") ? 'selected' : '' }}>Upto 10 hours before start time</option>
-                                          <option value="Upto 11 hours before start time" {{ ( $task->soonest_appointment_booking_time=="Upto 11 hours before start time") ? 'selected' : '' }}>Upto 11 hours before start time</option>
-                                          <option value="Upto 12 hours before start time" {{ ( $task->soonest_appointment_booking_time=="Upto 12 hours before start time") ? 'selected' : '' }}>Upto 12 hours before start time</option>
-                                          <option value="Upto 13 hours before start time" {{ ( $task->soonest_appointment_booking_time=="Upto 13 hours before start time") ? 'selected' : '' }}>Upto 13 hours before start time</option>
-                                          <option value="Upto 14 hours before start time" {{ ( $task->soonest_appointment_booking_time=="Upto 14 hours before start time") ? 'selected' : '' }}>Upto 14 hours before start time</option>
-                                          <option value="Upto 15 hours before start time" {{ ( $task->soonest_appointment_booking_time=="Upto 15 hours before start time") ? 'selected' : '' }}>Upto 15 hours before start time</option>
-                                          <option value="Upto 16 hours before start time" {{ ( $task->soonest_appointment_booking_time=="Upto 16 hours before start time") ? 'selected' : '' }}>Upto 16 hours before start time</option>
-                                          <option value="Upto 17 hours before start time" {{ ( $task->soonest_appointment_booking_time=="Upto 17 hours before start time") ? 'selected' : '' }}>Upto 17 hours before start time</option>
-                                          <option value="Upto 18 hours before start time" {{ ( $task->soonest_appointment_booking_time=="Upto 18 hours before start time") ? 'selected' : '' }}>Upto 18 hours before start time</option>
-                                          <option value="Upto 19 hours before start time" {{ ( $task->soonest_appointment_booking_time=="Upto 19 hours before start time") ? 'selected' : '' }}>Upto 19 hours before start time</option>
-                                          <option value="Upto 20 hours before start time" {{ ( $task->soonest_appointment_booking_time=="Upto 20 hours before start time") ? 'selected' : '' }}>Upto 20 hours before start time</option>
-                                          <option value="Upto 21 hours before start time" {{ ( $task->soonest_appointment_booking_time=="Upto 21 hours before start time") ? 'selected' : '' }}>Upto 21 hours before start time</option>
-                                          <option value="Upto 22 hours before start time" {{ ( $task->soonest_appointment_booking_time=="Upto 22 hours before start time") ? 'selected' : '' }}>Upto 22 hours before start time</option>
-                                          <option value="Upto 23 hours before start time" {{ ( $task->soonest_appointment_booking_time=="Upto 23 hours before start time") ? 'selected' : '' }}>Upto 23 hours before start time</option>
-                                          <option value="Upto 24 hours before start time" {{ ( $task->soonest_appointment_booking_time=="Upto 24 hours before start time") ? 'selected' : '' }}>Upto 24 hours before start time</option>
-                                          <option value="Upto 48 hours before start time" {{ ( $task->soonest_appointment_booking_time=="Upto 48 hours before start time") ? 'selected' : '' }}>Upto 48 hours before start time</option>
+                                          <option value="" {{ ( $soonest_appointment_booking_time=="") ? 'selected' : '' }}></option>
+                                          <option value="Upto 15 mins before start time" {{ ( $soonest_appointment_booking_time=="Upto 15 mins before start time") ? 'selected' : '' }}>Upto 15 mins before start time</option>
+                                          <option value="Upto 30 mins before start time" {{ ( $soonest_appointment_booking_time=="Upto 30 mins before start time") ? 'selected' : '' }}>Upto 30 mins before start time</option>
+                                          <option value="Upto 1 hour before start time" {{ ( $soonest_appointment_booking_time=="Upto 1 hour before start time") ? 'selected' : '' }}>Upto 1 hour before start time</option>
+                                          <option value="Upto 2 hours before start time" {{ ( $soonest_appointment_booking_time=="Upto 2 hours before start time") ? 'selected' : '' }}>Upto 2 hours before start time</option>
+                                          <option value="Upto 3 hours before start time" {{ ( $soonest_appointment_booking_time=="Upto 3 hours before start time") ? 'selected' : '' }}>Upto 3 hours before start time</option>
+                                          <option value="Upto 4 hours before start time" {{ ( $soonest_appointment_booking_time=="Upto 4 hours before start time") ? 'selected' : '' }}>Upto 4 hours before start time</option>
+                                          <option value="Upto 5 hours before start time" {{ ( $soonest_appointment_booking_time=="Upto 5 hours before start time") ? 'selected' : '' }}>Upto 5 hours before start time</option>
+                                          <option value="Upto 6 hours before start time" {{ ( $soonest_appointment_booking_time=="Upto 6 hours before start time") ? 'selected' : '' }}>Upto 6 hours before start time</option>
+                                          <option value="Upto 7 hours before start time" {{ ( $soonest_appointment_booking_time=="Upto 7 hours before start time") ? 'selected' : '' }}>Upto 7 hours before start time</option>
+                                          <option value="Upto 8 hours before start time" {{ ( $soonest_appointment_booking_time=="Upto 8 hours before start time") ? 'selected' : '' }}>Upto 8 hours before start time</option>
+                                          <option value="Upto 9 hours before start time" {{ ( $soonest_appointment_booking_time=="Upto 9 hours before start time") ? 'selected' : '' }}>Upto 9 hours before start time</option>
+                                          <option value="Upto 10 hours before start time" {{ ( $soonest_appointment_booking_time=="Upto 10 hours before start time") ? 'selected' : '' }}>Upto 10 hours before start time</option>
+                                          <option value="Upto 11 hours before start time" {{ ( $soonest_appointment_booking_time=="Upto 11 hours before start time") ? 'selected' : '' }}>Upto 11 hours before start time</option>
+                                          <option value="Upto 12 hours before start time" {{ ( $soonest_appointment_booking_time=="Upto 12 hours before start time") ? 'selected' : '' }}>Upto 12 hours before start time</option>
+                                          <option value="Upto 13 hours before start time" {{ ( $soonest_appointment_booking_time=="Upto 13 hours before start time") ? 'selected' : '' }}>Upto 13 hours before start time</option>
+                                          <option value="Upto 14 hours before start time" {{ ( $soonest_appointment_booking_time=="Upto 14 hours before start time") ? 'selected' : '' }}>Upto 14 hours before start time</option>
+                                          <option value="Upto 15 hours before start time" {{ ( $soonest_appointment_booking_time=="Upto 15 hours before start time") ? 'selected' : '' }}>Upto 15 hours before start time</option>
+                                          <option value="Upto 16 hours before start time" {{ ( $soonest_appointment_booking_time=="Upto 16 hours before start time") ? 'selected' : '' }}>Upto 16 hours before start time</option>
+                                          <option value="Upto 17 hours before start time" {{ ( $soonest_appointment_booking_time=="Upto 17 hours before start time") ? 'selected' : '' }}>Upto 17 hours before start time</option>
+                                          <option value="Upto 18 hours before start time" {{ ( $soonest_appointment_booking_time=="Upto 18 hours before start time") ? 'selected' : '' }}>Upto 18 hours before start time</option>
+                                          <option value="Upto 19 hours before start time" {{ ( $soonest_appointment_booking_time=="Upto 19 hours before start time") ? 'selected' : '' }}>Upto 19 hours before start time</option>
+                                          <option value="Upto 20 hours before start time" {{ ( $soonest_appointment_booking_time=="Upto 20 hours before start time") ? 'selected' : '' }}>Upto 20 hours before start time</option>
+                                          <option value="Upto 21 hours before start time" {{ ( $soonest_appointment_booking_time=="Upto 21 hours before start time") ? 'selected' : '' }}>Upto 21 hours before start time</option>
+                                          <option value="Upto 22 hours before start time" {{ ( $soonest_appointment_booking_time=="Upto 22 hours before start time") ? 'selected' : '' }}>Upto 22 hours before start time</option>
+                                          <option value="Upto 23 hours before start time" {{ ( $soonest_appointment_booking_time=="Upto 23 hours before start time") ? 'selected' : '' }}>Upto 23 hours before start time</option>
+                                          <option value="Upto 24 hours before start time" {{ ( $soonest_appointment_booking_time=="Upto 24 hours before start time") ? 'selected' : '' }}>Upto 24 hours before start time</option>
+                                          <option value="Upto 48 hours before start time" {{ ( $soonest_appointment_booking_time=="Upto 48 hours before start time") ? 'selected' : '' }}>Upto 48 hours before start time</option>
                                        </select>
                                        <!--end::Input-->
                                     </div>
@@ -136,14 +142,17 @@
                                        <label class="required fw-semibold fs-6 mb-2">Define - Latest appointment booking time</label>
                                        <!--end::Label-->
                                        <!--begin::Input-->
+                                       @php 
+                                       $latest_appointment_booking_time = isset($task->latest_appointment_booking_time) ? $task->latest_appointment_booking_time : "";
+                                       @endphp
                                        <select aria-label="Latest appointment booking time" name="latest_appointment_booking_time" data-control="select2" data-placeholder="Latest appointment booking time..." class="form-select mb-2">
-                                          <option value="" {{ ( $task->latest_appointment_booking_time=="") ? 'selected' : '' }}></option>
-                                          <option value="No more than 6 months in the future" {{ ( $task->latest_appointment_booking_time=="No more than 6 months in the future") ? 'selected' : '' }}>No more than 6 months in the future</option>
-                                          <option value="No more than 5 months in the future" {{ ( $task->latest_appointment_booking_time=="No more than 5 months in the future") ? 'selected' : '' }}>No more than 5 months in the future</option>
-                                          <option value="No more than 4 months in the future" {{ ( $task->latest_appointment_booking_time=="No more than 4 months in the future") ? 'selected' : '' }}>No more than 4 months in the future</option>
-                                          <option value="No more than 3 months in the future" {{ ( $task->latest_appointment_booking_time=="No more than 3 months in the future") ? 'selected' : '' }}>No more than 3 months in the future</option>
-                                          <option value="No more than 2 months in the future" {{ ( $task->latest_appointment_booking_time=="No more than 2 months in the future") ? 'selected' : '' }}>No more than 2 months in the future</option>
-                                          <option value="No more than 1 month in the future" {{ ( $task->latest_appointment_booking_time=="No more than 1 month in the future") ? 'selected' : '' }}>No more than 1 month in the future</option>
+                                          <option value="" {{ ( $latest_appointment_booking_time=="") ? 'selected' : '' }}></option>
+                                          <option value="No more than 6 months in the future" {{ ( $latest_appointment_booking_time=="No more than 6 months in the future") ? 'selected' : '' }}>No more than 6 months in the future</option>
+                                          <option value="No more than 5 months in the future" {{ ( $latest_appointment_booking_time=="No more than 5 months in the future") ? 'selected' : '' }}>No more than 5 months in the future</option>
+                                          <option value="No more than 4 months in the future" {{ ( $latest_appointment_booking_time=="No more than 4 months in the future") ? 'selected' : '' }}>No more than 4 months in the future</option>
+                                          <option value="No more than 3 months in the future" {{ ( $latest_appointment_booking_time=="No more than 3 months in the future") ? 'selected' : '' }}>No more than 3 months in the future</option>
+                                          <option value="No more than 2 months in the future" {{ ( $latest_appointment_booking_time=="No more than 2 months in the future") ? 'selected' : '' }}>No more than 2 months in the future</option>
+                                          <option value="No more than 1 month in the future" {{ ( $latest_appointment_booking_time=="No more than 1 month in the future") ? 'selected' : '' }}>No more than 1 month in the future</option>
                                        </select>
                                        <!--end::Input-->
                                     </div>
@@ -164,15 +173,18 @@
                                        <label class="required fw-semibold fs-6 mb-2">Max booking allowed</label>
                                        <!--end::Label-->
                                        <!--begin::Input-->
+                                       @php 
+                                       $max_booking_allowed = isset($task->max_booking_allowed) ? $task->max_booking_allowed : "";
+                                       @endphp
                                        <select aria-label="Max booking allowed" name="max_booking_allowed" data-control="select2" data-placeholder="Max booking allowed..." class="form-select mb-2">
-                                          <option value="" {{ ( $task->max_booking_allowed=="") ? 'selected' : '' }}></option>
-                                          <option value="4" {{ ( $task->max_booking_allowed=="4") ? 'selected' : '' }}>4</option>
-                                          <option value="5" {{ ( $task->max_booking_allowed=="5") ? 'selected' : '' }}>5</option>
-                                          <option value="6" {{ ( $task->max_booking_allowed=="6") ? 'selected' : '' }}>6</option>
-                                          <option value="7" {{ ( $task->max_booking_allowed=="7") ? 'selected' : '' }}>7</option>
-                                          <option value="8" {{ ( $task->max_booking_allowed=="8") ? 'selected' : '' }}>8</option>
-                                          <option value="9" {{ ( $task->max_booking_allowed=="9") ? 'selected' : '' }}>9</option>
-                                          <option value="10" {{ ( $task->max_booking_allowed=="10") ? 'selected' : '' }}>10</option>
+                                          <option value="" {{ ( $max_booking_allowed=="") ? 'selected' : '' }}></option>
+                                          <option value="4" {{ ( $max_booking_allowed=="4") ? 'selected' : '' }}>4</option>
+                                          <option value="5" {{ ( $max_booking_allowed=="5") ? 'selected' : '' }}>5</option>
+                                          <option value="6" {{ ( $max_booking_allowed=="6") ? 'selected' : '' }}>6</option>
+                                          <option value="7" {{ ( $max_booking_allowed=="7") ? 'selected' : '' }}>7</option>
+                                          <option value="8" {{ ( $max_booking_allowed=="8") ? 'selected' : '' }}>8</option>
+                                          <option value="9" {{ ( $max_booking_allowed=="9") ? 'selected' : '' }}>9</option>
+                                          <option value="10" {{ ( $max_booking_allowed=="10") ? 'selected' : '' }}>10</option>
                                        </select>
                                        <!--end::Input-->
                                     </div>
