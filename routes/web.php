@@ -122,6 +122,7 @@ Route::get('admin/setting/edit-partnerdetails-status/{id}/{status}', [CountryCon
 Route::get('admin/setting/edit-disablecity-status/{id}/{status}', [CountryController::class,'changeDisableCityStatus']);
 Route::get('admin/setting/edit-role-status/{id}/{status}', [ParterConfigController::class,'changeRoleStatus']);
 
+Route::get('admin/services/services-config/get-subcategory/{id}', [ServicesConfigController::class,'getStateAjax']);
 
 Route::get('partner/settings',[PartnerSettingController::class,'index'])->name('settings.indexp');
 Route::get('partner/venue-setting',[VenueController::class,'index'])->name('venue.index');
@@ -146,7 +147,7 @@ Route::get('partner/venue-setting',[VenueController::class,'index'])->name('venu
     Route::get('admin/add-servicecategory/enable-status/{id}', [ServicesConfigController::class, 'enabled']);
     Route::get('admin/add-servicecategory/disable-status/{id}', [ServicesConfigController::class, 'disabled']);
 
-    
+    Route::post('admin/services/addservice',[ServicesConfigController::class,'addservice']);
     Route::post('admin/services/servicesubcategory',[ServicesConfigController::class,'store']);
 });
 

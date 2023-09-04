@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers\Admin;
 use App\Models\Admin\ServiceCategory;
+use App\Models\Admin\Service;
 use App\Models\Admin\ServiceSubCategory;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Facades\DB;
 class ServicesConfigController extends Controller
 {
     public function index()
@@ -14,8 +16,11 @@ class ServicesConfigController extends Controller
     	$meta_description  = "";
     	$meta_keywords     = "";
         $sercat=ServiceCategory::all();
-        
-        return view('admin/services/services-config/index', compact('title', 'meta_description', 'meta_keywords','sercat'));
+        $shares = DB::table('services')
+        ->leftjoin('service_categories', 'services.categoryid', '=', 'service_categories.id')
+        ->leftjoin('service_sub_categories', 'service_sub_categories.servicesubcategoryid', '=', 'services.subcategoryid')
+        ->get(); 
+        return view('admin/services/services-config/index', compact('title', 'meta_description', 'meta_keywords','sercat','shares'));
     }
 
     public function create(Request $request)
@@ -70,9 +75,30 @@ class ServicesConfigController extends Controller
     {
     	
         $ssc = new ServiceSubCategory;  
-        $ssc->category =  $request->get('category');  
-        $ssc->subcategory = $request->get('subcategory');  
+        $ssc->categoryid =  $request->get('category');  
+        $ssc->servicesubcategory = $request->get('subcategory');  
         $ssc->save();
         return redirect()->back()->with('message', 'Service SubCategory created successfully.');
+    }
+
+    public function getStateAjax($category_id){
+
+        $getSubcategory = ServiceSubCategory::where('categoryid','=',$category_id)->orderBy('servicesubcategory','asc')->get(['servicesubcategoryid','servicesubcategory']);
+        // echo "<pre>"; print_r($getSubcategory);die;
+        foreach ($getSubcategory as $getAll) {
+            echo '<option value="'.$getAll->servicesubcategoryid.'">'.$getAll->servicesubcategory.'</option>';
+        }
+    }
+
+    public function addservice(Request $request)
+    {
+    	
+        $s = new Service;  
+        $s->categoryid =  $request->get('category');  
+        $s->subcategoryid = $request->get('dis_subcategory');
+        $s->servicename = $request->get('servicename');
+        $s->is_active 	= 1;   
+        $s->save();
+        return redirect()->back()->with('messageservice', 'Services created successfully.');
     }
 }
