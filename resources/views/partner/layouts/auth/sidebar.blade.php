@@ -1,3 +1,6 @@
+@if(Request::is('partner/reports'))
+	<div class="app-wrapper flex-column flex-row-fluid" id="kt_app_wrapper2">
+@endif
 <!--begin::Sidebar-->
 <div id="kt_app_sidebar" class="app-sidebar" data-kt-drawer="true" data-kt-drawer-name="app-sidebar" data-kt-drawer-activate="{default: true, lg: false}" data-kt-drawer-overlay="true" data-kt-drawer-width="auto" data-kt-drawer-direction="start" data-kt-drawer-toggle="#kt_app_sidebar_mobile_toggle">
 	<!--begin::Sidebar primary-->
@@ -9,7 +12,7 @@
 				<!--begin::Navbar item-->
 				<li class="nav-item py-1">
 					<!--begin::Navbar link-->
-					<a href="/dasalon-html/partners/home.html" class="nav-link py-4 px-1 btn asidenav active">
+					<a href="{{ url('/partner/dashoard') }}" class="nav-link py-4 px-1 btn asidenav {{ Request::is('partner/dashoard') ? 'active' : '' }}">
 						<i class="ki-outline ki-questionnaire-tablet fs-1"></i>
 						<span class="pt-2 fs-9 fs-lg-7 fw-bold">Home</span>
 					</a>
@@ -19,7 +22,7 @@
 				<!--begin::Navbar item-->
 				<li class="nav-item py-1">
 					<!--begin::Navbar link-->
-					<a href="/dasalon-html/partners/calender.html" class="nav-link py-4 px-1 btn asidenav">
+					<a href="{{ route('calender.index') }}" class="nav-link py-4 px-1 btn asidenav {{ Request::is('partner/calender') ? 'active' : '' }}">
 						<i class="ki-outline ki-abstract-26 fs-1"></i>
 						<span class="pt-2 fs-9 fs-lg-7 fw-bold">Calender</span>
 					</a>
@@ -29,7 +32,7 @@
 				<!--begin::Navbar item-->
 				<li class="nav-item py-1">
 					<!--begin::Navbar link-->
-					<a href="/dasalon-html/partners/appointments.html" class="nav-link py-4 px-1 btn asidenav">
+					<a href="{{ route('appointments.index') }}" class="nav-link py-4 px-1 btn asidenav {{ Request::is('partner/appointments') ? 'active' : '' }}">
 						<i class="ki-outline ki-notification-status fs-1"></i>
 						<span class="pt-2 fs-9 fs-lg-7 fw-bold">Appointments</span>
 					</a>
@@ -39,7 +42,7 @@
 				<!--begin::Navbar item-->
 				<li class="nav-item py-1">
 					<!--begin::Navbar link-->
-					<a href="/dasalon-html/partners/clients.html" class="nav-link py-4 px-1 btn asidenav">
+					<a href="{{ route('clients.index') }}" class="nav-link py-4 px-1 btn asidenav {{ Request::is('partner/clients') ? 'active' : '' }}">
 						<i class="ki-outline ki-message-notif fs-1"></i>
 						<span class="pt-2 fs-9 fs-lg-7 fw-bold">Clients</span>
 					</a>
@@ -49,7 +52,7 @@
 				<!--begin::Navbar item-->
 				<li class="nav-item py-1">
 					<!--begin::Navbar link-->
-					<a href="/dasalon-html/partners/services.html" class="nav-link py-4 px-1 btn asidenav">
+					<a href="{{ route('services.index') }}" class="nav-link py-4 px-1 btn asidenav {{ Request::is('partner/services') ? 'active' : '' }}">
 						<i class="ki-outline ki-rocket fs-1"></i>
 						<span class="pt-2 fs-9 fs-lg-7 fw-bold">Catalog</span>
 					</a>
@@ -59,7 +62,7 @@
 				<!--begin::Navbar item-->
 				<li class="nav-item py-1">
 					<!--begin::Navbar link-->
-					<a href="/dasalon-html/partners/promote.html" class="nav-link py-4 px-1 btn asidenav">
+					<a href="{{ route('promote.index') }}" class="nav-link py-4 px-1 btn asidenav {{ Request::is('partner/promote') ? 'active' : '' }}">
 						<i class="ki-outline ki-chart-line fs-1"></i>
 						<span class="pt-2 fs-9 fs-lg-7 fw-bold">Promote</span>
 					</a>
@@ -70,7 +73,7 @@
 				<!--begin::Navbar item-->
 				<li class="nav-item py-1">
 					<!--begin::Navbar link-->
-					<a href="/dasalon-html/partners/reports.html" class="nav-link py-4 px-1 btn asidenav">
+					<a href="{{ route('reports.index') }}" class="nav-link py-4 px-1 btn asidenav {{ Request::is('partner/reports') ? 'active' : '' }}">
 						<i class="ki-outline ki-chart-line fs-1"></i>
 						<span class="pt-2 fs-9 fs-lg-7 fw-bold">Reports</span>
 					</a>
@@ -80,7 +83,7 @@
 				<!--begin::Navbar item-->
 				<li class="nav-item py-1">
 					<!--begin::Navbar link-->
-					<a href="/dasalon-html/partners/settings.html" class="nav-link py-4 px-1 btn asidenav">
+					<a href="{{ url('partner/settings') }}" class="nav-link py-4 px-1 btn asidenav {{ Request::is('partner/settings') ? 'active' : '' }}">
 						<i class="ki-outline ki-chart-line fs-1"></i>
 						<span class="pt-2 fs-9 fs-lg-7 fw-bold">Settings</span>
 					</a>
@@ -94,5 +97,8 @@
 
 	</div>
 	<!--end::Sidebar primary-->
+	@if(Request::is('partner/reports'))
+		@include('partner.layouts.auth.secondary-sidebar')
+	@endif
 </div>
 <!--end::Sidebar-->

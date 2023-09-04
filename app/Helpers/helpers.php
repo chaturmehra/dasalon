@@ -20,6 +20,15 @@ function getCountryConfigList(){
 	$countryList = CountryConfig::leftJoin('countries', 'country_config.country_id', '=', 'countries.id')->where('status',1)->get(['name','countries.id']);
 	return $countryList;
 }
+function adminAmenityCategories(){
+    $amenityList = [
+        'Venue'         => 'Venue',
+        'Access'        => 'Access',
+        'Products Used' => 'Products Used',
+        'Brands'        => 'Brands',
+    ];
+    return $amenityList;
+}
 
 if (!function_exists('loadScript')) {
     function loadScript( $src = "" ) {

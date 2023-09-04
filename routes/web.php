@@ -5,11 +5,17 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\Admin\SettingController as SettingController;
 use App\Http\Controllers\Partner\SettingController as PartnerSettingController;
 use App\Http\Controllers\Partner\UserController;
-use App\Http\Controllers\Admin\CountryController;
 use App\Http\Controllers\Partner\VenueController;
+use App\Http\Controllers\Partner\PartnerController;
+use App\Http\Controllers\Partner\CalenderController;
+use App\Http\Controllers\Partner\AppointmentsController;
+use App\Http\Controllers\Partner\ClientsController;
+use App\Http\Controllers\Partner\ServicesController;
+use App\Http\Controllers\Partner\PromoteController;
+use App\Http\Controllers\Partner\ReportsController;
+use App\Http\Controllers\Admin\CountryController;
 use App\Http\Controllers\Admin\AmenityController;
 use App\Http\Controllers\Admin\ParterConfigController;
-use App\Http\Controllers\Partner\PartnerController;
 use App\Http\Controllers\Admin\SystemAdminController;
 use App\Http\Controllers\Admin\SystemManagerController;
 use App\Http\Controllers\Admin\AppointmentController;
@@ -126,9 +132,6 @@ Route::middleware(['auth'])->group(function () {
 
     Route::get('admin/setting/edit-salon-status/{id}/{statussalon}', [ParterConfigController::class, 'changeSalonStatus']);
 
-    Route::get('partner/settings', [PartnerSettingController::class, 'index'])->name('settings.index');
-    Route::get('partner/venue-setting', [VenueController::class, 'index'])->name('venue.index');
-
     Route::get('admin/settings/appointment', [AppointmentController::class, 'index'])->name('settings.appointment');
 
     Route::get('admin/settings/subscription', [SubscriptionController::class, 'index'])->name('settings.subscription');
@@ -150,12 +153,6 @@ Route::middleware(['auth'])->group(function () {
     Route::get('admin/setting/edit-disablecity-status/{id}/{status}', [CountryController::class, 'changeDisableCityStatus']);
     Route::get('admin/setting/edit-role-status/{id}/{status}', [ParterConfigController::class, 'changeRoleStatus']);
 
-
-    Route::get('partner/settings', [PartnerSettingController::class, 'index'])->name('settings.indexp');
-    Route::get('partner/venue-setting', [VenueController::class, 'index'])->name('venue.index');
-    Route::get('partner/settings', [PartnerSettingController::class, 'index'])->name('settings.index');
-    Route::get('partner/venue-setting', [VenueController::class, 'index'])->name('venue.index');
-
     Route::get('admin/settings/appointment', [AppointmentController::class, 'index'])->name('settings.appointment');
     Route::post('admin/settings/appointment', [AppointmentController::class, 'create']);
     Route::get('admin/settings/subscription', [SubscriptionController::class, 'index'])->name('settings.subscription');
@@ -176,6 +173,16 @@ Route::middleware(['auth'])->group(function () {
 
 
     Route::post('admin/services/servicesubcategory', [ServicesConfigController::class, 'store']);
+
+    Route::get('partner/settings', [PartnerSettingController::class, 'index'])->name('settings.index');
+    Route::get('partner/venue-setting', [VenueController::class, 'index'])->name('venue.index');
+    Route::get('partner/calender', [CalenderController::class, 'index'])->name('calender.index');
+    Route::get('partner/appointments', [AppointmentsController::class, 'index'])->name('appointments.index');
+    Route::get('partner/clients', [ClientsController::class, 'index'])->name('clients.index');
+    Route::get('partner/services', [ServicesController::class, 'index'])->name('services.index');
+    Route::get('partner/promote', [PromoteController::class, 'index'])->name('promote.index');
+    Route::get('partner/reports', [ReportsController::class, 'index'])->name('reports.index');
+
 });
 
 /*Partner Route*/

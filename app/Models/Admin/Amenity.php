@@ -15,6 +15,7 @@ class Amenity extends Model
         'partner_type',
         'amenity_icon',
         'amenity_type',
+        'amenity_category',
         'status',
     ];
 }

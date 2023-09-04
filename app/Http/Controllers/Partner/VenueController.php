@@ -9,6 +9,10 @@ class VenueController extends Controller
    
     public function index()
     {
-        return view('partner/setting/venue/index');
+    	$title             = "Dasalon :: Venue";
+    	$meta_description  = "";
+    	$meta_keywords     = "";
+
+        return view('partner/setting/venue/index', compact('title', 'meta_description', 'meta_keywords'));
     }
 }

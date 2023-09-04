@@ -1,20 +1,8 @@
 <!DOCTYPE html>
-<!--
-Author: Keenthemes
-Product Name: Metronic
-Product Version: 8.1.8
-Purchase: https://1.envato.market/EA4JP
-Website: http://www.keenthemes.com
-Contact: support@keenthemes.com
-Follow: www.twitter.com/keenthemes
-Dribbble: www.dribbble.com/keenthemes
-Like: www.facebook.com/keenthemes
-License: For each use you must have a valid license purchased only from above link in order to legally use the theme for your project.
--->
 <html lang="en">
 	<!--begin::Head-->
 	<head><base href=""/>
-		<title>{{ isset($title) ? $title : "Dasalon Partner" }}</title>
+		<title>{{ isset($title) ? $title : "Dasalon" }}</title>
 		<meta charset="utf-8" />
 		<meta name="description" content="{{ isset($meta_description) ? $meta_description : '' }}" />
 		<meta name="keywords" content="{{ isset($meta_keywords) ? $meta_keywords : '' }}" />
@@ -30,14 +18,14 @@ License: For each use you must have a valid license purchased only from above li
 		<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inter:300,400,500,600,700" />
 		<!--end::Fonts-->
 		<!--begin::Vendor Stylesheets(used for this page only)-->
-		
-		<link href="{{ asset('/public/partner/assets/plugins/custom/fullcalendar/fullcalendar.bundle.css') }}" rel="stylesheet" type="text.css" />
-		<link href="{{ asset('/public/partner/assets/plugins/custom/datatables/datatables.bundle.css') }}" rel="stylesheet" type="text.css" />
+		<link href="{{ asset('/public/partner/assets/plugins/custom/fullcalendar/fullcalendar.bundle.css') }}" rel="stylesheet" type="text/css" />
+		<link href="{{ asset('/public/partner/assets/plugins/custom/datatables/datatables.bundle.css') }}" rel="stylesheet" type="text/css" />
 		<!--end::Vendor Stylesheets-->
 		<!--begin::Global Stylesheets Bundle(mandatory for all pages)-->
-		<link href="{{ asset('/public/partner/assets/plugins/global/plugins.bundle.css') }}" rel="stylesheet" type="text.css" />
-		<link href="{{ asset('/public/partner/assets/css/style.bundle.css') }}" rel="stylesheet" type="text.css" />
-		<link href="{{ asset('/public/partner/assets/css/style.css') }}" rel="stylesheet" type="text.css" />
+		<link href="{{ asset('/public/partner/assets/plugins/global/plugins.bundle.css') }}" rel="stylesheet" type="text/css" />
+		<link href="{{ asset('/public/partner/assets/css/style.bundle.css') }}" rel="stylesheet" type="text/css" />
+		<link href="{{ asset('/public/partner/assets/css/style.css') }}" rel="stylesheet" type="text/css" />
+		<link href="{{ asset('/public/assets/css/custom.css') }}" rel="stylesheet" type="text/css" />
 		<!--end::Global Stylesheets Bundle-->
 	</head>
 	<!--end::Head-->
@@ -1505,9 +1493,9 @@ License: For each use you must have a valid license purchased only from above li
 													<!--end::Avatar-->
 													<!--begin::Username-->
 													<div class="d-flex flex-column">
-														<div class="fw-bold d-flex align-items-center fs-5">Max Smith
+														<div class="fw-bold d-flex align-items-center fs-5">{{@Auth::user()->name}}
 														<span class="badge badge-light-success fw-bold fs-8 px-2 py-1 ms-2">Pro</span></div>
-														<a href="#" class="fw-semibold text-muted text-hover-primary fs-7">max@kt.com</a>
+														<a href="#" class="fw-semibold text-muted text-hover-primary fs-7">{{@Auth::user()->email}}</a>
 													</div>
 													<!--end::Username-->
 												</div>
@@ -1702,8 +1690,11 @@ License: For each use you must have a valid license purchased only from above li
 											<!--end::Menu item-->
 											<!--begin::Menu item-->
 											<div class="menu-item px-5">
-												<a href="../../demo31/dist/authentication/layouts/corporate/sign-in.html" class="menu-link px-5">Sign Out</a>
+												<a href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();" class="menu-link px-5">Sign Out</a>
 											</div>
+											<form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                                              @csrf
+                                              </form>
 											<!--end::Menu item-->
 										</div>
 										<!--end::User account menu-->
