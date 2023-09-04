@@ -476,10 +476,12 @@
                                                       <!--end::Label-->
                                                       <!--begin::Input-->
                                                       <select class="form-select mb-2" name="category" data-control="select2" data-placeholder="Select a Category...">
-                                                         <option></option>
-                                                         <option value="1">Hair</option>
-                                                         <option value="2">Face Care</option>
-                                                         <option value="3">Nail</option>
+                                                      @foreach($sercat as $serc)  
+                                                      <option></option>
+                                                         <option value="{{$serc->id}}">{{$serc->category}}</option>
+                                                         <!-- <option value="2">Face Care</option>
+                                                         <option value="3">Nail</option> -->
+                                                     @endforeach
                                                       </select>
                                                       <!--end::Input-->
                                                    </div>
@@ -617,6 +619,13 @@
                         <div class="card-header">
                            <h2 class="page-heading d-flex text-dark fw-bold fs-3 flex-column justify-content-center my-0">Service name</h2>
                         </div>
+                        @if(session()->has('messageservice'))
+               <div class="card-header display-message">
+                  <div class="alert alert-success">
+                     {{ session()->get('messageservice') }}
+                  </div>
+               </div>
+               @endif
                         <!--begin::Card header-->
                         <div class="card-header align-items-center pb-5 gap-2 gap-md-5 pt-5">
                            <!--begin::Card title-->
@@ -656,8 +665,9 @@
                                           </div>
                                           <div class="modal-body">
                                              <!--begin::Form-->
-                                             <form class="form">
-                                                <!--begin::Scroll-->
+                                             <form class="form" action = "{{ url('admin/services/addservice')}}" method = "post">
+                                             @csrf   
+                                             <!--begin::Scroll-->
                                                 <div class="d-flex flex-column scroll-y me-n7 pe-7">
                                                    <!--begin::Input group-->
                                                    <div class="fv-row mb-7">
@@ -665,11 +675,13 @@
                                                       <label class="required fw-semibold fs-6 mb-2">Category</label>
                                                       <!--end::Label-->
                                                       <!--begin::Input-->
-                                                      <select class="form-select mb-2" data-control="select2" data-placeholder="Select a Category...">
-                                                         <option></option>
-                                                         <option value="1">Hair</option>
-                                                         <option value="2">Face Care</option>
-                                                         <option value="3">Nail</option>
+                                                      <select class="form-select mb-2 select_category" name="category" data-control="select2" data-placeholder="Select a Category...">
+                                                      @foreach($sercat as $serc)     
+                                                      <option></option>
+                                                         <option value="{{$serc->id}}">{{$serc->category}}</option>
+                                                         <!-- <option value="2">Face Care</option>
+                                                         <option value="3">Nail</option> -->
+                                                     @endforeach
                                                       </select>
                                                       <!--end::Input-->
                                                    </div>
@@ -680,10 +692,10 @@
                                                       <label class="required fw-semibold fs-6 mb-2">Sub category</label>
                                                       <!--end::Label-->
                                                       <!--begin::Input-->
-                                                      <select class="form-select mb-2" data-control="select2" data-placeholder="Select a Sub Category...">
-                                                         <option></option>
+                                                      <select class="form-select mb-2" name="dis_subcategory" id="dis_subcategory" data-control="select2" data-placeholder="Select a Sub Category...">
+                                                         <!-- <option></option>
                                                          <option value="1">Hair Cut style</option>
-                                                         <option value="2">Hair Color</option>
+                                                         <option value="2">Hair Color</option> -->
                                                       </select>
                                                       <!--end::Input-->
                                                    </div>
@@ -694,7 +706,7 @@
                                                       <label class="required fw-semibold fs-6 mb-2">Service Name</label>
                                                       <!--end::Label-->
                                                       <!--begin::Input-->
-                                                      <input type="text" name="" class="form-control form-control-solid mb-3 mb-lg-0" placeholder="Service name"/>
+                                                      <input type="text" name="servicename" class="form-control form-control-solid mb-3 mb-lg-0" placeholder="Service name"/>
                                                       <!--end::Input-->
                                                    </div>
                                                    <!--end::Input group-->
@@ -739,13 +751,25 @@
                                  </tr>
                               </thead>
                               <tbody class="text-gray-600 fw-semibold">
-                                 <tr>
-                                    <td>1</td>
-                                    <td>Hair cut style</td>
-                                    <td>Hair</td>
-                                    <td>Hair cut</td>
+                              @if( !empty($shares) )
+                        @foreach($shares as $key => $share)
+                           @php
+                              $status = $share->is_active;
+                              if($status == 1 ){
+                                 $status = "Enabled";
+                                 $class 	= "success";
+                              }else{
+                                 $status = "Disabled";
+                                 $class 	= "danger";
+                              }
+                           @endphp  
+                              <tr>
+                                    <td>{{ $key+1 }}</td>
+                                    <td>{{ $share->servicename }}</td>
+                                    <td>{{ $share->category }}</td>
+                                    <td>{{ $share->servicesubcategory }}</td>
                                     <td>
-                                       <div class="badge badge-light-success fw-bold">Enabled</div>
+                                       <div class="badge badge-light-{{ $class }} fw-bold">{{ $status }}</div>
                                     </td>
                                     <td class="text-end">
                                        <a href="#" class="btn btn-light btn-active-light-primary btn-flex btn-center btn-sm" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end">Actions
@@ -769,156 +793,8 @@
                                        <!--end::Menu-->
                                     </td>
                                  </tr>
-                                 <tr>
-                                    <td>2</td>
-                                    <td>Children hair cut</td>
-                                    <td>Hair</td>
-                                    <td>Hair cut</td>
-                                    <td>
-                                       <div class="badge badge-light-success fw-bold">Enabled</div>
-                                    </td>
-                                    <td class="text-end">
-                                       <a href="#" class="btn btn-light btn-active-light-primary btn-flex btn-center btn-sm" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end">Actions
-                                       <i class="ki-duotone ki-down fs-5 ms-1"></i></a>
-                                       <!--begin::Menu-->
-                                       <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-600 menu-state-bg-light-primary fw-semibold fs-7 w-125px py-4" data-kt-menu="true">
-                                          <!--begin::Menu item-->
-                                          <div class="menu-item px-3">
-                                             <a href="" class="menu-link px-3">Enable</a>
-                                          </div>
-                                          <!--end::Menu item-->
-                                          <!--begin::Menu item-->
-                                          <div class="menu-item px-3">
-                                             <a href="" class="menu-link px-3">Disable</a>
-                                          </div>
-                                          <!--end::Menu item-->
-                                          <div class="menu-item px-3">
-                                             <a href="" data-bs-toggle="modal" data-bs-target="#kt_modal_service" class="menu-link px-3">Edit</a>
-                                          </div>
-                                       </div>
-                                       <!--end::Menu-->
-                                    </td>
-                                 </tr>
-                                 <tr>
-                                    <td>3</td>
-                                    <td>Color Highlight</td>
-                                    <td>Hair</td>
-                                    <td>Hair Color</td>
-                                    <td>
-                                       <div class="badge badge-light-success fw-bold">Enabled</div>
-                                    </td>
-                                    <td class="text-end">
-                                       <a href="#" class="btn btn-light btn-active-light-primary btn-flex btn-center btn-sm" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end">Actions
-                                       <i class="ki-duotone ki-down fs-5 ms-1"></i></a>
-                                       <!--begin::Menu-->
-                                       <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-600 menu-state-bg-light-primary fw-semibold fs-7 w-125px py-4" data-kt-menu="true">
-                                          <!--begin::Menu item-->
-                                          <div class="menu-item px-3">
-                                             <a href="" class="menu-link px-3">Enable</a>
-                                          </div>
-                                          <!--end::Menu item-->
-                                          <!--begin::Menu item-->
-                                          <div class="menu-item px-3">
-                                             <a href="" class="menu-link px-3">Disable</a>
-                                          </div>
-                                          <!--end::Menu item-->
-                                          <div class="menu-item px-3">
-                                             <a href="" data-bs-toggle="modal" data-bs-target="#kt_modal_service" class="menu-link px-3">Edit</a>
-                                          </div>
-                                       </div>
-                                       <!--end::Menu-->
-                                    </td>
-                                 </tr>
-                                 <tr>
-                                    <td>4</td>
-                                    <td>Long Hair Color</td>
-                                    <td>Hair</td>
-                                    <td>Hair Color</td>
-                                    <td>
-                                       <div class="badge badge-light-success fw-bold">Enabled</div>
-                                    </td>
-                                    <td class="text-end">
-                                       <a href="#" class="btn btn-light btn-active-light-primary btn-flex btn-center btn-sm" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end">Actions
-                                       <i class="ki-duotone ki-down fs-5 ms-1"></i></a>
-                                       <!--begin::Menu-->
-                                       <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-600 menu-state-bg-light-primary fw-semibold fs-7 w-125px py-4" data-kt-menu="true">
-                                          <!--begin::Menu item-->
-                                          <div class="menu-item px-3">
-                                             <a href="" class="menu-link px-3">Enable</a>
-                                          </div>
-                                          <!--end::Menu item-->
-                                          <!--begin::Menu item-->
-                                          <div class="menu-item px-3">
-                                             <a href="" class="menu-link px-3">Disable</a>
-                                          </div>
-                                          <!--end::Menu item-->
-                                          <div class="menu-item px-3">
-                                             <a href="" data-bs-toggle="modal" data-bs-target="#kt_modal_service" class="menu-link px-3">Edit</a>
-                                          </div>
-                                       </div>
-                                       <!--end::Menu-->
-                                    </td>
-                                 </tr>
-                                 <tr>
-                                    <td>5</td>
-                                    <td>D- Tan - Oxy</td>
-                                    <td>Face care</td>
-                                    <td>D- Tan</td>
-                                    <td>
-                                       <div class="badge badge-light-success fw-bold">Enabled</div>
-                                    </td>
-                                    <td class="text-end">
-                                       <a href="#" class="btn btn-light btn-active-light-primary btn-flex btn-center btn-sm" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end">Actions
-                                       <i class="ki-duotone ki-down fs-5 ms-1"></i></a>
-                                       <!--begin::Menu-->
-                                       <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-600 menu-state-bg-light-primary fw-semibold fs-7 w-125px py-4" data-kt-menu="true">
-                                          <!--begin::Menu item-->
-                                          <div class="menu-item px-3">
-                                             <a href="" class="menu-link px-3">Enable</a>
-                                          </div>
-                                          <!--end::Menu item-->
-                                          <!--begin::Menu item-->
-                                          <div class="menu-item px-3">
-                                             <a href="" class="menu-link px-3">Disable</a>
-                                          </div>
-                                          <!--end::Menu item-->
-                                          <div class="menu-item px-3">
-                                             <a href="" data-bs-toggle="modal" data-bs-target="#kt_modal_service" class="menu-link px-3">Edit</a>
-                                          </div>
-                                       </div>
-                                       <!--end::Menu-->
-                                    </td>
-                                 </tr>
-                                 <tr>
-                                    <td>6</td>
-                                    <td>D- Tan - O3</td>
-                                    <td>Face care</td>
-                                    <td>D- Tan</td>
-                                    <td>
-                                       <div class="badge badge-light-success fw-bold">Enabled</div>
-                                    </td>
-                                    <td class="text-end">
-                                       <a href="#" class="btn btn-light btn-active-light-primary btn-flex btn-center btn-sm" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end">Actions
-                                       <i class="ki-duotone ki-down fs-5 ms-1"></i></a>
-                                       <!--begin::Menu-->
-                                       <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-600 menu-state-bg-light-primary fw-semibold fs-7 w-125px py-4" data-kt-menu="true">
-                                          <!--begin::Menu item-->
-                                          <div class="menu-item px-3">
-                                             <a href="" class="menu-link px-3">Enable</a>
-                                          </div>
-                                          <!--end::Menu item-->
-                                          <!--begin::Menu item-->
-                                          <div class="menu-item px-3">
-                                             <a href="" class="menu-link px-3">Disable</a>
-                                          </div>
-                                          <!--end::Menu item-->
-                                          <div class="menu-item px-3">
-                                             <a href="" data-bs-toggle="modal" data-bs-target="#kt_modal_service" class="menu-link px-3">Edit</a>
-                                          </div>
-                                       </div>
-                                       <!--end::Menu-->
-                                    </td>
-                                 </tr>
+                                 @endforeach
+                        @endif
                               </tbody>
                            </table>
                            <!--end::Table-->
@@ -1360,5 +1236,6 @@
    </div>
    <!--end::Content wrapper-->
 </div>
-
 @endsection
+
+
