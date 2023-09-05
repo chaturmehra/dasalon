@@ -134,7 +134,7 @@ Route::middleware(['auth'])->group(function () {
 
     Route::get('admin/settings/appointment', [AppointmentController::class, 'index'])->name('settings.appointment');
 
-    Route::get('admin/settings/subscription', [SubscriptionController::class, 'index'])->name('settings.subscription');
+Route::get('admin/services/services-config/get-subcategory/{id}', [ServicesConfigController::class,'getStateAjax']);
 
     Route::get('admin/settings/payment-gateway', [PaymentGatewayController::class, 'index'])->name('settings.payment-gateway');
 
@@ -183,6 +183,8 @@ Route::middleware(['auth'])->group(function () {
     Route::get('partner/promote', [PromoteController::class, 'index'])->name('promote.index');
     Route::get('partner/reports', [ReportsController::class, 'index'])->name('reports.index');
 
+    Route::post('admin/services/addservice',[ServicesConfigController::class,'addservice']);
+    Route::post('admin/services/servicesubcategory',[ServicesConfigController::class,'store']);
 });
 
 /*Partner Route*/

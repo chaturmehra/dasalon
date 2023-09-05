@@ -4132,7 +4132,8 @@
 			//     KTDatatablesExample3.init();
 			// });
 		</script>
-		
+		<script src="{{asset('/assets/js/services.js')}}" type="text/javascript"></script>
+
 	</body>
 	<!--end::Body-->
 </html>
