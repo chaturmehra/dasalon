@@ -115,6 +115,7 @@ class PartnerController extends Controller
                 'name'      => $name,
                 'email'     => $email,
                 'phone'     => "",
+                'country'   => "",
                 'role'      => 1,
             ]);
 
@@ -205,6 +206,7 @@ class PartnerController extends Controller
                 'name'      => $request->businessname,
                 'email'     => $email,
                 'phone'     => $request->phone,
+                'country'   => "",
                 'role'      => 1,
                 'is_active' => 1,
             ]);
@@ -282,6 +284,7 @@ class PartnerController extends Controller
             'name'      => $request->name,
             'email'     => $email,
             'phone'     => $request->phone,
+            'country'   => "",
             'role'      => 2,
             'is_active' => 1,
         ]);

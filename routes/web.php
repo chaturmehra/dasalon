@@ -42,7 +42,7 @@ use App\Http\Controllers\TwilioSMSController;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('partner/user/sign-in');
 });
 Route::get('/admin/login', function () {
     return view('welcome');
@@ -175,7 +175,10 @@ Route::get('admin/services/services-config/get-subcategory/{id}', [ServicesConfi
     Route::post('admin/services/servicesubcategory', [ServicesConfigController::class, 'store']);
 
     Route::get('partner/settings', [PartnerSettingController::class, 'index'])->name('settings.index');
+
     Route::get('partner/venue-setting', [VenueController::class, 'index'])->name('venue.index');
+    Route::post('partner/store-venue-setting', [VenueController::class, 'storeVenues']);
+
     Route::get('partner/calender', [CalenderController::class, 'index'])->name('calender.index');
     Route::get('partner/appointments', [AppointmentsController::class, 'index'])->name('appointments.index');
     Route::get('partner/clients', [ClientsController::class, 'index'])->name('clients.index');
