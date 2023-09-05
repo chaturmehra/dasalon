@@ -626,6 +626,20 @@
                   </div>
                </div>
                @endif
+               @if(session()->has('messagestatus'))
+               <div class="card-header display-message">
+                  <div class="alert alert-success">
+                     {{ session()->get('messagestatus') }}
+                  </div>
+               </div>
+               @endif
+               @if(session()->has('errorstatus'))
+               <div class="card-header display-message">
+                  <div class="alert alert-danger">
+                     {{ session()->get('errorstatus') }}
+                  </div>
+               </div>
+               @endif
                         <!--begin::Card header-->
                         <div class="card-header align-items-center pb-5 gap-2 gap-md-5 pt-5">
                            <!--begin::Card title-->
@@ -754,12 +768,12 @@
                               @if( !empty($shares) )
                         @foreach($shares as $key => $share)
                            @php
-                              $status = $share->is_active;
-                              if($status == 1 ){
-                                 $status = "Enabled";
+                              $statusservice = $share->is_active;
+                              if($statusservice==1){
+                                 $statusservice = "Enabled";
                                  $class 	= "success";
                               }else{
-                                 $status = "Disabled";
+                                 $statusservice = "Disabled";
                                  $class 	= "danger";
                               }
                            @endphp  
@@ -769,7 +783,8 @@
                                     <td>{{ $share->category }}</td>
                                     <td>{{ $share->servicesubcategory }}</td>
                                     <td>
-                                       <div class="badge badge-light-{{ $class }} fw-bold">{{ $status }}</div>
+                                      
+                                       <div class="badge badge-light-{{ $class }} fw-bold">{{ $statusservice }}</div>
                                     </td>
                                     <td class="text-end">
                                        <a href="#" class="btn btn-light btn-active-light-primary btn-flex btn-center btn-sm" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end">Actions
@@ -778,16 +793,16 @@
                                        <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-600 menu-state-bg-light-primary fw-semibold fs-7 w-125px py-4" data-kt-menu="true">
                                           <!--begin::Menu item-->
                                           <div class="menu-item px-3">
-                                             <a href="" class="menu-link px-3">Enable</a>
+                                             <a href="{{ url('/admin/add-service/enable-status/'.$share->serviceid) }}" class="menu-link px-3">Enable</a>
                                           </div>
                                           <!--end::Menu item-->
                                           <!--begin::Menu item-->
                                           <div class="menu-item px-3">
-                                             <a href="" class="menu-link px-3">Disable</a>
+                                             <a href="{{ url('/admin/add-service/disable-status/'.$share->serviceid) }}" class="menu-link px-3">Disable</a>
                                           </div>
                                           <!--end::Menu item-->
                                           <div class="menu-item px-3">
-                                             <a href="" data-bs-toggle="modal" data-bs-target="#kt_modal_service" class="menu-link px-3">Edit</a>
+                                             <a href="{{ url('/admin/service-name-manage/'.$share->serviceid) }}" data-bs-toggle="modal" data-bs-target="#kt_modal_service" class="menu-link px-3">Edit</a>
                                           </div>
                                        </div>
                                        <!--end::Menu-->
@@ -807,9 +822,17 @@
                   <!--begin::Tab pane-->
                   <div class="tab-pane fade" id="serviceconfig3" role="tab-panel">
                      <div class="card card-flush">
-                        <form class="form">
-                           <div class="card-body align-items-center py-10">
+                        <form class="form" action = "{{ url('admin/services/recommendedpackage')}}" method = "post">
+                        @csrf  
+                        <div class="card-body align-items-center py-10">
                               <h1 class="fw-bold text-dark mb-9">Add package</h1>
+                              @if(session()->has('messagerp'))
+               <div class="card-header display-message">
+                  <div class="alert alert-success">
+                     {{ session()->get('messagerp') }}
+                  </div>
+               </div>
+               @endif
                               <div class="row">
                                  <div class="col-md-3 fv-row mb-7">
                                     <h3 class="card-title align-items-start flex-column">
@@ -825,7 +848,7 @@
                                              <label class="required fw-semibold fs-6 mb-2">Package name</label>
                                              <!--end::Label-->
                                              <!--begin::Input-->
-                                             <input type="text" name="" class="form-control form-control-solid mb-3 mb-lg-0" placeholder="Package name" />
+                                             <input type="text" name="packagename" class="form-control form-control-solid mb-3 mb-lg-0" placeholder="Package name" required/>
                                              <!--end::Input-->
                                           </div>
                                           <!--end::Input group-->
@@ -837,11 +860,11 @@
                                              <label class="required fw-semibold fs-6 mb-2">Gender</label>
                                              <!--end::Label-->
                                              <!--begin::Input-->
-                                             <select aria-label="Gender" data-control="select2" data-placeholder="Gender..." class="form-select mb-2">
+                                             <select aria-label="Gender" name="gender" data-control="select2" data-placeholder="Gender..." class="form-select mb-2" required>
                                                 <option></option>
-                                                <option>Unisex</option>
-                                                <option>Male</option>
-                                                <option>Female</option>
+                                                <option value="Unisex">Unisex</option>
+                                                <option value="Male">Male</option>
+                                                <option value="Female">Female</option>
                                              </select>
                                              <!--end::Input-->
                                           </div>
@@ -863,11 +886,13 @@
                                              <label class="required fw-semibold fs-6 mb-2">Category</label>
                                              <!--end::Label-->
                                              <!--begin::Input-->
-                                             <select aria-label="Category" data-control="select2" data-placeholder="Category..." class="form-select mb-2">
-                                                <option></option>
-                                                <option>Hair</option>
-                                                <option>Face care</option>
-                                                <option>Nail</option>
+                                             <select aria-label="Category" name="categoryid" data-control="select2" data-placeholder="Category..." class="form-select mb-2 select_category2" required>
+                                             @foreach($sercat as $serc)     
+                                                      <option></option>
+                                                         <option value="{{$serc->id}}">{{$serc->category}}</option>
+                                                         <!-- <option value="2">Face Care</option>
+                                                         <option value="3">Nail</option> -->
+                                                     @endforeach
                                              </select>
                                              <!--end::Input-->
                                           </div>
@@ -880,10 +905,10 @@
                                              <label class="required fw-semibold fs-6 mb-2">Sub Category</label>
                                              <!--end::Label-->
                                              <!--begin::Input-->
-                                             <select aria-label="Sub Category" data-control="select2" data-placeholder="Sub Category..." class="form-select mb-2">
-                                                <option></option>
+                                             <select aria-label="Sub Category" name="getdis_subcategory" id="getdis_subcategory" data-control="select2" data-placeholder="Sub Category..." class="form-select mb-2 select_subcategory">
+                                                <!-- <option></option>
                                                 <option>Hair Cut</option>
-                                                <option>Hair Color</option>
+                                                <option>Hair Color</option> -->
                                              </select>
                                              <!--end::Input-->
                                           </div>
@@ -905,12 +930,15 @@
                                              <label class="required fw-semibold fs-6 mb-2">Select Service</label>
                                              <!--end::Label-->
                                              <!--begin::Input-->
-                                             <select class="form-select form-select-solid" data-control="select2" data-placeholder="Select an option" data-allow-clear="true" multiple="multiple">
-                                                <option></option>
+                                             <select class="form-select form-select-solid" name="dis_service" id="dis_service" data-control="select2" data-placeholder="Select an option" data-allow-clear="true" multiple="multiple">
+                                             
+                                             <!-- <option></option>
                                                 <option value="1">Hair Cut Style</option>
                                                 <option value="2">Children Hair Cut</option>
                                                 <option value="3">Men Hair Cut</option>
-                                                <option value="4">Women Hair Cut</option>
+                                                <option value="4">Women Hair Cut</option> -->
+
+                                            
                                              </select>
                                              <!--end::Input-->
                                           </div>
@@ -932,11 +960,14 @@
                                              <label class="required fw-semibold fs-6 mb-2">Partner type</label>
                                              <!--end::Label-->
                                              <!--begin::Input-->
-                                             <select class="form-select form-select-solid" data-control="select2" data-placeholder="Select an option" data-allow-clear="true" multiple="multiple">
-                                                <option></option>
+                                             <select class="form-select form-select-solid" name="partnerid" data-control="select2" data-placeholder="Select an option" data-allow-clear="true" multiple="multiple" required>
+                                             @foreach($pt as $p) 
+                                             <option value="{{$p->id}}">{{$p->partner_name}}</option>  
+                                             <!-- <option></option>
                                                 <option value="1">Salon</option>
                                                 <option value="2">Freelancer</option>
-                                                <option value="3">Salon with home service</option>
+                                                <option value="3">Salon with home service</option> -->
+                                             @endforeach
                                              </select>
                                              <!--end::Input-->
                                           </div>
@@ -949,7 +980,7 @@
                                              <label class="required fw-semibold fs-6 mb-2">Business type</label>
                                              <!--end::Label-->
                                              <!--begin::Input-->
-                                             <select class="form-select form-select-solid" data-control="select2" data-placeholder="Select an option" data-allow-clear="true" multiple="multiple">
+                                             <select class="form-select form-select-solid" name="businesstypeid" data-control="select2" data-placeholder="Select an option" data-allow-clear="true" multiple="multiple">
                                                 <option></option>
                                                 <option value="1">Beauty Salon</option>
                                                 <option value="2">Hair Salon</option>
@@ -977,7 +1008,7 @@
                                              <label class="required fw-semibold fs-6 mb-2">Unique id</label>
                                              <!--end::Label-->
                                              <!--begin::Input-->
-                                             <input type="text" name="" class="form-control form-control-solid mb-3 mb-lg-0" placeholder="Unique id" />
+                                             <input type="text" name="uniqueid" class="form-control form-control-solid mb-3 mb-lg-0" placeholder="Unique id"  required/>
                                              <!--end::Input-->
                                           </div>
                                           <!--end::Input group-->
@@ -998,7 +1029,7 @@
                                              <label class="required fw-semibold fs-6 mb-2">Discount</label>
                                              <!--end::Label-->
                                              <!--begin::Input-->
-                                             <input type="text" name="" class="form-control form-control-solid mb-3 mb-lg-0" placeholder="Discount" />
+                                             <input type="text" name="discount" class="form-control form-control-solid mb-3 mb-lg-0" placeholder="Discount" required/>
                                              <!--end::Input-->
                                           </div>
                                           <!--end::Input group-->
@@ -1060,162 +1091,55 @@
                               <!--end::Table head-->
                               <!--begin::Table body-->
                               <tbody class="fw-bold text-gray-600">
-                                 <!--begin::SubTable template-->
-                                 <tr data-kt-docs-datatable-subtable="subtable_template" class="d-none">
-                                    <td></td>
-                                    <td></td>
+                              @if( !empty($rp) )
+                        @foreach($rp as $key => $r)
+                           @php 
+                              $status1 = $r->is_active;
+                              if($status1 == 1 ){
+                                 $status1 = "Enabled";
+                                 $class 	= "success";
+                              }else{
+                                 $status1 = "Disabled";
+                                 $class 	= "danger";
+                              }
+                           @endphp   
+                              <!--begin::SubTable template-->
+                                 <tr data-kt-docs-datatable-subtable="subtable_template">
+                                    <td>{{ $key+1 }}</td>
+                                    <td>{{$r->created_at->format('d M Y, g:i a')}}</td>
+                                    <td>{{$r->packagename}}</td>
+                                    <td>{{$r->gender}}</td>
+                                    <td>{{$r->discount}}</td>
                                     <td>
-                                       <div class="d-flex flex-column text-muted">
-                                          <a href="#" class="text-dark text-hover-primary fw-bold" data-kt-docs-datatable-subtable="service_name">Service name</a>
+                                       <div class="badge badge-light-success fw-bold">Enabled</div>
+                                    </td>
+                                    <td class="text-end">
+                                       <a href="#" class="btn btn-light btn-active-light-primary btn-flex btn-center btn-sm" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end">Actions
+                                       <i class="ki-duotone ki-down fs-5 ms-1"></i></a>
+                                       <!--begin::Menu-->
+                                       <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-600 menu-state-bg-light-primary fw-semibold fs-7 w-125px py-4" data-kt-menu="true">
+                                          <!--begin::Menu item-->
+                                          <div class="menu-item px-3">
+                                             <a href="" class="menu-link px-3">Enable</a>
+                                          </div>
+                                          <!--end::Menu item-->
+                                          <!--begin::Menu item-->
+                                          <div class="menu-item px-3">
+                                             <a href="" class="menu-link px-3">Disable</a>
+                                          </div>
                                        </div>
+                                       <!--end::Menu-->
                                     </td>
                                     <td>
-                                       <div class="d-flex flex-column text-muted">
-                                          <a href="#" class="text-dark text-hover-primary fw-bold" data-kt-docs-datatable-subtable="service_cat_name">Category name</a>
-                                       </div>
+                                       <button type="button" class="btn btn-sm btn-icon btn-light btn-active-light-primary toggle h-25px w-25px" data-kt-docs-datatable-subtable="expand_row">
+                                       <span class="svg-icon fs-3 m-0 toggle-off">...</span>
+                                       <span class="svg-icon fs-3 m-0 toggle-on">...</span>
+                                       </button>
                                     </td>
-                                    <td>
-                                       <div class="d-flex flex-column text-muted">
-                                          <a href="#" class="text-dark text-hover-primary fw-bold" data-kt-docs-datatable-subtable="service_subcat_name">Sub category name</a>
-                                       </div>
-                                    </td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
                                  </tr>
                                  <!--end::SubTable template-->
-                                 <tr>
-                                    <td>1</td>
-                                    <td>10 Nov 2021, 10:30 am</td>
-                                    <td>Hair cut, shampoo, blow dye</td>
-                                    <td>Male</td>
-                                    <td>20%</td>
-                                    <td>
-                                       <div class="badge badge-light-success fw-bold">Enabled</div>
-                                    </td>
-                                    <td class="text-end">
-                                       <a href="#" class="btn btn-light btn-active-light-primary btn-flex btn-center btn-sm" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end">Actions
-                                       <i class="ki-duotone ki-down fs-5 ms-1"></i></a>
-                                       <!--begin::Menu-->
-                                       <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-600 menu-state-bg-light-primary fw-semibold fs-7 w-125px py-4" data-kt-menu="true">
-                                          <!--begin::Menu item-->
-                                          <div class="menu-item px-3">
-                                             <a href="" class="menu-link px-3">Enable</a>
-                                          </div>
-                                          <!--end::Menu item-->
-                                          <!--begin::Menu item-->
-                                          <div class="menu-item px-3">
-                                             <a href="" class="menu-link px-3">Disable</a>
-                                          </div>
-                                       </div>
-                                       <!--end::Menu-->
-                                    </td>
-                                    <td>
-                                       <button type="button" class="btn btn-sm btn-icon btn-light btn-active-light-primary toggle h-25px w-25px" data-kt-docs-datatable-subtable="expand_row">
-                                       <span class="svg-icon fs-3 m-0 toggle-off">...</span>
-                                       <span class="svg-icon fs-3 m-0 toggle-on">...</span>
-                                       </button>
-                                    </td>
-                                 </tr>
-                                 <tr>
-                                    <td>2</td>
-                                    <td>10 Nov 2020, 10:30 am</td>
-                                    <td>Facial, D tan</td>
-                                    <td>Female</td>
-                                    <td>30%</td>
-                                    <td>
-                                       <div class="badge badge-light-success fw-bold">Enabled</div>
-                                    </td>
-                                    <td class="text-end">
-                                       <a href="#" class="btn btn-light btn-active-light-primary btn-flex btn-center btn-sm" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end">Actions
-                                       <i class="ki-duotone ki-down fs-5 ms-1"></i></a>
-                                       <!--begin::Menu-->
-                                       <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-600 menu-state-bg-light-primary fw-semibold fs-7 w-125px py-4" data-kt-menu="true">
-                                          <!--begin::Menu item-->
-                                          <div class="menu-item px-3">
-                                             <a href="" class="menu-link px-3">Enable</a>
-                                          </div>
-                                          <!--end::Menu item-->
-                                          <!--begin::Menu item-->
-                                          <div class="menu-item px-3">
-                                             <a href="" class="menu-link px-3">Disable</a>
-                                          </div>
-                                       </div>
-                                       <!--end::Menu-->
-                                    </td>
-                                    <td>
-                                       <button type="button" class="btn btn-sm btn-icon btn-light btn-active-light-primary toggle h-25px w-25px" data-kt-docs-datatable-subtable="expand_row">
-                                       <span class="svg-icon fs-3 m-0 toggle-off">...</span>
-                                       <span class="svg-icon fs-3 m-0 toggle-on">...</span>
-                                       </button>
-                                    </td>
-                                 </tr>
-                                 <tr>
-                                    <td>3</td>
-                                    <td>10 Mar 2021, 10:30 am</td>
-                                    <td>Manicure, Pedicure, Makeup</td>
-                                    <td>Female</td>
-                                    <td>10%</td>
-                                    <td>
-                                       <div class="badge badge-light-success fw-bold">Enabled</div>
-                                    </td>
-                                    <td class="text-end">
-                                       <a href="#" class="btn btn-light btn-active-light-primary btn-flex btn-center btn-sm" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end">Actions
-                                       <i class="ki-duotone ki-down fs-5 ms-1"></i></a>
-                                       <!--begin::Menu-->
-                                       <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-600 menu-state-bg-light-primary fw-semibold fs-7 w-125px py-4" data-kt-menu="true">
-                                          <!--begin::Menu item-->
-                                          <div class="menu-item px-3">
-                                             <a href="" class="menu-link px-3">Enable</a>
-                                          </div>
-                                          <!--end::Menu item-->
-                                          <!--begin::Menu item-->
-                                          <div class="menu-item px-3">
-                                             <a href="" class="menu-link px-3">Disable</a>
-                                          </div>
-                                       </div>
-                                       <!--end::Menu-->
-                                    </td>
-                                    <td>
-                                       <button type="button" class="btn btn-sm btn-icon btn-light btn-active-light-primary toggle h-25px w-25px" data-kt-docs-datatable-subtable="expand_row">
-                                       <span class="svg-icon fs-3 m-0 toggle-off">...</span>
-                                       <span class="svg-icon fs-3 m-0 toggle-on">...</span>
-                                       </button>
-                                    </td>
-                                 </tr>
-                                 <tr>
-                                    <td>4</td>
-                                    <td>10 Nov 2020, 10:30 am</td>
-                                    <td>Straightening, Rebonding</td>
-                                    <td>Unisex</td>
-                                    <td>15%</td>
-                                    <td>
-                                       <div class="badge badge-light-success fw-bold">Enabled</div>
-                                    </td>
-                                    <td class="text-end">
-                                       <a href="#" class="btn btn-light btn-active-light-primary btn-flex btn-center btn-sm" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end">Actions
-                                       <i class="ki-duotone ki-down fs-5 ms-1"></i></a>
-                                       <!--begin::Menu-->
-                                       <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-600 menu-state-bg-light-primary fw-semibold fs-7 w-125px py-4" data-kt-menu="true">
-                                          <!--begin::Menu item-->
-                                          <div class="menu-item px-3">
-                                             <a href="" class="menu-link px-3">Enable</a>
-                                          </div>
-                                          <!--end::Menu item-->
-                                          <!--begin::Menu item-->
-                                          <div class="menu-item px-3">
-                                             <a href="" class="menu-link px-3">Disable</a>
-                                          </div>
-                                       </div>
-                                       <!--end::Menu-->
-                                    </td>
-                                    <td>
-                                       <button type="button" class="btn btn-sm btn-icon btn-light btn-active-light-primary toggle h-25px w-25px" data-kt-docs-datatable-subtable="expand_row">
-                                       <span class="svg-icon fs-3 m-0 toggle-off">...</span>
-                                       <span class="svg-icon fs-3 m-0 toggle-on">...</span>
-                                       </button>
-                                    </td>
-                                 </tr>
+                                 @endforeach
+                        @endif
                               </tbody>
                               <!--end::Table body-->
                            </table>
