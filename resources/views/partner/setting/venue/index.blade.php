@@ -218,6 +218,8 @@
                </div>
             </div>
             <!--begin::Layout-->
+            @if($venue_data_arr)
+            @foreach($venue_data_arr as $key => $venue_data)
             <div class="d-flex flex-column flex-lg-row mt-8">
                <!--begin::Sidebar-->
                <div class="flex-column flex-lg-row-auto w-lg-250px w-xl-350px mb-10">
@@ -245,31 +247,28 @@
                                  <!--begin::Details item-->
                                  <div class="fw-bold mt-5">Venue name</div>
                                  <div class="text-gray-600">
-                                    Venue 1
+                                    {{ $venue_data['name'] }}
                                  </div>
                                  <!--begin::Details item-->
                                  <!--begin::Details item-->
                                  <div class="fw-bold mt-5">Address</div>
                                  <div class="text-gray-600">
-                                    Unit 1/23 Hastings Road,
-                                    <br />Melbourne 3000,
-                                    <br />Victoria,
-                                    <br />Australia.
+                                    {{ $venue_data['address'] }}
                                  </div>
                                  <!--begin::Details item-->
                                  <!--begin::Details item-->
                                  <div class="fw-bold mt-5">Phone</div>
                                  <div class="text-gray-600">
-                                    <a href="#" class="text-gray-600 text-hover-primary">9645854715</a>
+                                    <a href="#" class="text-gray-600 text-hover-primary">{{ $venue_data['phone'] }}</a>
                                  </div>
                                  <!--begin::Details item-->
                                  <!--begin::Details item-->
                                  <div class="fw-bold mt-5">Email</div>
-                                 <div class="text-gray-600">harry@gmail.com</div>
+                                 <div class="text-gray-600">{{ $venue_data['email'] }}</div>
                                  <!--begin::Details item-->
                                  <!--begin::Details item-->
                                  <div class="fw-bold mt-5">Billing Details</div>
-                                 <div class="text-gray-600">English</div>
+                                 <div class="text-gray-600">{{ $venue_data['billing_details'] }}</div>
                                  <!--begin::Details item-->
                                  <!--begin::Details item-->
                                  <div class="fw-bold mt-5">Last Login</div>
@@ -301,7 +300,7 @@
                               <!--end::Icon-->
                               <!--begin::Info-->
                               <span class="ms-4">
-                              <span class="fs-3 fw-bold text-gray-900 d-block">Unisex</span>
+                              <span class="fs-3 fw-bold text-gray-900 d-block">{{ $venue_data['venue_meta']['gender_restriction'] }}</span>
                               </span>
                               <!--end::Info-->
                            </span>
@@ -330,9 +329,9 @@
                            <!--begin::Col-->
                            <div class="col-md-7 mb-11 mb-md-0">
                               <!--begin::Overlay-->
-                              <a class="d-block overlay" data-fslightbox="lightbox-hot-sales" href="{{ asset('/public/partner/assets/media/stock/900x600/42.jpg') }}" target="_blank">
+                              <a class="d-block overlay" data-fslightbox="lightbox-hot-sales" href="{{ asset('/public/'.$venue_data['venue_meta']['featured']) }}" target="_blank">
                                  <!--begin::Image-->
-                                 <div class="overlay-wrapper bgi-position-center bgi-no-repeat bgi-size-cover h-200px card-rounded mb-3" style="height: 266px;background-image:url({{ asset('/public/assets/media/stock/900x600/42.jpg') }}"></div>
+                                 <div class="overlay-wrapper bgi-position-center bgi-no-repeat bgi-size-cover h-200px card-rounded mb-3" style="height: 266px;background-image:url({{ asset('/public/'.$venue_data['venue_meta']['featured']) }}"></div>
                                  <!--end::Image-->
                                  <!--begin::Action-->
                                  <div class="overlay-layer card-rounded bg-dark bg-opacity-25">
@@ -358,9 +357,9 @@
                               <div class="row">
                                  <div class="col-md-6 mb-11 mb-md-0">
                                     <!--begin::Overlay-->
-                                    <a class="d-block overlay" data-fslightbox="lightbox-hot-sales" href="{{ asset('/public/partner/assets/media/stock/900x600/40.jpg') }}" target="_blank">
+                                    <a class="d-block overlay" data-fslightbox="lightbox-hot-sales" href="{{ asset('/public/'.$venue_data['venue_meta']['imgother1']) }}" target="_blank">
                                        <!--begin::Image-->
-                                       <div class="overlay-wrapper bgi-position-center bgi-no-repeat bgi-size-cover h-100px card-rounded mb-3" style="height: 266px;background-image:url({{ asset('/public/assets/media/stock/900x600/40.jpg') }}"></div>
+                                       <div class="overlay-wrapper bgi-position-center bgi-no-repeat bgi-size-cover h-100px card-rounded mb-3" style="height: 266px;background-image:url({{ asset('/public/'.$venue_data['venue_meta']['imgother1']) }}"></div>
                                        <!--end::Image-->
                                        <!--begin::Action-->
                                        <div class="overlay-layer card-rounded bg-dark bg-opacity-25">
@@ -376,9 +375,9 @@
                                  </div>
                                  <div class="col-md-6 mb-11 mb-md-0">
                                     <!--begin::Overlay-->
-                                    <a class="d-block overlay" data-fslightbox="lightbox-hot-sales" href="{{ asset('/public/partner/assets/media/stock/900x600/41.jpg') }}" target="_blank">
+                                    <a class="d-block overlay" data-fslightbox="lightbox-hot-sales" href="{{ asset('/public/'.$venue_data['venue_meta']['imgother2']) }}" target="_blank">
                                        <!--begin::Image-->
-                                       <div class="overlay-wrapper bgi-position-center bgi-no-repeat bgi-size-cover h-100px card-rounded mb-3" style="height: 266px;background-image:url({{ asset('/public/assets/media/stock/900x600/41.jpg') }}"></div>
+                                       <div class="overlay-wrapper bgi-position-center bgi-no-repeat bgi-size-cover h-100px card-rounded mb-3" style="height: 266px;background-image:url({{ asset('/public/'.$venue_data['venue_meta']['imgother2']) }}"></div>
                                        <!--end::Image-->
                                        <!--begin::Action-->
                                        <div class="overlay-layer card-rounded bg-dark bg-opacity-25">
@@ -394,9 +393,9 @@
                                  </div>
                                  <div class="col-md-6 mb-11 mb-md-0">
                                     <!--begin::Overlay-->
-                                    <a class="d-block overlay" data-fslightbox="lightbox-hot-sales" href="{{ asset('/public/partner/assets/media/stock/900x600/40.jpg') }}" target="_blank">
+                                    <a class="d-block overlay" data-fslightbox="lightbox-hot-sales" href="{{ asset('/public/'.$venue_data['venue_meta']['imgother3']) }}" target="_blank">
                                        <!--begin::Image-->
-                                       <div class="overlay-wrapper bgi-position-center bgi-no-repeat bgi-size-cover h-100px card-rounded mb-3" style="height: 266px;background-image:url({{ asset('/public/assets/media/stock/900x600/40.jpg') }}"></div>
+                                       <div class="overlay-wrapper bgi-position-center bgi-no-repeat bgi-size-cover h-100px card-rounded mb-3" style="height: 266px;background-image:url({{ asset('/public/'.$venue_data['venue_meta']['imgother3']) }}"></div>
                                        <!--end::Image-->
                                        <!--begin::Action-->
                                        <div class="overlay-layer card-rounded bg-dark bg-opacity-25">
@@ -412,9 +411,9 @@
                                  </div>
                                  <div class="col-md-6 mb-11 mb-md-0">
                                     <!--begin::Overlay-->
-                                    <a class="d-block overlay" data-fslightbox="lightbox-hot-sales" href="{{ asset('/public/partner/assets/media/stock/900x600/41.jpg') }}" target="_blank">
+                                    <a class="d-block overlay" data-fslightbox="lightbox-hot-sales" href="{{ asset('/public/'.$venue_data['venue_meta']['imgother4']) }}" target="_blank">
                                        <!--begin::Image-->
-                                       <div class="overlay-wrapper bgi-position-center bgi-no-repeat bgi-size-cover h-100px card-rounded mb-3" style="height: 266px;background-image:url({{ asset('/public/assets/media/stock/900x600/41.jpg') }}"></div>
+                                       <div class="overlay-wrapper bgi-position-center bgi-no-repeat bgi-size-cover h-100px card-rounded mb-3" style="height: 266px;background-image:url({{ asset('/public/'.$venue_data['venue_meta']['imgother4']) }}"></div>
                                        <!--end::Image-->
                                        <!--begin::Action-->
                                        <div class="overlay-layer card-rounded bg-dark bg-opacity-25">
@@ -785,6 +784,8 @@
                   </div>
                </div>
             </div>
+            @endforeach
+            @endif
          </div>
          <!--end::Content container-->
       </div>
@@ -1019,7 +1020,7 @@
                                  <span class="text-gray-400 fw-semibold d-block fs-6 mt-5">Select amenities available
                                  </span>
                               </h3>
-                              <input type="text" name="billing_details" class="form-control form-control-solid mb-3 mb-lg-0" placeholder="Business name - venue name" value="Business name - venue name" required>
+                              <input type="text" name="billing_details" class="form-control form-control-solid mb-3 mb-lg-0" placeholder="Business name - venue name" value="" required>
                            </div>
                         </div>
                      </div>
@@ -1034,7 +1035,7 @@
                                  <label class="required fw-semibold fs-6 mb-2">Where's your business located?</label>
                                  <!--end::Label-->
                                  <!--begin::Input-->
-                                 <input type="text" name="business_location" class="form-control form-control-solid mb-3 mb-lg-0" placeholder="business locationn" value="Punggol Park, Hougang Avenue 10, Singapore" required/>
+                                 <input type="text" id="business_location" name="business_location" class="form-control form-control-solid mb-3 mb-lg-0" placeholder="business locationn" value="" required/>
                                  <!--end::Input-->
                               </div>
                               <!--end::Input group-->
@@ -1048,14 +1049,14 @@
                                        <label class="required fw-semibold fs-6 mb-2">Address</label>
                                        <!--end::Label-->
                                        <!--begin::Input-->
-                                       <input type="text" name="business_address" class="form-control form-control-solid mb-3 mb-lg-0" placeholder="Others" value="Punggol Park, Hougang Avenue 10, Singapore" required>
+                                       <input type="text" name="business_address" class="form-control form-control-solid mb-3 mb-lg-0" placeholder="Address" value="" required>
                                        <!--end::Input-->
                                     </div>
                                     <div class="col-md-6 mb-7">
                                        <div class="mb-0">
                                           <label class="form-label">Apt./Suite etc</label>
                                           <!--begin::Input-->
-                                          <input type="text" name="business_aptsuite" class="form-control form-control-solid mb-3 mb-lg-0" placeholder="Apt./Suite" value="Suite 1" required>
+                                          <input type="text" name="business_aptsuite" class="form-control form-control-solid mb-3 mb-lg-0" placeholder="Apt./Suite" value="" required>
                                           <!--end::Input-->
                                        </div>
                                     </div>
@@ -1064,7 +1065,7 @@
                                        <label class="required fw-semibold fs-6 mb-2">District</label>
                                        <!--end::Label-->
                                        <!--begin::Input-->
-                                       <input type="text" name="district" class="form-control form-control-solid mb-3 mb-lg-0" placeholder="district" value="Hougang" required>
+                                       <input type="text" name="district" class="form-control form-control-solid mb-3 mb-lg-0" placeholder="District" value="" required>
                                        <!--end::Input-->
                                     </div>
                                     <div class="col-md-6 mb-7">
@@ -1072,7 +1073,7 @@
                                        <label class="required fw-semibold fs-6 mb-2">City</label>
                                        <!--end::Label-->
                                        <!--begin::Input-->
-                                       <input type="text" name="city" class="form-control form-control-solid mb-3 mb-lg-0" placeholder="city" value="Singapore" required>
+                                       <input type="text" name="city" class="form-control form-control-solid mb-3 mb-lg-0" placeholder="City" value="" required>
                                        <!--end::Input-->
                                     </div>
                                     <div class="col-md-6 mb-7">
@@ -1080,7 +1081,7 @@
                                        <label class="required fw-semibold fs-6 mb-2">Region</label>
                                        <!--end::Label-->
                                        <!--begin::Input-->
-                                       <input type="text" name="region" class="form-control form-control-solid mb-3 mb-lg-0" placeholder="city" value="Singapore, Singapore" required>
+                                       <input type="text" name="region" class="form-control form-control-solid mb-3 mb-lg-0" placeholder="Region" value="" required>
                                        <!--end::Input-->
                                     </div>
                                     <div class="col-md-6 mb-7">
@@ -1088,7 +1089,7 @@
                                        <label class="required fw-semibold fs-6 mb-2">Postcode</label>
                                        <!--end::Label-->
                                        <!--begin::Input-->
-                                       <input type="text" name="postcode" class="form-control form-control-solid mb-3 mb-lg-0" placeholder="Postcode" value="538768" required>
+                                       <input type="text" name="postcode" class="form-control form-control-solid mb-3 mb-lg-0" placeholder="Postcode" value="" required>
                                        <!--end::Input-->
                                     </div>
                                     <div class="col-md-6 mb-7">
@@ -1096,13 +1097,13 @@
                                        <label class="required fw-semibold fs-6 mb-2">Country</label>
                                        <!--end::Label-->
                                        <!--begin::Input-->
-                                       <input type="text" name="country" class="form-control form-control-solid mb-3 mb-lg-0" placeholder="country" value="Singapore" required>
+                                       <input type="text" name="country" class="form-control form-control-solid mb-3 mb-lg-0" placeholder="Country" value="" required>
                                        <!--end::Input-->
                                     </div>
                                     <div class="col-md-6 mb-7">
                                        <div class="mb-0">
                                           <label class="form-label">Directions</label>
-                                          <textarea class="form-control form-control form-control-solid" data-kt-autosize="true" placeholder="Directions" value="Direction 1" name="directions"></textarea>
+                                          <textarea class="form-control form-control form-control-solid" data-kt-autosize="true" placeholder="Directions" value="" name="directions"></textarea>
                                        </div>
                                     </div>
                                  </div>
@@ -2914,5 +2915,25 @@
        }
    
    }
+</script>
+<script type="text/javascript" src="https://maps.google.com/maps/api/js?key={{ env('GOOGLE_MAP_KEY') }}&libraries=places" ></script>
+
+<script>
+	google.maps.event.addDomListener(window, 'load', initialize);
+
+	function initialize() {
+		var input = document.getElementById('business_location');
+		var autocomplete = new google.maps.places.Autocomplete(input);
+
+		autocomplete.addListener('place_changed', function () {
+			var place = autocomplete.getPlace();
+			console.log("place", place)
+			/*$('#latitude').val(place.geometry['location'].lat());
+			$('#longitude').val(place.geometry['location'].lng());
+
+			$("#latitudeArea").removeClass("d-none");
+			$("#longtitudeArea").removeClass("d-none");*/
+		});
+	}
 </script>
 @endpush

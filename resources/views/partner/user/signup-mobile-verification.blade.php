@@ -83,22 +83,31 @@
 							<!--begin::Input group=-->
 							<div class="fv-row mb-8">
 								<!--begin::Email-->
-								<input type="text" placeholder="Business Name" name="businessname" autocomplete="off" class="form-control bg-transparent" required="required" />
+								<input type="text" placeholder="Business Name" name="businessname" autocomplete="off" class="form-control bg-transparent" required="required" value="{{ old('businessname') }}" />
 								<!--end::Email-->
 							</div>
 
 							<!--begin::Input group=-->
 							<div class="fv-row mb-8">
 								<!--begin::Email-->
-								<input type="text" placeholder="Website (optional)" name="websitename" autocomplete="off" class="form-control bg-transparent" />
+								<input type="url" placeholder="Website (optional)" name="websitename" autocomplete="off" class="form-control bg-transparent" value="{{ old('websitename') }}"/>
 								<!--end::Email-->
 							</div>
 
 							<!--begin::Input group=-->
 							<div class="fv-row mb-8">
+								<div class="d-flex gap-3">
+									<!--begin::Email-->
+									<input type="text" placeholder="Mobile Number" id="signup_mobile" name="phone" autocomplete="off" class="form-control bg-transparent" required="required" value="{{ old('phone') }}" />
+									<!--end::Email-->
+									<a href="javascript:void(0)" class="btn btn-sm btn-light btn-active-light-primary px-2 w-100px d-flex align-items-center justify-content-center signup_send_otp">Send OTP</a>
+								</div>
+							</div>
+
+							{{-- <div class="fv-row mb-8">
 								<input type="text" placeholder="Mobile Number" name="phone" autocomplete="off" class="form-control bg-transparent" required="required" id="signup_mobile" />								
 							</div>
-							<!-- <div class="fv-row mb-8">
+							<div class="fv-row mb-8">
 								<div class="row align-items-center">
 									 <div class="col-9 pe-0">
 
@@ -109,17 +118,15 @@
 									 	<a href="#" class="btn btn-sm btn-flex btn-primary align-self-center px-0 w-100 justify-content-center">Send OTP</a>
 									 </div>
 								</div>
-							</div> -->
+							</div>
 
 							<div class="d-flex flex-stack flex-wrap gap-3 fs-base fw-semibold mb-8">
 								<div></div>
-								<!--begin::Link-->
 								<a href="javascript:void(0)" class="link-primary signup_send_otp">Send OTP</a>
-								<!--end::Link-->
-							</div>
+							</div> --}}
 
 							<!--begin::Input group=-->
-							<!-- <div class="fv-row mb-8">
+							{{-- <div class="fv-row mb-8">
 								<div class="row align-items-center">
 									<div class="col-9 pe-0">
 										<input type="text" placeholder="Enter OTP" name="otp" autocomplete="off" class="form-control bg-transparent" />
@@ -128,7 +135,7 @@
 										<a href="#" class="btn btn-sm btn-flex btn-primary align-self-center px-0 w-100 justify-content-center">Verify OTP</a>
 									</div>
 								</div>
-							</div> -->
+							</div>
 
 							<div class="fv-row mb-8">
 								<input type="text" placeholder="Enter OTP" name="otp" id="signup_otp" autocomplete="off" class="form-control bg-transparent" required="required"/>
@@ -137,6 +144,15 @@
 							<div class="d-flex flex-stack flex-wrap gap-3 fs-base fw-semibold mb-8">
 								<div></div>
 								<a href="javascript:void(0)" class="link-primary signup_verify_otp">Verify OTP</a>
+							</div> --}}
+
+							<div class="fv-row mb-8">
+								<div class="d-flex gap-3">
+									<!--begin::Email-->
+									<input type="text" placeholder="Enter OTP" name="otp" required="required" id="signup_otp" autocomplete="off" class="form-control bg-transparent" value="{{ old('otp') }}"/>
+									<!--end::Email-->
+									<a href="javascript:void(0)" class="btn btn-sm btn-light btn-active-light-primary px-2 w-100px d-flex align-items-center justify-content-center signup_verify_otp">Verify OTP</a>
+								</div>
 							</div>
 
 							<!--begin::Submit button-->
@@ -170,3 +186,8 @@
 <!--end::Root-->
 
 @endsection
+
+
+@push('scripts')
+<script type="text/javascript"></script>
+@endpush

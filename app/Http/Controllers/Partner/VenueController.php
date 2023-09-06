@@ -20,21 +20,37 @@ class VenueController extends Controller
 
     	$get_amenities = Amenity::where('status', 1)->get();
     	$amenities = [];
-    	foreach ($get_amenities as $key => $amenity) {
-    		$amenity_arr['id'] 					= $amenity['id'];
-    		$amenity_arr['amenity_name'] 		= $amenity['amenity_name'];
-    		$amenity_arr['partner_type'] 		= $amenity['partner_type'];
-    		$amenity_arr['amenity_icon'] 		= $amenity['amenity_icon'];
-    		$amenity_arr['amenity_type'] 		= $amenity['amenity_type'];
-    		$amenity_arr['amenity_category'] 	= $amenity['amenity_category'];
-    		$amenity_arr['status'] 				= $amenity['status'];
+    	if (!empty($get_amenities)) {
+	    	foreach ($get_amenities as $key => $amenity) {
+	    		$amenity_arr['id'] 					= $amenity['id'];
+	    		$amenity_arr['amenity_name'] 		= $amenity['amenity_name'];
+	    		$amenity_arr['partner_type'] 		= $amenity['partner_type'];
+	    		$amenity_arr['amenity_icon'] 		= $amenity['amenity_icon'];
+	    		$amenity_arr['amenity_type'] 		= $amenity['amenity_type'];
+	    		$amenity_arr['amenity_category'] 	= $amenity['amenity_category'];
+	    		$amenity_arr['status'] 				= $amenity['status'];
 
-    		$amenities[$amenity['amenity_category']][] = $amenity_arr;
-    	}
+	    		$amenities[$amenity['amenity_category']][] = $amenity_arr;
+	    	}
+	    }
 
-    	// echo "<pre>"; print_r($amenityArr); die;
+    	$venues 	= Venue::get()->toArray();
 
-        return view('partner/setting/venue/index', compact('title', 'meta_description', 'meta_keywords', 'amenities'));
+    	$venue_data_array 	= $this->array_by_ids($venues, "id");
+    	$venue_ids 			= array_column($venues, 'id');
+
+    	$venue_meta 		= $this->get_venue_meta_by_venue_ids($venue_ids);
+
+    	$venue_data_arr = [];
+    	if (!empty($venue_data_array)) {
+			foreach ($venue_data_array as $vkey => $venue_data) {
+				$venue_id = $venue_data["id"];
+				$venue_data["venue_meta"] = $venue_meta[$venue_id];
+				$venue_data_arr[] = $venue_data;
+			}
+		}
+
+        return view('partner/setting/venue/index', compact('title', 'meta_description', 'meta_keywords', 'amenities', 'venue_data_arr'));
     }
 
     public function storeVenues(Request $request)
@@ -51,36 +67,41 @@ class VenueController extends Controller
             'billing_details' 	=> $request->billing_details,
         ]);
 
-        if( !empty($request->business_location) ){
-        	$this->add_venue_meta($venue->id, 'business_location', $request->business_location);
-        }
-        if( !empty($request->business_address) ){
-        	$this->add_venue_meta($venue->id, 'business_address', $request->business_address);
-        }
-        if( !empty($request->business_aptsuite) ){
-        	$this->add_venue_meta($venue->id, 'business_aptsuite', $request->business_aptsuite);
-        }
-        if( !empty($request->district) ){
-        	$this->add_venue_meta($venue->id, 'district', $request->district);
-        }
-        if( !empty($request->city) ){
-        	$this->add_venue_meta($venue->id, 'city', $request->city);
-        }
-        if( !empty($request->region) ){
-        	$this->add_venue_meta($venue->id, 'region', $request->region);
-        }
-        if( !empty($request->postcode) ){
-        	$this->add_venue_meta($venue->id, 'postcode', $request->postcode);
-        }
-        if( !empty($request->country) ){
-        	$this->add_venue_meta($venue->id, 'country', $request->country);
-        }
-        if( !empty($request->directions) ){
-        	$this->add_venue_meta($venue->id, 'directions', $request->directions);
-        }
-        if( !empty($request->business_address_check) ){
-        	$this->add_venue_meta($venue->id, 'business_address_check', $request->business_address_check);
-        }
+    	$business_address_check = $request->business_address_check;
+
+        if( empty($business_address_check) ){
+
+	        if( !empty($request->business_location) ){
+	        	$this->add_venue_meta($venue->id, 'business_location', $request->business_location);
+	        }
+	        if( !empty($request->business_address) ){
+	        	$this->add_venue_meta($venue->id, 'business_address', $request->business_address);
+	        }
+	        if( !empty($request->business_aptsuite) ){
+	        	$this->add_venue_meta($venue->id, 'business_aptsuite', $request->business_aptsuite);
+	        }
+	        if( !empty($request->district) ){
+	        	$this->add_venue_meta($venue->id, 'district', $request->district);
+	        }
+	        if( !empty($request->city) ){
+	        	$this->add_venue_meta($venue->id, 'city', $request->city);
+	        }
+	        if( !empty($request->region) ){
+	        	$this->add_venue_meta($venue->id, 'region', $request->region);
+	        }
+	        if( !empty($request->postcode) ){
+	        	$this->add_venue_meta($venue->id, 'postcode', $request->postcode);
+	        }
+	        if( !empty($request->country) ){
+	        	$this->add_venue_meta($venue->id, 'country', $request->country);
+	        }
+	        if( !empty($request->directions) ){
+	        	$this->add_venue_meta($venue->id, 'directions', $request->directions);
+	        }
+	    }else{
+	    	$this->add_venue_meta($venue->id, 'business_address_check', $business_address_check);
+	    }
+
         if( !empty($request->gender_restriction) ){
         	$this->add_venue_meta($venue->id, 'gender_restriction', $request->gender_restriction);
         }
@@ -204,5 +225,30 @@ class VenueController extends Controller
 			$result = DB::table($tbl_name1)->insert(['venue_id' => $cid, 'meta_key' => $key, 'meta_value' => $value]);
 		}
 		return $result;
+	}
+
+	public function get_venue_meta_by_venue_ids($venue_ids){
+		$venue_meta = VenueMeta::where("venue_id", $venue_ids)->get();
+		$vanue_meta_data = [];
+		foreach ($venue_meta as $key => $meta) { 
+			$vanue_meta_data[$meta["venue_id"]][$meta["meta_key"]] = $meta["meta_value"];
+		}
+		return $vanue_meta_data;
+	}
+
+	public function array_by_ids($array, $column, $multi_arr=false)
+	{
+		$formatted_arr = [];
+		if ( !empty($array) ) {
+			foreach ($array as $key => $arr) {
+				if ($multi_arr) {
+					$formatted_arr[$arr[$column]][] = $arr; 
+				}else{
+					$formatted_arr[$arr[$column]] = $arr; 
+				}
+			}
+		}
+
+		return $formatted_arr;
 	}
 }

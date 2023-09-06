@@ -15,6 +15,13 @@
 <script src="{{asset('/public/partner/assets/js/custom/authentication/sign-up/general.js')}}"></script>
 <script src="{{asset('/public/partner/assets/js/custom/authentication/reset-password/reset-password.js')}}"></script>
 <script src="{{asset('/public/partner/assets/js/custom/authentication/reset-password/new-password.js')}}"></script> -->
+<script src="https://cdn.jsdelivr.net/npm/intl-tel-input@18.2.1/build/js/intlTelInput.min.js"></script>
+<script>
+	const input = document.querySelector("#signup_mobile");
+	window.intlTelInput(input, {
+		utilsScript: "https://cdn.jsdelivr.net/npm/intl-tel-input@18.2.1/build/js/utils.js",
+	});
+</script>
 <script type="text/javascript">
 	jQuery(document).on('click', '.signup_send_otp', function(){
 	    event.preventDefault();
@@ -31,22 +38,40 @@
 	                //response = JSON.parse(response);
 	                //$('.spinner-cls').hide();
 	                if (response.status) {
-		                new swal("OTP sent successfully on your mobile number: "+phone, {
-		                    icon: "success",
-		                });
+		                Swal.fire({
+		                	text: "OTP sent successfully on your mobile number: "+phone,
+		                	icon: "success",
+		                	buttonsStyling: !1,
+		                	confirmButtonText: "Ok, got it!",
+		                	customClass: {
+		                		confirmButton: "btn btn-primary"
+		                	}
+		                })
 		            }
 	            },
 	            error:function(error)
 	            {
-	                new swal("Something went wrong. Please try again.", {
-	                    icon: "error",
-	                });
+	                Swal.fire({
+	                	text: "Something went wrong. Please try again.",
+	                	icon: "error",
+	                	buttonsStyling: !1,
+	                	confirmButtonText: "Ok, got it!",
+	                	customClass: {
+	                		confirmButton: "btn btn-primary"
+	                	}
+	                })
 	            }
 	        });
 	    }else{
-	        new swal("Mobile number is required.", {
-	            icon: "error",
-	        });
+	        Swal.fire({
+	        	text: "Mobile number is required.",
+	        	icon: "error",
+	        	buttonsStyling: !1,
+	        	confirmButtonText: "Ok, got it!",
+	        	customClass: {
+	        		confirmButton: "btn btn-primary"
+	        	}
+	        })
 	    }
 	});
 	jQuery(document).on('click', '.signup_verify_otp', function(){
@@ -65,27 +90,51 @@
 	                //response = JSON.parse(response);
 	                //console.log("response", response)
 	                if (response.status) {
-		                new swal("OTP matched successfully.", {
-		                    icon: "success",
-		                });
+		                Swal.fire({
+		                	text: "OTP matched successfully.",
+		                	icon: "success",
+		                	buttonsStyling: !1,
+		                	confirmButtonText: "Ok, got it!",
+		                	customClass: {
+		                		confirmButton: "btn btn-primary"
+		                	}
+		                })
 		                jQuery('#signup_otp').attr('readonly','true');
 	                }else{
-	                	new swal("OTP not matched.", {
-		                    icon: "success",
-		                });
+		                Swal.fire({
+		                	text: "OTP not matched.",
+		                	icon: "error",
+		                	buttonsStyling: !1,
+		                	confirmButtonText: "Ok, got it!",
+		                	customClass: {
+		                		confirmButton: "btn btn-primary"
+		                	}
+		                })
 	                }
 	            },
 	            error:function(error)
 	            {
-	                new swal("Something went wrong. Please try again.", {
-	                    icon: "error",
-	                });
+	                Swal.fire({
+	                	text: "Something went wrong. Please try again.",
+	                	icon: "error",
+	                	buttonsStyling: !1,
+	                	confirmButtonText: "Ok, got it!",
+	                	customClass: {
+	                		confirmButton: "btn btn-primary"
+	                	}
+	                })
 	            }
 	        });
 	    }else{
-	        new swal("OTP is required.", {
-	            icon: "error",
-	        });
+	        Swal.fire({
+	        	text: "OTP is required!",
+	        	icon: "error",
+	        	buttonsStyling: !1,
+	        	confirmButtonText: "Ok, got it!",
+	        	customClass: {
+	        		confirmButton: "btn btn-primary"
+	        	}
+	        })
 	    }
 	});
 </script>

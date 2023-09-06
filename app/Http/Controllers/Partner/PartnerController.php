@@ -150,7 +150,7 @@ class PartnerController extends Controller
     {
         
         $validator = Validator::make($request->all(), [
-            'email'  => 'required|unique:users|max:100',
+            'email'  => 'required||email|unique:users|max:100',
         ]);
  
         if ($validator->fails()) {
@@ -182,8 +182,9 @@ class PartnerController extends Controller
 
         $validator = Validator::make($request->all(), [
             'businessname'  => 'required|max:30',
-            'phone'         => 'required|max:15',
-            'otp'           => 'required|min:6|max:6',
+            'phone'         => 'required|numeric',
+            'otp'           => 'required|numeric',
+            'websitename'   => 'url',
         ]);
  
         if ($validator->fails()) {
@@ -267,8 +268,8 @@ class PartnerController extends Controller
 
         $validator = Validator::make($request->all(), [
             'name'      => 'required|max:30',
-            'phone'     => 'required|max:15',
-            'otp'       => 'required|min:6|max:6',
+            'phone'     => 'required|numeric',
+            'otp'       => 'required|numeric',
         ]);
  
         if ($validator->fails()) {

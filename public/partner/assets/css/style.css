@@ -1025,7 +1025,7 @@ a.editbtn span {
 #kt_modal_scrollable22 .modal-body {
     background: linear-gradient(0deg, rgba(244, 244, 244, 0.7), rgba(244, 244, 244, 0.7)),#FFFFFF;
 }
-#kt_modal_scrollable22 .modal-body, div#kt_drawer_example_permanent2 .card-body.hover-scroll-overlay-y {
+#kt_modal_scrollable22 .modal-body, #kt_modal_scrollable33 .modal-body, div#kt_drawer_example_permanent2 .card-body.hover-scroll-overlay-y {
     background: linear-gradient(0deg, rgba(244, 244, 244, 0.7), rgba(244, 244, 244, 0.7)),#FFFFFF;
 }
 #kt_drawer_example_permanent2 .card-header {
@@ -1050,4 +1050,27 @@ a.editbtn span {
 }
 .subscription_pricediv span:first-child, .subscription_pricediv span.subscription_price {
     color: var(--bs-primary);
+}
+.ht-fc {
+    height: fit-content;
+}
+.permissiontables thead tr, .permissiontables thead th {
+    border: 0;
+}
+.permissiontables thead th:first-child {
+    width: 400px;
+}
+.fc-toolbar-chunk {
+    position: relative;
+}
+.fc-toolbar-chunk input#date-picker {
+    position: absolute;
+    left: 0;
+    right: 0;
+    margin: 0 auto;
+    opacity: 0;
+    cursor: pointer;
+}
+.iti {
+    width: 100%;
 }
