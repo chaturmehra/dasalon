@@ -31,10 +31,17 @@ class ServicesConfigController extends Controller
     public function create(Request $request)
     {
     	
+    //    $request->validate(['icon'=>'required']);
         $sc = new ServiceCategory;  
         $sc->country =  $request->get('country');  
         $sc->category = $request->get('category');  
-        $sc->icon = $request->get('icon');  
+
+        if($request->file('icon')){
+            $file= $request->file('icon');
+            $filename=$file->getClientOriginalName();
+            $file-> move(public_path('uploads/category'), $filename);
+            $sc->icon= $filename;
+        } 
         $sc->is_active 	= 1;
         $sc->save();
         return redirect()->back()->with('message', 'Service Category created successfully.');
@@ -74,6 +81,27 @@ class ServicesConfigController extends Controller
 	    }else{
 	    	return redirect()->back()->with('error', 'Please select Service Category.');
 	    }
+    }
+
+    public function edit($id)
+    {
+        $sc =ServiceCategory::find($id);
+        return $sc;
+    }
+
+    public function update(Request $request)
+    {
+        $sc = ServiceCategory::find($request->get('category_id'));
+        $sc->category=$request->input('category');
+    
+        if($request->file('avatar')){
+            $file= $request->file('avatar');
+            $filename=$file->getClientOriginalName();
+            $file-> move(public_path('uploads/category'), $filename);
+            $sc->icon= $filename;
+        }
+        $sc->update();
+        return redirect()->back()->with('message','Service Category Updated Successfully');
     }
 
     public function store(Request $request)
@@ -170,5 +198,43 @@ class ServicesConfigController extends Controller
         $s->is_active 	= 1;   
         $s->save();
         return redirect()->back()->with('messagerp', 'Recommended Package created successfully.');
+    }
+
+    public function enabledrp($rp_id): RedirectResponse
+    {
+        if($rp_id){
+            $rp = new RecommendedPackage;
+
+            $rp->exists       = true;
+            $rp->rp_id           = $rp_id;
+            $rp->is_active    = 1;
+            $rp->updated_at   = date('Y-m-d H:i:s');
+
+            $rp->save();
+
+            return redirect()->back()->with('messagestatusrp', 'Recommended Package status updated successfully.');
+        }else{
+            return redirect()->back()->with('errorstatusrp', 'Please select Recommended Package.');
+        }
+    }
+
+    public function disabledrp($rp_id): RedirectResponse
+    {
+    	if($rp_id){
+	        $rp = new RecommendedPackage;
+
+	        $rp->exists 		= true;
+	        $rp->rp_id 			= $rp_id;
+	        $rp->is_active 	= 0;
+	        $rp->updated_at 	= date('Y-m-d H:i:s');
+            
+            // echo "<pre>"; print_r($s->is_active);die;
+            
+	        $rp->save();
+
+	        return redirect()->back()->with('messagestatusrp', 'Recommended Package status updated successfully.');
+	    }else{
+	    	return redirect()->back()->with('errorstatusrp', 'Please select Recommended Package.');
+	    }
     }
 }

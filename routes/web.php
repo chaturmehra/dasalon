@@ -155,6 +155,12 @@ Route::get('partner/venue-setting',[VenueController::class,'index'])->name('venu
     Route::post('admin/services/addservice',[ServicesConfigController::class,'addservice']);
     Route::post('admin/services/servicesubcategory',[ServicesConfigController::class,'store']);
     Route::post('admin/services/recommendedpackage',[ServicesConfigController::class,'addrecommendedpackage']);
+    Route::get('admin/rp/enable-status/{rp_id}', [ServicesConfigController::class, 'enabledrp']);
+    Route::get('admin/rp/disable-status/{rp_id}', [ServicesConfigController::class, 'disabledrp']);
+
+     Route::get('admin/edit-servicecategory/{id}', [ServicesConfigController::class, 'edit']); 
+    
+Route::post('admin/update-servicecategory', [ServicesConfigController::class, 'update']);
 });
 
 /*Partner Route*/
