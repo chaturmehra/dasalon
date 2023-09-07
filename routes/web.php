@@ -114,13 +114,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('partnerdetails-list', [CountryController::class, 'getPartnerDetailsAjaxList'])->name('partnerdetails.getAjaxList');
     Route::get('disablecity-list', [CountryController::class, 'getDisableCityAjaxList'])->name('disablecity.getAjaxList');
     Route::get('role-list', [ParterConfigController::class, 'getAjaxList'])->name('role.getAjaxList');
-    Route::post('admin/save_country', [CountryController::class, 'saveCountry'])->name('settings.saveCountry');
-    Route::post('admin/save_franchise', [CountryController::class, 'saveFranchise'])->name('settings.saveFranchise');
-    Route::post('admin/save_partnertype', [CountryController::class, 'savePartnerType'])->name('settings.savePartnerType');
-    Route::post('admin/save_partnerdetails', [CountryController::class, 'savePartnerDetails'])->name('settings.savePartnerDetails');
-    Route::post('admin/save_disablecity', [CountryController::class, 'saveDisableCity'])->name('settings.saveDisableCity');
-    Route::post('admin/save_role', [ParterConfigController::class, 'saveRole'])->name('settings.saveRole');
-    Route::post('admin/save_partnertypeproperty', [ParterConfigController::class, 'savepartnertypeProperty'])->name('settings.savepartnertypeProperty');
+
     Route::post('admin/save_profilefeature', [ParterConfigController::class, 'saveprofileFeature'])->name('settings.saveprofilefeature');
 
     Route::get('admin/setting/edit-country-status/{id}/{status}', [CountryController::class, 'changeCountryStatus']);
@@ -132,9 +126,7 @@ Route::middleware(['auth'])->group(function () {
 
     Route::get('admin/setting/edit-salon-status/{id}/{statussalon}', [ParterConfigController::class, 'changeSalonStatus']);
 
-    Route::get('admin/settings/appointment', [AppointmentController::class, 'index'])->name('settings.appointment');
-
-Route::get('admin/services/services-config/get-subcategory/{id}', [ServicesConfigController::class,'getStateAjax']);
+    Route::get('admin/services/services-config/get-subcategory/{id}', [ServicesConfigController::class,'getStateAjax']);
 
     Route::get('admin/settings/payment-gateway', [PaymentGatewayController::class, 'index'])->name('settings.payment-gateway');
 
@@ -146,25 +138,10 @@ Route::get('admin/services/services-config/get-subcategory/{id}', [ServicesConfi
     Route::get('admin/services/offers-management', [OffersManagementController::class, 'index'])->name('services.offers-management');
     Route::post('admin/settings/edit-profilefeature-status', [ParterConfigController::class, 'changeProfilefeaturepermission']);
     Route::get('admin/setting/edit-property-status', [ParterConfigController::class, 'changePropertypermission']);
-    Route::get('admin/setting/edit-country-status/{id}/{status}', [CountryController::class, 'changeCountryStatus']);
-    Route::get('admin/setting/edit-franchise-status/{id}/{status}', [CountryController::class, 'changeFranchiseStatus']);
-    Route::get('admin/setting/edit-partnertype-status/{id}/{status}', [CountryController::class, 'changePartnerTypeStatus']);
-    Route::get('admin/setting/edit-partnerdetails-status/{id}/{status}', [CountryController::class, 'changePartnerDetailsStatus']);
-    Route::get('admin/setting/edit-disablecity-status/{id}/{status}', [CountryController::class, 'changeDisableCityStatus']);
-    Route::get('admin/setting/edit-role-status/{id}/{status}', [ParterConfigController::class, 'changeRoleStatus']);
 
     Route::get('admin/settings/appointment', [AppointmentController::class, 'index'])->name('settings.appointment');
     Route::post('admin/settings/appointment', [AppointmentController::class, 'create']);
     Route::get('admin/settings/subscription', [SubscriptionController::class, 'index'])->name('settings.subscription');
-
-    Route::get('admin/settings/payment-gateway', [PaymentGatewayController::class, 'index'])->name('settings.payment-gateway');
-
-    Route::get('admin/services', [ServiceController::class, 'index'])->name('services.index');
-    Route::get('admin/services/order-management', [OrderManagementController::class, 'index'])->name('services.order-management');
-    Route::get('admin/services/services-config', [ServicesConfigController::class, 'index'])->name('services.services-config');
-    Route::get('admin/services/partner-mapping', [PartnerMappingController::class, 'index'])->name('services.partner-mapping');
-    Route::get('admin/services/recommendations', [RecommendationsController::class, 'index'])->name('services.recommendations');
-    Route::get('admin/services/offers-management', [OffersManagementController::class, 'index'])->name('services.offers-management');
 
     Route::post('admin/services/servicecategory', [ServicesConfigController::class, 'create']);
 
@@ -178,6 +155,8 @@ Route::get('admin/services/services-config/get-subcategory/{id}', [ServicesConfi
 
     Route::get('partner/venue-setting', [VenueController::class, 'index'])->name('venue.index');
     Route::post('partner/store-venue-setting', [VenueController::class, 'storeVenues']);
+    Route::post('partner/update-venue-setting', [VenueController::class, 'updateVenues']);
+    Route::get('partner/get-venue-detail-by-id/{id}', [VenueController::class, 'getVenueDetailById']);
 
     Route::get('partner/calender', [CalenderController::class, 'index'])->name('calender.index');
     Route::get('partner/appointments', [AppointmentsController::class, 'index'])->name('appointments.index');
@@ -186,98 +165,21 @@ Route::get('admin/services/services-config/get-subcategory/{id}', [ServicesConfi
     Route::get('partner/promote', [PromoteController::class, 'index'])->name('promote.index');
     Route::get('partner/reports', [ReportsController::class, 'index'])->name('reports.index');
 
-    Route::post('admin/services/addservice',[ServicesConfigController::class,'addservice']);
-    Route::post('admin/services/servicesubcategory',[ServicesConfigController::class,'store']);
-    Route::get('admin/settings/amenity',[AmenityController::class,'index'])->name('settings.amenity');
-    Route::post('admin/settings/saveamenity',[AmenityController::class,'storeAmenity'])->name('settings.saveAmenity');
-    Route::get('amenity-list',[AmenityController::class,'getAjaxAmenityList'])->name('amenity.getAjaxList');
-    Route::get('admin/setting/edit-amenity-status/{id}/{status}', [AmenityController::class,'changeAmenityStatus']);
-    Route::get('special-amenity-list',[AmenityController::class,'getAjaxSpecialAmenityList'])->name('specialamenity.getAjaxList');
-    Route::get('admin/setting/get-state/{id}', [CountryController::class,'getStateAjax']);
-    Route::get('admin/setting/get-city/{id}', [CountryController::class,'getCityAjax']);
-	Route::get('admin/settings/country-config',[CountryController::class,'index'])->name('settings.country');
-	Route::get('admin/settings/partner-config',[ParterConfigController::class,'index'])->name('settings.role');
-
-    Route::post('admin/save_country',[CountryController::class,'saveCountry'])->name('settings.saveCountry');
-    Route::post('admin/save_franchise',[CountryController::class,'saveFranchise'])->name('settings.saveFranchise');
-    Route::post('admin/save_partnertype',[CountryController::class,'savePartnerType'])->name('settings.savePartnerType');
-    Route::post('admin/save_partnerdetails',[CountryController::class,'savePartnerDetails'])->name('settings.savePartnerDetails');
-    Route::post('admin/save_disablecity',[CountryController::class,'saveDisableCity'])->name('settings.saveDisableCity');
-    Route::post('admin/save_role',[ParterConfigController::class,'saveRole'])->name('settings.saveRole');
-    Route::post('admin/save_partnertypeproperty',[ParterConfigController::class,'savepartnertypeProperty'])->name('settings.savepartnertypeProperty');
-
-Route::post('admin/save_country',[CountryController::class,'saveCountry'])->name('settings.saveCountry');
-Route::post('admin/save_franchise',[CountryController::class,'saveFranchise'])->name('settings.saveFranchise');
-Route::post('admin/save_partnertype',[CountryController::class,'savePartnerType'])->name('settings.savePartnerType');
-Route::post('admin/save_partnerdetails',[CountryController::class,'savePartnerDetails'])->name('settings.savePartnerDetails');
-Route::post('admin/save_disablecity',[CountryController::class,'saveDisableCity'])->name('settings.saveDisableCity');
-Route::post('admin/save_role',[ParterConfigController::class,'saveRole'])->name('settings.saveRole');
-Route::post('admin/save_partnertypeproperty',[ParterConfigController::class,'savepartnertypeProperty'])->name('settings.savepartnertypeProperty');
-Route::post('admin/save_profilefeature',[ParterConfigController::class,'saveprofileFeature'])->name('settings.saveprofilefeature');
-    Route::get('country-list',[CountryController::class,'getAjaxList'])->name('country.getAjaxList');
-    Route::get('franchise-list',[CountryController::class,'getFranchiseAjaxList'])->name('franchise.getAjaxList');
-    Route::get('partnertype-list',[CountryController::class,'getPartnerTypeAjaxList'])->name('partnertype.getAjaxList');
-    Route::get('partnerdetails-list',[CountryController::class,'getPartnerDetailsAjaxList'])->name('partnerdetails.getAjaxList');
-    Route::get('disablecity-list',[CountryController::class,'getDisableCityAjaxList'])->name('disablecity.getAjaxList');
-    Route::get('role-list',[ParterConfigController::class,'getAjaxList'])->name('role.getAjaxList');
-
-    Route::get('admin/setting/edit-country-status/{id}/{status}', [CountryController::class,'changeCountryStatus']);
-    Route::get('admin/setting/edit-franchise-status/{id}/{status}', [CountryController::class,'changeFranchiseStatus']);
-    Route::get('admin/setting/edit-partnertype-status/{id}/{status}', [CountryController::class,'changePartnerTypeStatus']);
-    Route::get('admin/setting/edit-partnerdetails-status/{id}/{status}', [CountryController::class,'changePartnerDetailsStatus']);
-    Route::get('admin/setting/edit-disablecity-status/{id}/{status}', [CountryController::class,'changeDisableCityStatus']);
-    Route::get('admin/setting/edit-role-status/{id}/{status}', [ParterConfigController::class,'changeRoleStatus']);
-
-    Route::get('admin/setting/edit-salon-status/{id}/{statussalon}', [ParterConfigController::class,'changeSalonStatus']);	
-
-Route::post('admin/settings/edit-profilefeature-status', [ParterConfigController::class,'changeProfilefeaturepermission']);
-Route::get('admin/setting/edit-property-status', [ParterConfigController::class,'changePropertypermission']);
-Route::get('admin/setting/edit-country-status/{id}/{status}', [CountryController::class,'changeCountryStatus']);
-Route::get('admin/setting/edit-franchise-status/{id}/{status}', [CountryController::class,'changeFranchiseStatus']);
-Route::get('admin/setting/edit-partnertype-status/{id}/{status}', [CountryController::class,'changePartnerTypeStatus']);
-Route::get('admin/setting/edit-partnerdetails-status/{id}/{status}', [CountryController::class,'changePartnerDetailsStatus']);
-Route::get('admin/setting/edit-disablecity-status/{id}/{status}', [CountryController::class,'changeDisableCityStatus']);
-Route::get('admin/setting/edit-role-status/{id}/{status}', [ParterConfigController::class,'changeRoleStatus']);
-
-Route::get('admin/services/services-config/get-subcategory/{id}', [ServicesConfigController::class,'getSubcategoryAjax']);
-Route::get('admin/services/services-config/get-service/{id}', [ServicesConfigController::class,'getServiceAjax']);
-
-Route::get('partner/settings',[PartnerSettingController::class,'index'])->name('settings.indexp');
-Route::get('partner/venue-setting',[VenueController::class,'index'])->name('venue.index');
-    Route::get('partner/settings',[PartnerSettingController::class,'index'])->name('settings.index');
-    Route::get('partner/venue-setting',[VenueController::class,'index'])->name('venue.index');
-
-    Route::get('admin/settings/appointment',[AppointmentController::class,'index'])->name('settings.appointment');
-    Route::post('admin/settings/appointment',[AppointmentController::class,'create']);
-    Route::get('admin/settings/subscription',[SubscriptionController::class,'index'])->name('settings.subscription');
-
-    Route::get('admin/settings/payment-gateway',[PaymentGatewayController::class,'index'])->name('settings.payment-gateway');
-
-    Route::get('admin/services',[ServiceController::class,'index'])->name('services.index');
-    Route::get('admin/services/order-management',[OrderManagementController::class,'index'])->name('services.order-management');
-    Route::get('admin/services/services-config',[ServicesConfigController::class,'index'])->name('services.services-config');
-    Route::get('admin/services/partner-mapping',[PartnerMappingController::class,'index'])->name('services.partner-mapping');
-    Route::get('admin/services/recommendations',[RecommendationsController::class,'index'])->name('services.recommendations');
-    Route::get('admin/services/offers-management',[OffersManagementController::class,'index'])->name('services.offers-management');
-
-    Route::post('admin/services/servicecategory',[ServicesConfigController::class,'create']);
-    
-    Route::get('admin/add-servicecategory/enable-status/{id}', [ServicesConfigController::class, 'enabled']);
-    Route::get('admin/add-servicecategory/disable-status/{id}', [ServicesConfigController::class, 'disabled']);
-
+    Route::get('admin/services/services-config/get-subcategory/{id}', [ServicesConfigController::class,'getSubcategoryAjax']);
+    Route::get('admin/services/services-config/get-service/{id}', [ServicesConfigController::class,'getServiceAjax']);
     
     Route::get('admin/add-service/enable-status/{serviceid}', [ServicesConfigController::class, 'enabledservice']);
     Route::get('admin/add-service/disable-status/{serviceid}', [ServicesConfigController::class, 'disabledservice']);
     Route::get('admin/service-name-manage/{serviceid}', [ServicesConfigController::class, 'edit_view']);
     Route::post('admin/services/addservice',[ServicesConfigController::class,'addservice']);
-    Route::post('admin/services/servicesubcategory',[ServicesConfigController::class,'store']);
+    //Route::post('admin/services/servicesubcategory',[ServicesConfigController::class,'store']);
     Route::post('admin/services/recommendedpackage',[ServicesConfigController::class,'addrecommendedpackage']);
     Route::get('admin/rp/enable-status/{rp_id}', [ServicesConfigController::class, 'enabledrp']);
     Route::get('admin/rp/disable-status/{rp_id}', [ServicesConfigController::class, 'disabledrp']);
 
-     Route::get('admin/edit-servicecategory/{id}', [ServicesConfigController::class, 'edit']); 
+    Route::get('admin/edit-servicecategory/{id}', [ServicesConfigController::class, 'edit']); 
     
-Route::post('admin/update-servicecategory', [ServicesConfigController::class, 'update']);
+    Route::post('admin/update-servicecategory', [ServicesConfigController::class, 'update']);
 });
 
 /*Partner Route*/

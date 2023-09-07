@@ -1,3 +1,6 @@
+.image-input-wrapper {
+    background-image: url('../../../../public/assets/media/svg/avatars/blank.svg');
+}
 img {
     max-width: 100%;
 }
