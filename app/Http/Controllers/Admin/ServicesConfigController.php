@@ -21,7 +21,8 @@ class ServicesConfigController extends Controller
         $shares = DB::table('services')
        ->leftjoin('service_categories', 'services.categoryid', '=', 'service_categories.id')
         ->leftjoin('service_sub_categories', 'service_sub_categories.servicesubcategoryid', '=', 'services.subcategoryid')
-       ->select('services.serviceid','services.is_active','services.servicename','service_categories.category','service_sub_categories.servicesubcategory')
+       ->select('services.serviceid','services.is_active','services.servicename','service_categories.category',
+       'service_sub_categories.servicesubcategoryid','service_sub_categories.servicesubcategory')
         ->get();
         $pt=PartnerType::all(); 
         $rp=RecommendedPackage::all();
@@ -180,6 +181,22 @@ class ServicesConfigController extends Controller
         foreach ($getService as $gets) {
             echo '<option value="'.$gets->serviceid.'">'.$gets->servicename.'</option>';
         }
+    }
+
+    public function edit_view($serviceid){
+        $s =Service::find($serviceid);
+        return $s;
+    }
+
+    
+    public function updateservice(Request $request)
+    {
+        $s = Service::find($request->get('service_id'));
+        $s->categoryid=$request->input('categoryid');
+        $s->subcategoryid=$request->input('dis_subcategory3');
+        $s->servicename=$request->input('servicename');
+        $s->update();
+        return redirect()->back()->with('messageus','Service Updated Successfully');
     }
 
     public function addrecommendedpackage(Request $request)

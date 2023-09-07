@@ -409,6 +409,13 @@
                   </div>
                </div>
                @endif
+               @if(session()->has('messageus'))
+               <div class="card-header display-message">
+                  <div class="alert alert-success">
+                     {{ session()->get('messageus') }}
+                  </div>
+               </div>
+               @endif
                @if(session()->has('messagestatus'))
                <div class="card-header display-message">
                   <div class="alert alert-success">
@@ -585,7 +592,7 @@
                                           </div>
                                           <!--end::Menu item-->
                                           <div class="menu-item px-3">
-                                             <a href="{{ url('/admin/service-name-manage/'.$share->serviceid) }}" data-bs-toggle="modal" data-bs-target="#kt_modal_service" class="menu-link px-3">Edit</a>
+                                             <a href="javascript:void(0)" service-id="{{ $share->serviceid}}" data-bs-toggle="modal" data-bs-target="#kt_modal_service" class="menu-link px-3 edit-service">Edit</a>
                                           </div>
                                        </div>
                                        <!--end::Menu-->
@@ -1146,8 +1153,10 @@
 
 		            <div class="modal-body">
 		                <!--begin::Form-->
-						<form class="form">
-							<!--begin::Scroll-->
+						<form class="form"method="post" action="{{ url('admin/update-service')}}" >
+						@csrf
+						<input type="hidden" name="service_id" id="service_id">	
+                  <!--begin::Scroll-->
 							<div class="d-flex flex-column scroll-y me-n7 pe-7">
 
 								<!--begin::Input group-->
@@ -1156,11 +1165,10 @@
 									<label class="required fw-semibold fs-6 mb-2">Category</label>
 									<!--end::Label-->
 									<!--begin::Input-->
-									<select class="form-select mb-2" data-control="select2" data-placeholder="Select a Category...">
-									    <option></option>
-										<option value="1" selected>Hair</option>
-										<option value="2">Face Care</option>
-										<option value="3">Nail</option>
+									<select class="form-select mb-2 select_category3" name="categoryid" id="categoryid" data-control="select2" data-placeholder="Select a Category...">
+                               @foreach($sercat as $serv)
+										<option value="{{$serv->id}}">{{$serv->category}}</option>
+										@endforeach
 									</select>
 									<!--end::Input-->
 								</div>
@@ -1172,10 +1180,10 @@
 									<label class="required fw-semibold fs-6 mb-2">Sub category</label>
 									<!--end::Label-->
 									<!--begin::Input-->
-									<select class="form-select mb-2" data-control="select2" data-placeholder="Select a Sub Category...">
-									    <option></option>
-										<option value="1">Hair Cut style</option>
-										<option value="2" selected>Hair Color</option>
+									<select class="form-select mb-2  subcategoryid" name="dis_subcategory3" id="dis_subcategory3" data-control="select2" data-placeholder="Select a Sub Category...">
+                           @foreach($shares as $serv1)
+										<option value="{{$serv1->servicesubcategoryid}}">{{$serv1->servicesubcategory}}</option>
+										@endforeach
 									</select>
 									<!--end::Input-->
 								</div>
@@ -1187,7 +1195,7 @@
 									<label class="required fw-semibold fs-6 mb-2">Service Name</label>
 									<!--end::Label-->
 									<!--begin::Input-->
-									<input type="text" name="" class="form-control form-control-solid mb-3 mb-lg-0" placeholder="Service name" value="Hair Cut Style" />
+									<input type="text" name="servicename" id="servicename" class="form-control form-control-solid mb-3 mb-lg-0" placeholder="Service name" />
 									<!--end::Input-->
 								</div>
 								<!--end::Input group-->
@@ -1514,7 +1522,7 @@
         event.preventDefault();
         var id = $(this).attr('category-id');
         
-        alert(id);
+      //   alert(id);
             $.ajax({
             url:'{{ url('admin/edit-servicecategory')}}'+'/' + id,
             type:'GET',
@@ -1535,7 +1543,7 @@
                 $('#kt_docs_datatable_subtable1').DataTable().ajax.reload();
                 }
             });
-          
+         });
 
 //             $("form[name='categoryupdate_form']").validate({
 //     rules: {
@@ -1564,8 +1572,35 @@
 // 		}
 //   });
 
+        
+
+
+
+        $(document).on('click', '.edit-service', function(){
+        event.preventDefault();
+        var serviceid = $(this).attr('service-id');
+        
+      //   alert(id);
+            $.ajax({
+            url:'{{ url('admin/edit-service')}}'+'/' + serviceid,
+            type:'GET',
+                beforeSend:function(){
+                     $('.spinner-cls').show();
+               },
+                success:function(data)
+                {
+                  // console.log("data", data)
+                  $('.spinner-cls').hide();
+                  $("#categoryid").val(data.categoryid).trigger('change');
+                  $(".subcategoryid").val(data.subcategoryid).trigger('change');
+                  $("#servicename").val(data.servicename);
+                  $("#service_id").val(data.serviceid);
+                  // $("#avatar").css('background-image', 'url('+data.icon/')');               
+               
+                $('#kt_datatable_example3').DataTable().ajax.reload();
+                }
+            });
         });
-			
 		</script>
 @endpush
 
