@@ -130,7 +130,7 @@
                                           </div>
                                           <div class="modal-body">
                                              <!--begin::Form-->
-                                             <form class="form" action = "{{ url('admin/services/servicecategory')}}" method = "post" >
+                                             <form class="form" action = "{{ url('admin/services/servicecategory')}}"  enctype="multipart/form-data" method = "post" >
                                              @csrf   
                                              <!--begin::Scroll-->
                                                 <div class="d-flex flex-column scroll-y me-n7 pe-7">
@@ -140,12 +140,12 @@
                                                       <label for="kt_docs_select2_country" class="form-label">Select a country</label>
                                                       <div class="form-floating border rounded">
                                                          <select class="form-select" name="country" placeholder="..." id="kt_docs_select2_country">
-                                                            <option value="">Select Country</option>
-                                                            @foreach(getCountryList() as $con_val)
-                                                            <option value="{{$con_val->id}}" data-kt-select2-country="{{asset('/public/assets/media/flags/'.strtolower(str_replace(' ','-',$con_val->name.'.svg')))}}">{{$con_val->name}}</option>
-                                                            @endforeach
+                                                         <option value="">Select Country</option>
+																		   @foreach(getCountryList() as $con_val)
+										                             <option value="{{$con_val->iso2}}" data-kt-select2-country="{{asset('/assets/media/flags/'.strtolower(str_replace(' ','-',$con_val->name.'.svg')))}}">{{$con_val->name}}</option>
+																			@endforeach
                                                          </select>
-                                                      </div>
+                                                         </div>
                                                       <!--end::Input-->
                                                    </div>
                                                    <!--end::Input group-->
@@ -334,7 +334,7 @@
                               }
                            @endphp
                          <!--begin::SubTable template-->
-                         <tr data-kt-docs-datatable-subtable="subtable_template">
+                         <tr>
                            <td>{{ $key+1 }}</td>
                            <td>{{ $ser->country }}</td>
                            <td>{{ $ser->category }}</td>
@@ -347,7 +347,11 @@
                                           </div>
                                        </div>
                                     </td> -->
-                                    <td>{{ $ser->icon }}</td>
+                                    <td>
+                                       
+                               <img id="avatar" name="avatar" accept=".png, .jpg, .jpeg" src="{{asset('/uploads/category')}}/{{ $ser->icon }}" style="width: 2em;"/>
+                                    
+                                    </td>
                                     <td>
                                        <div class="badge badge-light-{{ $class }} fw-bold" data-kt-docs-datatable-subtable="subcat_status">{{ $status }}</div>
                                     </td>
@@ -368,7 +372,7 @@
                                           </div>
                                           <!--end::Menu item-->
                                           <div class="menu-item px-3">
-                                             <a href="" data-bs-toggle="modal" data-bs-target="#kt_modal_cat" class="menu-link px-3">Edit</a>
+                                             <a href="javascript:void(0)" category-id="{{ $ser->id}}" data-bs-toggle="modal" data-bs-target="#kt_modal_cat" class="menu-link px-3 edit-category">Edit</a>
                                           </div>
                                        </div>
                                        <!--end::Menu-->
@@ -402,6 +406,20 @@
                <div class="card-header display-message">
                   <div class="alert alert-success">
                      {{ session()->get('messageservice') }}
+                  </div>
+               </div>
+               @endif
+               @if(session()->has('messagestatus'))
+               <div class="card-header display-message">
+                  <div class="alert alert-success">
+                     {{ session()->get('messagestatus') }}
+                  </div>
+               </div>
+               @endif
+               @if(session()->has('errorstatus'))
+               <div class="card-header display-message">
+                  <div class="alert alert-danger">
+                     {{ session()->get('errorstatus') }}
                   </div>
                </div>
                @endif
@@ -533,12 +551,12 @@
                               @if( !empty($shares) )
                         @foreach($shares as $key => $share)
                            @php
-                              $status = $share->is_active;
-                              if($status == 1 ){
-                                 $status = "Enabled";
+                              $statusservice = $share->is_active;
+                              if($statusservice==1){
+                                 $statusservice = "Enabled";
                                  $class 	= "success";
                               }else{
-                                 $status = "Disabled";
+                                 $statusservice = "Disabled";
                                  $class 	= "danger";
                               }
                            @endphp  
@@ -548,7 +566,8 @@
                                     <td>{{ $share->category }}</td>
                                     <td>{{ $share->servicesubcategory }}</td>
                                     <td>
-                                       <div class="badge badge-light-{{ $class }} fw-bold">{{ $status }}</div>
+                                      
+                                       <div class="badge badge-light-{{ $class }} fw-bold">{{ $statusservice }}</div>
                                     </td>
                                     <td class="text-end">
                                        <a href="#" class="btn btn-light btn-active-light-primary btn-flex btn-center btn-sm" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end">Actions
@@ -557,16 +576,16 @@
                                        <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-600 menu-state-bg-light-primary fw-semibold fs-7 w-125px py-4" data-kt-menu="true">
                                           <!--begin::Menu item-->
                                           <div class="menu-item px-3">
-                                             <a href="" class="menu-link px-3">Enable</a>
+                                             <a href="{{ url('/admin/add-service/enable-status/'.$share->serviceid) }}" class="menu-link px-3">Enable</a>
                                           </div>
                                           <!--end::Menu item-->
                                           <!--begin::Menu item-->
                                           <div class="menu-item px-3">
-                                             <a href="" class="menu-link px-3">Disable</a>
+                                             <a href="{{ url('/admin/add-service/disable-status/'.$share->serviceid) }}" class="menu-link px-3">Disable</a>
                                           </div>
                                           <!--end::Menu item-->
                                           <div class="menu-item px-3">
-                                             <a href="" data-bs-toggle="modal" data-bs-target="#kt_modal_service" class="menu-link px-3">Edit</a>
+                                             <a href="{{ url('/admin/service-name-manage/'.$share->serviceid) }}" data-bs-toggle="modal" data-bs-target="#kt_modal_service" class="menu-link px-3">Edit</a>
                                           </div>
                                        </div>
                                        <!--end::Menu-->
@@ -586,9 +605,17 @@
                   <!--begin::Tab pane-->
                   <div class="tab-pane fade" id="serviceconfig3" role="tab-panel">
                      <div class="card card-flush">
-                        <form class="form">
-                           <div class="card-body align-items-center py-10">
+                        <form class="form" action = "{{ url('admin/services/recommendedpackage')}}" method = "post">
+                        @csrf  
+                        <div class="card-body align-items-center py-10">
                               <h1 class="fw-bold text-dark mb-9">Add package</h1>
+                              @if(session()->has('messagerp'))
+               <div class="card-header display-message">
+                  <div class="alert alert-success">
+                     {{ session()->get('messagerp') }}
+                  </div>
+               </div>
+               @endif
                               <div class="row">
                                  <div class="col-md-3 fv-row mb-7">
                                     <h3 class="card-title align-items-start flex-column">
@@ -604,7 +631,7 @@
                                              <label class="required fw-semibold fs-6 mb-2">Package name</label>
                                              <!--end::Label-->
                                              <!--begin::Input-->
-                                             <input type="text" name="" class="form-control form-control-solid mb-3 mb-lg-0" placeholder="Package name" />
+                                             <input type="text" name="packagename" class="form-control form-control-solid mb-3 mb-lg-0" placeholder="Package name" required/>
                                              <!--end::Input-->
                                           </div>
                                           <!--end::Input group-->
@@ -616,11 +643,11 @@
                                              <label class="required fw-semibold fs-6 mb-2">Gender</label>
                                              <!--end::Label-->
                                              <!--begin::Input-->
-                                             <select aria-label="Gender" data-control="select2" data-placeholder="Gender..." class="form-select mb-2">
+                                             <select aria-label="Gender" name="gender" data-control="select2" data-placeholder="Gender..." class="form-select mb-2" required>
                                                 <option></option>
-                                                <option>Unisex</option>
-                                                <option>Male</option>
-                                                <option>Female</option>
+                                                <option value="Unisex">Unisex</option>
+                                                <option value="Male">Male</option>
+                                                <option value="Female">Female</option>
                                              </select>
                                              <!--end::Input-->
                                           </div>
@@ -642,11 +669,13 @@
                                              <label class="required fw-semibold fs-6 mb-2">Category</label>
                                              <!--end::Label-->
                                              <!--begin::Input-->
-                                             <select aria-label="Category" data-control="select2" data-placeholder="Category..." class="form-select mb-2">
-                                                <option></option>
-                                                <option>Hair</option>
-                                                <option>Face care</option>
-                                                <option>Nail</option>
+                                             <select aria-label="Category" name="categoryid" data-control="select2" data-placeholder="Category..." class="form-select mb-2 select_category2" required>
+                                             @foreach($sercat as $serc)     
+                                                      <option></option>
+                                                         <option value="{{$serc->id}}">{{$serc->category}}</option>
+                                                         <!-- <option value="2">Face Care</option>
+                                                         <option value="3">Nail</option> -->
+                                                     @endforeach
                                              </select>
                                              <!--end::Input-->
                                           </div>
@@ -659,10 +688,10 @@
                                              <label class="required fw-semibold fs-6 mb-2">Sub Category</label>
                                              <!--end::Label-->
                                              <!--begin::Input-->
-                                             <select aria-label="Sub Category" data-control="select2" data-placeholder="Sub Category..." class="form-select mb-2">
-                                                <option></option>
+                                             <select aria-label="Sub Category" name="getdis_subcategory" id="getdis_subcategory" data-control="select2" data-placeholder="Sub Category..." class="form-select mb-2 select_subcategory">
+                                                <!-- <option></option>
                                                 <option>Hair Cut</option>
-                                                <option>Hair Color</option>
+                                                <option>Hair Color</option> -->
                                              </select>
                                              <!--end::Input-->
                                           </div>
@@ -684,12 +713,15 @@
                                              <label class="required fw-semibold fs-6 mb-2">Select Service</label>
                                              <!--end::Label-->
                                              <!--begin::Input-->
-                                             <select class="form-select form-select-solid" data-control="select2" data-placeholder="Select an option" data-allow-clear="true" multiple="multiple">
-                                                <option></option>
+                                             <select class="form-select form-select-solid" name="dis_service" id="dis_service" data-control="select2" data-placeholder="Select an option" data-allow-clear="true" multiple="multiple">
+                                             
+                                             <!-- <option></option>
                                                 <option value="1">Hair Cut Style</option>
                                                 <option value="2">Children Hair Cut</option>
                                                 <option value="3">Men Hair Cut</option>
-                                                <option value="4">Women Hair Cut</option>
+                                                <option value="4">Women Hair Cut</option> -->
+
+                                            
                                              </select>
                                              <!--end::Input-->
                                           </div>
@@ -711,11 +743,14 @@
                                              <label class="required fw-semibold fs-6 mb-2">Partner type</label>
                                              <!--end::Label-->
                                              <!--begin::Input-->
-                                             <select class="form-select form-select-solid" data-control="select2" data-placeholder="Select an option" data-allow-clear="true" multiple="multiple">
-                                                <option></option>
+                                             <select class="form-select form-select-solid" name="partnerid" data-control="select2" data-placeholder="Select an option" data-allow-clear="true" multiple="multiple" required>
+                                             @foreach($pt as $p) 
+                                             <option value="{{$p->id}}">{{$p->partner_name}}</option>  
+                                             <!-- <option></option>
                                                 <option value="1">Salon</option>
                                                 <option value="2">Freelancer</option>
-                                                <option value="3">Salon with home service</option>
+                                                <option value="3">Salon with home service</option> -->
+                                             @endforeach
                                              </select>
                                              <!--end::Input-->
                                           </div>
@@ -728,7 +763,7 @@
                                              <label class="required fw-semibold fs-6 mb-2">Business type</label>
                                              <!--end::Label-->
                                              <!--begin::Input-->
-                                             <select class="form-select form-select-solid" data-control="select2" data-placeholder="Select an option" data-allow-clear="true" multiple="multiple">
+                                             <select class="form-select form-select-solid" name="businesstypeid" data-control="select2" data-placeholder="Select an option" data-allow-clear="true" multiple="multiple">
                                                 <option></option>
                                                 <option value="1">Beauty Salon</option>
                                                 <option value="2">Hair Salon</option>
@@ -756,7 +791,7 @@
                                              <label class="required fw-semibold fs-6 mb-2">Unique id</label>
                                              <!--end::Label-->
                                              <!--begin::Input-->
-                                             <input type="text" name="" class="form-control form-control-solid mb-3 mb-lg-0" placeholder="Unique id" />
+                                             <input type="text" name="uniqueid" class="form-control form-control-solid mb-3 mb-lg-0" placeholder="Unique id"  required/>
                                              <!--end::Input-->
                                           </div>
                                           <!--end::Input group-->
@@ -777,7 +812,7 @@
                                              <label class="required fw-semibold fs-6 mb-2">Discount</label>
                                              <!--end::Label-->
                                              <!--begin::Input-->
-                                             <input type="text" name="" class="form-control form-control-solid mb-3 mb-lg-0" placeholder="Discount" />
+                                             <input type="text" name="discount" class="form-control form-control-solid mb-3 mb-lg-0" placeholder="Discount" required/>
                                              <!--end::Input-->
                                           </div>
                                           <!--end::Input group-->
@@ -804,6 +839,20 @@
                         <div class="card-header">
                            <h2 class="page-heading d-flex text-dark fw-bold fs-3 flex-column justify-content-center my-0">Manage Package</h2>
                         </div>
+                        @if(session()->has('messagestatusrp'))
+               <div class="card-header display-message">
+                  <div class="alert alert-success">
+                     {{ session()->get('messagestatusrp') }}
+                  </div>
+               </div>
+               @endif
+               @if(session()->has('errorstatusrp'))
+               <div class="card-header display-message">
+                  <div class="alert alert-success">
+                     {{ session()->get('errorstatusrp') }}
+                  </div>
+               </div>
+               @endif
                         <!--begin::Card header-->
                         <div class="card-header align-items-center pb-5 gap-2 gap-md-5 pt-5">
                            <!--begin::Card title-->
@@ -839,162 +888,55 @@
                               <!--end::Table head-->
                               <!--begin::Table body-->
                               <tbody class="fw-bold text-gray-600">
-                                 <!--begin::SubTable template-->
-                                 <tr data-kt-docs-datatable-subtable="subtable_template" class="d-none">
-                                    <td></td>
-                                    <td></td>
+                              @if( !empty($rp) )
+                        @foreach($rp as $key => $r)
+                           @php 
+                              $status1 = $r->is_active;
+                              if($status1 == 1 ){
+                                 $status1 = "Enabled";
+                                 $class 	= "success";
+                              }else{
+                                 $status1 = "Disabled";
+                                 $class 	= "danger";
+                              }
+                           @endphp   
+                              <!--begin::SubTable template-->
+                                 <tr data-kt-docs-datatable-subtable="subtable_template">
+                                    <td>{{ $key+1 }}</td>
+                                    <td>{{$r->created_at->format('d M Y, g:i a')}}</td>
+                                    <td>{{$r->packagename}}</td>
+                                    <td>{{$r->gender}}</td>
+                                    <td>{{$r->discount}}</td>
                                     <td>
-                                       <div class="d-flex flex-column text-muted">
-                                          <a href="#" class="text-dark text-hover-primary fw-bold" data-kt-docs-datatable-subtable="service_name">Service name</a>
+                                       <div class="badge badge-light-{{$class}} fw-bold">{{$status1}}</div>
+                                    </td>
+                                    <td class="text-end">
+                                       <a href="#" class="btn btn-light btn-active-light-primary btn-flex btn-center btn-sm" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end">Actions
+                                       <i class="ki-duotone ki-down fs-5 ms-1"></i></a>
+                                       <!--begin::Menu-->
+                                       <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-600 menu-state-bg-light-primary fw-semibold fs-7 w-125px py-4" data-kt-menu="true">
+                                          <!--begin::Menu item-->
+                                          <div class="menu-item px-3">
+                                             <a href="{{ url('/admin/rp/enable-status/'.$r->rp_id) }}" class="menu-link px-3">Enable</a>
+                                          </div>
+                                          <!--end::Menu item-->
+                                          <!--begin::Menu item-->
+                                          <div class="menu-item px-3">
+                                             <a href="{{ url('/admin/rp/disable-status/'.$r->rp_id) }}" class="menu-link px-3">Disable</a>
+                                          </div>
                                        </div>
+                                       <!--end::Menu-->
                                     </td>
                                     <td>
-                                       <div class="d-flex flex-column text-muted">
-                                          <a href="#" class="text-dark text-hover-primary fw-bold" data-kt-docs-datatable-subtable="service_cat_name">Category name</a>
-                                       </div>
+                                       <button type="button" class="btn btn-sm btn-icon btn-light btn-active-light-primary toggle h-25px w-25px" data-kt-docs-datatable-subtable="expand_row">
+                                       <span class="svg-icon fs-3 m-0 toggle-off">...</span>
+                                       <span class="svg-icon fs-3 m-0 toggle-on">...</span>
+                                       </button>
                                     </td>
-                                    <td>
-                                       <div class="d-flex flex-column text-muted">
-                                          <a href="#" class="text-dark text-hover-primary fw-bold" data-kt-docs-datatable-subtable="service_subcat_name">Sub category name</a>
-                                       </div>
-                                    </td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
                                  </tr>
                                  <!--end::SubTable template-->
-                                 <tr>
-                                    <td>1</td>
-                                    <td>10 Nov 2021, 10:30 am</td>
-                                    <td>Hair cut, shampoo, blow dye</td>
-                                    <td>Male</td>
-                                    <td>20%</td>
-                                    <td>
-                                       <div class="badge badge-light-success fw-bold">Enabled</div>
-                                    </td>
-                                    <td class="text-end">
-                                       <a href="#" class="btn btn-light btn-active-light-primary btn-flex btn-center btn-sm" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end">Actions
-                                       <i class="ki-duotone ki-down fs-5 ms-1"></i></a>
-                                       <!--begin::Menu-->
-                                       <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-600 menu-state-bg-light-primary fw-semibold fs-7 w-125px py-4" data-kt-menu="true">
-                                          <!--begin::Menu item-->
-                                          <div class="menu-item px-3">
-                                             <a href="" class="menu-link px-3">Enable</a>
-                                          </div>
-                                          <!--end::Menu item-->
-                                          <!--begin::Menu item-->
-                                          <div class="menu-item px-3">
-                                             <a href="" class="menu-link px-3">Disable</a>
-                                          </div>
-                                       </div>
-                                       <!--end::Menu-->
-                                    </td>
-                                    <td>
-                                       <button type="button" class="btn btn-sm btn-icon btn-light btn-active-light-primary toggle h-25px w-25px" data-kt-docs-datatable-subtable="expand_row">
-                                       <span class="svg-icon fs-3 m-0 toggle-off">...</span>
-                                       <span class="svg-icon fs-3 m-0 toggle-on">...</span>
-                                       </button>
-                                    </td>
-                                 </tr>
-                                 <tr>
-                                    <td>2</td>
-                                    <td>10 Nov 2020, 10:30 am</td>
-                                    <td>Facial, D tan</td>
-                                    <td>Female</td>
-                                    <td>30%</td>
-                                    <td>
-                                       <div class="badge badge-light-success fw-bold">Enabled</div>
-                                    </td>
-                                    <td class="text-end">
-                                       <a href="#" class="btn btn-light btn-active-light-primary btn-flex btn-center btn-sm" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end">Actions
-                                       <i class="ki-duotone ki-down fs-5 ms-1"></i></a>
-                                       <!--begin::Menu-->
-                                       <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-600 menu-state-bg-light-primary fw-semibold fs-7 w-125px py-4" data-kt-menu="true">
-                                          <!--begin::Menu item-->
-                                          <div class="menu-item px-3">
-                                             <a href="" class="menu-link px-3">Enable</a>
-                                          </div>
-                                          <!--end::Menu item-->
-                                          <!--begin::Menu item-->
-                                          <div class="menu-item px-3">
-                                             <a href="" class="menu-link px-3">Disable</a>
-                                          </div>
-                                       </div>
-                                       <!--end::Menu-->
-                                    </td>
-                                    <td>
-                                       <button type="button" class="btn btn-sm btn-icon btn-light btn-active-light-primary toggle h-25px w-25px" data-kt-docs-datatable-subtable="expand_row">
-                                       <span class="svg-icon fs-3 m-0 toggle-off">...</span>
-                                       <span class="svg-icon fs-3 m-0 toggle-on">...</span>
-                                       </button>
-                                    </td>
-                                 </tr>
-                                 <tr>
-                                    <td>3</td>
-                                    <td>10 Mar 2021, 10:30 am</td>
-                                    <td>Manicure, Pedicure, Makeup</td>
-                                    <td>Female</td>
-                                    <td>10%</td>
-                                    <td>
-                                       <div class="badge badge-light-success fw-bold">Enabled</div>
-                                    </td>
-                                    <td class="text-end">
-                                       <a href="#" class="btn btn-light btn-active-light-primary btn-flex btn-center btn-sm" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end">Actions
-                                       <i class="ki-duotone ki-down fs-5 ms-1"></i></a>
-                                       <!--begin::Menu-->
-                                       <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-600 menu-state-bg-light-primary fw-semibold fs-7 w-125px py-4" data-kt-menu="true">
-                                          <!--begin::Menu item-->
-                                          <div class="menu-item px-3">
-                                             <a href="" class="menu-link px-3">Enable</a>
-                                          </div>
-                                          <!--end::Menu item-->
-                                          <!--begin::Menu item-->
-                                          <div class="menu-item px-3">
-                                             <a href="" class="menu-link px-3">Disable</a>
-                                          </div>
-                                       </div>
-                                       <!--end::Menu-->
-                                    </td>
-                                    <td>
-                                       <button type="button" class="btn btn-sm btn-icon btn-light btn-active-light-primary toggle h-25px w-25px" data-kt-docs-datatable-subtable="expand_row">
-                                       <span class="svg-icon fs-3 m-0 toggle-off">...</span>
-                                       <span class="svg-icon fs-3 m-0 toggle-on">...</span>
-                                       </button>
-                                    </td>
-                                 </tr>
-                                 <tr>
-                                    <td>4</td>
-                                    <td>10 Nov 2020, 10:30 am</td>
-                                    <td>Straightening, Rebonding</td>
-                                    <td>Unisex</td>
-                                    <td>15%</td>
-                                    <td>
-                                       <div class="badge badge-light-success fw-bold">Enabled</div>
-                                    </td>
-                                    <td class="text-end">
-                                       <a href="#" class="btn btn-light btn-active-light-primary btn-flex btn-center btn-sm" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end">Actions
-                                       <i class="ki-duotone ki-down fs-5 ms-1"></i></a>
-                                       <!--begin::Menu-->
-                                       <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-600 menu-state-bg-light-primary fw-semibold fs-7 w-125px py-4" data-kt-menu="true">
-                                          <!--begin::Menu item-->
-                                          <div class="menu-item px-3">
-                                             <a href="" class="menu-link px-3">Enable</a>
-                                          </div>
-                                          <!--end::Menu item-->
-                                          <!--begin::Menu item-->
-                                          <div class="menu-item px-3">
-                                             <a href="" class="menu-link px-3">Disable</a>
-                                          </div>
-                                       </div>
-                                       <!--end::Menu-->
-                                    </td>
-                                    <td>
-                                       <button type="button" class="btn btn-sm btn-icon btn-light btn-active-light-primary toggle h-25px w-25px" data-kt-docs-datatable-subtable="expand_row">
-                                       <span class="svg-icon fs-3 m-0 toggle-off">...</span>
-                                       <span class="svg-icon fs-3 m-0 toggle-on">...</span>
-                                       </button>
-                                    </td>
-                                 </tr>
+                                 @endforeach
+                        @endif
                               </tbody>
                               <!--end::Table body-->
                            </table>
@@ -1015,559 +957,616 @@
    </div>
    <!--end::Content wrapper-->
 </div>
-
 <!--Edit Category modal -->
 <div class="modal fade" tabindex="-1" id="kt_modal_cat">
-  <div class="modal-dialog modal-dialog-scrollable">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title">Edit Category</h5>
+		    <div class="modal-dialog modal-dialog-scrollable">
+		        <div class="modal-content">
+		            <div class="modal-header">
+		                <h5 class="modal-title">Edit Category</h5>
 
-        <!--begin::Close-->
-        <div class="btn btn-icon btn-sm btn-active-light-primary ms-2" data-bs-dismiss="modal" aria-label="Close">
-          <i class="ki-duotone ki-cross fs-2x"><span class="path1"></span><span class="path2"></span></i>
-       </div>
-       <!--end::Close-->
-    </div>
+		                <!--begin::Close-->
+		                <div class="btn btn-icon btn-sm btn-active-light-primary ms-2" data-bs-dismiss="modal" aria-label="Close">
+		                    <i class="ki-duotone ki-cross fs-2x"><span class="path1"></span><span class="path2"></span></i>
+		                </div>
+		                <!--end::Close-->
+		            </div>
 
-    <div class="modal-body">
-     <!--begin::Form-->
-     <form class="form">
-      <!--begin::Scroll-->
-      <div class="d-flex flex-column scroll-y me-n7 pe-7">
+		            <div class="modal-body">
+		                <!--begin::Form-->
+						<form class="form"  method="post" action="{{ url('admin/update-servicecategory')}}" enctype="multipart/form-data">
+                  @csrf
+						<input type="hidden" name="category_id" id="category_id">
+							<!--begin::Scroll-->
+							<div class="d-flex flex-column scroll-y me-n7 pe-7">
 
-         <!--begin::Input group-->
-         <div class="fv-row mb-7">
-            <!--begin::Label-->
-            <label class="required fw-semibold fs-6 mb-2">Category</label>
-            <!--end::Label-->
-            <!--begin::Input-->
-            <input type="text" name="" class="form-control form-control-solid mb-3 mb-lg-0" placeholder="Category" value="Hair" />
-            <!--end::Input-->
-         </div>
-         <!--end::Input group-->
+								<!--begin::Input group-->
+								<div class="fv-row mb-7">
+									<!--begin::Label-->
+									<label class="required fw-semibold fs-6 mb-2">Category</label>
+									<!--end::Label-->
+									<!--begin::Input-->
+									<input type="text" id="category" name="category" class="form-control form-control-solid mb-3 mb-lg-0" placeholder="Category" />
+									<!--end::Input-->
+								</div>
+								<!--end::Input group-->
 
-         <!--begin::Input group-->
-         <div class="fv-row mb-7 d-flex flex-column">
-            <label class="required fw-semibold fs-6 mb-2">Category icon</label>
-            <div class="image-input image-input-empty" data-kt-image-input="true">
-              <!--begin::Image preview wrapper-->
-              <div class="image-input-wrapper w-125px h-125px"></div>
-              <!--end::Image preview wrapper-->
+								<!--begin::Input group-->
+								<div class="fv-row mb-7 d-flex flex-column">
+									<label class="required fw-semibold fs-6 mb-2">Category icon</label>
+									<div class="image-input image-input-empty" data-kt-image-input="true">
+									    <!--begin::Image preview wrapper-->
+									    <div class="image-input-wrapper w-125px h-125px edit-cat-icon"></div>
+									    <!--end::Image preview wrapper-->
 
-              <!--begin::Edit button-->
-              <label class="btn btn-icon btn-circle btn-color-muted btn-active-color-primary w-25px h-25px bg-body shadow"
-              data-kt-image-input-action="change"
-              data-bs-toggle="tooltip"
-              data-bs-dismiss="click"
-              title="Change avatar">
-              <i class="ki-duotone ki-pencil fs-6"><span class="path1"></span><span class="path2"></span></i>
+									    <!--begin::Edit button-->
+									    <label class="btn btn-icon btn-circle btn-color-muted btn-active-color-primary w-25px h-25px bg-body shadow"
+									    data-kt-image-input-action="change"
+									    data-bs-toggle="tooltip"
+									    data-bs-dismiss="click"
+									    title="Change avatar">
+									        <i class="ki-duotone ki-pencil fs-6"><span class="path1"></span><span class="path2"></span></i>
 
-              <!--begin::Inputs-->
-              <input type="file" name="avatar" accept=".png, .jpg, .jpeg" />
-              <input type="hidden" name="avatar_remove" />
-              <!--end::Inputs-->
-           </label>
-           <!--end::Edit button-->
+									        <!--begin::Inputs-->
+									        <input type="file" id="avatar" name="avatar" accept=".png, .jpg, .jpeg" />
+									        <input type="hidden" name="avatar_remove" />
+									        <!--end::Inputs-->
+									    </label>
+									    <!--end::Edit button-->
 
-           <!--begin::Cancel button-->
-           <span class="btn btn-icon btn-circle btn-color-muted btn-active-color-primary w-25px h-25px bg-body shadow"
-           data-kt-image-input-action="cancel"
-           data-bs-toggle="tooltip"
-           data-bs-dismiss="click"
-           title="Cancel avatar">
-           <i class="ki-outline ki-cross fs-3"></i>
-        </span>
-        <!--end::Cancel button-->
+									    <!--begin::Cancel button-->
+									    <span class="btn btn-icon btn-circle btn-color-muted btn-active-color-primary w-25px h-25px bg-body shadow"
+									    data-kt-image-input-action="cancel"
+									    data-bs-toggle="tooltip"
+									    data-bs-dismiss="click"
+									    title="Cancel avatar">
+									        <i class="ki-outline ki-cross fs-3"></i>
+									    </span>
+									    <!--end::Cancel button-->
 
-        <!--begin::Remove button-->
-        <span class="btn btn-icon btn-circle btn-color-muted btn-active-color-primary w-25px h-25px bg-body shadow"
-        data-kt-image-input-action="remove"
-        data-bs-toggle="tooltip"
-        data-bs-dismiss="click"
-        title="Remove avatar">
-        <i class="ki-outline ki-cross fs-3"></i>
-     </span>
-     <!--end::Remove button-->
-  </div>
-  <!--end::Image input-->
-</div>
-<!--end::Input group-->
+									    <!--begin::Remove button-->
+									    <span class="btn btn-icon btn-circle btn-color-muted btn-active-color-primary w-25px h-25px bg-body shadow"
+									    data-kt-image-input-action="remove"
+									    data-bs-toggle="tooltip"
+									    data-bs-dismiss="click"
+									    title="Remove avatar">
+									        <i class="ki-outline ki-cross fs-3"></i>
+									    </span>
+									    <!--end::Remove button-->
+									</div>
+									<!--end::Image input-->
+								</div>
+								<!--end::Input group-->
 
-</div>
-<!--end::Scroll-->
+							</div>
+							<!--end::Scroll-->
 
-<!--begin::Actions-->
-<div class="modal-footer">
-  <button type="button" class="btn btn-light" data-bs-dismiss="modal">Discard</button>
-  <button type="submit" class="btn btn-primary">
-   <span class="indicator-label">Submit</span>
-   <span class="indicator-progress">Please wait...
-      <span class="spinner-border spinner-border-sm align-middle ms-2"></span>
-   </span>
-</button>
-</div>
-<!--end::Actions-->
-</form>
-<!--end::Form-->
-</div>
+							<!--begin::Actions-->
+							<div class="modal-footer">
+				                <button type="button" class="btn btn-light" data-bs-dismiss="modal">Discard</button>
+				                <button type="submit" class="btn btn-primary">
+									<span class="indicator-label">Submit</span>
+									<span class="indicator-progress">Please wait...
+										<span class="spinner-border spinner-border-sm align-middle ms-2"></span>
+									</span>
+								</button>
+				            </div>
+							<!--end::Actions-->
+						</form>
+						<!--end::Form-->
+		            </div>
 
-</div>
-</div>
-</div>
-<!--end::Modal -->
+		        </div>
+		    </div>
+		</div>
+		<!--end::Modal -->
 
-<!--Edit SubCategory modal -->
-<div class="modal fade" tabindex="-1" id="kt_modal_subcat">
-  <div class="modal-dialog modal-dialog-scrollable">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title">Edit Sub Category</h5>
+		<!--Edit SubCategory modal -->
+		<div class="modal fade" tabindex="-1" id="kt_modal_subcat">
+		    <div class="modal-dialog modal-dialog-scrollable">
+		        <div class="modal-content">
+		            <div class="modal-header">
+		                <h5 class="modal-title">Edit Sub Category</h5>
 
-        <!--begin::Close-->
-        <div class="btn btn-icon btn-sm btn-active-light-primary ms-2" data-bs-dismiss="modal" aria-label="Close">
-          <i class="ki-duotone ki-cross fs-2x"><span class="path1"></span><span class="path2"></span></i>
-       </div>
-       <!--end::Close-->
-    </div>
+		                <!--begin::Close-->
+		                <div class="btn btn-icon btn-sm btn-active-light-primary ms-2" data-bs-dismiss="modal" aria-label="Close">
+		                    <i class="ki-duotone ki-cross fs-2x"><span class="path1"></span><span class="path2"></span></i>
+		                </div>
+		                <!--end::Close-->
+		            </div>
 
-    <div class="modal-body">
-     <!--begin::Form-->
-     <form class="form">
-      <!--begin::Scroll-->
-      <div class="d-flex flex-column scroll-y me-n7 pe-7">
+		            <div class="modal-body">
+		                <!--begin::Form-->
+						<form class="form">
+							<!--begin::Scroll-->
+							<div class="d-flex flex-column scroll-y me-n7 pe-7">
 
-         <!--begin::Input group-->
-         <div class="fv-row mb-7">
-            <!--begin::Label-->
-            <label class="required fw-semibold fs-6 mb-2">Category</label>
-            <!--end::Label-->
-            <!--begin::Input-->
-            <select class="form-select mb-2" data-control="select2" data-placeholder="Select a Category...">
-              <option></option>
-              <option value="1" selected>Hair</option>
-              <option value="2">Face Care</option>
-              <option value="3">Nail</option>
-           </select>
-           <!--end::Input-->
-        </div>
-        <!--end::Input group-->
+								<!--begin::Input group-->
+								<div class="fv-row mb-7">
+									<!--begin::Label-->
+									<label class="required fw-semibold fs-6 mb-2">Category</label>
+									<!--end::Label-->
+									<!--begin::Input-->
+									<select class="form-select mb-2" data-control="select2" data-placeholder="Select a Category...">
+									    <option></option>
+										<option value="1" selected>Hair</option>
+										<option value="2">Face Care</option>
+										<option value="3">Nail</option>
+									</select>
+									<!--end::Input-->
+								</div>
+								<!--end::Input group-->
 
-        <!--begin::Input group-->
-        <div class="fv-row mb-7">
-         <!--begin::Label-->
-         <label class="required fw-semibold fs-6 mb-2">Sub category</label>
-         <!--end::Label-->
-         <!--begin::Input-->
-         <input type="text" name="" class="form-control form-control-solid mb-3 mb-lg-0" placeholder="sub category" value="Hair Color" />
-         <!--end::Input-->
-      </div>
-      <!--end::Input group-->
+								<!--begin::Input group-->
+								<div class="fv-row mb-7">
+									<!--begin::Label-->
+									<label class="required fw-semibold fs-6 mb-2">Sub category</label>
+									<!--end::Label-->
+									<!--begin::Input-->
+									<input type="text" name="" class="form-control form-control-solid mb-3 mb-lg-0" placeholder="sub category" value="Hair Color" />
+									<!--end::Input-->
+								</div>
+								<!--end::Input group-->
 
-   </div>
-   <!--end::Scroll-->
+							</div>
+							<!--end::Scroll-->
 
-   <!--begin::Actions-->
-   <div class="modal-footer">
-     <button type="button" class="btn btn-light" data-bs-dismiss="modal">Discard</button>
-     <button type="submit" class="btn btn-primary">
-      <span class="indicator-label">Submit</span>
-      <span class="indicator-progress">Please wait...
-         <span class="spinner-border spinner-border-sm align-middle ms-2"></span>
-      </span>
-   </button>
-</div>
-<!--end::Actions-->
-</form>
-<!--end::Form-->
-</div>
+							<!--begin::Actions-->
+							<div class="modal-footer">
+				                <button type="button" class="btn btn-light" data-bs-dismiss="modal">Discard</button>
+				                <button type="submit" class="btn btn-primary">
+									<span class="indicator-label">Submit</span>
+									<span class="indicator-progress">Please wait...
+										<span class="spinner-border spinner-border-sm align-middle ms-2"></span>
+									</span>
+								</button>
+				            </div>
+							<!--end::Actions-->
+						</form>
+						<!--end::Form-->
+		            </div>
 
-</div>
-</div>
-</div>
-<!--end::Modal -->
+		        </div>
+		    </div>
+		</div>
+		<!--end::Modal -->
 
-<!--Edit service name modal -->
-<div class="modal fade" tabindex="-1" id="kt_modal_service">
-  <div class="modal-dialog modal-dialog-scrollable">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title">Edit Service</h5>
+		<!--Edit service name modal -->
+		<div class="modal fade" tabindex="-1" id="kt_modal_service">
+		    <div class="modal-dialog modal-dialog-scrollable">
+		        <div class="modal-content">
+		            <div class="modal-header">
+		                <h5 class="modal-title">Edit Service</h5>
 
-        <!--begin::Close-->
-        <div class="btn btn-icon btn-sm btn-active-light-primary ms-2" data-bs-dismiss="modal" aria-label="Close">
-          <i class="ki-duotone ki-cross fs-2x"><span class="path1"></span><span class="path2"></span></i>
-       </div>
-       <!--end::Close-->
-    </div>
+		                <!--begin::Close-->
+		                <div class="btn btn-icon btn-sm btn-active-light-primary ms-2" data-bs-dismiss="modal" aria-label="Close">
+		                    <i class="ki-duotone ki-cross fs-2x"><span class="path1"></span><span class="path2"></span></i>
+		                </div>
+		                <!--end::Close-->
+		            </div>
 
-    <div class="modal-body">
-     <!--begin::Form-->
-     <form class="form">
-      <!--begin::Scroll-->
-      <div class="d-flex flex-column scroll-y me-n7 pe-7">
+		            <div class="modal-body">
+		                <!--begin::Form-->
+						<form class="form">
+							<!--begin::Scroll-->
+							<div class="d-flex flex-column scroll-y me-n7 pe-7">
 
-         <!--begin::Input group-->
-         <div class="fv-row mb-7">
-            <!--begin::Label-->
-            <label class="required fw-semibold fs-6 mb-2">Category</label>
-            <!--end::Label-->
-            <!--begin::Input-->
-            <select class="form-select mb-2" data-control="select2" data-placeholder="Select a Category...">
-              <option></option>
-              <option value="1" selected>Hair</option>
-              <option value="2">Face Care</option>
-              <option value="3">Nail</option>
-           </select>
-           <!--end::Input-->
-        </div>
-        <!--end::Input group-->
+								<!--begin::Input group-->
+								<div class="fv-row mb-7">
+									<!--begin::Label-->
+									<label class="required fw-semibold fs-6 mb-2">Category</label>
+									<!--end::Label-->
+									<!--begin::Input-->
+									<select class="form-select mb-2" data-control="select2" data-placeholder="Select a Category...">
+									    <option></option>
+										<option value="1" selected>Hair</option>
+										<option value="2">Face Care</option>
+										<option value="3">Nail</option>
+									</select>
+									<!--end::Input-->
+								</div>
+								<!--end::Input group-->
 
-        <!--begin::Input group-->
-        <div class="fv-row mb-7">
-         <!--begin::Label-->
-         <label class="required fw-semibold fs-6 mb-2">Sub category</label>
-         <!--end::Label-->
-         <!--begin::Input-->
-         <select class="form-select mb-2" data-control="select2" data-placeholder="Select a Sub Category...">
-           <option></option>
-           <option value="1">Hair Cut style</option>
-           <option value="2" selected>Hair Color</option>
-        </select>
-        <!--end::Input-->
-     </div>
-     <!--end::Input group-->
+								<!--begin::Input group-->
+								<div class="fv-row mb-7">
+									<!--begin::Label-->
+									<label class="required fw-semibold fs-6 mb-2">Sub category</label>
+									<!--end::Label-->
+									<!--begin::Input-->
+									<select class="form-select mb-2" data-control="select2" data-placeholder="Select a Sub Category...">
+									    <option></option>
+										<option value="1">Hair Cut style</option>
+										<option value="2" selected>Hair Color</option>
+									</select>
+									<!--end::Input-->
+								</div>
+								<!--end::Input group-->
 
-     <!--begin::Input group-->
-     <div class="fv-row mb-7">
-      <!--begin::Label-->
-      <label class="required fw-semibold fs-6 mb-2">Service Name</label>
-      <!--end::Label-->
-      <!--begin::Input-->
-      <input type="text" name="" class="form-control form-control-solid mb-3 mb-lg-0" placeholder="Service name" value="Hair Cut Style" />
-      <!--end::Input-->
-   </div>
-   <!--end::Input group-->
+								<!--begin::Input group-->
+								<div class="fv-row mb-7">
+									<!--begin::Label-->
+									<label class="required fw-semibold fs-6 mb-2">Service Name</label>
+									<!--end::Label-->
+									<!--begin::Input-->
+									<input type="text" name="" class="form-control form-control-solid mb-3 mb-lg-0" placeholder="Service name" value="Hair Cut Style" />
+									<!--end::Input-->
+								</div>
+								<!--end::Input group-->
 
-</div>
-<!--end::Scroll-->
+							</div>
+							<!--end::Scroll-->
 
-<!--begin::Actions-->
-<div class="modal-footer">
-  <button type="button" class="btn btn-light" data-bs-dismiss="modal">Discard</button>
-  <button type="submit" class="btn btn-primary">
-   <span class="indicator-label">Submit</span>
-   <span class="indicator-progress">Please wait...
-      <span class="spinner-border spinner-border-sm align-middle ms-2"></span>
-   </span>
-</button>
-</div>
-<!--end::Actions-->
-</form>
-<!--end::Form-->
-</div>
+							<!--begin::Actions-->
+							<div class="modal-footer">
+				                <button type="button" class="btn btn-light" data-bs-dismiss="modal">Discard</button>
+				                <button type="submit" class="btn btn-primary">
+									<span class="indicator-label">Submit</span>
+									<span class="indicator-progress">Please wait...
+										<span class="spinner-border spinner-border-sm align-middle ms-2"></span>
+									</span>
+								</button>
+				            </div>
+							<!--end::Actions-->
+						</form>
+						<!--end::Form-->
+		            </div>
 
-</div>
-</div>
-</div>
-<!--end::Modal -->
-
+		        </div>
+		    </div>
+		</div>
+		<!--end::Modal -->
 @endsection
-
 @push('scripts')
 <script type="text/javascript">
-         function moreSubtable(table, dataIt, rowIt, nCol, tableNo, dateCh=false) {
-            var datatable;
-            var template;
+			function moreSubtable(table, dataIt, rowIt, nCol, tableNo, dateCh=false) {
+				var datatable;
+				var template;
 
-            // Private methods
-            let initDatatable = () => {
-               // Set date data order
-               if(dateCh) {
-                  let tableRows = table.querySelectorAll('tbody tr');
+				// Private methods
+				let initDatatable = () => {
+					// Set date data order
+					if(dateCh) {
+						let tableRows = table.querySelectorAll('tbody tr');
 
-                  tableRows.forEach(row => {
-                     let dateRow = row.querySelectorAll('td');
-                     let realDate = moment(dateRow[1].innerHTML, "DD MMM YYYY, LT").format(); // select date from 2nd column in table
+						tableRows.forEach(row => {
+							let dateRow = row.querySelectorAll('td');
+							let realDate = moment(dateRow[1].innerHTML, "DD MMM YYYY, LT").format(); // select date from 2nd column in table
 
-                     // Skip template
-                     if (!row.closest('[data-kt-docs-datatable-subtable="subtable_template"]')) {
-                        dateRow[1].setAttribute('data-order', realDate);
-                        dateRow[1].innerText = moment(realDate).fromNow();
-                     }
-                  });
-               }
+							// Skip template
+							if (!row.closest('[data-kt-docs-datatable-subtable="subtable_template"]')) {
+								dateRow[1].setAttribute('data-order', realDate);
+								dateRow[1].innerText = moment(realDate).fromNow();
+							}
+						});
+					}
 
-               // Get subtable template
-               let subtable = document.querySelector('[data-kt-docs-datatable-subtable="subtable_template"]');
-               template = subtable.cloneNode(true);
-               template.classList.remove('d-none');
+					// Get subtable template
+					let subtable = document.querySelector('[data-kt-docs-datatable-subtable="subtable_template"]');
+					template = subtable.cloneNode(true);
+					// template.classList.remove('d-none');
 
-               // Remove subtable template
-               subtable.parentNode.removeChild(subtable);
+					// Remove subtable template
+					// subtable.parentNode.removeChild(subtable);
 
-               // Init datatable --- more info on datatables: https://datatables.net/manual/
-               datatable = $(table).DataTable({
-                  "info": false,
-                  'order': [],
-                  "lengthChange": false,
-                  'pageLength': (nCol-1),
-                  'ordering': false,
-                  'paging': false,
-                  'columnDefs': [
-                     { orderable: false, targets: 0 }, // Disable ordering on column 0 (checkbox)
-                     { orderable: false, targets: (nCol-1) }, // Disable ordering on column 6 (actions)
-                  ]
-               });
+					// Init datatable --- more info on datatables: https://datatables.net/manual/
+					datatable = $(table).DataTable({
+						"info": false,
+						'order': [],
+						"lengthChange": false,
+						'pageLength': (nCol-1),
+						'ordering': false,
+						'paging': false,
+						'columnDefs': [
+							{ orderable: false, targets: 0 }, // Disable ordering on column 0 (checkbox)
+							{ orderable: false, targets: (nCol-1) }, // Disable ordering on column 6 (actions)
+						]
+					});
 
-               // Re-init functions on every table re-draw -- more info: https://datatables.net/reference/event/draw
-               datatable.on('draw', function () {
-                  resetSubtable();
-                  handleActionButton();
-               });
-            }
+					// Re-init functions on every table re-draw -- more info: https://datatables.net/reference/event/draw
+					datatable.on('draw', function () {
+						resetSubtable();
+						handleActionButton();
+					});
+				}
 
-            // Subtable data sample
-            let data = dataIt;
+				// Subtable data sample
+				let data = dataIt;
 
-            // Handle action button
-            let handleActionButton = () => {
-               let buttons = table.querySelectorAll('[data-kt-docs-datatable-subtable="expand_row"]');
+				// Handle action button
+				let handleActionButton = () => {
+					let buttons = table.querySelectorAll('[data-kt-docs-datatable-subtable="expand_row"]');
 
-               // Sample row items counter --- for demo purpose only, remove this variable in your project
-               let rowItems = rowIt;
-               console.log('hello', rowItems)
-               buttons.forEach((button, index) => {
-                  button.addEventListener('click', e => {
-                     e.stopImmediatePropagation();
-                     e.preventDefault();
+					// Sample row items counter --- for demo purpose only, remove this variable in your project
+					let rowItems = rowIt;
+					console.log('hello', rowItems)
+					buttons.forEach((button, index) => {
+						button.addEventListener('click', e => {
+							e.stopImmediatePropagation();
+							e.preventDefault();
 
-                     let row = button.closest('tr');
-                     let rowClasses = ['isOpen', 'border-bottom-0'];
+							let row = button.closest('tr');
+							let rowClasses = ['isOpen', 'border-bottom-0'];
 
-                     // Get total number of items to generate --- for demo purpose only, remove this code snippet in your project
-                     let demoData = [];
+							// Get total number of items to generate --- for demo purpose only, remove this code snippet in your project
+							let demoData = [];
 
-                     console.log('hello', rowItems)
-                     for (var j = 0; j < rowItems[index]; j++) {
-                        demoData.push(data[index][j]);
-                     }
-                     // End of generating demo data
+							console.log('hello', rowItems)
+							for (var j = 0; j < rowItems[index]; j++) {
+								demoData.push(data[index][j]);
+							}
+							// End of generating demo data
 
-                     // Handle subtable expanded state
-                     if (row.classList.contains('isOpen')) {
-                        // Remove all subtables from current order row
-                        while (row.nextSibling && row.nextSibling.getAttribute('data-kt-docs-datatable-subtable') === 'subtable_template') {
-                           row.nextSibling.parentNode.removeChild(row.nextSibling);
-                        }
-                        row.classList.remove(...rowClasses);
-                        button.classList.remove('active');
-                     } else {
-                        populateTemplate(demoData.reverse(), row);
-                        row.classList.add(...rowClasses);
-                        button.classList.add('active');
-                     }
-                  });
-               });
-            }
+							// Handle subtable expanded state
+							if (row.classList.contains('isOpen')) {
+								// Remove all subtables from current order row
+								while (row.nextSibling && row.nextSibling.getAttribute('data-kt-docs-datatable-subtable') === 'subtable_template') {
+									row.nextSibling.parentNode.removeChild(row.nextSibling);
+								}
+								row.classList.remove(...rowClasses);
+								button.classList.remove('active');
+							} else {
+								populateTemplate(demoData.reverse(), row);
+								row.classList.add(...rowClasses);
+								button.classList.add('active');
+							}
+						});
+					});
+				}
 
-            // Populate template with content/data -- content/data can be replaced with relevant data from database or API
-            let populateTemplate = (data, target) => {
-               data.forEach((d, index) => {
-                  // Clone template node
-                  let newTemplate = template.cloneNode(true);
+				// Populate template with content/data -- content/data can be replaced with relevant data from database or API
+				let populateTemplate = (data, target) => {
+					data.forEach((d, index) => {
+						// Clone template node
+						let newTemplate = template.cloneNode(true);
 
-                  if(tableNo === 1) {
-                     // Select data elements
-                     let name = newTemplate.querySelector('[data-kt-docs-datatable-subtable="subcat_name"]');
-                     let status = newTemplate.querySelector('[data-kt-docs-datatable-subtable="subcat_status"]');
+						if(tableNo === 1) {
+							// Select data elements
+							let name = newTemplate.querySelector('[data-kt-docs-datatable-subtable="subcat_name"]');
+							let status = newTemplate.querySelector('[data-kt-docs-datatable-subtable="subcat_status"]');
 
-                     // Populate elements with data
-                     name.innerText = d.name;
-                     status.innerText = d.status;
-                  }
+							// Populate elements with data
+							name.innerText = d.name;
+							status.innerText = d.status;
+						}
 
-                  if(tableNo === 2) {
-                     // Select data elements
-                     let name = newTemplate.querySelector('[data-kt-docs-datatable-subtable="service_name"]');
-                     let cat = newTemplate.querySelector('[data-kt-docs-datatable-subtable="service_cat_name"]');
-                     let subcat = newTemplate.querySelector('[data-kt-docs-datatable-subtable="service_subcat_name"]');
+						if(tableNo === 2) {
+							// Select data elements
+							let name = newTemplate.querySelector('[data-kt-docs-datatable-subtable="service_name"]');
+							let cat = newTemplate.querySelector('[data-kt-docs-datatable-subtable="service_cat_name"]');
+							let subcat = newTemplate.querySelector('[data-kt-docs-datatable-subtable="service_subcat_name"]');
 
-                     // Populate elements with data
-                     name.innerText = d.name;
-                     cat.innerText = d.cat;
-                     subcat.innerText = d.subcat;
-                  }
+							// Populate elements with data
+							name.innerText = d.name;
+							cat.innerText = d.cat;
+							subcat.innerText = d.subcat;
+						}
 
-                  // New template border controller
-                  // When only 1 row is available
-                  if (data.length === 1) {
-                     let borderClasses = ['rounded', 'rounded-end-0'];
-                     newTemplate.querySelectorAll('td')[0].classList.add(...borderClasses);
-                     borderClasses = ['rounded', 'rounded-start-0'];
-                     newTemplate.querySelectorAll('td')[nCol-3].classList.add(...borderClasses);
+						// New template border controller
+						// When only 1 row is available
+						if (data.length === 1) {
+							let borderClasses = ['rounded', 'rounded-end-0'];
+							newTemplate.querySelectorAll('td')[0].classList.add(...borderClasses);
+							borderClasses = ['rounded', 'rounded-start-0'];
+							newTemplate.querySelectorAll('td')[nCol-3].classList.add(...borderClasses);
 
-                     // Remove bottom border
-                     newTemplate.classList.add('border-bottom-0');
-                  } else {
-                     // When multiple rows detected
-                     if (index === (data.length - 1)) { // first row
-                        let borderClasses = ['rounded-start', 'rounded-bottom-0'];
-                        newTemplate.querySelectorAll('td')[0].classList.add(...borderClasses);
-                        borderClasses = ['rounded-end', 'rounded-bottom-0'];
-                        newTemplate.querySelectorAll('td')[nCol-3].classList.add(...borderClasses);
-                     }
-                     if (index === 0) { // last row
-                        let borderClasses = ['rounded-start', 'rounded-top-0'];
-                        newTemplate.querySelectorAll('td')[0].classList.add(...borderClasses);
-                        borderClasses = ['rounded-end', 'rounded-top-0'];
-                        newTemplate.querySelectorAll('td')[nCol-3].classList.add(...borderClasses);
+							// Remove bottom border
+							newTemplate.classList.add('border-bottom-0');
+						} else {
+							// When multiple rows detected
+							if (index === (data.length - 1)) { // first row
+								let borderClasses = ['rounded-start', 'rounded-bottom-0'];
+								newTemplate.querySelectorAll('td')[0].classList.add(...borderClasses);
+								borderClasses = ['rounded-end', 'rounded-bottom-0'];
+								newTemplate.querySelectorAll('td')[nCol-3].classList.add(...borderClasses);
+							}
+							if (index === 0) { // last row
+								let borderClasses = ['rounded-start', 'rounded-top-0'];
+								newTemplate.querySelectorAll('td')[0].classList.add(...borderClasses);
+								borderClasses = ['rounded-end', 'rounded-top-0'];
+								newTemplate.querySelectorAll('td')[nCol-3].classList.add(...borderClasses);
 
-                        // Remove bottom border on last row
-                        newTemplate.classList.add('border-bottom-0');
-                     }
-                  }
+								// Remove bottom border on last row
+								newTemplate.classList.add('border-bottom-0');
+							}
+						}
 
-                  // Insert new template into table
-                  let tbody = table.querySelector('tbody');
-                  tbody.insertBefore(newTemplate, target.nextSibling);
-               });
-            }
+						// Insert new template into table
+						let tbody = table.querySelector('tbody');
+						tbody.insertBefore(newTemplate, target.nextSibling);
+					});
+				}
 
-            // Reset subtable
-            let resetSubtable = () => {
-               let subtables = document.querySelectorAll('[data-kt-docs-datatable-subtable="subtable_template"]');
-               subtables.forEach(st => {
-                  st.parentNode.removeChild(st);
-               });
+				// Reset subtable
+				let resetSubtable = () => {
+					let subtables = document.querySelectorAll('[data-kt-docs-datatable-subtable="subtable_template"]');
+					subtables.forEach(st => {
+						st.parentNode.removeChild(st);
+					});
 
-               let rows = table.querySelectorAll('tbody tr');
-               rows.forEach(r => {
-                  r.classList.remove('isOpen');
-                  if (r.querySelector('[data-kt-docs-datatable-subtable="expand_row"]')) {
-                     r.querySelector('[data-kt-docs-datatable-subtable="expand_row"]').classList.remove('active');
-                  }
-               });
-            }
+					let rows = table.querySelectorAll('tbody tr');
+					rows.forEach(r => {
+						r.classList.remove('isOpen');
+						if (r.querySelector('[data-kt-docs-datatable-subtable="expand_row"]')) {
+							r.querySelector('[data-kt-docs-datatable-subtable="expand_row"]').classList.remove('active');
+						}
+					});
+				}
 
-            initDatatable();
-            handleActionButton();
+				initDatatable();
+				handleActionButton();
 
-            if(tableNo === 1) {
-               let filterSearch = document.querySelector('[data-kt-filter-subtable1="search"]');
-                 filterSearch.addEventListener('keyup', function (e) {
-                     datatable.search(e.target.value).draw();
-                 });
-            }
+				if(tableNo === 1) {
+					let filterSearch = document.querySelector('[data-kt-filter-subtable1="search"]');
+			        filterSearch.addEventListener('keyup', function (e) {
+			            datatable.search(e.target.value).draw();
+			        });
+				}
 
-            if(tableNo === 2) {
-               let filterSearch = document.querySelector('[data-kt-filter-subtable2="search"]');
-                 filterSearch.addEventListener('keyup', function (e) {
-                     datatable.search(e.target.value).draw();
-                 });
-            }
+				if(tableNo === 2) {
+					let filterSearch = document.querySelector('[data-kt-filter-subtable2="search"]');
+			        filterSearch.addEventListener('keyup', function (e) {
+			            datatable.search(e.target.value).draw();
+			        });
+				}
 
-         }
+			}
 
-         var table1 = document.querySelector("#kt_docs_datatable_subtable1");
-         let data1 = [
-               [
-                  {
-                     name: 'Hair Color',
-                     status: 'Enabled'
-                  },
-                  {
-                     name: 'Hair Cut',
-                     status: 'Enabled'
-                  }
-               ],
-               [
-                  {
-                     name: 'D-Tan',
-                     status: 'Enabled'
-                  },
-                  {
-                     name: 'Face CleanUp',
-                     status: 'Enabled'
-                  }
-               ],
-               [
-                  {
-                     name: 'Nail subcat1',
-                     status: 'Enabled'
-                  },
-                  {
-                     name: 'Nail subcat2',
-                     status: 'Enabled'
-                  }
-               ]
-         ];
-         let rowItems1 = [2, 2, 2];
-         moreSubtable(table1, data1, rowItems1, 7, 1);
+			var table1 = document.querySelector("#kt_docs_datatable_subtable1");
+			let data1 = [
+					[
+						{
+							name: 'Hair Color',
+							status: 'Enabled'
+						},
+						{
+							name: 'Hair Cut',
+							status: 'Enabled'
+						}
+					],
+					[
+						{
+							name: 'D-Tan',
+							status: 'Enabled'
+						},
+						{
+							name: 'Face CleanUp',
+							status: 'Enabled'
+						}
+					],
+					[
+						{
+							name: 'Nail subcat1',
+							status: 'Enabled'
+						},
+						{
+							name: 'Nail subcat2',
+							status: 'Enabled'
+						}
+					]
+			];
+			let rowItems1 = [2, 2, 2];
+			moreSubtable(table1, data1, rowItems1, 7, 1);
 
-         var table2 = document.querySelector("#kt_docs_datatable_subtable2");
-         let data2 = [
-               [
-                  {
-                     name: 'Hair Dye',
-                     cat: 'Hair',
-                     subcat: 'Hair Color'
-                  },
-                  {
-                     name: 'Shampoo',
-                     cat: 'Hair',
-                     subcat: 'Spa'
-                  },
-                  {
-                     name: 'Hair Cut',
-                     cat: 'Hair',
-                     subcat: 'Hair Cut'
-                  }
-               ],
-               [
-                  {
-                     name: 'Facial',
-                     cat: 'Face Care',
-                     subcat: 'Face Care subcat1'
-                  },
-                  {
-                     name: 'D tan',
-                     cat: 'Face Care',
-                     subcat: 'Face Care subcat2'
-                  }
-               ],
-               [
-                  {
-                     name: 'Manicure',
-                     cat: 'Nails',
-                     subcat: 'Nails Subcat1'
-                  },
-                  {
-                     name: 'Pedicure',
-                     cat: 'Nails',
-                     subcat: 'Nails Subcat1'
-                  },
-                  {
-                     name: 'Makeup',
-                     cat: 'Face Care',
-                     subcat: 'Face Care subcat1'
-                  }
-               ],
-               [
-                  {
-                     name: 'Straightening',
-                     cat: 'Hairs',
-                     subcat: 'Hairs Subcat1'
-                  },
-                  {
-                     name: 'Rebonding',
-                     cat: 'Hairs',
-                     subcat: 'Hairs Subcat2'
-                  }
-               ]
-         ];
-         let rowItems2 = [3, 2, 3, 2];
-         moreSubtable(table2, data2, rowItems2, 8, 2, true);
-         
-      </script>
+			var table2 = document.querySelector("#kt_docs_datatable_subtable2");
+			let data2 = [
+					[
+						{
+							name: 'Hair Dye',
+							cat: 'Hair',
+							subcat: 'Hair Color'
+						},
+						{
+							name: 'Shampoo',
+							cat: 'Hair',
+							subcat: 'Spa'
+						},
+						{
+							name: 'Hair Cut',
+							cat: 'Hair',
+							subcat: 'Hair Cut'
+						}
+					],
+					[
+						{
+							name: 'Facial',
+							cat: 'Face Care',
+							subcat: 'Face Care subcat1'
+						},
+						{
+							name: 'D tan',
+							cat: 'Face Care',
+							subcat: 'Face Care subcat2'
+						}
+					],
+					[
+						{
+							name: 'Manicure',
+							cat: 'Nails',
+							subcat: 'Nails Subcat1'
+						},
+						{
+							name: 'Pedicure',
+							cat: 'Nails',
+							subcat: 'Nails Subcat1'
+						},
+						{
+							name: 'Makeup',
+							cat: 'Face Care',
+							subcat: 'Face Care subcat1'
+						}
+					],
+					[
+						{
+							name: 'Straightening',
+							cat: 'Hairs',
+							subcat: 'Hairs Subcat1'
+						},
+						{
+							name: 'Rebonding',
+							cat: 'Hairs',
+							subcat: 'Hairs Subcat2'
+						}
+					]
+			];
+			let rowItems2 = [3, 2, 3, 2];
+			moreSubtable(table2, data2, rowItems2, 8, 2, true);
+
+         $(document).on('click', '.edit-category', function(){
+        event.preventDefault();
+        var id = $(this).attr('category-id');
+        
+        alert(id);
+            $.ajax({
+            url:'{{ url('admin/edit-servicecategory')}}'+'/' + id,
+            type:'GET',
+                beforeSend:function(){
+                     $('.spinner-cls').show();
+               },
+                success:function(data)
+                {
+                  // console.log("data", data)
+                  var img_path = "{{ asset('uploads/category/') }}";
+                  $('.spinner-cls').hide();
+                  $("#category").val(data.category);
+                  $("#category_id").val(data.id);
+                  // $("#avatar").css('background-image', 'url('+data.icon/')');
+                  $(".edit-cat-icon").css('background-image', 'url('+img_path+'/'+data.icon+')');
+               
+               
+                $('#kt_docs_datatable_subtable1').DataTable().ajax.reload();
+                }
+            });
+          
+
+//             $("form[name='categoryupdate_form']").validate({
+//     rules: {
+//       category: "required",
+// 	},
+   
+//     submitHandler: function(form) {
+//      var formData = {
+//       category: $("#category").val(),
+//       avatar: $("#avatar").val(),
+//     };
+// 	  $.ajax({
+// 				url:'{{ url('admin/update-servicecategory')}}'+'/' + id,
+// 				data: formData,
+// 				type: "POST",
+// 				success:function(data)
+// 				{
+// 				  document.country_form.reset();
+// 				  $('#kt_modal_cat').modal('hide');
+// 				  $('#kt_docs_datatable_subtable1').DataTable().ajax.reload();
+// 				  swal("Your Service-Category updated successfully!", {
+// 					icon: "success",
+// 				  });
+// 				}
+// 				});
+// 		}
+//   });
+
+        });
+			
+		</script>
 @endpush
+
+
