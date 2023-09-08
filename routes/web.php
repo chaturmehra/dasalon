@@ -170,7 +170,7 @@ Route::middleware(['auth'])->group(function () {
     
     Route::get('admin/add-service/enable-status/{serviceid}', [ServicesConfigController::class, 'enabledservice']);
     Route::get('admin/add-service/disable-status/{serviceid}', [ServicesConfigController::class, 'disabledservice']);
-    Route::get('admin/service-name-manage/{serviceid}', [ServicesConfigController::class, 'edit_view']);
+   
     Route::post('admin/services/addservice',[ServicesConfigController::class,'addservice']);
     //Route::post('admin/services/servicesubcategory',[ServicesConfigController::class,'store']);
     Route::post('admin/services/recommendedpackage',[ServicesConfigController::class,'addrecommendedpackage']);
@@ -180,6 +180,8 @@ Route::middleware(['auth'])->group(function () {
     Route::get('admin/edit-servicecategory/{id}', [ServicesConfigController::class, 'edit']); 
     
     Route::post('admin/update-servicecategory', [ServicesConfigController::class, 'update']);
+    Route::get('admin/edit-service/{serviceid}', [ServicesConfigController::class, 'edit_view']);
+    Route::post('admin/update-service', [ServicesConfigController::class, 'updateservice']);
 });
 
 /*Partner Route*/
