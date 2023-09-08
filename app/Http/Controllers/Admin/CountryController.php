@@ -10,13 +10,16 @@ use App\Models\Admin\PartnerDetails;
 use App\Models\Admin\DisableCity;
 use App\Models\Admin\Franchise;
 use Illuminate\Http\Request;
+use App\Models\Admin\BusinessType;
+use Illuminate\Http\RedirectResponse; 
 
 class CountryController extends Controller
 {
    
     public function index()
     {
-        return view('admin/setting/country/index');
+        $bts=BusinessType::all();
+        return view('admin/setting/country/index',compact('bts'));
     }
 
     public function countryList()
@@ -70,6 +73,53 @@ class CountryController extends Controller
         ]);
 		return response()->json(['status'=>true]);
 	}
+
+    public function store(Request $request): RedirectResponse
+    {
+        $bt = new BusinessType;
+        $bt->businesstype 		= $request->businesstype;
+        $bt->is_active 	= 1;
+        $bt->save();
+        return redirect()->back()->with('message', 'Business Type created successfully.');
+    }
+
+    public function enabledbt($bt_id): RedirectResponse
+    {
+        if($bt_id){
+            $bt = new BusinessType;
+
+            $bt->exists       = true;
+            $bt->bt_id           = $bt_id;
+            $bt->is_active    = 1;
+            $bt->updated_at   = date('Y-m-d H:i:s');
+
+            $bt->save();
+
+            return redirect()->back()->with('statusbt', 'Business Type status updated successfully.');
+        }else{
+            return redirect()->back()->with('errorstatusbt', 'Please select Business Type.');
+        }
+    }
+
+    public function disabledbt($bt_id): RedirectResponse
+    {
+    	if($bt_id){
+	        $bt = new BusinessType;
+
+	        $bt->exists 		= true;
+	        $bt->bt_id 			= $bt_id;
+	        $bt->is_active 	= 0;
+	        $bt->updated_at 	= date('Y-m-d H:i:s');
+            
+            // echo "<pre>"; print_r($s->is_active);die;
+            
+	        $bt->save();
+
+	        return redirect()->back()->with('statusbt', 'Business Type status updated successfully.');
+	    }else{
+	    	return redirect()->back()->with('errorstatusbt', 'Please select Business Type.');
+	    }
+    }
 	
 	public function savePartnerDetails(Request $request){
 		
