@@ -223,8 +223,8 @@ class PartnerController extends Controller
             $userDetails = UserDetails::create($userDetails);
 
             $this->createPasswordLinkEmail($email, $request->businessname, $user->id);
-
-            return redirect('/partner/login')->with('success', 'We have sent to a create password link in your mail. Please check.');
+            //return view('partner/user/signup-complete');
+            return redirect('partner/user/signup-complete')->with('success', 'We have sent to a create password link in your mail. Please check.');
 
         }else{
 

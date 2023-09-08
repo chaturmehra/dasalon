@@ -40,6 +40,31 @@
 					<!--begin::Wrapper-->
 					<div class="d-flex flex-center flex-column flex-column-fluid pb-15 pb-lg-20">
 						<!--begin::Form-->
+						@if(session()->has('success'))
+						<div class="card-header display-message">
+							<div class="alert alert-success">
+								{{ session()->get('success') }}
+							</div>
+						</div>
+						@endif
+						@if(session()->has('error'))
+						<div class="card-header display-message">
+							<div class="alert alert-danger">
+								{{ session()->get('error') }}
+							</div>
+						</div>
+						@endif
+						@if ($errors->any())
+						<div class="card-header display-message">
+							<div class="alert alert-danger">
+								<ul>
+									@foreach ($errors->all() as $error)
+									<li>{{ $error }}</li>
+									@endforeach
+								</ul>
+							</div>
+						</div>
+						@endif
 						<form class="form w-100" novalidate="novalidate" id="kt_sign_in_form" data-kt-redirect-url="" action="#">
 							<!--begin::Heading-->
 							<div class="text-center mb-11">
