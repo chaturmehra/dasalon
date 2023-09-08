@@ -142,7 +142,7 @@
                                                          <select class="form-select" name="country" placeholder="..." id="kt_docs_select2_country">
                                                          <option value="">Select Country</option>
 																		   @foreach(getCountryList() as $con_val)
-										                             <option value="{{$con_val->iso2}}" data-kt-select2-country="{{asset('/assets/media/flags/'.strtolower(str_replace(' ','-',$con_val->name.'.svg')))}}">{{$con_val->name}}</option>
+										                             <option value="{{$con_val->iso2}}" data-kt-select2-country="{{asset('/public/assets/media/flags/'.strtolower(str_replace(' ','-',$con_val->name.'.svg')))}}">{{$con_val->name}}</option>
 																			@endforeach
                                                          </select>
                                                          </div>
