@@ -458,6 +458,184 @@
 												<!--end::Products-->
 
 												<div class="card card-flush mb-8">
+													<!--begin::Card header-->
+													<div class="card-header align-items-center py-5 gap-2 gap-md-5">
+													
+														<!--begin::Card title-->
+														<div class="card-title">
+															<!--begin::Search-->
+															<div class="d-flex align-items-center position-relative my-1">
+																<i class="ki-outline ki-magnifier fs-3 position-absolute ms-4"></i>
+																<input type="text" data-kt-filter4="search" class="form-control form-control-solid w-250px ps-14" placeholder="Search">
+															</div>
+															<!--end::Search-->
+														</div>
+														<!--end::Card title-->
+
+														<!--begin::Card toolbar-->
+														<div class="card-toolbar flex-row-fluid justify-content-end gap-5"> 
+															<!--begin::Card toolbar-->
+															<div class="card-toolbar">
+																<!--begin::Toolbar-->
+																<div class="d-flex justify-content-end" data-kt-user-table-toolbar="base">
+
+																	<!--begin::Add Country-->
+																	<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#kt_modal_scrollable_6">
+																	    <i class="ki-duotone ki-plus fs-2"></i>Add Venue - business type
+																	</button>
+																	<!--end::Add Country-->
+
+																</div>
+																<!--end::Toolbar-->
+
+
+																<!--begin::Modal - Add task-->
+																<div class="modal fade" tabindex="-1" id="kt_modal_scrollable_6">
+																    <div class="modal-dialog modal-dialog-scrollable">
+																        <div class="modal-content">
+																            <div class="modal-header">
+																                <h5 class="modal-title">Add Venue - business type</h5>
+
+																                <!--begin::Close-->
+																                <div class="btn btn-icon btn-sm btn-active-light-primary ms-2" data-bs-dismiss="modal" aria-label="Close">
+																                    <i class="ki-duotone ki-cross fs-2x"><span class="path1"></span><span class="path2"></span></i>
+																                </div>
+																                <!--end::Close-->
+																            </div>
+
+																            <div class="modal-body">
+																                <!--begin::Form-->
+																				<form class="form" action="{{ url('/admin/add-businesstype') }}" method="post">
+																				@csrf	
+																				<!--begin::Scroll-->
+																					<div class="d-flex flex-column scroll-y me-n7 pe-7">
+
+																						<!--begin::Input group-->
+																						<div class="fv-row mb-7">
+																							<!--begin::Label-->
+																							<label class="required fw-semibold fs-6 mb-2">Venue - business type</label>
+																							<!--end::Label-->
+																							<!--begin::Input-->
+																							<input type="text" name="businesstype" class="form-control form-control-solid mb-3 mb-lg-0" placeholder="Venue - business type">
+																							<!--end::Input-->
+																						</div>
+																						<!--end::Input group-->
+
+																					</div>
+																					<!--end::Scroll-->
+
+																					<!--begin::Actions-->
+																					<div class="modal-footer">
+																		                <button type="button" class="btn btn-light" data-bs-dismiss="modal">Discard</button>
+																		                <button type="submit" class="btn btn-primary">
+																							<span class="indicator-label">Submit</span>
+																							<span class="indicator-progress">Please wait...
+																								<span class="spinner-border spinner-border-sm align-middle ms-2"></span>
+																							</span>
+																						</button>
+																		            </div>
+																					<!--end::Actions-->
+																				</form>
+																				<!--end::Form-->
+																            </div>
+
+																        </div>
+																    </div>
+																</div>
+																<!--end::Modal - Add task-->
+															</div>
+															<!--end::Card toolbar-->
+														</div>
+														<!--end::Card toolbar-->
+
+													</div>
+													<!--end::Card header-->
+													@if(session()->has('message'))
+														<div class="card-header display-message">
+															<div class="alert alert-success">
+																{{ session()->get('message') }}
+															</div>
+														</div>
+														@endif
+														@if(session()->has('statusbt'))
+														<div class="card-header display-message">
+															<div class="alert alert-success">
+																{{ session()->get('statusbt') }}
+															</div>
+														</div>
+														@endif
+														@if(session()->has('errorstatusbt'))
+														<div class="card-header display-message">
+															<div class="alert alert-danger">
+																{{ session()->get('errorstatusbt') }}
+															</div>
+														</div>
+														@endif
+													<!--begin::Card body-->
+													<div class="card-body pt-0">
+														<!--begin::Table-->
+														<div id="kt_datatable_example4_wrapper" class="dataTables_wrapper dt-bootstrap4 no-footer">
+															<div class="table-responsive">
+																<table class="table align-middle table-row-dashed fs-6 gy-5 dataTable no-footer" id="kt_datatable_example4">
+																	<thead>
+																		<tr class="text-start text-muted fw-bold fs-7 text-uppercase gs-0">
+																		<th class="min-w-125px sorting" tabindex="0" aria-controls="kt_datatable_example4" rowspan="1" colspan="1" aria-label="S No.: activate to sort column ascending" style="width: 0px;">S No.</th>
+																		<th class="min-w-125px sorting" tabindex="0" aria-controls="kt_datatable_example4" rowspan="1" colspan="1" aria-label="Venue - Business type: activate to sort column ascending" style="width: 0px;">Venue - Business type</th>
+																		<th class="min-w-125px sorting" tabindex="0" aria-controls="kt_datatable_example4" rowspan="1" colspan="1" aria-label="Status: activate to sort column ascending" style="width: 0px;">Status</th>
+																		<th class="min-w-100px sorting" tabindex="0" aria-controls="kt_datatable_example4" rowspan="1" colspan="1" aria-label="Actions: activate to sort column ascending" style="width: 0px;">Actions</th>
+																		</tr>
+																	</thead>
+																	<tbody class="text-gray-600 fw-semibold">																	
+																	@if( !empty($bts) )
+																	@foreach($bts as $key=>$bt)	
+																	@php
+																		$statusbt = $bt->is_active;
+																		if($statusbt==1){
+																			$statusbt = "Enabled";
+																			$class 	= "success";
+																		}else{
+																			$statusbt = "Disabled";
+																			$class 	= "danger";
+																		}
+																	@endphp 
+																	<tr class="odd">
+																		<td>{{$key+1}}</td>
+																		<td>{{$bt->businesstype}}</td>
+																		<td>
+																			<div class="badge badge-light-{{$class}} fw-bold">{{$statusbt}}</div>
+																		</td>
+																		<td class="" data-order="Invalid date">
+																			<a href="#" class="btn btn-light btn-active-light-primary btn-flex btn-center btn-sm" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end">Actions
+																			<i class="ki-duotone ki-down fs-5 ms-1"></i></a>
+																			<!--begin::Menu-->
+																			<div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-600 menu-state-bg-light-primary fw-semibold fs-7 w-125px py-4" data-kt-menu="true">
+																				<!--begin::Menu item-->
+																				<div class="menu-item px-3">
+																					<a href="{{ url('/admin/businesstype/enable-status/'.$bt->bt_id) }}" class="menu-link px-3">Enable</a>
+																				</div>
+																				<!--end::Menu item-->
+																				<!--begin::Menu item-->
+																				<div class="menu-item px-3">
+																					<a href="{{ url('/admin/businesstype/disable-status/'.$bt->bt_id) }}" class="menu-link px-3">Disable</a>
+																				</div>
+																				<!--end::Menu item-->
+																			</div>
+																			<!--end::Menu-->
+																		</td>
+																		</tr>
+																		@endforeach
+																			@endif
+																	</tbody>
+																</table>
+															</div>
+														
+														</div>
+														<!--end::Table-->
+													</div>
+													<!--end::Card body-->
+												</div>
+
+												<div class="card card-flush mb-8">
 
 													<div class="card-header">
 														<h2 class="page-heading d-flex text-dark fw-bold fs-3 flex-column justify-content-center my-0">Partner type & Country definition</h2>

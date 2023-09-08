@@ -77,7 +77,7 @@ Route::middleware(['auth'])->group(function () {
 
     Route::get('admin/add-sub/enable-status/{id}', [SubscriptionController::class, 'enabled']);
     Route::get('admin/add-sub/disable-status/{id}', [SubscriptionController::class, 'disabled']);
-    Route::post('admin/settings/subscriptionplan',[SubscriptionController::class,'create']);
+    Route::post('admin/settings/subscriptionplan', [SubscriptionController::class, 'create']);
 
     Route::get('admin/add-system-manager', [SystemManagerController::class, 'index']);
     Route::get('admin/edit-system-manager/{id}', [SystemManagerController::class, 'edit']);
@@ -126,7 +126,7 @@ Route::middleware(['auth'])->group(function () {
 
     Route::get('admin/setting/edit-salon-status/{id}/{statussalon}', [ParterConfigController::class, 'changeSalonStatus']);
 
-    Route::get('admin/services/services-config/get-subcategory/{id}', [ServicesConfigController::class,'getStateAjax']);
+    Route::get('admin/services/services-config/get-subcategory/{id}', [ServicesConfigController::class, 'getStateAjax']);
 
     Route::get('admin/settings/payment-gateway', [PaymentGatewayController::class, 'index'])->name('settings.payment-gateway');
 
@@ -165,23 +165,28 @@ Route::middleware(['auth'])->group(function () {
     Route::get('partner/promote', [PromoteController::class, 'index'])->name('promote.index');
     Route::get('partner/reports', [ReportsController::class, 'index'])->name('reports.index');
 
-    Route::get('admin/services/services-config/get-subcategory/{id}', [ServicesConfigController::class,'getSubcategoryAjax']);
-    Route::get('admin/services/services-config/get-service/{id}', [ServicesConfigController::class,'getServiceAjax']);
-    
+    Route::get('admin/services/services-config/get-subcategory/{id}', [ServicesConfigController::class, 'getSubcategoryAjax']);
+    Route::get('admin/services/services-config/get-service/{id}', [ServicesConfigController::class, 'getServiceAjax']);
+
     Route::get('admin/add-service/enable-status/{serviceid}', [ServicesConfigController::class, 'enabledservice']);
     Route::get('admin/add-service/disable-status/{serviceid}', [ServicesConfigController::class, 'disabledservice']);
-   
-    Route::post('admin/services/addservice',[ServicesConfigController::class,'addservice']);
+
+    Route::post('admin/services/addservice', [ServicesConfigController::class, 'addservice']);
     //Route::post('admin/services/servicesubcategory',[ServicesConfigController::class,'store']);
-    Route::post('admin/services/recommendedpackage',[ServicesConfigController::class,'addrecommendedpackage']);
+    Route::post('admin/services/recommendedpackage', [ServicesConfigController::class, 'addrecommendedpackage']);
     Route::get('admin/rp/enable-status/{rp_id}', [ServicesConfigController::class, 'enabledrp']);
     Route::get('admin/rp/disable-status/{rp_id}', [ServicesConfigController::class, 'disabledrp']);
 
-    Route::get('admin/edit-servicecategory/{id}', [ServicesConfigController::class, 'edit']); 
-    
+    Route::get('admin/edit-servicecategory/{id}', [ServicesConfigController::class, 'edit']);
+
     Route::post('admin/update-servicecategory', [ServicesConfigController::class, 'update']);
     Route::get('admin/edit-service/{serviceid}', [ServicesConfigController::class, 'edit_view']);
     Route::post('admin/update-service', [ServicesConfigController::class, 'updateservice']);
+
+    Route::post('admin/add-businesstype', [CountryController::class, 'store']);
+    Route::get('admin/businesstype/enable-status/{bt_id}', [CountryController::class, 'enabledbt']);
+    Route::get('admin/businesstype/disable-status/{bt_id}', [CountryController::class, 'disabledbt']);
+
 });
 
 /*Partner Route*/

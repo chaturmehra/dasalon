@@ -599,7 +599,7 @@
                                     </td>
                                  </tr>
                                  @endforeach
-                        @endif
+                                @endif
                               </tbody>
                            </table>
                            <!--end::Table-->
@@ -720,7 +720,7 @@
                                              <label class="required fw-semibold fs-6 mb-2">Select Service</label>
                                              <!--end::Label-->
                                              <!--begin::Input-->
-                                             <select class="form-select form-select-solid" name="dis_service" id="dis_service" data-control="select2" data-placeholder="Select an option" data-allow-clear="true" multiple="multiple">
+                                             <select class="form-select form-select-solid" name="dis_service[]" id="dis_service" data-control="select2" data-placeholder="Select an option" data-allow-clear="true" multiple="multiple">
                                              
                                              <!-- <option></option>
                                                 <option value="1">Hair Cut Style</option>
@@ -750,7 +750,7 @@
                                              <label class="required fw-semibold fs-6 mb-2">Partner type</label>
                                              <!--end::Label-->
                                              <!--begin::Input-->
-                                             <select class="form-select form-select-solid" name="partnerid" data-control="select2" data-placeholder="Select an option" data-allow-clear="true" multiple="multiple" required>
+                                             <select class="form-select form-select-solid" name="partnerid[]" data-control="select2" data-placeholder="Select an option" data-allow-clear="true" multiple="multiple" required>
                                              @foreach($pt as $p) 
                                              <option value="{{$p->id}}">{{$p->partner_name}}</option>  
                                              <!-- <option></option>
@@ -770,22 +770,11 @@
                                              <label class="required fw-semibold fs-6 mb-2">Business type</label>
                                              <!--end::Label-->
                                              <!--begin::Input-->
-                                             <select class="form-select form-select-solid" name="businesstypeid" data-control="select2" data-placeholder="Select an option" data-allow-clear="true" multiple="multiple">
-                                                <option></option>
-                                                <option value="1">Beauty Salon</option>
-                                                <option value="2">Hair Salon</option>
-                                                <option value="3">Nail Salon</option>
-                                                <option value="4">Manicure / Pedicure</option>
-                                                <option value="3">Massage / Therapeut</option>
-                                                <option value="3">Weight loss</option>
-                                                <option value="3">Therapy center</option>
-                                                <option value="3">Tattoo & Piercing</option>
-                                                <option value="3">Waxing salon</option>
-                                                <option value="3">Massage</option>
-                                                <option value="3">Spa</option>
-                                                <option value="3">General wellness</option>
-                                                <option value="3">Aesthetics</option>
-                                                <option value="3">Barbershop</option>
+                                             <select class="form-select form-select-solid" name="businesstypeid[]" data-control="select2" data-placeholder="Select an option" data-allow-clear="true" multiple="multiple" required>
+                                                <!-- <option></option> -->
+                                               @foreach($bt as $b)
+                                                <option value="{{$b->bt_id}}">{{$b->businesstype}}</option>
+                                             @endforeach
                                              </select>
                                              <!--end::Input-->
                                           </div>

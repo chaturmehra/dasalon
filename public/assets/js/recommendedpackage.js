@@ -33,6 +33,7 @@ $(document).ready(function(){
                   success:function(data)
                   {
                     //debugger;
+                    console.log(data);
                       $('#dis_service').html(data);
                   }
               });
