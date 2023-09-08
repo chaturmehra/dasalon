@@ -919,7 +919,6 @@
                                        </button>
                                     </td>
                                  </tr>
-                                 <!--end::SubTable template-->
                                  @endforeach
                         @endif
                               </tbody>

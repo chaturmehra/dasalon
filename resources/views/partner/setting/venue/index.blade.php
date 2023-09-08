@@ -462,120 +462,30 @@
                      <!--end::Header-->
                      <div class="card-body">
                         <div class="row">
-                           <!--begin::Col-->
+                           
+                        	@if( !empty($venue_data['business_type_data']) )
+                        	@foreach($venue_data['business_type_data'] as $business_type)
                            <div class="col-md-6 mb-5">
                               <!--begin::Option-->
                               <label class="btn btn-outline btn-outline-dashed btn-active-light-primary d-flex text-start p-6 align-items-center">
-                                 <div class="icn ms-3">
+                                 <!-- <div class="icn ms-3">
                                     <img src="{{ asset('/public/partner/assets/media/icons/duotune/layouts/lay001.svg') }}"/>
-                                 </div>
+                                 </div> -->
                                  <!--begin::Info-->
                                  <span class="ms-3">
                                     <h3 class="card-title align-items-start flex-column">
-                                       <span class="card-label fw-bold text-gray-800 fs-4 mb-4">Business type 1</span>
-                                       <span class="text-gray-400 fw-semibold d-block fs-6">lorem ipsum dolar sit amet
-                                       </span>
+                                       <span class="card-label fw-bold text-gray-800 fs-4 mb-4">{{ $business_type['business_type'] }}</span>
+                                       <!-- <span class="text-gray-400 fw-semibold d-block fs-6">lorem ipsum dolar sit amet
+                                       </span> -->
                                     </h3>
                                  </span>
                                  <!--end::Info-->
                               </label>
                               <!--end::Option-->
                            </div>
-                           <!--begin::Col-->
-                           <div class="col-md-6 mb-5">
-                              <!--begin::Option-->
-                              <label class="btn btn-outline btn-outline-dashed btn-active-light-primary d-flex text-start p-6 align-items-center">
-                                 <div class="icn ms-3">
-                                    <img src="{{ asset('/public/partner/assets/media/icons/duotune/layouts/lay002.svg') }}"/>
-                                 </div>
-                                 <!--begin::Info-->
-                                 <span class="ms-3">
-                                    <h3 class="card-title align-items-start flex-column">
-                                       <span class="card-label fw-bold text-gray-800 fs-4 mb-4">Business type 2</span>
-                                       <span class="text-gray-400 fw-semibold d-block fs-6">lorem ipsum dolar sit amet
-                                       </span>
-                                    </h3>
-                                 </span>
-                                 <!--end::Info-->
-                              </label>
-                              <!--end::Option-->
-                           </div>
-                           <!--begin::Col-->
-                           <div class="col-md-6 mb-5">
-                              <!--begin::Option-->
-                              <label class="btn btn-outline btn-outline-dashed btn-active-light-primary d-flex text-start p-6 align-items-center">
-                                 <div class="icn ms-3">
-                                    <img src="{{ asset('/public/partner/assets/media/icons/duotune/layouts/lay003.svg') }}"/>
-                                 </div>
-                                 <!--begin::Info-->
-                                 <span class="ms-3">
-                                    <h3 class="card-title align-items-start flex-column">
-                                       <span class="card-label fw-bold text-gray-800 fs-4 mb-4">Business type 3</span>
-                                       <span class="text-gray-400 fw-semibold d-block fs-6">lorem ipsum dolar sit amet
-                                       </span>
-                                    </h3>
-                                 </span>
-                                 <!--end::Info-->
-                              </label>
-                              <!--end::Option-->
-                           </div>
-                           <!--begin::Col-->
-                           <div class="col-md-6 mb-5">
-                              <!--begin::Option-->
-                              <label class="btn btn-outline btn-outline-dashed btn-active-light-primary d-flex text-start p-6 align-items-center">
-                                 <div class="icn ms-3">
-                                    <img src="{{ asset('/public/partner/assets/media/icons/duotune/layouts/lay004.svg') }}"/>
-                                 </div>
-                                 <!--begin::Info-->
-                                 <span class="ms-3">
-                                    <h3 class="card-title align-items-start flex-column">
-                                       <span class="card-label fw-bold text-gray-800 fs-4 mb-4">Business type 4</span>
-                                       <span class="text-gray-400 fw-semibold d-block fs-6">lorem ipsum dolar sit amet
-                                       </span>
-                                    </h3>
-                                 </span>
-                                 <!--end::Info-->
-                              </label>
-                              <!--end::Option-->
-                           </div>
-                           <!--begin::Col-->
-                           <div class="col-md-6 mb-5">
-                              <!--begin::Option-->
-                              <label class="btn btn-outline btn-outline-dashed btn-active-light-primary d-flex text-start p-6 align-items-center">
-                                 <div class="icn ms-3">
-                                    <img src="{{ asset('/public/partner/assets/media/icons/duotune/layouts/lay005.svg') }}"/>
-                                 </div>
-                                 <!--begin::Info-->
-                                 <span class="ms-3">
-                                    <h3 class="card-title align-items-start flex-column">
-                                       <span class="card-label fw-bold text-gray-800 fs-4 mb-4">Business type 5</span>
-                                       <span class="text-gray-400 fw-semibold d-block fs-6">lorem ipsum dolar sit amet
-                                       </span>
-                                    </h3>
-                                 </span>
-                                 <!--end::Info-->
-                              </label>
-                              <!--end::Option-->
-                           </div>
-                           <!--begin::Col-->
-                           <div class="col-md-6 mb-5">
-                              <!--begin::Option-->
-                              <label class="btn btn-outline btn-outline-dashed btn-active-light-primary d-flex text-start p-6 align-items-center">
-                                 <div class="icn ms-3">
-                                    <img src="{{ asset('/public/partner/assets/media/icons/duotune/layouts/lay006.svg') }}"/>
-                                 </div>
-                                 <!--begin::Info-->
-                                 <span class="ms-3">
-                                    <h3 class="card-title align-items-start flex-column">
-                                       <span class="card-label fw-bold text-gray-800 fs-4 mb-4">Business type 6</span>
-                                       <span class="text-gray-400 fw-semibold d-block fs-6">lorem ipsum dolar sit amet
-                                       </span>
-                                    </h3>
-                                 </span>
-                                 <!--end::Info-->
-                              </label>
-                              <!--end::Option-->
-                           </div>
+                           @endforeach
+                           @endif
+
                         </div>
                      </div>
                   </div>
@@ -1201,75 +1111,31 @@
                            <div class="col-md-6 mb-7">
                               <div class="fv-row mb-7">
                                  <div class="row">
-                                    <!--begin::Col-->
+                                    @if(!empty($businesstypes))
+                                    @foreach($businesstypes as $businesstype)
                                     <div class="col-md-6 mb-5">
                                        <!--begin::Option-->
                                        <label class="btn btn-outline btn-outline-dashed btn-active-light-primary d-flex text-start p-6 align-items-center">
                                           <!--begin::Radio-->
                                           <span class="form-check form-check-custom form-check-solid form-check-sm align-items-start mt-1">
-                                          <input class="form-check-input" type="checkbox" value="Salon" name="venuebusiness[]"/>
+                                          <input class="form-check-input add_venuebusiness" type="checkbox" value="{{ $businesstype->bt_id }}" name="venuebusiness[]" />
                                           </span>
                                           <!--end::Radio-->
-                                          <div class="icn ms-3">
+                                          <!-- <div class="icn ms-3">
                                              <img src="{{ asset('/public/partner/assets/media/icons/duotune/communication/com001.svg') }}">
-                                          </div>
+                                          </div> -->
                                           <!--begin::Info-->
                                           <span class="ms-3">
                                              <h3 class="card-title align-items-start flex-column">
-                                                <span class="card-label fw-bold text-gray-800 fs-4 mb-4">Salon</span>
+                                                <span class="card-label fw-bold text-gray-800 fs-4 mb-4">{{ $businesstype->businesstype }}</span>
                                              </h3>
                                           </span>
                                           <!--end::Info-->
                                        </label>
                                        <!--end::Option-->
                                     </div>
-                                    <!--end::Col-->
-                                    <!--begin::Col-->
-                                    <div class="col-md-6 mb-5">
-                                       <!--begin::Option-->
-                                       <label class="btn btn-outline btn-outline-dashed btn-active-light-primary d-flex text-start p-6 align-items-center">
-                                          <!--begin::Radio-->
-                                          <span class="form-check form-check-custom form-check-solid form-check-sm align-items-start mt-1">
-                                          <input class="form-check-input" type="checkbox" value="Spa" name="venuebusiness[]"/>
-                                          </span>
-                                          <!--end::Radio-->
-                                          <div class="icn ms-3">
-                                             <img src="{{ asset('/public/partner/assets/media/icons/duotune/communication/com002.svg') }}">
-                                          </div>
-                                          <!--begin::Info-->
-                                          <span class="ms-3">
-                                             <h3 class="card-title align-items-start flex-column">
-                                                <span class="card-label fw-bold text-gray-800 fs-4 mb-4">Spa</span>
-                                             </h3>
-                                          </span>
-                                          <!--end::Info-->
-                                       </label>
-                                       <!--end::Option-->
-                                    </div>
-                                    <!--end::Col-->
-                                    <!--begin::Col-->
-                                    <div class="col-md-6 mb-5">
-                                       <!--begin::Option-->
-                                       <label class="btn btn-outline btn-outline-dashed btn-active-light-primary d-flex text-start p-6 align-items-center">
-                                          <!--begin::Radio-->
-                                          <span class="form-check form-check-custom form-check-solid form-check-sm align-items-start mt-1">
-                                          <input class="form-check-input" type="checkbox" value="Nail Studio" name="venuebusiness[]"/>
-                                          </span>
-                                          <!--end::Radio-->
-                                          <div class="icn ms-3">
-                                             <img src="{{ asset('/public/partner/assets/media/icons/duotune/communication/com003.svg') }}">
-                                          </div>
-                                          <!--begin::Info-->
-                                          <span class="ms-3">
-                                             <h3 class="card-title align-items-start flex-column">
-                                                <span class="card-label fw-bold text-gray-800 fs-4 mb-4">Nail Studio</span>
-                                             </h3>
-                                          </span>
-                                          <!--end::Info-->
-                                       </label>
-                                       <!--end::Option-->
-                                    </div>
-                                    <!--end::Col-->
+                                    @endforeach
+                                    @endif
                                  </div>
                               </div>
                            </div>
@@ -3252,75 +3118,31 @@
                            <div class="col-md-6 mb-7">
                               <div class="fv-row mb-7">
                                  <div class="row">
-                                    <!--begin::Col-->
+                                    @if(!empty($businesstypes))
+                                    @foreach($businesstypes as $businesstype)
                                     <div class="col-md-6 mb-5">
                                        <!--begin::Option-->
                                        <label class="btn btn-outline btn-outline-dashed btn-active-light-primary d-flex text-start p-6 align-items-center">
                                           <!--begin::Radio-->
                                           <span class="form-check form-check-custom form-check-solid form-check-sm align-items-start mt-1">
-                                          <input class="form-check-input edit_venuebusiness" type="checkbox" value="Salon" name="venuebusiness[]" />
+                                          <input class="form-check-input edit_venuebusiness" type="checkbox" value="{{ $businesstype->bt_id }}" name="venuebusiness[]" />
                                           </span>
                                           <!--end::Radio-->
-                                          <div class="icn ms-3">
+                                          <!-- <div class="icn ms-3">
                                              <img src="{{ asset('/public/partner/assets/media/icons/duotune/communication/com001.svg') }}">
-                                          </div>
+                                          </div> -->
                                           <!--begin::Info-->
                                           <span class="ms-3">
                                              <h3 class="card-title align-items-start flex-column">
-                                                <span class="card-label fw-bold text-gray-800 fs-4 mb-4">Salon</span>
+                                                <span class="card-label fw-bold text-gray-800 fs-4 mb-4">{{ $businesstype->businesstype }}</span>
                                              </h3>
                                           </span>
                                           <!--end::Info-->
                                        </label>
                                        <!--end::Option-->
                                     </div>
-                                    <!--end::Col-->
-                                    <!--begin::Col-->
-                                    <div class="col-md-6 mb-5">
-                                       <!--begin::Option-->
-                                       <label class="btn btn-outline btn-outline-dashed btn-active-light-primary d-flex text-start p-6 align-items-center">
-                                          <!--begin::Radio-->
-                                          <span class="form-check form-check-custom form-check-solid form-check-sm align-items-start mt-1">
-                                          <input class="form-check-input edit_venuebusiness" type="checkbox" value="Spa" name="venuebusiness[]"/>
-                                          </span>
-                                          <!--end::Radio-->
-                                          <div class="icn ms-3">
-                                             <img src="{{ asset('/public/partner/assets/media/icons/duotune/communication/com002.svg') }}">
-                                          </div>
-                                          <!--begin::Info-->
-                                          <span class="ms-3">
-                                             <h3 class="card-title align-items-start flex-column">
-                                                <span class="card-label fw-bold text-gray-800 fs-4 mb-4">Spa</span>
-                                             </h3>
-                                          </span>
-                                          <!--end::Info-->
-                                       </label>
-                                       <!--end::Option-->
-                                    </div>
-                                    <!--end::Col-->
-                                    <!--begin::Col-->
-                                    <div class="col-md-6 mb-5">
-                                       <!--begin::Option-->
-                                       <label class="btn btn-outline btn-outline-dashed btn-active-light-primary d-flex text-start p-6 align-items-center">
-                                          <!--begin::Radio-->
-                                          <span class="form-check form-check-custom form-check-solid form-check-sm align-items-start mt-1">
-                                          <input class="form-check-input edit_venuebusiness" type="checkbox" value="Nail Studio" name="venuebusiness[]"/>
-                                          </span>
-                                          <!--end::Radio-->
-                                          <div class="icn ms-3">
-                                             <img src="{{ asset('/public/partner/assets/media/icons/duotune/communication/com003.svg') }}">
-                                          </div>
-                                          <!--begin::Info-->
-                                          <span class="ms-3">
-                                             <h3 class="card-title align-items-start flex-column">
-                                                <span class="card-label fw-bold text-gray-800 fs-4 mb-4">Nail Studio</span>
-                                             </h3>
-                                          </span>
-                                          <!--end::Info-->
-                                       </label>
-                                       <!--end::Option-->
-                                    </div>
-                                    <!--end::Col-->
+                                    @endforeach
+                                    @endif
                                  </div>
                               </div>
                            </div>
@@ -3344,7 +3166,7 @@
 					         <div class="d-flex gap-5 openhoursnav">
 					            <!--begin:::Tab item-->
 					            <div class="form-check form-check-custom">
-					               <input class="form-check-input" type="radio" checked value="open_for_selected_hours" name="openhours" id="openhoursnav1" onclick="funcShowDiv()" />
+					               <input class="form-check-input edit_openhours" type="radio" value="open_for_selected_hours" name="openhours" id="openhoursnav1" onclick="funcShowDiv()" />
 					               <label class="form-check-label nav-link" for="openhoursnav1" onclick="funcShowDiv()">
 					               Open for selected hours
 					               </label>
@@ -3352,7 +3174,7 @@
 					            <!--end:::Tab item-->
 					            <!--begin:::Tab item-->
 					            <div class="form-check form-check-custom">
-					               <input class="form-check-input" type="radio" value="always_open" name="openhours" id="openhoursnav2" onclick="funcShowDiv()"/>
+					               <input class="form-check-input edit_openhours" type="radio" value="always_open" name="openhours" id="openhoursnav2" onclick="funcShowDiv()"/>
 					               <label class="form-check-label nav-link" for="openhoursnav2" onclick="funcShowDiv()">
 					               Always open
 					               </label>
@@ -3360,7 +3182,7 @@
 					            <!--end:::Tab item-->
 					            <!--begin:::Tab item-->
 					            <div class="form-check form-check-custom">
-					               <input class="form-check-input" type="radio" value="appointment_only" name="openhours" id="openhoursnav3" onclick="funcShowDiv()"/>
+					               <input class="form-check-input edit_openhours" type="radio" value="appointment_only" name="openhours" id="openhoursnav3" onclick="funcShowDiv()"/>
 					               <label class="form-check-label nav-link" for="openhoursnav3" onclick="funcShowDiv()">
 					               By appointment only
 					               </label>
@@ -4546,7 +4368,7 @@
 					<div data-kt-stepper-element="content">
 					   <!--begin::Scroll-->
 					   <div class="d-flex flex-column me-n7 pe-7 gap-7 amenities-tab">
-					      @if($amenities)
+					      @if(!empty($amenities))
 					      @foreach($amenities as $key => $amenity)
 					      @if($key == "Venue")
 					      <span class="card-label fw-bold text-gray-800 mb-4">{{ $key }}</span>
@@ -4556,7 +4378,7 @@
 					            <label class="btn btn-outline btn-outline-dashed btn-active-light-primary d-flex text-start p-6 align-items-center" for="flexCheckammenity1">
 					               <!--begin::Radio-->
 					               <span class="form-check form-check-custom form-check-solid form-check-sm align-items-start mt-1">
-					               <input class="form-check-input" type="checkbox" value="{{ $am_val['id'] }}" id="flexCheckammenity{{$key}}" name="amenity[]" />
+					               <input class="form-check-input edit_venue_amenity" type="checkbox" value="{{ $am_val['id'] }}" id="flexCheckammenity{{$key}}" name="amenity[]" />
 					               </span>
 					               <!--end::Radio-->
 					               <div class="icn ms-3">
@@ -4582,7 +4404,7 @@
 					            <label class="btn btn-outline btn-outline-dashed btn-active-light-primary d-flex text-start p-6 align-items-center" for="flexCheckammenity1">
 					               <!--begin::Radio-->
 					               <span class="form-check form-check-custom form-check-solid form-check-sm align-items-start mt-1">
-					               <input class="form-check-input" type="checkbox" value="{{ $am_val['id'] }}" id="flexCheckammenityaccess{{$key}}" name="amenity[]"/>
+					               <input class="form-check-input edit_venue_amenity" type="checkbox" value="{{ $am_val['id'] }}" id="flexCheckammenityaccess{{$key}}" name="amenity[]"/>
 					               </span>
 					               <!--end::Radio-->
 					               <div class="icn ms-3">
@@ -4608,7 +4430,7 @@
 					            <label class="btn btn-outline btn-outline-dashed btn-active-light-primary d-flex text-start p-6 align-items-center" for="flexCheckammenity1">
 					               <!--begin::Radio-->
 					               <span class="form-check form-check-custom form-check-solid form-check-sm align-items-start mt-1">
-					               <input class="form-check-input" type="checkbox" value="{{ $am_val['id'] }}" id="flexCheckammenityprod{{$key}}" name="amenity[]"/>
+					               <input class="form-check-input edit_venue_amenity" type="checkbox" value="{{ $am_val['id'] }}" id="flexCheckammenityprod{{$key}}" name="amenity[]"/>
 					               </span>
 					               <!--end::Radio-->
 					               <div class="icn ms-3">
@@ -4634,7 +4456,7 @@
 					            <label class="btn btn-outline btn-outline-dashed btn-active-light-primary d-flex text-start p-6 align-items-center" for="flexCheckammenity1">
 					               <!--begin::Radio-->
 					               <span class="form-check form-check-custom form-check-solid form-check-sm align-items-start mt-1">
-					               <input class="form-check-input" type="checkbox" value="{{ $am_val['id'] }}" id="flexCheckammenitybrand{{$key}}" name="amenity[]"/>
+					               <input class="form-check-input edit_venue_amenity" type="checkbox" value="{{ $am_val['id'] }}" id="flexCheckammenitybrand{{$key}}" name="amenity[]"/>
 					               </span>
 					               <!--end::Radio-->
 					               <div class="icn ms-3">
@@ -4843,9 +4665,7 @@
 						$("#edit_venue_district").val(venues_meta.district);
 						$("#edit_venue_region").val(venues_meta.region);
 						$("#edit_venue_postcode").val(venues_meta.postcode);
-						//$("#edit_venue_district").val(venues_meta.district);
-						//$("#edit_venue_district").val(venues_meta.district);
-						//$("#edit_venue_district").val(venues_meta.district);
+						
 						var featured = "{{ asset('/public/') }}"+venues_meta.featured;
 						var imgother1 = "{{ asset('/public/') }}"+venues_meta.imgother1;
 						var imgother2 = "{{ asset('/public/') }}"+venues_meta.imgother2;
@@ -4858,14 +4678,34 @@
 						$("#edit_otherimg4").css('background-image', 'url('+imgother4+')');
 						//$("#country").val(country_id).trigger('change');
 						var gender_restriction = venues_meta.gender_restriction;
+						var openhours = venues_meta.openhours;
 						if (gender_restriction == "Unisex"){
 							$('.edit_gender_restriction#unisex').prop('checked', true);
 						}else if(gender_restriction == "Male"){
 							$('.edit_gender_restriction#male').prop('checked', true);
 						}else if(gender_restriction == "Female"){
 							$('.edit_gender_restriction#female').prop('checked', true);
-
 						}
+						if (openhours == "open_for_selected_hours"){
+							$('.edit_openhours#openhoursnav1').prop('checked', true);
+						}else if(openhours == "always_open"){
+							$('.edit_openhours#openhoursnav2').prop('checked', true);
+						}else if(openhours == "appointment_only"){
+							$('.edit_openhours#openhoursnav3').prop('checked', true);
+						}
+
+						var amenity 		= venues_meta.amenity;
+						var split_amenity = amenity.split(",");
+						$.each(split_amenity, function(index, value) {
+							$(".edit_venue_amenity[value="+value+"]").prop("checked", true);
+						});
+
+						var business_type 	= venues_meta.venuebusiness;
+						var split_bt = business_type.split(",");
+						$.each(split_bt, function(index, value) {
+							console.log("valuevalue", value);
+							$(".edit_venuebusiness[value="+value+"]").prop("checked", true);
+						});
 					}
 				}
 			});

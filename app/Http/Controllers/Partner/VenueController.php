@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Partner;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Admin\Amenity;
+use App\Models\Admin\BusinessType;
 use App\Models\Partner\Venue;
 use App\Models\Partner\VenueMeta;
 use Illuminate\Support\Facades\Auth;
@@ -19,6 +20,8 @@ class VenueController extends Controller
 		$meta_keywords     = "";
 
 		$get_amenities = Amenity::where('status', 1)->get();
+		$businesstypes = BusinessType::where('is_active', 1)->get();
+
 		$amenities = [];
 		if (!empty($get_amenities)) {
 			foreach ($get_amenities as $key => $amenity) {
@@ -41,6 +44,7 @@ class VenueController extends Controller
 
 		$venue_meta 		= $this->get_venue_meta_by_venue_ids($venue_ids);
 		$amenity_ids 		= array_column($venue_meta, 'amenity');
+		$business_types_ids = array_column($venue_meta, 'venuebusiness');
 
 		/*
 		if (!empty($amenity_ids)) {
@@ -58,8 +62,12 @@ class VenueController extends Controller
 				$amenities_ids 		= explode(',', $amenity_ids[$i]);
 				$amenity_data 		= $this->get_amenity_by_ids($amenities_ids);
 
+				$business_type_ids 	= explode(',', $business_types_ids[$i]);
+				$business_type_data = $this->get_business_type_by_ids($business_type_ids);
+
 				$venue_data["venue_meta"] = $venue_meta_data;
 				$venue_data["amenity_data"] = $amenity_data;
+				$venue_data["business_type_data"] = $business_type_data;
 				$venue_data_arr[] = $venue_data;
 
 				$i++;
@@ -68,7 +76,7 @@ class VenueController extends Controller
 
 		// echo "<pre>"; print_r($venue_data_arr); die;
 
-		return view('partner/setting/venue/index', compact('title', 'meta_description', 'meta_keywords', 'amenities', 'venue_data_arr'));
+		return view('partner/setting/venue/index', compact('title', 'meta_description', 'meta_keywords', 'amenities', 'venue_data_arr', 'businesstypes'));
 	}
 
 	public function storeVenues(Request $request)
@@ -234,17 +242,17 @@ class VenueController extends Controller
 			$image->move($destinationPath, $imgother4);
 			$imgother4 =  '/uploads/imgother/'.$imgother4;
 		}
-		if( !empty($request->featured) ){
-			$this->add_venue_meta($venue->id, 'featured', $request->featured);
+		if( !empty($featured) ){
+			$this->add_venue_meta($venue->id, 'featured', $featured);
 		}
-		if( !empty($request->imgother1) ){
-			$this->add_venue_meta($venue->id, 'imgother1', $request->imgother1);
+		if( !empty($imgother1) ){
+			$this->add_venue_meta($venue->id, 'imgother1', $imgother1);
 		}
-		if( !empty($request->imgother2) ){
-			$this->add_venue_meta($venue->id, 'imgother2', $request->imgother2);
+		if( !empty($imgother2) ){
+			$this->add_venue_meta($venue->id, 'imgother2', $imgother2);
 		}
-		if( !empty($request->imgother3) ){
-			$this->add_venue_meta($venue->id, 'imgother3', $request->imgother3);
+		if( !empty($imgother3) ){
+			$this->add_venue_meta($venue->id, 'imgother3', $imgother3);
 		}
 		if( !empty($request->imgother4) ){
 			$this->add_venue_meta($venue->id, 'imgother4', $request->imgother4);
@@ -414,20 +422,20 @@ class VenueController extends Controller
 			$image->move($destinationPath, $imgother4);
 			$imgother4 =  '/uploads/imgother/'.$imgother4;
 		}
-		if( !empty($request->featured) ){
-			$this->add_venue_meta($venue_id, 'featured', $request->featured);
+		if( !empty($featured) ){
+			$this->add_venue_meta($venue_id, 'featured', $featured);
 		}
-		if( !empty($request->imgother1) ){
-			$this->add_venue_meta($venue_id, 'imgother1', $request->imgother1);
+		if( !empty($imgother1) ){
+			$this->add_venue_meta($venue_id, 'imgother1', $imgother1);
 		}
-		if( !empty($request->imgother2) ){
-			$this->add_venue_meta($venue_id, 'imgother2', $request->imgother2);
+		if( !empty($imgother2) ){
+			$this->add_venue_meta($venue_id, 'imgother2', $imgother2);
 		}
-		if( !empty($request->imgother3) ){
-			$this->add_venue_meta($venue_id, 'imgother3', $request->imgother3);
+		if( !empty($imgother3) ){
+			$this->add_venue_meta($venue_id, 'imgother3', $imgother3);
 		}
-		if( !empty($request->imgother4) ){
-			$this->add_venue_meta($venue_id, 'imgother4', $request->imgother4);
+		if( !empty($imgother4) ){
+			$this->add_venue_meta($venue_id, 'imgother4', $imgother4);
 		}
 
 		return redirect()->back()->with('success', 'Venue updated successfully.');
@@ -474,6 +482,19 @@ class VenueController extends Controller
 			$amenities_data_arr[] = $amenities_data;
 		}
 		return $amenities_data_arr;
+	}
+	public function get_business_type_by_ids($business_type_ids){
+
+		$bt_data = BusinessType::whereIn("bt_id", $business_type_ids)->get()->toArray();
+
+		$bt_data_arr = [];
+		foreach ($bt_data as $amkey => $value) { 
+			$btype_data["bt_id"] 			= $value["bt_id"];
+			$btype_data["business_type"] 	= $value["businesstype"];
+
+			$bt_data_arr[] = $btype_data;
+		}
+		return $bt_data_arr;
 	}
 
 	public function array_by_ids($array, $column, $multi_arr=false)
