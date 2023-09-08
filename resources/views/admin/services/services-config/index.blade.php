@@ -349,7 +349,7 @@
                                     </td> -->
                                     <td>
                                        
-                               <img id="avatar" name="avatar" accept=".png, .jpg, .jpeg" src="{{asset('/uploads/category')}}/{{ $ser->icon }}" style="width: 2em;"/>
+                               <img id="avatar" name="avatar" accept=".png, .jpg, .jpeg" src="{{asset('/public/uploads/category')}}/{{ $ser->icon }}" style="width: 2em;"/>
                                     
                                     </td>
                                     <td>
@@ -1521,7 +1521,7 @@
                 success:function(data)
                 {
                   // console.log("data", data)
-                  var img_path = "{{ asset('uploads/category/') }}";
+                  var img_path = "{{ asset('public/uploads/category/') }}";
                   $('.spinner-cls').hide();
                   $("#category").val(data.category);
                   $("#category_id").val(data.id);

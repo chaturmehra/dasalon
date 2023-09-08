@@ -182,9 +182,9 @@ class PartnerController extends Controller
 
         $validator = Validator::make($request->all(), [
             'businessname'  => 'required|max:30',
-            'phone'         => 'required|numeric',
+            'phone'         => 'required',
             'otp'           => 'required|numeric',
-            'websitename'   => 'url',
+            'websitename'   => 'nullable|url',
         ]);
  
         if ($validator->fails()) {
@@ -268,7 +268,7 @@ class PartnerController extends Controller
 
         $validator = Validator::make($request->all(), [
             'name'      => 'required|max:30',
-            'phone'     => 'required|numeric',
+            'phone'     => 'required',
             'otp'       => 'required|numeric',
         ]);
  
