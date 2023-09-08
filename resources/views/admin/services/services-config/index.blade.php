@@ -255,7 +255,7 @@
                                                       <!--end::Label-->
                                                       <!--begin::Input-->
                                                       <select class="form-select mb-2" name="category" data-control="select2" data-placeholder="Select a Category...">
-                                                      @foreach($sercat as $serc)  
+                                                      @foreach($catactive as $serc)  
                                                       <option></option>
                                                          <option value="{{$serc->id}}">{{$serc->category}}</option>
                                                          <!-- <option value="2">Face Care</option>
@@ -480,7 +480,7 @@
                                                       <!--end::Label-->
                                                       <!--begin::Input-->
                                                       <select class="form-select mb-2 select_category" name="category" data-control="select2" data-placeholder="Select a Category...">
-                                                      @foreach($sercat as $serc)     
+                                                      @foreach($catactive as $serc)     
                                                       <option></option>
                                                          <option value="{{$serc->id}}">{{$serc->category}}</option>
                                                          <!-- <option value="2">Face Care</option>
@@ -677,7 +677,7 @@
                                              <!--end::Label-->
                                              <!--begin::Input-->
                                              <select aria-label="Category" name="categoryid" data-control="select2" data-placeholder="Category..." class="form-select mb-2 select_category2" required>
-                                             @foreach($sercat as $serc)     
+                                             @foreach($catactive as $serc)     
                                                       <option></option>
                                                          <option value="{{$serc->id}}">{{$serc->category}}</option>
                                                          <!-- <option value="2">Face Care</option>
@@ -1155,7 +1155,7 @@
 									<!--end::Label-->
 									<!--begin::Input-->
 									<select class="form-select mb-2 select_category3" name="categoryid" id="categoryid" data-control="select2" data-placeholder="Select a Category...">
-                               @foreach($sercat as $serv)
+                               @foreach($catactive as $serv)
 										<option value="{{$serv->id}}">{{$serv->category}}</option>
 										@endforeach
 									</select>
