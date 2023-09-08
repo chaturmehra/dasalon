@@ -10,6 +10,8 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\DB;
 use App\Models\Admin\PartnerType;
 use App\Models\Admin\RecommendedPackage;
+use App\Models\Admin\BusinessType;
+
 class ServicesConfigController extends Controller
 {
     public function index()
@@ -26,7 +28,8 @@ class ServicesConfigController extends Controller
         ->get();
         $pt=PartnerType::all(); 
         $rp=RecommendedPackage::all();
-        return view('admin/services/services-config/index', compact('title', 'meta_description', 'meta_keywords','sercat','shares','pt','rp'));
+        $bt=BusinessType::all();
+        return view('admin/services/services-config/index', compact('title', 'meta_description', 'meta_keywords','sercat','shares','pt','rp','bt'));
     }
 
     public function create(Request $request)
@@ -201,15 +204,17 @@ class ServicesConfigController extends Controller
 
     public function addrecommendedpackage(Request $request)
     {
-    	
+    	$but=implode(", ", $request->get('businesstypeid'));
+        $service=implode(", ",$request->get('dis_service'));
+        $partnerid=implode(", ", $request->get('partnerid'));
         $s = new RecommendedPackage;  
         $s->packagename =  $request->get('packagename');  
         $s->gender = $request->get('gender');
         $s->categoryid = $request->get('categoryid');
         $s->subcategoryid = $request->get('getdis_subcategory');
-        $s->serviceid = $request->get('dis_service');
-        $s->partnerid = $request->get('partnerid');
-        $s->businesstypeid = $request->get('businesstypeid');
+        $s->serviceid = $service;
+        $s->partnerid = $partnerid;
+        $s->businesstypeid = $but;
         $s->uniqueid = $request->get('uniqueid');
         $s->discount = $request->get('discount');
         $s->is_active 	= 1;   

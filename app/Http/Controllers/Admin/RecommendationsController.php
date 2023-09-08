@@ -12,7 +12,7 @@ class RecommendationsController extends Controller
     	$title             = "Dasalon :: Services Recommendations";
     	$meta_description  = "";
     	$meta_keywords     = "";
-
+        
         return view('admin/services/recommendations/index', compact('title', 'meta_description', 'meta_keywords'));
     }
 }

@@ -163,6 +163,12 @@ Route::get('partner/venue-setting',[VenueController::class,'index'])->name('venu
 Route::post('admin/update-servicecategory', [ServicesConfigController::class, 'update']);
 Route::get('admin/edit-service/{serviceid}', [ServicesConfigController::class, 'edit_view']);
 Route::post('admin/update-service', [ServicesConfigController::class, 'updateservice']);
+
+Route::post('admin/add-businesstype', [CountryController::class, 'store']);
+
+Route::get('admin/businesstype/enable-status/{bt_id}', [CountryController::class, 'enabledbt']);
+Route::get('admin/businesstype/disable-status/{bt_id}', [CountryController::class, 'disabledbt']);
+
 });
 
 /*Partner Route*/
