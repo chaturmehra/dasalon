@@ -20,6 +20,7 @@ class ServicesConfigController extends Controller
     	$meta_description  = "";
     	$meta_keywords     = "";
         $sercat=ServiceCategory::all();
+        $catactive=ServiceCategory::where('is_active', '=', 1)->get();
         $shares = DB::table('services')
        ->leftjoin('service_categories', 'services.categoryid', '=', 'service_categories.id')
         ->leftjoin('service_sub_categories', 'service_sub_categories.servicesubcategoryid', '=', 'services.subcategoryid')
@@ -29,7 +30,7 @@ class ServicesConfigController extends Controller
         $pt=PartnerType::all(); 
         $rp=RecommendedPackage::all();
         $bt=BusinessType::all();
-        return view('admin/services/services-config/index', compact('title', 'meta_description', 'meta_keywords','sercat','shares','pt','rp','bt'));
+        return view('admin/services/services-config/index', compact('title', 'meta_description', 'meta_keywords','sercat','catactive','shares','pt','rp','bt'));
     }
 
     public function create(Request $request)
