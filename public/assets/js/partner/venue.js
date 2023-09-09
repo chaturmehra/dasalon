@@ -56,6 +56,14 @@ $(document).on('click', '.update-venue-detail', function(){
             var always_open = venues_meta.always_open;
             var appointment_only = venues_meta.appointment_only;
             var advance_setting = venues_meta.advance_setting;
+            
+            // var adv_setting_mon = venues_meta.adv_setting_mon;
+            // var adv_setting_tue = venues_meta.adv_setting_tue;
+            // var adv_setting_wed = venues_meta.adv_setting_wed;
+            // var adv_setting_thu = venues_meta.adv_setting_thu;
+            // var adv_setting_fri = venues_meta.adv_setting_fri;
+            // var adv_setting_sat = venues_meta.adv_setting_sat;
+            // var adv_setting_sun = venues_meta.adv_setting_sun;
 
             if (gender_restriction == "Unisex"){
               $('.edit_gender_restriction#unisex').prop('checked', true);

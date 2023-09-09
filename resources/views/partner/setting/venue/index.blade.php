@@ -3299,7 +3299,7 @@
 					                           <td>
 					                              <div>
 					                                 <div class="input-group kt_td_picker_time_only" data-td-target-input="nearest" data-td-target-toggle="nearest">
-					                                    <input type="text" name="adv_setting_open[]" class="form-control" data-td-target=".kt_td_picker_time_only"/>
+					                                    <input type="text" name="adv_setting_mon['open']" class="form-control" data-td-target=".kt_td_picker_time_only"/>
 					                                    <span class="input-group-text" data-td-target=".kt_td_picker_time_only" data-td-toggle="datetimepicker">
 					                                    <i class="ki-outline ki-time fs-3"></i>
 					                                    </span>
@@ -3309,7 +3309,7 @@
 					                           <td>
 					                              <div>
 					                                 <div class="input-group kt_td_picker_time_only" data-td-target-input="nearest" data-td-target-toggle="nearest">
-					                                    <input type="text" name="adv_setting_close[]" class="form-control" data-td-target=".kt_td_picker_time_only"/>
+					                                    <input type="text" name="adv_setting_mon['close']" class="form-control" data-td-target=".kt_td_picker_time_only"/>
 					                                    <span class="input-group-text" data-td-target=".kt_td_picker_time_only" data-td-toggle="datetimepicker">
 					                                    <i class="ki-outline ki-time fs-3"></i>
 					                                    </span>
@@ -3325,7 +3325,7 @@
 					                                    <div class="mb-7 mb-sm-0">
 					                                       <label for="" class="form-label">Open</label>
 					                                       <div class="input-group kt_td_picker_time_only" data-td-target-input="nearest" data-td-target-toggle="nearest">
-					                                          <input type="text" name="adv_setting_timeset_open[]" class="form-control" data-td-target=".kt_td_picker_time_only"/>
+					                                          <input type="text" name="adv_setting_mon['timeset_open']" class="form-control" data-td-target=".kt_td_picker_time_only"/>
 					                                          <span class="input-group-text" data-td-target=".kt_td_picker_time_only" data-td-toggle="datetimepicker">
 					                                          <i class="ki-outline ki-time fs-3"></i>
 					                                          </span>
@@ -3334,7 +3334,7 @@
 					                                    <div>
 					                                       <label for="" class="form-label">Close</label>
 					                                       <div class="input-group kt_td_picker_time_only" data-td-target-input="nearest" data-td-target-toggle="nearest">
-					                                          <input type="text" name="adv_setting_timeset_close[]" class="form-control" data-td-target=".kt_td_picker_time_only"/>
+					                                          <input type="text" name="adv_setting_mon['timeset_close']" class="form-control" data-td-target=".kt_td_picker_time_only"/>
 					                                          <span class="input-group-text" data-td-target=".kt_td_picker_time_only" data-td-toggle="datetimepicker">
 					                                          <i class="ki-outline ki-time fs-3"></i>
 					                                          </span>
