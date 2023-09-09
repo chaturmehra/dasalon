@@ -339,11 +339,10 @@
                            <td>{{ $ser->country }}</td>
                            <td>{{ $ser->category }}</td>
                                 
-                                    
                                     <!-- <td>
                                        <div class="d-flex align-items-center gap-3">
                                           <div class="d-flex flex-column text-muted">
-                                             <a href="#" class="text-dark text-hover-primary fw-bold" data-kt-docs-datatable-subtable="subcat_name">Sub category name</a>
+                                             <a href="#" class="text-dark text-hover-primary fw-bold" data-kt-docs-datatable-subtable="subcat_name">Hair Color</a>
                                           </div>
                                        </div>
                                     </td> -->
@@ -1534,36 +1533,7 @@
             });
          });
 
-//             $("form[name='categoryupdate_form']").validate({
-//     rules: {
-//       category: "required",
-// 	},
-   
-//     submitHandler: function(form) {
-//      var formData = {
-//       category: $("#category").val(),
-//       avatar: $("#avatar").val(),
-//     };
-// 	  $.ajax({
-// 				url:'{{ url('admin/update-servicecategory')}}'+'/' + id,
-// 				data: formData,
-// 				type: "POST",
-// 				success:function(data)
-// 				{
-// 				  document.country_form.reset();
-// 				  $('#kt_modal_cat').modal('hide');
-// 				  $('#kt_docs_datatable_subtable1').DataTable().ajax.reload();
-// 				  swal("Your Service-Category updated successfully!", {
-// 					icon: "success",
-// 				  });
-// 				}
-// 				});
-// 		}
-//   });
-
-        
-
-
+  
 
         $(document).on('click', '.edit-service', function(){
         event.preventDefault();
