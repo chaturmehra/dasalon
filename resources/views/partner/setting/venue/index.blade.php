@@ -1263,7 +1263,7 @@
                                     </div>
                                     <div>
                                        <label class="form-check form-switch form-check-custom form-check-solid">
-                                       <input class="form-check-input" name="advance_setting" type="checkbox" value="" onchange="showopHrDiv(this)"/>
+                                       <input class="form-check-input" name="advance_setting" type="checkbox" onchange="showopHrDiv(this)"/>
                                        <span class="form-check-label">
                                        Advance setting
                                        </span>
@@ -2858,7 +2858,7 @@
                               </div>
                            </div>
                            <div class="form-check my-10">
-                              <input class="form-check-input" type="checkbox" id="flexCheckDefault" name="business_address_check" />
+                              <input class="form-check-input edit_business_address_check" type="checkbox" id="flexCheckDefault" name="business_address_check" />
                               <label class="form-check-label" for="flexCheckDefault">
                               I dont have a business address(mobile and online services only)
                               </label>
@@ -3191,7 +3191,7 @@
 					         </div>
 					         <!--end:::Tabs-->
 					         <hr class="my-10">
-					         <div class="operatingdiv active" id="operatinghourstab1">
+					         <div class="operatingdiv edit" id="operatinghourstab1">
 					            <h3 class="card-title mb-7">
 					               <span class="card-label fw-bold text-gray-800">Open for selected hours</span>
 					            </h3>
@@ -3200,45 +3200,45 @@
 					                  <span class="card-label fw-bold text-gray-800">Operating days</span>
 					               </h3>
 					               <div class="d-flex align-items-center flex-wrap gap-4 mb-10">
-					                  <div class="form-check d-flex align-items-center gap-5 px-0 working-days">
+					                  <div class="form-check d-flex align-items-center gap-5 px-0 edit-working-days">
 					                     <div class="form-check">
-					                        <input class="form-check-input" type="checkbox" name="operating_days[]" value="mon" id="selhours1" onchange="showOpDivData(this)"/>
+					                        <input class="form-check-input edit_operating_days" type="checkbox" name="operating_days[]" value="mon" id="selhours1" onchange="showOpEditDivData(this)"/>
 					                        <label class="form-check-label" for="selhours1">
 					                        Mon
 					                        </label>
 					                     </div>
 					                     <div class="form-check">
-					                        <input class="form-check-input" type="checkbox" name="operating_days[]" value="tue" id="selhours2" onchange="showOpDivData(this)"/>
+					                        <input class="form-check-input edit_operating_days" type="checkbox" name="operating_days[]" value="tue" id="selhours2" onchange="showOpEditDivData(this)"/>
 					                        <label class="form-check-label" for="selhours2">
 					                        Tue
 					                        </label>
 					                     </div>
 					                     <div class="form-check">
-					                        <input class="form-check-input" type="checkbox" name="operating_days[]" value="wed" id="selhours3" onchange="showOpDivData(this)"/>
+					                        <input class="form-check-input edit_operating_days" type="checkbox" name="operating_days[]" value="wed" id="selhours3" onchange="showOpEditDivData(this)"/>
 					                        <label class="form-check-label" for="selhours3">
 					                        Wed
 					                        </label>
 					                     </div>
 					                     <div class="form-check">
-					                        <input class="form-check-input" type="checkbox" name="operating_days[]" value="thu" id="selhours4" onchange="showOpDivData(this)"/>
+					                        <input class="form-check-input edit_operating_days" type="checkbox" name="operating_days[]" value="thu" id="selhours4" onchange="showOpEditDivData(this)"/>
 					                        <label class="form-check-label" for="selhours4">
 					                        Thu
 					                        </label>
 					                     </div>
 					                     <div class="form-check">
-					                        <input class="form-check-input" type="checkbox" name="operating_days[]" value="fri" id="selhours5" onchange="showOpDivData(this)"/>
+					                        <input class="form-check-input edit_operating_days" type="checkbox" name="operating_days[]" value="fri" id="selhours5" onchange="showOpEditDivData(this)"/>
 					                        <label class="form-check-label" for="selhours5">
 					                        Fri
 					                        </label>
 					                     </div>
 					                     <div class="form-check">
-					                        <input class="form-check-input" type="checkbox" name="operating_days[]" value="sat" id="selhours6" onchange="showOpDivData(this)"/>
+					                        <input class="form-check-input edit_operating_days" type="checkbox" name="operating_days[]" value="sat" id="selhours6" onchange="showOpEditDivData(this)"/>
 					                        <label class="form-check-label" for="selhours6">
 					                        Sat
 					                        </label>
 					                     </div>
 					                     <div class="form-check">
-					                        <input class="form-check-input" type="checkbox" name="operating_days[]" value="sun" id="selhours7" onchange="showOpDivData(this)"/>
+					                        <input class="form-check-input edit_operating_days" type="checkbox" name="operating_days[]" value="sun" id="selhours7" onchange="showOpEditDivData(this)"/>
 					                        <label class="form-check-label" for="selhours7">
 					                        Sun
 					                        </label>
@@ -3252,7 +3252,7 @@
 					                  <div class="mb-7 mb-sm-0">
 					                     <label for="" class="form-label">Open</label>
 					                     <div class="input-group kt_td_picker_time_only" data-td-target-input="nearest" data-td-target-toggle="nearest">
-					                        <input type="text" name="operating_open_hours" class="form-control" data-td-target=".kt_td_picker_time_only"/>
+					                        <input type="text" name="operating_open_hours" class="form-control edit_operating_open_hours" data-td-target=".kt_td_picker_time_only"/>
 					                        <span class="input-group-text" data-td-target=".kt_td_picker_time_only" data-td-toggle="datetimepicker">
 					                        <i class="ki-outline ki-time fs-3"></i>
 					                        </span>
@@ -3261,7 +3261,7 @@
 					                  <div>
 					                     <label for="" class="form-label">Close</label>
 					                     <div class="input-group kt_td_picker_time_only" data-td-target-input="nearest" data-td-target-toggle="nearest">
-					                        <input type="text" name="operating_close_hours" class="form-control" data-td-target=".kt_td_picker_time_only"/>
+					                        <input type="text" name="operating_close_hours" class="form-control edit_operating_close_hours" data-td-target=".kt_td_picker_time_only"/>
 					                        <span class="input-group-text" data-td-target=".kt_td_picker_time_only" data-td-toggle="datetimepicker">
 					                        <i class="ki-outline ki-time fs-3"></i>
 					                        </span>
@@ -3270,13 +3270,13 @@
 					               </div>
 					               <div>
 					                  <label class="form-check form-switch form-check-custom form-check-solid">
-					                  <input class="form-check-input" name="advance_setting" type="checkbox" value="" onchange="showopHrDiv(this)"/>
+					                  <input class="form-check-input edit_advance_setting" name="advance_setting" type="checkbox" onchange="showopEditHrDiv(this)"/>
 					                  <span class="form-check-label">
 					                  Advance setting
 					                  </span>
 					                  </label>
 					               </div>
-					               <div class="card-body brdr showopHrDiv1 d-none mt-8">
+					               <div class="card-body brdr showopEditHrDiv1 d-none mt-8 edit-add-close-op-hours">
 					                  <h3 class="card-title mb-7">
 					                     <span class="card-label fw-bold text-gray-800">Add closed period during operating hours</span>
 					                  </h3>
@@ -3291,8 +3291,8 @@
 					                           <th class="min-w-150px"></th>
 					                        </tr>
 					                     </thead>
-					                     <tbody class="text-gray-600 fw-semibold">
-					                        <tr class="d-none">
+					                     <tbody class="text-gray-600 fw-semibold edit-advance-setting-op-hours">
+					                        <tr class="d-none mon">
 					                           <td>
 					                              Mon
 					                           </td>
@@ -3347,7 +3347,7 @@
 					                              </div>
 					                           </td>
 					                        </tr>
-					                        <tr class="d-none">
+					                        <tr class="d-none tue">
 					                           <td>
 					                              Tue
 					                           </td>
@@ -3402,7 +3402,7 @@
 					                              </div>
 					                           </td>
 					                        </tr>
-					                        <tr class="d-none">
+					                        <tr class="d-none wed">
 					                           <td>
 					                              Wed
 					                           </td>
@@ -3457,7 +3457,7 @@
 					                              </div>
 					                           </td>
 					                        </tr>
-					                        <tr class="d-none">
+					                        <tr class="d-none thu">
 					                           <td>
 					                              Thu
 					                           </td>
@@ -3512,7 +3512,7 @@
 					                              </div>
 					                           </td>
 					                        </tr>
-					                        <tr class="d-none">
+					                        <tr class="d-none fri">
 					                           <td>
 					                              Fri
 					                           </td>
@@ -3567,7 +3567,7 @@
 					                              </div>
 					                           </td>
 					                        </tr>
-					                        <tr class="d-none">
+					                        <tr class="d-none sat">
 					                           <td>
 					                              Sat
 					                           </td>
@@ -3622,7 +3622,7 @@
 					                              </div>
 					                           </td>
 					                        </tr>
-					                        <tr class="d-none">
+					                        <tr class="d-none sun">
 					                           <td>
 					                              Sun
 					                           </td>
@@ -3683,7 +3683,7 @@
 					               </div>
 					            </div>
 					         </div>
-					         <div class="operatingdiv" id="operatinghourstab2">
+					         <div class="operatingdiv edit" id="operatinghourstab2">
 					            <h3 class="card-title mb-7">
 					               <span class="card-label fw-bold text-gray-800">Always open</span>
 					            </h3>
@@ -3700,7 +3700,7 @@
 					                     <tr>
 					                        <td>
 					                           <div class="form-check">
-					                              <input class="form-check-input" type="checkbox" value="mon" id="operatingd1" name="always_open[]" />
+					                              <input class="form-check-input edit_always_open" type="checkbox" value="mon" id="operatingd1" name="always_open[]" />
 					                              <label class="form-check-label" for="operatingd1">
 					                              Mon
 					                              </label>
@@ -3711,7 +3711,7 @@
 					                     <tr>
 					                        <td>
 					                           <div class="form-check">
-					                              <input class="form-check-input" name="always_open[]" type="checkbox" value="tue" id="operatingd2" />
+					                              <input class="form-check-input edit_always_open" name="always_open[]" type="checkbox" value="tue" id="operatingd2" />
 					                              <label class="form-check-label" for="operatingd2">
 					                              Tue
 					                              </label>
@@ -3722,7 +3722,7 @@
 					                     <tr>
 					                        <td>
 					                           <div class="form-check">
-					                              <input class="form-check-input" type="checkbox" name="always_open[]" value="wed" id="operatingd3" />
+					                              <input class="form-check-input edit_always_open" type="checkbox" name="always_open[]" value="wed" id="operatingd3" />
 					                              <label class="form-check-label" for="operatingd3">
 					                              Wed
 					                              </label>
@@ -3733,7 +3733,7 @@
 					                     <tr>
 					                        <td>
 					                           <div class="form-check">
-					                              <input class="form-check-input" type="checkbox" name="always_open[]" value="thu" id="operatingd4" />
+					                              <input class="form-check-input edit_always_open" type="checkbox" name="always_open[]" value="thu" id="operatingd4" />
 					                              <label class="form-check-label" for="operatingd4">
 					                              Thu
 					                              </label>
@@ -3744,7 +3744,7 @@
 					                     <tr>
 					                        <td>
 					                           <div class="form-check">
-					                              <input class="form-check-input" type="checkbox" name="always_open[]" value="fri" id="operatingd5" />
+					                              <input class="form-check-input edit_always_open" type="checkbox" name="always_open[]" value="fri" id="operatingd5" />
 					                              <label class="form-check-label" for="operatingd5">
 					                              Fri
 					                              </label>
@@ -3755,7 +3755,7 @@
 					                     <tr>
 					                        <td>
 					                           <div class="form-check">
-					                              <input class="form-check-input" type="checkbox" name="always_open[]" value="sat" id="operatingd6" />
+					                              <input class="form-check-input edit_always_open" type="checkbox" name="always_open[]" value="sat" id="operatingd6" />
 					                              <label class="form-check-label" for="operatingd6">
 					                              Sat
 					                              </label>
@@ -3766,7 +3766,7 @@
 					                     <tr>
 					                        <td>
 					                           <div class="form-check">
-					                              <input class="form-check-input" type="checkbox" name="always_open[]" value="sun" id="operatingd7" />
+					                              <input class="form-check-input edit_always_open" type="checkbox" name="always_open[]" value="sun" id="operatingd7" />
 					                              <label class="form-check-label" for="operatingd7">
 					                              Sun
 					                              </label>
@@ -3789,7 +3789,7 @@
 					               <!--end::Table-->
 					            </div>
 					         </div>
-					         <div class="operatingdiv" id="operatinghourstab3">
+					         <div class="operatingdiv edit" id="operatinghourstab3">
 					            <h3 class="card-title mb-7">
 					               <span class="card-label fw-bold text-gray-800">By appointment only</span>
 					            </h3>
@@ -3806,7 +3806,7 @@
 					                     <tr>
 					                        <td>
 					                           <div class="form-check">
-					                              <input class="form-check-input" type="checkbox" name="appointment_only[]" value="mon" id="apponly1" />
+					                              <input class="form-check-input edit_appointment_only" type="checkbox" name="appointment_only[]" value="mon" id="apponly1" />
 					                              <label class="form-check-label" for="apponly1">
 					                              Mon
 					                              </label>
@@ -3817,7 +3817,7 @@
 					                     <tr>
 					                        <td>
 					                           <div class="form-check">
-					                              <input class="form-check-input" type="checkbox" name="appointment_only[]" value="tue" id="apponly2" />
+					                              <input class="form-check-input edit_appointment_only" type="checkbox" name="appointment_only[]" value="tue" id="apponly2" />
 					                              <label class="form-check-label" for="apponly2">
 					                              Tue
 					                              </label>
@@ -3828,7 +3828,7 @@
 					                     <tr>
 					                        <td>
 					                           <div class="form-check">
-					                              <input class="form-check-input" type="checkbox" name="appointment_only[]" value="wed" id="apponly3" />
+					                              <input class="form-check-input edit_appointment_only" type="checkbox" name="appointment_only[]" value="wed" id="apponly3" />
 					                              <label class="form-check-label" for="apponly3">
 					                              Wed
 					                              </label>
@@ -3839,7 +3839,7 @@
 					                     <tr>
 					                        <td>
 					                           <div class="form-check">
-					                              <input class="form-check-input" type="checkbox" name="appointment_only[]" value="thu" id="apponly4" />
+					                              <input class="form-check-input edit_appointment_only" type="checkbox" name="appointment_only[]" value="thu" id="apponly4" />
 					                              <label class="form-check-label" for="apponly4">
 					                              Thu
 					                              </label>
@@ -3850,7 +3850,7 @@
 					                     <tr>
 					                        <td>
 					                           <div class="form-check">
-					                              <input class="form-check-input" type="checkbox" name="appointment_only[]" value="fri" id="apponly5" />
+					                              <input class="form-check-input edit_appointment_only" type="checkbox" name="appointment_only[]" value="fri" id="apponly5" />
 					                              <label class="form-check-label" for="apponly5">
 					                              Fri
 					                              </label>
@@ -3861,7 +3861,7 @@
 					                     <tr>
 					                        <td>
 					                           <div class="form-check">
-					                              <input class="form-check-input" type="checkbox" name="appointment_only[]" value="sat" id="apponly6" />
+					                              <input class="form-check-input edit_appointment_only" type="checkbox" name="appointment_only[]" value="sat" id="apponly6" />
 					                              <label class="form-check-label" for="apponly6">
 					                              Sat
 					                              </label>
@@ -3872,7 +3872,7 @@
 					                     <tr>
 					                        <td>
 					                           <div class="form-check">
-					                              <input class="form-check-input" type="checkbox" name="appointment_only[]" value="sun" id="apponly7" />
+					                              <input class="form-check-input edit_appointment_only" type="checkbox" name="appointment_only[]" value="sun" id="apponly7" />
 					                              <label class="form-check-label" for="apponly7">
 					                              Sun
 					                              </label>
@@ -3903,7 +3903,7 @@
 					<div data-kt-stepper-element="content">
 					   <div class="card card-flush w-100">
 					      <div class="card-body pt-0">
-					         <div class="mt-10 showopHrDiv2">
+					         <div class="mt-10 showopEditHrDiv2 edit-off-peakphours">
 					            <table class="table align-middle table-row-dashed fs-6 gy-5">
 					            	<thead>
 					            		<tr class="text-start text-muted fw-bold fs-7 text-uppercase gs-0">
@@ -3915,7 +3915,7 @@
 					            		</tr>
 					            	</thead>
 					            	<tbody>
-					            		<tr class="d-none">
+					            		<tr class="d-none mon">
 					            			<td>Mon</td>
 					            			<td colspan="2">
 					            				<button type="button" class="btn btn-primary addweekoff">
@@ -3979,7 +3979,7 @@
 					            				</div>
 					            			</td>
 					            		</tr>
-					            		<tr class="d-none">
+					            		<tr class="d-none tue">
 					            			<td>Tue</td>
 					            			<td colspan="2">
 					            				<button type="button" class="btn btn-primary addweekoff">
@@ -4042,7 +4042,7 @@
 					            				</div>
 					            			</td>
 					            		</tr>
-					            		<tr class="d-none">
+					            		<tr class="d-none wed">
 					            			<td>Wed</td>
 					            			<td colspan="2">
 					            				<button type="button" class="btn btn-primary addweekoff">
@@ -4105,7 +4105,7 @@
 					            				</div>
 					            			</td>
 					            		</tr>
-					            		<tr class="d-none">
+					            		<tr class="d-none thu">
 					            			<td>Thu</td>
 					            			<td colspan="2">
 					            				<button type="button" class="btn btn-primary addweekoff">
@@ -4168,7 +4168,7 @@
 					            				</div>
 					            			</td>
 					            		</tr>
-					            		<tr class="d-none">
+					            		<tr class="d-none fri">
 					            			<td>Fri</td>
 					            			<td colspan="2">
 					            				<button type="button" class="btn btn-primary addweekoff">
@@ -4231,7 +4231,7 @@
 					            				</div>
 					            			</td>
 					            		</tr>
-					            		<tr class="d-none">
+					            		<tr class="d-none sat">
 					            			<td>Sat</td>
 					            			<td colspan="2">
 					            				<button type="button" class="btn btn-primary addweekoff">
@@ -4294,7 +4294,7 @@
 					            				</div>
 					            			</td>
 					            		</tr>
-					            		<tr class="d-none">
+					            		<tr class="d-none sun">
 					            			<td>Sun</td>
 					            			<td colspan="2">
 					            				<button type="button" class="btn btn-primary addweekoff">
@@ -4584,6 +4584,16 @@
    		opDiv1.classList.add('d-none')
    	}
    }
+
+   let opDiv11 = document.querySelector('.showopEditHrDiv1');
+   function showopEditHrDiv(e) {
+   	if(e.checked && opDiv11.classList.contains('d-none')) {
+   		opDiv11.classList.remove('d-none');
+   	}
+   	else {
+   		opDiv11.classList.add('d-none')
+   	}
+   }
    
    function showOpDivData(e) {
    
@@ -4627,114 +4637,59 @@
        }
    
    }
+   function showOpEditDivData(e) {
+   
+       let checkBoxInput = document.querySelector('.edit-working-days').children;
+       let opHrIndRow1 = document.querySelectorAll('.showopEditHrDiv1 > table > tbody >tr');
+       let opHrIndRow2 = document.querySelectorAll('.showopEditHrDiv2 > table > tbody >tr');
+   
+       for(let i=0; i<checkBoxInput.length; i++) {
+           if(e.checked && checkBoxInput[i].querySelector('input') == e) {
+               opHrIndRow1[i].classList.remove('d-none');
+               opHrIndRow2[i].classList.remove('d-none');
+   
+           }
+           else if(!e.checked && checkBoxInput[i].querySelector('input') == e) {
+               opHrIndRow1[i].classList.add('d-none');  
+               opHrIndRow2[i].classList.add('d-none'); 
+   
+   
+               let opHrIndRowDivWeek1 = opHrIndRow1[i].querySelectorAll('.divweekoff');
+               for(let i=0; i<opHrIndRowDivWeek1.length; i++) {
+               	opHrIndRowDivWeek1[i].style.display = "none";
+               	opHrIndRowDivWeek1[i].previousElementSibling.style.display="block";
+               }
+   
+               let opHrIndRowDivWeek2 = opHrIndRow2[i].querySelectorAll('.divweekoff');
+               for(let i=0; i<opHrIndRowDivWeek2.length; i++) {
+               	opHrIndRowDivWeek2[i].style.display = "none";
+               	opHrIndRowDivWeek2[i].previousElementSibling.style.display="block";
+               }
+   
+   
+               let inputTime1 = opHrIndRow1[i].querySelectorAll('.kt_td_picker_time_only > input')   
+   			for(let i=0; i<inputTime1.length; i++) {
+   		        inputTime1[i].value = '';
+   		    }
+   		    let inputTime2 = opHrIndRow2[i].querySelectorAll('.kt_td_picker_time_only > input')   
+   			for(let i=0; i<inputTime2.length; i++) {
+   		        inputTime2[i].value = '';
+   		    }          
+           }
+       }
+   
+   }
 </script>
 
 <script type="text/javascript">
-	$(document).on('click', '.update-venue-detail', function(){
-		event.preventDefault();
-		var venue_id = $(this).attr('venue-id');
-		if(venue_id){
-			$.ajax({
-				url: "{{ url('partner/get-venue-detail-by-id')}}"+'/'+venue_id,
-				type:'GET',
-				beforeSend:function(){
-					$('.spinner-cls').show();
-				},
-				success:function(response)
-				{
-					$('.spinner-cls').hide();
-					response = JSON.parse(response);
-
-					if (response.status) {
-						var venues_data = response.venues;
-						var venues_meta = response.venue_meta;
-
-						$("#edit_venue_id").val(venues_data.id);
-						$("#edit_venue_name").val(venues_data.name);
-						$("#edit_venue_email").val(venues_data.email);
-						$("#edit_venue_phone").val(venues_data.phone);
-						$("#edit_venue_address").val(venues_data.address);
-						$("#edit_venue_billing_details").val(venues_data.billing_details);
-
-						$("#edit_venue_business_address").val(venues_meta.business_address);
-						$("#edit_venue_business_aptsuite").val(venues_meta.business_aptsuite);
-						$("#edit_venue_business_location").val(venues_meta.business_location);
-						$("#edit_venue_city").val(venues_meta.city);
-						$("#edit_venue_country").val(venues_meta.country);
-						$("#edit_venue_directions").val(venues_meta.directions);
-						$("#edit_venue_district").val(venues_meta.district);
-						$("#edit_venue_region").val(venues_meta.region);
-						$("#edit_venue_postcode").val(venues_meta.postcode);
-						
-						var featured = "{{ asset('/public/') }}"+venues_meta.featured;
-						var imgother1 = "{{ asset('/public/') }}"+venues_meta.imgother1;
-						var imgother2 = "{{ asset('/public/') }}"+venues_meta.imgother2;
-						var imgother3 = "{{ asset('/public/') }}"+venues_meta.imgother3;
-						var imgother4 = "{{ asset('/public/') }}"+venues_meta.imgother4;
-						$("#edit_featured_img").css('background-image', 'url('+featured+')');
-						$("#edit_otherimg1").css('background-image', 'url('+imgother1+')');
-						$("#edit_otherimg2").css('background-image', 'url('+imgother2+')');
-						$("#edit_otherimg3").css('background-image', 'url('+imgother3+')');
-						$("#edit_otherimg4").css('background-image', 'url('+imgother4+')');
-						//$("#country").val(country_id).trigger('change');
-						var gender_restriction = venues_meta.gender_restriction;
-						var openhours = venues_meta.openhours;
-						if (gender_restriction == "Unisex"){
-							$('.edit_gender_restriction#unisex').prop('checked', true);
-						}else if(gender_restriction == "Male"){
-							$('.edit_gender_restriction#male').prop('checked', true);
-						}else if(gender_restriction == "Female"){
-							$('.edit_gender_restriction#female').prop('checked', true);
-						}
-						if (openhours == "open_for_selected_hours"){
-							$('.edit_openhours#openhoursnav1').prop('checked', true);
-						}else if(openhours == "always_open"){
-							$('.edit_openhours#openhoursnav2').prop('checked', true);
-						}else if(openhours == "appointment_only"){
-							$('.edit_openhours#openhoursnav3').prop('checked', true);
-						}
-
-						var amenity 		= venues_meta.amenity;
-						var split_amenity = amenity.split(",");
-						$.each(split_amenity, function(index, value) {
-							$(".edit_venue_amenity[value="+value+"]").prop("checked", true);
-						});
-
-						var business_type 	= venues_meta.venuebusiness;
-						var split_bt = business_type.split(",");
-						$.each(split_bt, function(index, value) {
-							console.log("valuevalue", value);
-							$(".edit_venuebusiness[value="+value+"]").prop("checked", true);
-						});
-					}
-				}
-			});
-		}
-	});
+	
 
 </script>
 <!-- <script type="text/javascript" src="https://maps.google.com/maps/api/js?key={{ env('GOOGLE_MAP_KEY') }}&libraries=places&callback=initMap" async defer></script> -->
 <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?libraries=places&key={{ env('GOOGLE_MAP_KEY') }}&callback=initMap" async defer></script>
 
 <script>
-	function initMap() {
-		google.maps.event.addDomListener(window, 'load', initialize);
-
-		function initialize() {
-			var input = document.getElementById('business_location');
-			var autocomplete = new google.maps.places.Autocomplete(input);
-
-			autocomplete.addListener('place_changed', function () {
-				var place = autocomplete.getPlace();
-				console.log("place", place)
-				/*$('#latitude').val(place.geometry['location'].lat());
-				$('#longitude').val(place.geometry['location'].lng());
-
-				$("#latitudeArea").removeClass("d-none");
-				$("#longtitudeArea").removeClass("d-none");*/
-			});
-		}
-	}
+	
 
 	/*function initMap() {
 		function initialize() {
@@ -4773,4 +4728,6 @@
         });
     });*/
 </script>
+
+<script src="{{asset('/public/assets/js/partner/venue.js')}}" type="text/javascript"></script>
 @endpush

@@ -27,6 +27,8 @@
 		<link href="{{ asset('/public/partner/assets/css/style.css') }}" rel="stylesheet" type="text/css" />
 		<link href="{{ asset('/public/assets/css/custom.css') }}" rel="stylesheet" type="text/css" />
 		<!--end::Global Stylesheets Bundle-->
+		<script type="text/javascript">var baseurl="{{ asset('/') }}";</script>
+		<script type="text/javascript">var publicurl="{{ asset('/public') }}";</script>
 	</head>
 	<!--end::Head-->
 	<!--begin::Body-->

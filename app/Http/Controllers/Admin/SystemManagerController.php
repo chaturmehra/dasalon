@@ -46,12 +46,13 @@ class SystemManagerController extends Controller
         $user->email        = $request->email;
         $user->password     = Hash::make($request->new_password);
         $user->phone        = $request->phone;
+        $user->country      = "";
         $user->is_active    = 1;
-        $user->role         = "System Manager";
+        $user->role         = 3;
 
         $user->save();
 
-        return redirect()->back()->with('message', 'System admin created successfully.');
+        return redirect('/admin/settings')->with('message', 'System admin created successfully.');
     }
 
     public function edit($id)
@@ -88,6 +89,7 @@ class SystemManagerController extends Controller
         $user->id           = $id;
         $user->name         = $request->name;
         $user->email        = $request->email;
+        $user->country      = "";
         if ($request->new_password) {
             $user->password     = Hash::make($request->new_password);
         }
@@ -95,7 +97,7 @@ class SystemManagerController extends Controller
 
         $user->save();
 
-        return redirect()->back()->with('message', 'System admin updated successfully.');
+        return redirect('/admin/settings')->with('message', 'System admin updated successfully.');
     }
 
     public function enabled($id): RedirectResponse

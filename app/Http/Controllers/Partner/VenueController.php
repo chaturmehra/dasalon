@@ -140,6 +140,7 @@ class VenueController extends Controller
 
 		$openhours = isset($request->openhours) ? $request->openhours : "";
 		$advance_setting = isset($request->advance_setting) ? $request->advance_setting : "";
+		
 		if ($openhours) {	        
 			$this->add_venue_meta($venue->id, 'openhours', $openhours);
 		}
@@ -154,7 +155,9 @@ class VenueController extends Controller
 			if( !empty($request->operating_close_hours) ){
 				$this->add_venue_meta($venue->id, 'operating_close_hours', $request->operating_close_hours);
 			}
-			if ($advance_setting) {
+			if ( !empty($advance_setting) ) {
+				$this->add_venue_meta($venue->id, 'advance_setting', 1);
+
 				if( !empty($request->adv_setting_open) ){
 					$this->add_venue_meta($venue->id, 'adv_setting_open', $request->adv_setting_open);
 				}
@@ -181,9 +184,6 @@ class VenueController extends Controller
 				$this->add_venue_meta($venue->id, 'appointment_only', $appointment_only);
 			}
 		}
-
-
-
 
 		if( !empty($request->off_peak_hour_start) ){
 			$off_peak_hour_start = implode(',', $request->off_peak_hour_start);
@@ -280,32 +280,85 @@ class VenueController extends Controller
 
 		if( empty($business_address_check) ){
 
-			if( !empty($request->business_location) ){
+			$get_business_location = $this->get_update_venue_meta($venue_id, 'business_location');
+			if(count($get_business_location) > 0 ){
 				$this->add_venue_meta($venue_id, 'business_location', $request->business_location);
+			}else{
+				if( !empty($request->business_location) ){
+					$this->add_venue_meta($venue_id, 'business_location', $request->business_location);
+				}
 			}
-			if( !empty($request->business_address) ){
+
+			$get_business_address = $this->get_update_venue_meta($venue_id, 'business_address');
+			if(count($get_business_address) > 0 ){
 				$this->add_venue_meta($venue_id, 'business_address', $request->business_address);
+			}else{
+				if( !empty($request->business_address) ){
+					$this->add_venue_meta($venue_id, 'business_address', $request->business_address);
+				}
 			}
-			if( !empty($request->business_aptsuite) ){
+
+			$get_business_aptsuite = $this->get_update_venue_meta($venue_id, 'business_aptsuite');
+			if(count($get_business_aptsuite) > 0 ){
 				$this->add_venue_meta($venue_id, 'business_aptsuite', $request->business_aptsuite);
+			}else{
+				if( !empty($request->business_aptsuite) ){
+					$this->add_venue_meta($venue_id, 'business_aptsuite', $request->business_aptsuite);
+				}
 			}
-			if( !empty($request->district) ){
+
+			$get_district = $this->get_update_venue_meta($venue_id, 'district');
+			if(count($get_district) > 0 ){
 				$this->add_venue_meta($venue_id, 'district', $request->district);
+			}else{
+				if( !empty($request->district) ){
+					$this->add_venue_meta($venue_id, 'district', $request->district);
+				}
 			}
-			if( !empty($request->city) ){
+
+			$get_city = $this->get_update_venue_meta($venue_id, 'city');
+			if(count($get_city) > 0 ){
 				$this->add_venue_meta($venue_id, 'city', $request->city);
+			}else{
+				if( !empty($request->city) ){
+					$this->add_venue_meta($venue_id, 'city', $request->city);
+				}
 			}
-			if( !empty($request->region) ){
+
+			$get_region = $this->get_update_venue_meta($venue_id, 'region');
+			if(count($get_region) > 0 ){
 				$this->add_venue_meta($venue_id, 'region', $request->region);
+			}else{
+				if( !empty($request->region) ){
+					$this->add_venue_meta($venue_id, 'region', $request->region);
+				}
 			}
-			if( !empty($request->postcode) ){
+
+			$get_postcode = $this->get_update_venue_meta($venue_id, 'postcode');
+			if(count($get_postcode) > 0 ){
 				$this->add_venue_meta($venue_id, 'postcode', $request->postcode);
+			}else{
+				if( !empty($request->postcode) ){
+					$this->add_venue_meta($venue_id, 'postcode', $request->postcode);
+				}
 			}
-			if( !empty($request->country) ){
+
+			$get_country = $this->get_update_venue_meta($venue_id, 'country');
+			if(count($get_country) > 0 ){
 				$this->add_venue_meta($venue_id, 'country', $request->country);
+			}else{
+				if( !empty($request->country) ){
+					$this->add_venue_meta($venue_id, 'country', $request->country);
+				}
 			}
-			if( !empty($request->directions) ){
+
+			$get_directions = $this->get_update_venue_meta($venue_id, 'directions');
+			if(count($get_directions) > 0 ){
 				$this->add_venue_meta($venue_id, 'directions', $request->directions);
+			}else{
+				if( !empty($request->directions) ){
+					$this->add_venue_meta($venue_id, 'directions', $request->directions);
+				}
 			}
 
 			$this->add_venue_meta($venue_id, 'business_address_check', "");
@@ -313,19 +366,33 @@ class VenueController extends Controller
 			$this->add_venue_meta($venue_id, 'business_address_check', $business_address_check);
 		}
 
-		if( !empty($request->gender_restriction) ){
+		$get_gender_restriction = $this->get_update_venue_meta($venue_id, 'gender_restriction');
+		if(count($get_gender_restriction) > 0 ){
 			$this->add_venue_meta($venue_id, 'gender_restriction', $request->gender_restriction);
+		}else{
+			if( !empty($request->gender_restriction) ){
+				$this->add_venue_meta($venue_id, 'gender_restriction', $request->gender_restriction);
+			}
 		}
-		if( !empty($request->venuebusiness) ){
+
+		$get_venuebusiness = $this->get_update_venue_meta($venue_id, 'venuebusiness');
+		if(count($get_venuebusiness) > 0 ){
 			$venuebusiness = implode(',', $request->venuebusiness);
 			$this->add_venue_meta($venue_id, 'venuebusiness', $venuebusiness);
+		}else{
+			if( !empty($request->venuebusiness) ){
+				$venuebusiness = implode(',', $request->venuebusiness);
+				$this->add_venue_meta($venue_id, 'venuebusiness', $venuebusiness);
+			}
 		}
 
 		$openhours = isset($request->openhours) ? $request->openhours : "";
 		$advance_setting = isset($request->advance_setting) ? $request->advance_setting : "";
+
 		if ($openhours) {	        
 			$this->add_venue_meta($venue_id, 'openhours', $openhours);
 		}
+
 		if ($openhours == "open_for_selected_hours") {
 			if( !empty($request->operating_days) ){
 				$operating_days = implode(',', $request->operating_days);
@@ -337,7 +404,10 @@ class VenueController extends Controller
 			if( !empty($request->operating_close_hours) ){
 				$this->add_venue_meta($venue_id, 'operating_close_hours', $request->operating_close_hours);
 			}
-			if ($advance_setting) {
+			if ( !empty($advance_setting) ) {
+
+				$this->add_venue_meta($venue_id, 'advance_setting', 1);
+
 				if( !empty($request->adv_setting_open) ){
 					$this->add_venue_meta($venue_id, 'adv_setting_open', $request->adv_setting_open);
 				}
@@ -351,35 +421,42 @@ class VenueController extends Controller
 					$this->add_venue_meta($venue_id, 'adv_setting_timeset_close', $request->adv_setting_timeset_close);
 				}
 			}
+
+			if( !empty($request->off_peak_hour_start) ){
+				$off_peak_hour_start = implode(',', $request->off_peak_hour_start);
+				$this->add_venue_meta($venue_id, 'off_peak_hour_start', $off_peak_hour_start);
+			}
+			if( !empty($request->off_peak_hour_end) ){
+				$off_peak_hour_end = implode(',', $request->off_peak_hour_end);
+				$this->add_venue_meta($venue_id, 'off_peak_hour_end', $off_peak_hour_end);
+			}
+			if( !empty($request->off_time_set_open) ){
+				$off_time_set_open = implode(',', $request->off_time_set_open);
+				$this->add_venue_meta($venue_id, 'off_time_set_open', $off_time_set_open);
+			}
+			if( !empty($request->off_time_set_close) ){
+				$off_time_set_close = implode(',', $request->off_time_set_close);
+				$this->add_venue_meta($venue_id, 'off_time_set_close', $off_time_set_close);
+			}
+
+			$this->add_venue_meta($venue_id, 'always_open', "");
+			$this->add_venue_meta($venue_id, 'appointment_only', "");
 		}
-		if ($openhours == "always_open") {	        
+		if ($openhours == "always_open") {
 			if( !empty($request->always_open) ){
 				$always_open = implode(',', $request->always_open);
 				$this->add_venue_meta($venue_id, 'always_open', $always_open);
 			}
+
+			$this->add_venue_meta($venue_id, 'appointment_only', "");
 		}
 		if ($openhours == "appointment_only") {
 			if( !empty($request->appointment_only) ){
 				$appointment_only = implode(',', $request->appointment_only);
 				$this->add_venue_meta($venue_id, 'appointment_only', $appointment_only);
 			}
-		}
 
-		if( !empty($request->off_peak_hour_start) ){
-			$off_peak_hour_start = implode(',', $request->off_peak_hour_start);
-			$this->add_venue_meta($venue_id, 'off_peak_hour_start', $off_peak_hour_start);
-		}
-		if( !empty($request->off_peak_hour_end) ){
-			$off_peak_hour_end = implode(',', $request->off_peak_hour_end);
-			$this->add_venue_meta($venue_id, 'off_peak_hour_end', $off_peak_hour_end);
-		}
-		if( !empty($request->off_time_set_open) ){
-			$off_time_set_open = implode(',', $request->off_time_set_open);
-			$this->add_venue_meta($venue_id, 'off_time_set_open', $off_time_set_open);
-		}
-		if( !empty($request->off_time_set_close) ){
-			$off_time_set_close = implode(',', $request->off_time_set_close);
-			$this->add_venue_meta($venue_id, 'off_time_set_close', $off_time_set_close);
+			$this->add_venue_meta($venue_id, 'always_open', "");
 		}
 		
 		if( !empty($request->amenity) ){
@@ -554,5 +631,12 @@ class VenueController extends Controller
 		}else{
 			return NULL;
 		}
+	}
+
+	/*Check if value is blank or not*/
+	public function get_update_venue_meta($vid, $key){
+		$query 		= DB::table('venue_meta')->where('venue_id', $vid)->where('meta_key', $key)->get();
+		$result 	= $query->toArray();
+		return $result;
 	}
 }

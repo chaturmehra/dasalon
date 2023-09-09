@@ -23,8 +23,10 @@ class SystemAdminController extends Controller
     	$meta_description  = "";
     	$meta_keywords     = "";
 
-    	$settings        = User::where("role", "Admin")->latest()->get();
-        $system_users    = User::where("role", "System Manager")->latest()->get();
+    	$settings        = User::where("role", 0)->latest()->get();
+        $system_users    = User::where("role", 3)->latest()->get();
+
+        
 
     	return view('admin/setting/system_admin/index', compact('title', 'meta_description', 'meta_keywords', 'settings', 'system_users'));
     }
@@ -56,7 +58,7 @@ class SystemAdminController extends Controller
         $user->phone 		= $request->phone;
         $user->country 		= $request->country;
         $user->is_active 	= 1;
-        $user->role 		= "0";
+        $user->role 		= 0;
 
         $user->save();
 
