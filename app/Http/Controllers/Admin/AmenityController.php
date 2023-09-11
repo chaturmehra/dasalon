@@ -81,12 +81,13 @@ class AmenityController extends Controller
         $totalRecordswithFilter = Amenity::select('count(*) as allcount')->where('amenity_name', 'like', '%' .$searchValue . '%')->count();
 
         $records = Amenity::leftJoin('partner_type', 'amenities.partner_type', '=', 'partner_type.id')
+        ->leftJoin('amenity_categories', 'amenities.amenity_category', '=', 'amenity_categories.id')
           ->where('amenities.amenity_name', 'like', '%' .$searchValue . '%')
           ->where('amenities.amenity_type', '=', '1')
           ->skip($start)
           ->take($rowperpage)
           ->orderBy('id','desc')
-          ->get(['amenities.*','partner_type.partner_name']);
+          ->get(['amenities.*','partner_type.partner_name','amenity_categories.amenity_category']);
 
         $data_arr = array();
         $i=0;
@@ -110,6 +111,7 @@ class AmenityController extends Controller
             $data_arr[] = array(
              "id" => $i,
              "amenity_name" => $record->amenity_name,
+             "amenity_category" => $record->amenity_category,
              "partner_type" => $record->partner_name,
              "amenity_icon" => $amenity_icon,
              "status" => $status,

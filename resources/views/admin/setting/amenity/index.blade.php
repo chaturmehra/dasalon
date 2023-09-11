@@ -260,6 +260,7 @@
 																	<tr class="text-start text-muted fw-bold fs-7 text-uppercase gs-0">
 																		<th class="min-w-125px">S No.</th>
 																		<th class="min-w-125px">Amenity name</th>
+																		<th class="min-w-125px">Amenity category</th>
 																		<th class="min-w-125px">Partner type</th>
 																		<th class="min-w-125px">Amenity icon</th>
 																		<th class="min-w-125px">Status</th>
@@ -499,6 +500,7 @@
 		   columns: [
 		      { data: 'id' },
 		      { data: 'amenity_name' },
+			  { data: 'amenity_category' },
 		      { data: 'partner_type' },
 		      { data: 'amenity_icon' },
 		      { data: 'status' },
@@ -675,7 +677,7 @@ $(function() {
         event.preventDefault();
         var id = $(this).attr('id');
         var data_id = $(this).attr('data-id');
-        var ajaxurl = 'https://webpristine.co.in/admin/setting/edit-amenity-status/' + id+'/'+data_id;
+        var ajaxurl = '{{ url('admin/setting/edit-amenity-status/')}}'+'/' + id+'/'+data_id;
         swal({
           title: "Are you sure?",
           text: "To change status this country?",
