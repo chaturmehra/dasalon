@@ -1,3 +1,4 @@
 .card-header.display-message {align-items: center;width: 100%;}
 .display-message .alert {width: 100%;}
+.pac-container {z-index: 999999;}
 /*.multistepform_venue .amenities-tab .icn img {width: 24px;height: 24px;}*/

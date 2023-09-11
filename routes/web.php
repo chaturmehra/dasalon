@@ -28,6 +28,7 @@ use App\Http\Controllers\Admin\PartnerMappingController;
 use App\Http\Controllers\Admin\RecommendationsController;
 use App\Http\Controllers\Admin\OffersManagementController;
 use App\Http\Controllers\TwilioSMSController;
+use App\Http\Controllers\Partner\StaffController;
 
 
 /*
@@ -186,6 +187,11 @@ Route::middleware(['auth'])->group(function () {
     Route::post('admin/add-businesstype', [CountryController::class, 'store']);
     Route::get('admin/businesstype/enable-status/{bt_id}', [CountryController::class, 'enabledbt']);
     Route::get('admin/businesstype/disable-status/{bt_id}', [CountryController::class, 'disabledbt']);
+
+    Route::get('partner/staff', [StaffController::class, 'index'])->name('staff.index');
+    /*Route::post('partner/staff/store-venue-setting', [StaffController::class, 'storeVenues']);
+    Route::post('partner/staff/update-venue-setting', [StaffController::class, 'updateVenues']);
+    Route::get('partner/staff/get-venue-detail-by-id/{id}', [StaffController::class, 'getVenueDetailById']);*/
 
 });
 
