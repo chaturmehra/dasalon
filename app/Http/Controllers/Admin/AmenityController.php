@@ -3,8 +3,9 @@
 namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Admin\Amenity;
+use App\Models\Admin\AmenityCategory;
 use Illuminate\Http\Request;
-
+use DB;
 class AmenityController extends Controller
 {
    
@@ -23,13 +24,37 @@ class AmenityController extends Controller
             $image->move($destinationPath, $amenity_icon);
             $amenity_icon =  '/uploads/amenity/'.$amenity_icon;
         }
+       
+        // DB::enableQueryLog();
+        $acat_name= AmenityCategory::where('amenity_category', $request->amenity_category);
+        // $querylog =  DB::getQueryLog();
+        // dd($querylog);  
+        // echo "<pre>";print_r($acat_name->count());die();
+        
+        
+    //    echo "<pre>";print_r($request->amenity_category);die();
 
+        if( !$acat_name->count() ) {
+            $acat_id = AmenityCategory::create([
+                'amenity_category' => $request->amenity_category,
+            ]);
+            
+	       $acat_id = $acat_id->id;
+        } else {
+            $acat_id = $acat_name->first()->id;
+        }
+
+       
+       
+        //    echo "<pre>";print_r();die();
         Amenity::create([
             'amenity_name' => $request->amenity_name,
+            'amenity_category' => $acat_id,
             'partner_type' => $request->partner_type,
             'amenity_type' => $request->amenity_type,
             'amenity_icon' => $amenity_icon,
         ]);
+        
         
         return true;
     }

@@ -6,6 +6,7 @@
 
 @php
 	$getPartnerType = getPartnerType();
+	//$getAmenityCategory=getAmenityCategory();
 @endphp
 <!--Begin:::Main-->
 <meta name="csrf-token" content="{{ csrf_token() }}">
@@ -139,7 +140,19 @@
 																								<label class="required fw-semibold fs-6 mb-2">Amenity name</label>
 																								<!--end::Label-->
 																								<!--begin::Input-->
-																								<input type="text" id="amenity_name" name="amenity_name" class="form-control mb-3 mb-lg-0" placeholder="Amenity name"/>
+																								<input type="text" id="amenity_name" name="amenity_name" 
+																								class="form-control mb-3 mb-lg-0" placeholder="Amenity name"/>
+																								<!--end::Input-->
+																							</div>
+																							<!--end::Input group-->
+
+																							<!--begin::Input group-->
+																							<div class="fv-row mb-7">
+																								<!--begin::Label-->
+																								<label class="required fw-semibold fs-6 mb-2">Amenity Category</label>
+																								<!--end::Label-->
+																								<!--begin::Input-->
+																								<input type="text" id="amenity_category" autocomplete="off" name="amenity_category" class="form-control mb-3 mb-lg-0" placeholder="Amenity Category"/>	
 																								<!--end::Input-->
 																							</div>
 																							<!--end::Input group-->
@@ -508,20 +521,32 @@ $(function() {
   $("form[name='amenity-form']").validate({
     rules: {
       amenity_name: "required",
+	  amenity_category: "required",
 	  amenity_icon: "required",
 	  partner_type: "required",
 	},
    
     submitHandler: function(form) {
 
-      var formData = new FormData();
-      var amenity_name = $('#amenity_name').val();
+      	var formData = new FormData();
+      	var amenity_name = $('#amenity_name').val();
+	  	var amenity_category = $('#amenity_category').val();
+	  	if(amenity_category != undefined ) {
+			amenity_category = JSON.parse(amenity_category);
+			amenity_category = amenity_category.map(function(cat){
+				return cat.value;
+			}).join(",");
+		}
+
+	  console.log("amenity_category",amenity_category);
+        //   debugger;
       var partner_type = $('#partner_type').val();
       var amenity_type = $('#amenity_type').val();
       var amenity_icon = $('#amenity_icon').prop('files')[0];
       var url = "{{ route('settings.saveAmenity') }}";
 
       formData.append('amenity_name', amenity_name);
+	  formData.append('amenity_category', amenity_category);
       formData.append('partner_type', partner_type);
       formData.append('amenity_type', amenity_type);
       formData.append('amenity_icon', amenity_icon);
@@ -552,6 +577,30 @@ $(function() {
         });
     }
   });
+
+
+  var input_add_category = document.querySelector("#amenity_category");
+  var service_list = "@php echo implode(',', getAmenityCategory()); @endphp";
+  service_list = service_list.split(",");
+//    service_list = [service_list];
+//   console.log("getAmenityCategory", service_list)
+			//var service_list = amenity_cat;
+			
+
+			function productDrp(input, list) {
+				new Tagify(input, {
+				    whitelist: list,
+				    maxTags: 1,
+				    dropdown: {
+				        maxItems: 40,           // <- mixumum allowed rendered suggestions
+				        classname: "tagify__inline__suggestions", // <- custom classname for this dropdown, so it could be targeted
+				        enabled: 0,             // <- show suggestions on focus
+				        closeOnSelect: true    // <- do not hide the suggestions dropdown once an item has been selected
+				    }
+				});
+			}
+
+			productDrp(input_add_category, service_list);
 
 
   	$('#special_amenities_table').DataTable({
