@@ -150,7 +150,7 @@ class PartnerController extends Controller
     {
         
         $validator = Validator::make($request->all(), [
-            'email'  => 'required||email|unique:users|max:100',
+            'email'  => 'required|email|unique:users|max:100',
         ]);
  
         if ($validator->fails()) {

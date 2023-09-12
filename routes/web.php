@@ -189,8 +189,11 @@ Route::middleware(['auth'])->group(function () {
     Route::get('admin/businesstype/disable-status/{bt_id}', [CountryController::class, 'disabledbt']);
 
     Route::get('partner/staff', [StaffController::class, 'index'])->name('staff.index');
-    /*Route::post('partner/staff/store-venue-setting', [StaffController::class, 'storeVenues']);
-    Route::post('partner/staff/update-venue-setting', [StaffController::class, 'updateVenues']);
+    Route::post('partner/staff/store', [StaffController::class, 'store']);
+    Route::get('partner/staff/edit-staff-status/{id}/{status}', [StaffController::class, 'changeStaffStatus']);
+    Route::get('partner/staff/delete-staff/{id}', [StaffController::class, 'deleteStaff']);
+    Route::get('partner/staff/view-staff/{id}', [StaffController::class, 'viewStaff']);
+    /*Route::post('partner/staff/update-venue-setting', [StaffController::class, 'updateVenues']);
     Route::get('partner/staff/get-venue-detail-by-id/{id}', [StaffController::class, 'getVenueDetailById']);*/
 
 });

@@ -4,6 +4,7 @@ namespace App\Models\Partner;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\Partner\VenueMeta;
 
 class Venue extends Model
 {
@@ -17,4 +18,5 @@ class Venue extends Model
         'email',
 		'billing_details',
     ];
+
 }

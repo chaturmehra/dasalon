@@ -2,6 +2,7 @@
 @section('content') 
 
 <!--Begin:::Main-->
+<meta name="csrf-token" content="{{ csrf_token() }}">
 <div class="app-main flex-column flex-row-fluid" id="kt_app_main">
    <!--begin::Content wrapper-->
    <div class="d-flex flex-column flex-column-fluid">
@@ -108,6 +109,29 @@
                   </div>
                </div>
                <div class="card card-flush mt-8">
+                  @if(session()->has('success'))
+                  <div class="card-header display-message">
+                     <div class="alert alert-success">
+                        {{ session()->get('success') }}
+                     </div>
+                  </div>
+                  @endif
+                  @if(session()->has('error'))
+                  <div class="card-header display-message">
+                     <div class="alert alert-danger">
+                        {{ session()->get('error') }}
+                     </div>
+                  </div>
+                  @endif
+                  @if ($errors->any())
+                  <div class="alert alert-danger">
+                     <ul>
+                        @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                        @endforeach
+                     </ul>
+                  </div>
+                  @endif
                   <!--begin::Card header-->
                   <div class="card-header align-items-center pt-5 gap-2 gap-md-5">
                      <!--begin::Card title-->
@@ -157,13 +181,13 @@
                                  <!--begin::Input group-->
                                  <div class="mb-10">
                                     <label class="form-label fs-6 fw-semibold">Role:</label>
-                                    <select class="form-select form-select-solid fw-bold" data-kt-select2="true" data-placeholder="Select option" data-allow-clear="true" data-kt-user-table-filter="role" data-hide-search="true">
+                                    <select class="form-select form-select-solid fw-bold filter-option-roles" data-kt-select2="true" data-placeholder="Select option" data-allow-clear="true" data-kt-user-table-filter="role" data-hide-search="true" name="role">
                                        <option></option>
-                                       <option value="Administrator">Administrator</option>
-                                       <option value="Analyst">Analyst</option>
-                                       <option value="Developer">Developer</option>
-                                       <option value="Support">Support</option>
-                                       <option value="Trial">Trial</option>
+                                       @if($roles)
+                                       @foreach($roles as $key => $role)
+                                       <option value="{{ $role->id }}">{{ $role->role_name }}</option>
+                                       @endforeach
+                                       @endif
                                     </select>
                                  </div>
                                  <!--end::Input group-->
@@ -239,13 +263,13 @@
                                           <label class="fs-6 fw-semibold form-label mb-2">Select Roles:</label>
                                           <!--end::Label-->
                                           <!--begin::Input-->
-                                          <select name="role" data-control="select2" data-placeholder="Select a role" data-hide-search="true" class="form-select form-select-solid fw-bold">
+                                          <select name="role" data-control="select2" data-placeholder="Select a role" data-hide-search="true" class="form-select form-select-solid fw-bold export-option-roles" name="export_roles">
                                              <option></option>
-                                             <option value="Administrator">Administrator</option>
-                                             <option value="Analyst">Analyst</option>
-                                             <option value="Developer">Developer</option>
-                                             <option value="Support">Support</option>
-                                             <option value="Trial">Trial</option>
+                                             @if($roles)
+                                             @foreach($roles as $key => $role)
+                                             <option value="{{ $role->id }}">{{ $role->role_name }}</option>
+                                             @endforeach
+                                             @endif
                                           </select>
                                           <!--end::Input-->
                                        </div>
@@ -260,7 +284,7 @@
                                              <option></option>
                                              <option value="excel">Excel</option>
                                              <option value="pdf">PDF</option>
-                                             <option value="cvs">CVS</option>
+                                             <option value="csv">CSV</option>
                                              <option value="zip">ZIP</option>
                                           </select>
                                           <!--end::Input-->
@@ -293,12 +317,12 @@
                   <!--begin::Card body-->
                   <div class="card-body py-4">
                      <!--begin::Table-->
-                     <table class="table align-middle table-row-dashed fs-6 gy-5" id="kt_table_users">
+                     <table class="table align-middle table-row-dashed fs-6 gy-5" id="staff_table">
                         <thead>
                            <tr class="text-start text-muted fw-bold fs-7 text-uppercase gs-0">
                               <th class="w-10px pe-2">
                                  <div class="form-check form-check-sm form-check-custom form-check-solid me-3">
-                                    <input class="form-check-input" type="checkbox" data-kt-check="true" data-kt-check-target="#kt_table_users .form-check-input" value="1" />
+                                    <input class="form-check-input" type="checkbox" data-kt-check="true" data-kt-check-target="#staff_table .form-check-input" value="1" />
                                  </div>
                               </th>
                               <th class="min-w-125px">User</th>
@@ -310,34 +334,46 @@
                            </tr>
                         </thead>
                         <tbody class="text-gray-600 fw-semibold">
+
+                           @if($getStaff)
+                           @foreach($getStaff as $skey => $staff)
+                           @php
+                           if($staff->is_active){
+                              $statusVal = 0;
+                              $statusText = "Disable";
+                           }else{
+                              $statusVal = 1;
+                              $statusText = "Enable";
+                           }
+                           @endphp
                            <tr>
                               <td>
                                  <div class="form-check form-check-sm form-check-custom form-check-solid">
-                                    <input class="form-check-input" type="checkbox" value="1" />
+                                    <input class="form-check-input" type="checkbox" value="{{ $staff->user_id }}" />
                                  </div>
                               </td>
                               <td class="d-flex align-items-center" id="kt_drawer_editprofile_toggle">
                                  <!--begin:: Avatar -->
                                  <div class="symbol symbol-circle symbol-50px overflow-hidden cursor-pointer me-3" id="kt_drawer_editprofile_toggle">
-                                    <a href="#">
+                                    <a href="javascript:void(0)" staff-id="{{ $staff->user_id }}" class="view-staff">
                                        <div class="symbol-label">
-                                          <img src="{{asset('/public/assets/media/avatars/300-6.jpg')}}" alt="Emma Smith" class="w-100" />
+                                          <img src="{{asset('/public/'.$staff->profile_image)}}" alt="{{ $staff->name }}" class="w-100" />
                                        </div>
                                     </a>
                                  </div>
                                  <!--end::Avatar-->
                                  <!--begin::User details-->
                                  <div class="d-flex flex-column">
-                                    <a href="#" class="text-gray-800 text-hover-primary mb-1">Emma Smith</a>
-                                    <span>smith@kpmg.com</span>
+                                    <a href="#" class="text-gray-800 text-hover-primary mb-1">{{ $staff->name }}</a>
+                                    <span>{{ $staff->email }}</span>
                                  </div>
                                  <!--begin::User details-->
                               </td>
-                              <td>9124578451</td>
-                              <td>Owner</td>
+                              <td>{{ $staff->phone }}</td>
+                              <td>{{ $staff->role_name }}</td>
                               <td>
                                  <label class="form-check form-switch form-check-custom form-check-solid">
-                                 <input class="form-check-input" type="checkbox" checked="checked" value="deactivate" disabled />
+                                 <input class="form-check-input" type="checkbox" @if($staff->is_active)checked="checked" @endif disabled />
                                  </label>
                                  <!--end::Switch-->
                               </td>
@@ -368,763 +404,26 @@
                                  <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-600 menu-state-bg-light-primary fw-semibold fs-7 w-125px py-4" data-kt-menu="true">
                                     <!--begin::Menu item-->
                                     <div class="menu-item px-3">
-                                       <a href="#" class="menu-link px-3" id="kt_drawer_editprofile_toggle">Edit</a>
+                                       <a href="#" class="menu-link px-3 view-staff" id="kt_drawer_editprofile_toggle" staff-id="{{ $staff->user_id }}">View</a>
                                     </div>
                                     <!--end::Menu item-->
                                     <!--begin::Menu item-->
                                     <div class="menu-item px-3">
-                                       <a href="#" class="menu-link px-3" data-kt-users-table-filter="delete_row">Delete</a>
+                                       <a href="javascript:void(0)" class="menu-link px-3 delete-staff" staff-id="{{ $staff->user_id }}">Delete</a>
                                     </div>
                                     <!--end::Menu item-->
                                     <!--begin::Menu item-->
                                     <div class="menu-item px-3">
-                                       <a href="#" class="menu-link px-3" data-kt-users-table-filter="delete_row">Disable</a>
+                                       <a href="javascript:void(0)" class="menu-link px-3 status-change"  status-value="{{ $statusVal }}" staff-id="{{ $staff->user_id }}">{{ $statusText }}
+                                       </a>
                                     </div>
                                     <!--end::Menu item-->
                                  </div>
                                  <!--end::Menu-->
                               </td>
                            </tr>
-                           <tr>
-                              <td>
-                                 <div class="form-check form-check-sm form-check-custom form-check-solid">
-                                    <input class="form-check-input" type="checkbox" value="1" />
-                                 </div>
-                              </td>
-                              <td class="d-flex align-items-center" id="kt_drawer_editprofile_toggle">
-                                 <!--begin:: Avatar -->
-                                 <div class="symbol symbol-circle symbol-50px overflow-hidden cursor-pointer me-3" id="kt_drawer_editprofile_toggle">
-                                    <a href="#">
-                                       <div class="symbol-label fs-3 bg-light-danger text-danger">M</div>
-                                    </a>
-                                 </div>
-                                 <!--end::Avatar-->
-                                 <!--begin::User details-->
-                                 <div class="d-flex flex-column">
-                                    <a href="#" class="text-gray-800 text-hover-primary mb-1">Melody Macy</a>
-                                    <span>melody@altbox.com</span>
-                                 </div>
-                                 <!--begin::User details-->
-                              </td>
-                              <td>9124578451</td>
-                              <td>Manager</td>
-                              <td>
-                                 <label class="form-check form-switch form-check-custom form-check-solid">
-                                 <input class="form-check-input" type="checkbox" checked="checked" value="deactivate" disabled />
-                                 </label>
-                                 <!--end::Switch-->
-                              </td>
-                              <td>
-                                 <div class="rating">
-                                    <div class="rating-label checked">
-                                       <i class="ki-duotone ki-star fs-6"></i>
-                                    </div>
-                                    <div class="rating-label checked">
-                                       <i class="ki-duotone ki-star fs-6"></i>
-                                    </div>
-                                    <div class="rating-label checked">
-                                       <i class="ki-duotone ki-star fs-6"></i>
-                                    </div>
-                                    <div class="rating-label checked">
-                                       <i class="ki-duotone ki-star fs-6"></i>
-                                    </div>
-                                    <div class="rating-label">
-                                       <i class="ki-duotone ki-star fs-6"></i>
-                                    </div>
-                                 </div>
-                                 <span class="text-muted fw-semibold text-muted d-block fs-7 mt-1">Above Avarage</span>
-                              </td>
-                              <td class="text-end">
-                                 <a href="#" class="btn btn-light btn-active-light-primary btn-flex btn-center btn-sm" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end">Actions
-                                 <i class="ki-duotone ki-down fs-5 ms-1"></i></a>
-                                 <!--begin::Menu-->
-                                 <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-600 menu-state-bg-light-primary fw-semibold fs-7 w-125px py-4" data-kt-menu="true">
-                                    <!--begin::Menu item-->
-                                    <div class="menu-item px-3">
-                                       <a href="#" class="menu-link px-3" id="kt_drawer_editprofile_toggle">Edit</a>
-                                    </div>
-                                    <!--end::Menu item-->
-                                    <!--begin::Menu item-->
-                                    <div class="menu-item px-3">
-                                       <a href="#" class="menu-link px-3" data-kt-users-table-filter="delete_row">Delete</a>
-                                    </div>
-                                    <!--end::Menu item-->
-                                    <!--begin::Menu item-->
-                                    <div class="menu-item px-3">
-                                       <a href="#" class="menu-link px-3" data-kt-users-table-filter="delete_row">Disable</a>
-                                    </div>
-                                    <!--end::Menu item-->
-                                 </div>
-                                 <!--end::Menu-->
-                              </td>
-                           </tr>
-                           <tr>
-                              <td>
-                                 <div class="form-check form-check-sm form-check-custom form-check-solid">
-                                    <input class="form-check-input" type="checkbox" value="1" />
-                                 </div>
-                              </td>
-                              <td class="d-flex align-items-center" id="kt_drawer_editprofile_toggle">
-                                 <!--begin:: Avatar -->
-                                 <div class="symbol symbol-circle symbol-50px overflow-hidden cursor-pointer me-3" id="kt_drawer_editprofile_toggle">
-                                    <a href="#">
-                                       <div class="symbol-label">
-                                          <img src="{{asset('/public/assets/media/avatars/300-1.jpg')}}" alt="Max Smith" class="w-100" />
-                                       </div>
-                                    </a>
-                                 </div>
-                                 <!--end::Avatar-->
-                                 <!--begin::User details-->
-                                 <div class="d-flex flex-column">
-                                    <a href="#" class="text-gray-800 text-hover-primary mb-1">Max Smith</a>
-                                    <span>max@kt.com</span>
-                                 </div>
-                                 <!--begin::User details-->
-                              </td>
-                              <td>9124578451</td>
-                              <td>Staff</td>
-                              <td>
-                                 <label class="form-check form-switch form-check-custom form-check-solid">
-                                 <input class="form-check-input" type="checkbox" value="active" disabled/>
-                                 </label>
-                                 <!--end::Switch-->
-                              </td>
-                              <td>
-                                 <div class="rating">
-                                    <div class="rating-label checked">
-                                       <i class="ki-duotone ki-star fs-6"></i>
-                                    </div>
-                                    <div class="rating-label checked">
-                                       <i class="ki-duotone ki-star fs-6"></i>
-                                    </div>
-                                    <div class="rating-label checked">
-                                       <i class="ki-duotone ki-star fs-6"></i>
-                                    </div>
-                                    <div class="rating-label checked">
-                                       <i class="ki-duotone ki-star fs-6"></i>
-                                    </div>
-                                    <div class="rating-label checked">
-                                       <i class="ki-duotone ki-star fs-6"></i>
-                                    </div>
-                                 </div>
-                                 <span class="text-muted fw-semibold text-muted d-block fs-7 mt-1">Best Rated</span>
-                              </td>
-                              <td class="text-end">
-                                 <a href="#" class="btn btn-light btn-active-light-primary btn-flex btn-center btn-sm" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end">Actions
-                                 <i class="ki-duotone ki-down fs-5 ms-1"></i></a>
-                                 <!--begin::Menu-->
-                                 <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-600 menu-state-bg-light-primary fw-semibold fs-7 w-125px py-4" data-kt-menu="true">
-                                    <!--begin::Menu item-->
-                                    <div class="menu-item px-3">
-                                       <a href="#" class="menu-link px-3" id="kt_drawer_editprofile_toggle">Edit</a>
-                                    </div>
-                                    <!--end::Menu item-->
-                                    <!--begin::Menu item-->
-                                    <div class="menu-item px-3">
-                                       <a href="#" class="menu-link px-3" data-kt-users-table-filter="delete_row">Delete</a>
-                                    </div>
-                                    <!--end::Menu item-->
-                                    <!--begin::Menu item-->
-                                    <div class="menu-item px-3">
-                                       <a href="#" class="menu-link px-3" data-kt-users-table-filter="delete_row">Enable</a>
-                                    </div>
-                                    <!--end::Menu item-->
-                                 </div>
-                                 <!--end::Menu-->
-                              </td>
-                           </tr>
-                           <tr>
-                              <td>
-                                 <div class="form-check form-check-sm form-check-custom form-check-solid">
-                                    <input class="form-check-input" type="checkbox" value="1" />
-                                 </div>
-                              </td>
-                              <td class="d-flex align-items-center" id="kt_drawer_editprofile_toggle">
-                                 <!--begin:: Avatar -->
-                                 <div class="symbol symbol-circle symbol-50px overflow-hidden cursor-pointer me-3" id="kt_drawer_editprofile_toggle">
-                                    <a href="#">
-                                       <div class="symbol-label">
-                                          <img src="{{asset('/public/assets/media/avatars/300-5.jpg')}}" alt="Sean Bean" class="w-100" />
-                                       </div>
-                                    </a>
-                                 </div>
-                                 <!--end::Avatar-->
-                                 <!--begin::User details-->
-                                 <div class="d-flex flex-column">
-                                    <a href="#" class="text-gray-800 text-hover-primary mb-1">Sean Bean</a>
-                                    <span>sean@dellito.com</span>
-                                 </div>
-                                 <!--begin::User details-->
-                              </td>
-                              <td>9124578451</td>
-                              <td>Owner</td>
-                              <td>
-                                 <label class="form-check form-switch form-check-custom form-check-solid">
-                                 <input class="form-check-input" type="checkbox" checked="checked" value="deactivate" disabled />
-                                 </label>
-                                 <!--end::Switch-->
-                              </td>
-                              <td>
-                                 <div class="rating">
-                                    <div class="rating-label checked">
-                                       <i class="ki-duotone ki-star fs-6"></i>
-                                    </div>
-                                    <div class="rating-label checked">
-                                       <i class="ki-duotone ki-star fs-6"></i>
-                                    </div>
-                                    <div class="rating-label checked">
-                                       <i class="ki-duotone ki-star fs-6"></i>
-                                    </div>
-                                    <div class="rating-label checked">
-                                       <i class="ki-duotone ki-star fs-6"></i>
-                                    </div>
-                                    <div class="rating-label checked">
-                                       <i class="ki-duotone ki-star fs-6"></i>
-                                    </div>
-                                 </div>
-                                 <span class="text-muted fw-semibold text-muted d-block fs-7 mt-1">Best Rated</span>
-                              </td>
-                              <td class="text-end">
-                                 <a href="#" class="btn btn-light btn-active-light-primary btn-flex btn-center btn-sm" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end">Actions
-                                 <i class="ki-duotone ki-down fs-5 ms-1"></i></a>
-                                 <!--begin::Menu-->
-                                 <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-600 menu-state-bg-light-primary fw-semibold fs-7 w-125px py-4" data-kt-menu="true">
-                                    <!--begin::Menu item-->
-                                    <div class="menu-item px-3">
-                                       <a href="#" class="menu-link px-3" id="kt_drawer_editprofile_toggle">Edit</a>
-                                    </div>
-                                    <!--end::Menu item-->
-                                    <!--begin::Menu item-->
-                                    <div class="menu-item px-3">
-                                       <a href="#" class="menu-link px-3" data-kt-users-table-filter="delete_row">Delete</a>
-                                    </div>
-                                    <!--end::Menu item-->
-                                    <!--begin::Menu item-->
-                                    <div class="menu-item px-3">
-                                       <a href="#" class="menu-link px-3" data-kt-users-table-filter="delete_row">Disable</a>
-                                    </div>
-                                    <!--end::Menu item-->
-                                 </div>
-                                 <!--end::Menu-->
-                              </td>
-                           </tr>
-                           <tr>
-                              <td>
-                                 <div class="form-check form-check-sm form-check-custom form-check-solid">
-                                    <input class="form-check-input" type="checkbox" value="1" />
-                                 </div>
-                              </td>
-                              <td class="d-flex align-items-center" id="kt_drawer_editprofile_toggle">
-                                 <!--begin:: Avatar -->
-                                 <div class="symbol symbol-circle symbol-50px overflow-hidden cursor-pointer me-3" id="kt_drawer_editprofile_toggle">
-                                    <a href="#">
-                                       <div class="symbol-label">
-                                          <img src="{{asset('/public/assets/media/avatars/300-25.jpg')}}" alt="Brian Cox" class="w-100" />
-                                       </div>
-                                    </a>
-                                 </div>
-                                 <!--end::Avatar-->
-                                 <!--begin::User details-->
-                                 <div class="d-flex flex-column">
-                                    <a href="#" class="text-gray-800 text-hover-primary mb-1">Brian Cox</a>
-                                    <span>brian@exchange.com</span>
-                                 </div>
-                                 <!--begin::User details-->
-                              </td>
-                              <td>9124578451</td>
-                              <td>Manager</td>
-                              <td>
-                                 <label class="form-check form-switch form-check-custom form-check-solid">
-                                 <input class="form-check-input" type="checkbox" checked="checked" value="deactivate" disabled />
-                                 </label>
-                                 <!--end::Switch-->
-                              </td>
-                              <td>
-                                 <div class="rating">
-                                    <div class="rating-label checked">
-                                       <i class="ki-duotone ki-star fs-6"></i>
-                                    </div>
-                                    <div class="rating-label checked">
-                                       <i class="ki-duotone ki-star fs-6"></i>
-                                    </div>
-                                    <div class="rating-label checked">
-                                       <i class="ki-duotone ki-star fs-6"></i>
-                                    </div>
-                                    <div class="rating-label checked">
-                                       <i class="ki-duotone ki-star fs-6"></i>
-                                    </div>
-                                    <div class="rating-label checked">
-                                       <i class="ki-duotone ki-star fs-6"></i>
-                                    </div>
-                                 </div>
-                                 <span class="text-muted fw-semibold text-muted d-block fs-7 mt-1">Best Rated</span>
-                              </td>
-                              <td class="text-end">
-                                 <a href="#" class="btn btn-light btn-active-light-primary btn-flex btn-center btn-sm" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end">Actions
-                                 <i class="ki-duotone ki-down fs-5 ms-1"></i></a>
-                                 <!--begin::Menu-->
-                                 <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-600 menu-state-bg-light-primary fw-semibold fs-7 w-125px py-4" data-kt-menu="true">
-                                    <!--begin::Menu item-->
-                                    <div class="menu-item px-3">
-                                       <a href="#" class="menu-link px-3" id="kt_drawer_editprofile_toggle">Edit</a>
-                                    </div>
-                                    <!--end::Menu item-->
-                                    <!--begin::Menu item-->
-                                    <div class="menu-item px-3">
-                                       <a href="#" class="menu-link px-3" data-kt-users-table-filter="delete_row">Delete</a>
-                                    </div>
-                                    <!--end::Menu item-->
-                                    <!--begin::Menu item-->
-                                    <div class="menu-item px-3">
-                                       <a href="#" class="menu-link px-3" data-kt-users-table-filter="delete_row">Disable</a>
-                                    </div>
-                                    <!--end::Menu item-->
-                                 </div>
-                                 <!--end::Menu-->
-                              </td>
-                           </tr>
-                           <tr>
-                              <td>
-                                 <div class="form-check form-check-sm form-check-custom form-check-solid">
-                                    <input class="form-check-input" type="checkbox" value="1" />
-                                 </div>
-                              </td>
-                              <td class="d-flex align-items-center" id="kt_drawer_editprofile_toggle">
-                                 <!--begin:: Avatar -->
-                                 <div class="symbol symbol-circle symbol-50px overflow-hidden cursor-pointer me-3" id="kt_drawer_editprofile_toggle">
-                                    <a href="#">
-                                       <div class="symbol-label fs-3 bg-light-warning text-warning">C</div>
-                                    </a>
-                                 </div>
-                                 <!--end::Avatar-->
-                                 <!--begin::User details-->
-                                 <div class="d-flex flex-column">
-                                    <a href="#" class="text-gray-800 text-hover-primary mb-1">Mikaela Collins</a>
-                                    <span>mik@pex.com</span>
-                                 </div>
-                                 <!--begin::User details-->
-                              </td>
-                              <td>9124578451</td>
-                              <td>Staff</td>
-                              <td>
-                                 <label class="form-check form-switch form-check-custom form-check-solid">
-                                 <input class="form-check-input" type="checkbox" checked="checked" value="deactivate" disabled />
-                                 </label>
-                                 <!--end::Switch-->
-                              </td>
-                              <td>
-                                 <div class="rating">
-                                    <div class="rating-label checked">
-                                       <i class="ki-duotone ki-star fs-6"></i>
-                                    </div>
-                                    <div class="rating-label checked">
-                                       <i class="ki-duotone ki-star fs-6"></i>
-                                    </div>
-                                    <div class="rating-label checked">
-                                       <i class="ki-duotone ki-star fs-6"></i>
-                                    </div>
-                                    <div class="rating-label checked">
-                                       <i class="ki-duotone ki-star fs-6"></i>
-                                    </div>
-                                    <div class="rating-label checked">
-                                       <i class="ki-duotone ki-star fs-6"></i>
-                                    </div>
-                                 </div>
-                                 <span class="text-muted fw-semibold text-muted d-block fs-7 mt-1">Best Rated</span>
-                              </td>
-                              <td class="text-end">
-                                 <a href="#" class="btn btn-light btn-active-light-primary btn-flex btn-center btn-sm" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end">Actions
-                                 <i class="ki-duotone ki-down fs-5 ms-1"></i></a>
-                                 <!--begin::Menu-->
-                                 <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-600 menu-state-bg-light-primary fw-semibold fs-7 w-125px py-4" data-kt-menu="true">
-                                    <!--begin::Menu item-->
-                                    <div class="menu-item px-3">
-                                       <a href="#" class="menu-link px-3" id="kt_drawer_editprofile_toggle">Edit</a>
-                                    </div>
-                                    <!--end::Menu item-->
-                                    <!--begin::Menu item-->
-                                    <div class="menu-item px-3">
-                                       <a href="#" class="menu-link px-3" data-kt-users-table-filter="delete_row">Delete</a>
-                                    </div>
-                                    <!--end::Menu item-->
-                                    <!--begin::Menu item-->
-                                    <div class="menu-item px-3">
-                                       <a href="#" class="menu-link px-3" data-kt-users-table-filter="delete_row">Disable</a>
-                                    </div>
-                                    <!--end::Menu item-->
-                                 </div>
-                                 <!--end::Menu-->
-                              </td>
-                           </tr>
-                           <tr>
-                              <td>
-                                 <div class="form-check form-check-sm form-check-custom form-check-solid">
-                                    <input class="form-check-input" type="checkbox" value="1" />
-                                 </div>
-                              </td>
-                              <td class="d-flex align-items-center" id="kt_drawer_editprofile_toggle">
-                                 <!--begin:: Avatar -->
-                                 <div class="symbol symbol-circle symbol-50px overflow-hidden cursor-pointer me-3" id="kt_drawer_editprofile_toggle">
-                                    <a href="#">
-                                       <div class="symbol-label">
-                                          <img src="{{asset('/public/assets/media/avatars/300-9.jpg')}}" alt="Francis Mitcham" class="w-100" />
-                                       </div>
-                                    </a>
-                                 </div>
-                                 <!--end::Avatar-->
-                                 <!--begin::User details-->
-                                 <div class="d-flex flex-column">
-                                    <a href="#" class="text-gray-800 text-hover-primary mb-1">Francis Mitcham</a>
-                                    <span>f.mit@kpmg.com</span>
-                                 </div>
-                                 <!--begin::User details-->
-                              </td>
-                              <td>9124578451</td>
-                              <td>Staff</td>
-                              <td>
-                                 <label class="form-check form-switch form-check-custom form-check-solid">
-                                 <input class="form-check-input" type="checkbox" checked="checked" value="deactivate" disabled />
-                                 </label>
-                                 <!--end::Switch-->
-                              </td>
-                              <td>
-                                 <div class="rating">
-                                    <div class="rating-label checked">
-                                       <i class="ki-duotone ki-star fs-6"></i>
-                                    </div>
-                                    <div class="rating-label checked">
-                                       <i class="ki-duotone ki-star fs-6"></i>
-                                    </div>
-                                    <div class="rating-label checked">
-                                       <i class="ki-duotone ki-star fs-6"></i>
-                                    </div>
-                                    <div class="rating-label checked">
-                                       <i class="ki-duotone ki-star fs-6"></i>
-                                    </div>
-                                    <div class="rating-label checked">
-                                       <i class="ki-duotone ki-star fs-6"></i>
-                                    </div>
-                                 </div>
-                                 <span class="text-muted fw-semibold text-muted d-block fs-7 mt-1">Best Rated</span>
-                              </td>
-                              <td class="text-end">
-                                 <a href="#" class="btn btn-light btn-active-light-primary btn-flex btn-center btn-sm" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end">Actions
-                                 <i class="ki-duotone ki-down fs-5 ms-1"></i></a>
-                                 <!--begin::Menu-->
-                                 <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-600 menu-state-bg-light-primary fw-semibold fs-7 w-125px py-4" data-kt-menu="true">
-                                    <!--begin::Menu item-->
-                                    <div class="menu-item px-3">
-                                       <a href="#" class="menu-link px-3" id="kt_drawer_editprofile_toggle">Edit</a>
-                                    </div>
-                                    <!--end::Menu item-->
-                                    <!--begin::Menu item-->
-                                    <div class="menu-item px-3">
-                                       <a href="#" class="menu-link px-3" data-kt-users-table-filter="delete_row">Delete</a>
-                                    </div>
-                                    <!--end::Menu item-->
-                                    <!--begin::Menu item-->
-                                    <div class="menu-item px-3">
-                                       <a href="#" class="menu-link px-3" data-kt-users-table-filter="delete_row">Disable</a>
-                                    </div>
-                                    <!--end::Menu item-->
-                                 </div>
-                                 <!--end::Menu-->
-                              </td>
-                           </tr>
-                           <tr>
-                              <td>
-                                 <div class="form-check form-check-sm form-check-custom form-check-solid">
-                                    <input class="form-check-input" type="checkbox" value="1" />
-                                 </div>
-                              </td>
-                              <td class="d-flex align-items-center" id="kt_drawer_editprofile_toggle">
-                                 <!--begin:: Avatar -->
-                                 <div class="symbol symbol-circle symbol-50px overflow-hidden cursor-pointer me-3" id="kt_drawer_editprofile_toggle">
-                                    <a href="#">
-                                       <div class="symbol-label fs-3 bg-light-danger text-danger">O</div>
-                                    </a>
-                                 </div>
-                                 <!--end::Avatar-->
-                                 <!--begin::User details-->
-                                 <div class="d-flex flex-column">
-                                    <a href="#" class="text-gray-800 text-hover-primary mb-1">Olivia Wild</a>
-                                    <span>olivia@corpmail.com</span>
-                                 </div>
-                                 <!--begin::User details-->
-                              </td>
-                              <td>9124578451</td>
-                              <td>Owner</td>
-                              <td>
-                                 <label class="form-check form-switch form-check-custom form-check-solid">
-                                 <input class="form-check-input" type="checkbox" checked="checked" value="deactivate" disabled />
-                                 </label>
-                                 <!--end::Switch-->
-                              </td>
-                              <td>
-                                 <div class="rating">
-                                    <div class="rating-label checked">
-                                       <i class="ki-duotone ki-star fs-6"></i>
-                                    </div>
-                                    <div class="rating-label checked">
-                                       <i class="ki-duotone ki-star fs-6"></i>
-                                    </div>
-                                    <div class="rating-label checked">
-                                       <i class="ki-duotone ki-star fs-6"></i>
-                                    </div>
-                                    <div class="rating-label checked">
-                                       <i class="ki-duotone ki-star fs-6"></i>
-                                    </div>
-                                    <div class="rating-label checked">
-                                       <i class="ki-duotone ki-star fs-6"></i>
-                                    </div>
-                                 </div>
-                                 <span class="text-muted fw-semibold text-muted d-block fs-7 mt-1">Best Rated</span>
-                              </td>
-                              <td class="text-end">
-                                 <a href="#" class="btn btn-light btn-active-light-primary btn-flex btn-center btn-sm" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end">Actions
-                                 <i class="ki-duotone ki-down fs-5 ms-1"></i></a>
-                                 <!--begin::Menu-->
-                                 <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-600 menu-state-bg-light-primary fw-semibold fs-7 w-125px py-4" data-kt-menu="true">
-                                    <!--begin::Menu item-->
-                                    <div class="menu-item px-3">
-                                       <a href="#" class="menu-link px-3" id="kt_drawer_editprofile_toggle">Edit</a>
-                                    </div>
-                                    <!--end::Menu item-->
-                                    <!--begin::Menu item-->
-                                    <div class="menu-item px-3">
-                                       <a href="#" class="menu-link px-3" data-kt-users-table-filter="delete_row">Delete</a>
-                                    </div>
-                                    <!--end::Menu item-->
-                                    <!--begin::Menu item-->
-                                    <div class="menu-item px-3">
-                                       <a href="#" class="menu-link px-3" data-kt-users-table-filter="delete_row">Disable</a>
-                                    </div>
-                                    <!--end::Menu item-->
-                                 </div>
-                                 <!--end::Menu-->
-                              </td>
-                           </tr>
-                           <tr>
-                              <td>
-                                 <div class="form-check form-check-sm form-check-custom form-check-solid">
-                                    <input class="form-check-input" type="checkbox" value="1" />
-                                 </div>
-                              </td>
-                              <td class="d-flex align-items-center" id="kt_drawer_editprofile_toggle">
-                                 <!--begin:: Avatar -->
-                                 <div class="symbol symbol-circle symbol-50px overflow-hidden cursor-pointer me-3" id="kt_drawer_editprofile_toggle">
-                                    <a href="#">
-                                       <div class="symbol-label fs-3 bg-light-primary text-primary">N</div>
-                                    </a>
-                                 </div>
-                                 <!--end::Avatar-->
-                                 <!--begin::User details-->
-                                 <div class="d-flex flex-column">
-                                    <a href="#" class="text-gray-800 text-hover-primary mb-1">Neil Owen</a>
-                                    <span>owen.neil@gmail.com</span>
-                                 </div>
-                                 <!--begin::User details-->
-                              </td>
-                              <td>9124578451</td>
-                              <td>Manager</td>
-                              <td>
-                                 <label class="form-check form-switch form-check-custom form-check-solid">
-                                 <input class="form-check-input" type="checkbox" checked="checked" value="deactivate" disabled />
-                                 </label>
-                                 <!--end::Switch-->
-                              </td>
-                              <td>
-                                 <div class="rating">
-                                    <div class="rating-label checked">
-                                       <i class="ki-duotone ki-star fs-6"></i>
-                                    </div>
-                                    <div class="rating-label checked">
-                                       <i class="ki-duotone ki-star fs-6"></i>
-                                    </div>
-                                    <div class="rating-label checked">
-                                       <i class="ki-duotone ki-star fs-6"></i>
-                                    </div>
-                                    <div class="rating-label checked">
-                                       <i class="ki-duotone ki-star fs-6"></i>
-                                    </div>
-                                    <div class="rating-label checked">
-                                       <i class="ki-duotone ki-star fs-6"></i>
-                                    </div>
-                                 </div>
-                                 <span class="text-muted fw-semibold text-muted d-block fs-7 mt-1">Best Rated</span>
-                              </td>
-                              <td class="text-end">
-                                 <a href="#" class="btn btn-light btn-active-light-primary btn-flex btn-center btn-sm" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end">Actions
-                                 <i class="ki-duotone ki-down fs-5 ms-1"></i></a>
-                                 <!--begin::Menu-->
-                                 <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-600 menu-state-bg-light-primary fw-semibold fs-7 w-125px py-4" data-kt-menu="true">
-                                    <!--begin::Menu item-->
-                                    <div class="menu-item px-3">
-                                       <a href="#" class="menu-link px-3" id="kt_drawer_editprofile_toggle">Edit</a>
-                                    </div>
-                                    <!--end::Menu item-->
-                                    <!--begin::Menu item-->
-                                    <div class="menu-item px-3">
-                                       <a href="#" class="menu-link px-3" data-kt-users-table-filter="delete_row">Delete</a>
-                                    </div>
-                                    <!--end::Menu item-->
-                                    <!--begin::Menu item-->
-                                    <div class="menu-item px-3">
-                                       <a href="#" class="menu-link px-3" data-kt-users-table-filter="delete_row">Disable</a>
-                                    </div>
-                                    <!--end::Menu item-->
-                                 </div>
-                                 <!--end::Menu-->
-                              </td>
-                           </tr>
-                           <tr>
-                              <td>
-                                 <div class="form-check form-check-sm form-check-custom form-check-solid">
-                                    <input class="form-check-input" type="checkbox" value="1" />
-                                 </div>
-                              </td>
-                              <td class="d-flex align-items-center" id="kt_drawer_editprofile_toggle">
-                                 <!--begin:: Avatar -->
-                                 <div class="symbol symbol-circle symbol-50px overflow-hidden cursor-pointer me-3" id="kt_drawer_editprofile_toggle">
-                                    <a href="#">
-                                       <div class="symbol-label">
-                                          <img src="{{asset('/public/assets/media/avatars/300-23.jpg')}}" alt="Dan Wilson" class="w-100" />
-                                       </div>
-                                    </a>
-                                 </div>
-                                 <!--end::Avatar-->
-                                 <!--begin::User details-->
-                                 <div class="d-flex flex-column">
-                                    <a href="#" class="text-gray-800 text-hover-primary mb-1">Dan Wilson</a>
-                                    <span>dam@consilting.com</span>
-                                 </div>
-                                 <!--begin::User details-->
-                              </td>
-                              <td>9124578451</td>
-                              <td>Staff</td>
-                              <td>
-                                 <label class="form-check form-switch form-check-custom form-check-solid">
-                                 <input class="form-check-input" type="checkbox" value="active" disabled/>
-                                 </label>
-                                 <!--end::Switch-->
-                              </td>
-                              <td>
-                                 <div class="rating">
-                                    <div class="rating-label checked">
-                                       <i class="ki-duotone ki-star fs-6"></i>
-                                    </div>
-                                    <div class="rating-label checked">
-                                       <i class="ki-duotone ki-star fs-6"></i>
-                                    </div>
-                                    <div class="rating-label checked">
-                                       <i class="ki-duotone ki-star fs-6"></i>
-                                    </div>
-                                    <div class="rating-label checked">
-                                       <i class="ki-duotone ki-star fs-6"></i>
-                                    </div>
-                                    <div class="rating-label checked">
-                                       <i class="ki-duotone ki-star fs-6"></i>
-                                    </div>
-                                 </div>
-                                 <span class="text-muted fw-semibold text-muted d-block fs-7 mt-1">Best Rated</span>
-                              </td>
-                              <td class="text-end">
-                                 <a href="#" class="btn btn-light btn-active-light-primary btn-flex btn-center btn-sm" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end">Actions
-                                 <i class="ki-duotone ki-down fs-5 ms-1"></i></a>
-                                 <!--begin::Menu-->
-                                 <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-600 menu-state-bg-light-primary fw-semibold fs-7 w-125px py-4" data-kt-menu="true">
-                                    <!--begin::Menu item-->
-                                    <div class="menu-item px-3">
-                                       <a href="#" class="menu-link px-3" id="kt_drawer_editprofile_toggle">Edit</a>
-                                    </div>
-                                    <!--end::Menu item-->
-                                    <!--begin::Menu item-->
-                                    <div class="menu-item px-3">
-                                       <a href="#" class="menu-link px-3" data-kt-users-table-filter="delete_row">Delete</a>
-                                    </div>
-                                    <!--end::Menu item-->
-                                    <!--begin::Menu item-->
-                                    <div class="menu-item px-3">
-                                       <a href="#" class="menu-link px-3" data-kt-users-table-filter="delete_row">Enable</a>
-                                    </div>
-                                    <!--end::Menu item-->
-                                 </div>
-                                 <!--end::Menu-->
-                              </td>
-                           </tr>
-                           <tr>
-                              <td>
-                                 <div class="form-check form-check-sm form-check-custom form-check-solid">
-                                    <input class="form-check-input" type="checkbox" value="1" />
-                                 </div>
-                              </td>
-                              <td class="d-flex align-items-center" id="kt_drawer_editprofile_toggle">
-                                 <!--begin:: Avatar -->
-                                 <div class="symbol symbol-circle symbol-50px overflow-hidden cursor-pointer me-3" id="kt_drawer_editprofile_toggle">
-                                    <a href="#">
-                                       <div class="symbol-label fs-3 bg-light-danger text-danger">E</div>
-                                    </a>
-                                 </div>
-                                 <!--end::Avatar-->
-                                 <!--begin::User details-->
-                                 <div class="d-flex flex-column">
-                                    <a href="#" class="text-gray-800 text-hover-primary mb-1">Emma Bold</a>
-                                    <span>emma@intenso.com</span>
-                                 </div>
-                                 <!--begin::User details-->
-                              </td>
-                              <td>9124578451</td>
-                              <td>Staff</td>
-                              <td>
-                                 <label class="form-check form-switch form-check-custom form-check-solid">
-                                 <input class="form-check-input" type="checkbox" checked="checked" value="deactivate" disabled />
-                                 </label>
-                                 <!--end::Switch-->
-                              </td>
-                              <td>
-                                 <div class="rating">
-                                    <div class="rating-label checked">
-                                       <i class="ki-duotone ki-star fs-6"></i>
-                                    </div>
-                                    <div class="rating-label checked">
-                                       <i class="ki-duotone ki-star fs-6"></i>
-                                    </div>
-                                    <div class="rating-label checked">
-                                       <i class="ki-duotone ki-star fs-6"></i>
-                                    </div>
-                                    <div class="rating-label checked">
-                                       <i class="ki-duotone ki-star fs-6"></i>
-                                    </div>
-                                    <div class="rating-label checked">
-                                       <i class="ki-duotone ki-star fs-6"></i>
-                                    </div>
-                                 </div>
-                                 <span class="text-muted fw-semibold text-muted d-block fs-7 mt-1">Best Rated</span>
-                              </td>
-                              <td class="text-end">
-                                 <a href="#" class="btn btn-light btn-active-light-primary btn-flex btn-center btn-sm" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end">Actions
-                                 <i class="ki-duotone ki-down fs-5 ms-1"></i></a>
-                                 <!--begin::Menu-->
-                                 <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-600 menu-state-bg-light-primary fw-semibold fs-7 w-125px py-4" data-kt-menu="true">
-                                    <!--begin::Menu item-->
-                                    <div class="menu-item px-3">
-                                       <a href="#" class="menu-link px-3" id="kt_drawer_editprofile_toggle">Edit</a>
-                                    </div>
-                                    <!--end::Menu item-->
-                                    <!--begin::Menu item-->
-                                    <div class="menu-item px-3">
-                                       <a href="#" class="menu-link px-3" data-kt-users-table-filter="delete_row">Delete</a>
-                                    </div>
-                                    <!--end::Menu item-->
-                                    <!--begin::Menu item-->
-                                    <div class="menu-item px-3">
-                                       <a href="#" class="menu-link px-3" data-kt-users-table-filter="delete_row">Disable</a>
-                                    </div>
-                                    <!--end::Menu item-->
-                                 </div>
-                                 <!--end::Menu-->
-                              </td>
-                           </tr>
+                           @endforeach
+                           @endif
                         </tbody>
                      </table>
                      <!--end::Table-->
@@ -3355,158 +2654,7 @@
 </div>
 <!--end::Drawer-->
 <!--begin::Drawer-->
-<div
-   id="kt_drawer_editprofile"
-   class="bg-white"
-   data-kt-drawer="true"
-   data-kt-drawer-activate="true"
-   data-kt-drawer-toggle="#kt_drawer_editprofile_toggle"
-   data-kt-drawer-close="#kt_drawer_editprofile_close"
-   data-kt-drawer-overlay="true"
-   data-kt-drawer-permanent="true"
-   data-kt-drawer-width="{default:'300px', 'md': '600px'}"
-   >
-   <!--begin::Card-->
-   <div class="card rounded-0 w-100">
-      <!--begin::Card header-->
-      <div class="card-header pe-5">
-         <!--begin::Title-->
-         <div class="card-title">
-            My Profile
-         </div>
-         <!--end::Title-->
-         <!--begin::Card toolbar-->
-         <div class="card-toolbar">
-            <!--begin::Close-->
-            <div class="btn btn-icon btn-sm btn-active-light-primary ms-2" id="kt_drawer_editprofile_close">
-               <i class="ki-duotone ki-cross fs-2x"><span class="path1"></span><span class="path2"></span></i>
-            </div>
-            <!--end::Close-->
-         </div>
-         <!--end::Card toolbar-->
-      </div>
-      <!--end::Card header-->
-      <!--begin::Card body-->
-      <div class="card-body hover-scroll-overlay-y pt-3">
-         <!--begin::Body-->
-         <div class="pt-5">
-            <!--begin::Items-->
-            <div class="brdr">
-               <!--begin::Section-->
-               <div class="d-flex justify-content-between align-items-start p-5">
-                  <!--begin::Content-->
-                  <div class="d-flex flex-column">
-                     <!--begin::Title-->
-                     <span class="text-gray-800 fw-bold fs-6">Name:</span>
-                     <span class="text-gray-400 fw-semibold fs-6">Ajit Kumar</span>
-                     <!--end::Title-->
-                  </div>
-                  <!--end::Content-->
-                  <div class="d-flex justify-content-end w-150px">
-                     <a href="#" class="btn btn-bg-light btn-color-muted btn-active-color-primary btn-sm px-4">Edit</a>
-                  </div>
-               </div>
-               <!--end::Section-->
-               <!--begin::Separator-->
-               <div class="separator my-3"></div>
-               <!--end::Separator-->
-               <!--begin::Section-->
-               <div class="d-flex justify-content-between align-items-start p-5">
-                  <!--begin::Content-->
-                  <div class="d-flex flex-column">
-                     <!--begin::Title-->
-                     <span class="text-gray-800 fw-bold fs-6">Email:</span>
-                     <span class="text-gray-400 fw-semibold fs-6">ajit.deo.kumar@gmail.com</span>
-                     <!--end::Title-->
-                  </div>
-                  <!--end::Content-->
-                  <div class="d-flex justify-content-end w-150px">
-                     <a href="#" class="btn btn-bg-light btn-color-muted btn-active-color-primary btn-sm px-4">Edit</a>
-                  </div>
-               </div>
-               <!--end::Section-->
-               <!--begin::Separator-->
-               <div class="separator my-3"></div>
-               <!--end::Separator-->
-               <!--begin::Section-->
-               <div class="d-flex justify-content-between align-items-start p-5">
-                  <!--begin::Content-->
-                  <div class="d-flex flex-column">
-                     <!--begin::Title-->
-                     <span class="text-gray-800 fw-bold fs-6">Primary mobile number:</span>
-                     <span class="text-gray-400 fw-semibold fs-6">+919004657741</span>
-                     <span class="text-gray-400 fw-semibold fs-6 mt-1">Quickly sign in, easily recover passwords, and receive security notifications with this mobile number.</span>
-                     <!--end::Title-->
-                  </div>
-                  <!--end::Content-->
-                  <div class="d-flex justify-content-end w-150px">
-                     <a href="#" class="btn btn-bg-light btn-color-muted btn-active-color-primary btn-sm px-4">Edit</a>
-                  </div>
-               </div>
-               <!--end::Section-->
-               <!--begin::Separator-->
-               <div class="separator my-3"></div>
-               <!--end::Separator-->
-               <!--begin::Section-->
-               <div class="d-flex justify-content-between align-items-start p-5">
-                  <!--begin::Content-->
-                  <div class="d-flex flex-column">
-                     <!--begin::Title-->
-                     <span class="text-gray-800 fw-bold fs-6">Password:</span>
-                     <span class="text-gray-400 fw-semibold fs-6">********</span>
-                     <!--end::Title-->
-                  </div>
-                  <!--end::Content-->
-                  <div class="d-flex justify-content-end w-150px">
-                     <a href="#" class="btn btn-bg-light btn-color-muted btn-active-color-primary btn-sm px-4">Edit</a>
-                  </div>
-               </div>
-               <!--end::Section-->
-               <!--begin::Separator-->
-               <div class="separator my-3"></div>
-               <!--end::Separator-->
-               <!--begin::Section-->
-               <div class="d-flex justify-content-between align-items-start p-5">
-                  <!--begin::Content-->
-                  <div class="d-flex flex-column">
-                     <!--begin::Title-->
-                     <span class="text-gray-800 fw-bold fs-6">2-step verification:</span>
-                     <span class="text-gray-400 fw-semibold fs-6 mt-1">Add a layer of security. Require a verification code in addition to your password</span>
-                     <!--end::Title-->
-                  </div>
-                  <!--end::Content-->
-                  <div class="d-flex justify-content-end w-150px">
-                     <a href="#" class="btn btn-bg-light btn-color-muted btn-active-color-primary btn-sm px-4">Turn on</a>
-                  </div>
-               </div>
-               <!--end::Section-->
-               <!--begin::Separator-->
-               <div class="separator my-3"></div>
-               <!--end::Separator-->
-               <!--begin::Section-->
-               <div class="d-flex justify-content-between align-items-start p-5">
-                  <!--begin::Content-->
-                  <div class="d-flex flex-column">
-                     <!--begin::Title-->
-                     <span class="text-gray-800 fw-bold fs-6">Compromised account?</span>
-                     <span class="text-gray-400 fw-semibold fs-6 mt-1">Take steps like changing tour password and signin out everywhere</span>
-                     <!--end::Title-->
-                  </div>
-                  <!--end::Content-->
-                  <div class="d-flex justify-content-end w-150px">
-                     <a href="#" class="btn btn-bg-light btn-color-muted btn-active-color-primary btn-sm px-4">Start</a>
-                  </div>
-               </div>
-               <!--end::Section-->
-            </div>
-            <!--end::Items-->
-         </div>
-         <!--end: Card Body-->
-      </div>
-      <!--end::Card body-->
-   </div>
-   <!--end::Card-->
-</div>
+@include('partner.staff.modal.view')
 <!--end::Drawer-->
 <!--end::Modals-->
 
@@ -3515,122 +2663,120 @@
 @push('scripts')
 <script type="text/javascript">
 
-    // CUSTOM JS
+   // CUSTOM JS
+   function showStaffDataN(e) {
 
-    function showStaffDataN(e) {
+      let checkBoxInput = document.querySelector('.staffworkingdays').children;
+      let advancesettingdiv = document.querySelectorAll('.advancesettingdiv');
+      let staffInd = document.querySelectorAll('.staff-ind-shift');
 
-    	let checkBoxInput = document.querySelector('.staffworkingdays').children;
-    	let advancesettingdiv = document.querySelectorAll('.advancesettingdiv');
-    	let staffInd = document.querySelectorAll('.staff-ind-shift');
+      for(let i=0; i<checkBoxInput.length; i++) {
+         if(e.checked && checkBoxInput[i].querySelector('input') == e) {
+            for(let j=0; j<advancesettingdiv.length; j++) {
+               let staffInd = advancesettingdiv[j].querySelectorAll('.staff-ind-shift');
+               staffInd[i].classList.remove('d-none');
+            }
+         }
+         else if(!e.checked && checkBoxInput[i].querySelector('input') == e) {
+            for(let j=0; j<advancesettingdiv.length; j++) {
+               let staffInd = advancesettingdiv[j].querySelectorAll('.staff-ind-shift');
+               staffInd[i].classList.add('d-none')	
+            }			    
+         }
+      }
 
-    	for(let i=0; i<checkBoxInput.length; i++) {
-    		if(e.checked && checkBoxInput[i].querySelector('input') == e) {
-    			for(let j=0; j<advancesettingdiv.length; j++) {
-    				let staffInd = advancesettingdiv[j].querySelectorAll('.staff-ind-shift');
-    				staffInd[i].classList.remove('d-none');
-    			}
-    		}
-    		else if(!e.checked && checkBoxInput[i].querySelector('input') == e) {
-    			for(let j=0; j<advancesettingdiv.length; j++) {
-    				let staffInd = advancesettingdiv[j].querySelectorAll('.staff-ind-shift');
-    				staffInd[i].classList.add('d-none')	
-    			}			    
-    		}
-    	}
+   }
 
-    }
+   function delStaffTime(e) {
+      e.parentElement.remove();
+   }
 
-    function delStaffTime(e) {
-    	e.parentElement.remove();
-    }
+   function showStaffSettingDiv(e) {
+      let staffDiv = document.querySelector('.staff-add-setting-div');
+      if(e.checked && staffDiv.classList.contains('d-none')) {
+         staffDiv.classList.remove('d-none');
+      }
+      else {
+         staffDiv.classList.add('d-none')
+      }
+   }
 
-    function showStaffSettingDiv(e) {
-    	let staffDiv = document.querySelector('.staff-add-setting-div');
-    	if(e.checked && staffDiv.classList.contains('d-none')) {
-    		staffDiv.classList.remove('d-none');
-    	}
-    	else {
-    		staffDiv.classList.add('d-none')
-    	}
-    }
+   let cloneDiv = document.querySelector('.single-add-shift-div').cloneNode(true);
+   function duplicateStaffTime(e) {
+      let dupCloneDiv = cloneDiv.cloneNode(true);		
+      let timep = dupCloneDiv.querySelectorAll('.kt_td_picker_time_only');
+      for(let i=0; i<timep.length; i++) {
+         timePick(timep[i]);
+      }
+      let appBef = e.parentElement;
+      appBef.parentNode.insertBefore(dupCloneDiv, e.parentElement);
+   }
 
-    let cloneDiv = document.querySelector('.single-add-shift-div').cloneNode(true);
-    function duplicateStaffTime(e) {
-    	let dupCloneDiv = cloneDiv.cloneNode(true);		
-    	let timep = dupCloneDiv.querySelectorAll('.kt_td_picker_time_only');
-    	for(let i=0; i<timep.length; i++) {
-    		timePick(timep[i]);
-    	}
-    	let appBef = e.parentElement;
-    	appBef.parentNode.insertBefore(dupCloneDiv, e.parentElement);
-    }
+   function timePick(elem) {
+      new tempusDominus.TempusDominus(elem, {
+         display: {
+            viewMode: "clock",
+            components: {
+               decades: false,
+               year: false,
+               month: false,
+               date: false,
+               hours: true,
+               minutes: true,
+               seconds: false
+            }
+         }
+      });
+   }
 
-    function timePick(elem) {
-    	new tempusDominus.TempusDominus(elem, {
-    		display: {
-    			viewMode: "clock",
-    			components: {
-    				decades: false,
-    				year: false,
-    				month: false,
-    				date: false,
-    				hours: true,
-    				minutes: true,
-    				seconds: false
-    			}
-    		}
-    	});
-    }
+   let advancesettingdivpar = document.querySelector('.advancesettingdiv').parentElement;
 
+   function weekSelect(e) {
+      let advancesettingdiv = document.querySelector('.advancesettingdiv').cloneNode(true);
+      advancesettingdivpar.replaceChildren();
+      for(let i=0; i<Number(e.value); i++) {
+         let advancesettingdivCln = advancesettingdiv.cloneNode(true);
+         let timep = advancesettingdivCln.querySelectorAll('.kt_td_picker_time_only');
+         for(let i=0; i<timep.length; i++) {
+            timep[i].querySelector('input').value='';
+            timePick(timep[i]);
+         }
+         advancesettingdivpar.append(advancesettingdivCln);
+         if(Number(e.value) === 5) {
+            break;
+         }
+      }
+   }
 
-    let advancesettingdivpar = document.querySelector('.advancesettingdiv').parentElement;
+   let event_plcHolder;
+   setTimeout(function() {
+      event_plcHolder = document.querySelector('select.end-date').nextElementSibling.querySelector('.select2-selection__placeholder');
+   }, 1000);
 
-    function weekSelect(e) {
-    	let advancesettingdiv = document.querySelector('.advancesettingdiv').cloneNode(true);
-    	advancesettingdivpar.replaceChildren();
-    	for(let i=0; i<Number(e.value); i++) {
-    		let advancesettingdivCln = advancesettingdiv.cloneNode(true);
-    		let timep = advancesettingdivCln.querySelectorAll('.kt_td_picker_time_only');
-    		for(let i=0; i<timep.length; i++) {
-    			timep[i].querySelector('input').value='';
-    			timePick(timep[i]);
-    		}
-    		advancesettingdivpar.append(advancesettingdivCln);
-    		if(Number(e.value) === 5) {
-    			break;
-    		}
-    	}
-    }
+   function workinghrend(e) {
+      if(Number(e.value) === 2) {
+         e.parentElement.previousElementSibling.classList.remove('d-none');
+         e.parentElement.previousElementSibling.querySelector('.kt_datepicker').value='';
+         e.options[e.selectedIndex].text = '';
+         e.value = '';
+         e.parentElement.classList.add('d-none');
 
-    let event_plcHolder;
-    setTimeout(function() {
-    	event_plcHolder = document.querySelector('select.end-date').nextElementSibling.querySelector('.select2-selection__placeholder');
-    }, 1000);
+         let event_nextsib = e.nextElementSibling.querySelector('.select2-selection__rendered');
+         event_nextsib.textContent='';
+         event_nextsib.removeAttribute("title");
+         event_nextsib.append(event_plcHolder);
+      }
+   }
 
-    function workinghrend(e) {
-    	if(Number(e.value) === 2) {
-    		e.parentElement.previousElementSibling.classList.remove('d-none');
-    		e.parentElement.previousElementSibling.querySelector('.kt_datepicker').value='';
-    		e.options[e.selectedIndex].text = '';
-    		e.value = '';
-    		e.parentElement.classList.add('d-none');
-
-    		let event_nextsib = e.nextElementSibling.querySelector('.select2-selection__rendered');
-    		event_nextsib.textContent='';
-    		event_nextsib.removeAttribute("title");
-    		event_nextsib.append(event_plcHolder);
-    	}
-    }
-
-    function delworkinghrend(e) {
-    	e.parentElement.classList.add('d-none');
-    	e.parentElement.nextElementSibling.classList.remove('d-none');
-    }
-
+   function delworkinghrend(e) {
+      e.parentElement.classList.add('d-none');
+      e.parentElement.nextElementSibling.classList.remove('d-none');
+   }
 
 </script>
 
 <script type="text/javascript">
 	$("#kt_daterangepicker_1").daterangepicker();
 </script>
+<script src="{{asset('/public/assets/js/partner/staff.js')}}" type="text/javascript"></script>
 @endpush()

@@ -39,7 +39,7 @@ class VenueController extends Controller
 				$amenities[$amenity['ac_id']][] = $amenity_arr;
 			}
 		}
-// echo "<pre>"; print_r($amenities); die;
+		
 		$venues 	= Venue::get()->toArray();
 
 		$venue_data_array 	= $this->array_by_ids($venues, "id");

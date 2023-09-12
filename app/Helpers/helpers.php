@@ -55,3 +55,16 @@ function getAmenityCategory(){
 	// echo "<pre>"; print_r($amenitycategory); 
 	return $amenitycategory;
 }
+
+
+function scheduleType(){
+    $scheduleTypeList = [
+        '1'  => 'Every week',
+        '2'  => 'Every two week',
+        '3'  => 'Every three week',
+        '4'  => 'Every month',
+        '5'  => 'Every six month',
+    ];
+    return $scheduleTypeList;
+}
+

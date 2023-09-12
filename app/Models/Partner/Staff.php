@@ -8,14 +8,17 @@ use Illuminate\Database\Eloquent\Model;
 class Staff extends Model
 {
     use HasFactory;
-    protected $table = 'staff_id';
+    protected $table 		= 'staff';
+    protected $primaryKey 	= 'staff_id';
     protected $fillable = [
+        'user_id',
         'partner_id',
         'gender',
         'facebook',
         'instagram',
         'online_status',
         'staff_role',
+		'profile_image',
 		'profile_description',
 		'joining_date',
 		'venues',
@@ -24,6 +27,7 @@ class Staff extends Model
 		'schedule_type',
 		'start_date',
 		'end_date',
+		'end_date_type',
 		'monday_hours',
 		'tuesday_hours',
 		'wednesday_hours',

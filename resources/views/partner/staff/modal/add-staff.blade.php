@@ -13,7 +13,8 @@
             <!--begin::Scroll-->
             <div class="d-flex flex-column scroll-y me-n7 pe-7">
                <!--begin::Form-->
-               <form class="form d-flex flex-column flex-lg-row">
+               <form class="form d-flex flex-column flex-lg-row" method="post" action="{{ url('partner/staff/store') }}" enctype="multipart/form-data">
+                  @csrf
                   <!--begin::Aside column-->
                   <div class="d-flex flex-column gap-7 gap-lg-10 w-100 w-lg-400px mb-7 me-lg-10">
                      <!--begin::Thumbnail settings-->
@@ -47,7 +48,7 @@
                                  </i>
                                  <!--end::Icon-->
                                  <!--begin::Inputs-->
-                                 <input type="file" name="avatar" accept=".png, .jpg, .jpeg" />
+                                 <input type="file" name="profile_image" accept=".png, .jpg, .jpeg" />
                                  <input type="hidden" name="avatar_remove" />
                                  <!--end::Inputs-->
                               </label>
@@ -91,11 +92,13 @@
                         <!--begin::Card body-->
                         <div class="card-body pt-0">
                            <!--begin::Select2-->
-                           <select class="form-select mb-2" data-control="select2" data-hide-search="true" data-placeholder="Select an option">
-                              <option></option>
-                              <option value="published" selected="selected">Role1</option>
-                              <option value="draft">Role2</option>
-                              <option value="scheduled">Role3</option>
+                           <select class="form-select mb-2" data-control="select2" data-hide-search="true" data-placeholder="Select an option" name="staff_role" required="required">
+                              <option value="">Please select role</option>
+                              @if($roles)
+                              @foreach($roles as $key => $role)
+                              <option value="{{ $role->id }}">{{ $role->role_name }}</option>
+                              @endforeach
+                              @endif
                            </select>
                            <!--end::Select2-->
                         </div>
@@ -109,7 +112,7 @@
                            <!--end::Card title-->
                            <div class="card-toolbar">
                               <label class="form-check form-switch form-check-custom form-check-solid">
-                              <input class="form-check-input" type="checkbox" value="" checked="checked" />
+                              <input class="form-check-input" type="checkbox" checked="checked" name="online_status" />
                               </label>
                            </div>
                         </div>
@@ -130,7 +133,7 @@
                            <!--end::Card title-->
                            <div class="card-toolbar">
                               <label class="form-check form-switch form-check-custom form-check-solid">
-                              <input class="form-check-input" type="checkbox" value="" checked="checked" />
+                              <input class="form-check-input" type="checkbox" checked="checked" name="staff_status" />
                               </label>
                            </div>
                         </div>
@@ -153,7 +156,7 @@
                         <!--end::Card header-->
                         <!--begin::Card body-->
                         <div class="card-body pt-0">
-                           <input class="form-control kt_datepicker" placeholder="Joining date"/> 
+                           <input class="form-control kt_datepicker" placeholder="Joining date" name="joining_date" /> 
                         </div>
                         <!--end::Card body-->
                      </div>
@@ -191,23 +194,25 @@
                         <!--begin::Card body-->
                         <div class="card-body pt-0">
                            <div class="row">
+                              @if($venue_data_arr)
+                              @foreach($venue_data_arr as $key => $venue_data)
                               <!--begin::Col-->
                               <div class="col-md-12 mb-5">
                                  <!--begin::Option-->
                                  <label class="btn btn-outline btn-outline-dashed btn-active-light-primary d-flex text-start p-6 align-items-center flex-wrap">
                                     <!--begin::Radio-->
                                     <span class="form-check form-check-custom form-check-solid form-check-sm align-items-start mt-1">
-                                    <input class="form-check-input" type="checkbox" value="" checked/>
+                                    <input class="form-check-input" type="checkbox" name="venues[]" value="{{ $venue_data['id'] }}" />
                                     </span>
                                     <!--end::Radio-->
                                     <div class="quantity-icn ms-3">
-                                       <img src="{{asset('/public/partner/assets/media/svg/salon.svg')}}">
+                                       <img src="{{ asset('/public/'. $venue_data['venue_meta']['featured']) }}">
                                     </div>
                                     <!--begin::Info-->
                                     <span class="mt-3 w-100">
                                        <h3 class="card-title align-items-start flex-column">
-                                          <span class="card-label fw-bold text-gray-800 fs-4 mb-4">Alexandra road</span>
-                                          <span class="text-muted d-block fw-light fs-7 mt-1">Alexandra Central Mall, 321 Alexandra Road, Singapore (Bukit Merah)
+                                          <span class="card-label fw-bold text-gray-800 fs-4 mb-4">{{ $venue_data['name'] }}</span>
+                                          <span class="text-muted d-block fw-light fs-7 mt-1">{{ $venue_data['venue_meta']['business_address'] }}
                                           </span>
                                        </h3>
                                     </span>
@@ -216,31 +221,9 @@
                                  <!--end::Option-->
                               </div>
                               <!--end::Col-->
-                              <!--begin::Col-->
-                              <div class="col-md-12">
-                                 <!--begin::Option-->
-                                 <label class="btn btn-outline btn-outline-dashed btn-active-light-primary d-flex text-start p-6 align-items-center flex-wrap">
-                                    <!--begin::Radio-->
-                                    <span class="form-check form-check-custom form-check-solid form-check-sm align-items-start mt-1">
-                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckVenue2" checked/>
-                                    </span>
-                                    <!--end::Radio-->
-                                    <div class="quantity-icn ms-3">
-                                       <img src="{{asset('/public/partner/assets/media/svg/salon.svg')}}">
-                                    </div>
-                                    <!--begin::Info-->
-                                    <span class="mt-3 w-100">
-                                       <h3 class="card-title align-items-start flex-column">
-                                          <span class="card-label fw-bold text-gray-800 fs-4 mb-4">YJ Salons - Punggol</span>
-                                          <span class="text-muted d-block fw-light fs-7 mt-1">Punggol Park, Hougang Avenue 10, Singapore (Hougang)
-                                          </span>
-                                       </h3>
-                                    </span>
-                                    <!--end::Info-->
-                                 </label>
-                                 <!--end::Option-->
-                              </div>
-                              <!--end::Col-->
+                              @endforeach
+                              @endif
+
                            </div>
                         </div>
                         <!--end::Card body-->
@@ -262,7 +245,7 @@
                                     </div>
                                     <div class="fv-row">
                                        <!--begin::Input-->
-                                       <input type="text" class="form-control form-control-solid" name="input2" placeholder="Staff Name" value=""/>
+                                       <input type="text" class="form-control form-control-solid" name="name" placeholder="Staff Name" required="required" />
                                        <!--end::Input-->
                                     </div>
                                  </div>
@@ -272,12 +255,11 @@
                                     </div>
                                     <div class="fv-row">
                                        <!--begin::Input-->
-                                       <select class="form-select form-select-solid" data-control="select2" data-placeholder="Select Role" data-hide-search="true">
-                                          <option></option>
-                                          <option value="1">Male</option>
-                                          <option value="2">Female</option>
-                                          <option value="2">Non binary</option>
-                                          <option value="2">Others</option>
+                                       <select class="form-select form-select-solid" data-control="select2" data-placeholder="Select Role" data-hide-search="true" name="gender" required="required">
+                                          <option value="">Please select</option>
+                                          <option value="Male">Male</option>
+                                          <option value="Female">Female</option>
+                                          <option value="Unisex">Unisex</option>
                                        </select>
                                        <!--end::Input-->
                                     </div>
@@ -288,7 +270,7 @@
                                     </div>
                                     <div class="fv-row">
                                        <!--begin::Input-->
-                                       <input type="text" class="form-control form-control-solid" name="input2" placeholder="Phone no." value=""/>
+                                       <input type="text" class="form-control form-control-solid" name="phone" placeholder="Phone no." required="required"/>
                                        <!--end::Input-->
                                     </div>
                                  </div>
@@ -298,7 +280,7 @@
                                     </div>
                                     <div class="fv-row">
                                        <!--begin::Input-->
-                                       <input type="email" class="form-control form-control-solid" name="input2" placeholder="Email" value=""/>
+                                       <input type="email" class="form-control form-control-solid" name="email" placeholder="Email" required="required"/>
                                        <!--end::Input-->
                                     </div>
                                  </div>
@@ -322,7 +304,7 @@
                               <!--begin::Input group-->
                               <div class="fv-row">
                                  <!--begin::Input-->
-                                 <textarea class="form-control mb-2" data-kt-autosize="true" placeholder="Description"></textarea>
+                                 <textarea class="form-control mb-2" data-kt-autosize="true" placeholder="Description" name="profile_description"></textarea>
                                  <!--end::Input-->
                               </div>
                               <!--end::Input group-->
@@ -341,7 +323,7 @@
                                     </div>
                                     <div class="fv-row">
                                        <!--begin::Input-->
-                                       <input type="text" class="form-control form-control-solid" name="input2" placeholder="Facebook" value=""/>
+                                       <input type="text" class="form-control form-control-solid" name="facebook" placeholder="Facebook" />
                                        <!--end::Input-->
                                     </div>
                                  </div>
@@ -351,7 +333,7 @@
                                     </div>
                                     <div class="fv-row">
                                        <!--begin::Input-->
-                                       <input type="text" class="form-control form-control-solid" name="input2" placeholder="Instagram" value=""/>
+                                       <input type="text" class="form-control form-control-solid" name="instagram" placeholder="Instagram" />
                                        <!--end::Input-->
                                     </div>
                                  </div>
@@ -369,43 +351,43 @@
                                  <div class="d-flex align-items-center flex-wrap gap-4 mb-10">
                                     <div class="form-check d-flex align-items-center gap-5 px-0 staffworkingdays">
                                        <div class="form-check">
-                                          <input class="form-check-input" type="checkbox" value="" id="selhours1" onchange="showStaffDataN(this)" />
+                                          <input class="form-check-input" type="checkbox" value="mon" id="selhours1" onchange="showStaffDataN(this)" name="staff_working_days[]" />
                                           <label class="form-check-label" for="selhours1">
                                           Mon
                                           </label>
                                        </div>
                                        <div class="form-check">
-                                          <input class="form-check-input" type="checkbox" value="" id="selhours2" onchange="showStaffDataN(this)"/>
+                                          <input class="form-check-input" type="checkbox" value="tue" name="staff_working_days[]" id="selhours2" onchange="showStaffDataN(this)"/>
                                           <label class="form-check-label" for="selhours2">
                                           Tue
                                           </label>
                                        </div>
                                        <div class="form-check">
-                                          <input class="form-check-input" type="checkbox" value="" id="selhours3" onchange="showStaffDataN(this)"/>
+                                          <input class="form-check-input" type="checkbox" value="wed" name="staff_working_days[]" id="selhours3" onchange="showStaffDataN(this)"/>
                                           <label class="form-check-label" for="selhours3">
                                           Wed
                                           </label>
                                        </div>
                                        <div class="form-check">
-                                          <input class="form-check-input" type="checkbox" value="" id="selhours4" onchange="showStaffDataN(this)"/>
+                                          <input class="form-check-input" type="checkbox" value="thu" name="staff_working_days[]" id="selhours4" onchange="showStaffDataN(this)"/>
                                           <label class="form-check-label" for="selhours4">
                                           Thu
                                           </label>
                                        </div>
                                        <div class="form-check">
-                                          <input class="form-check-input" type="checkbox" value="" id="selhours5" onchange="showStaffDataN(this)"/>
+                                          <input class="form-check-input" type="checkbox" value="fri" name="staff_working_days[]" id="selhours5" onchange="showStaffDataN(this)"/>
                                           <label class="form-check-label" for="selhours5">
                                           Fri
                                           </label>
                                        </div>
                                        <div class="form-check">
-                                          <input class="form-check-input" type="checkbox" value="" id="selhours6" onchange="showStaffDataN(this)"/>
+                                          <input class="form-check-input" type="checkbox" value="sat" name="staff_working_days[]" id="selhours6" onchange="showStaffDataN(this)"/>
                                           <label class="form-check-label" for="selhours6">
                                           Sat
                                           </label>
                                        </div>
                                        <div class="form-check">
-                                          <input class="form-check-input" type="checkbox" value="" id="selhours7" onchange="showStaffDataN(this)"/>
+                                          <input class="form-check-input" type="checkbox" value="sun" name="staff_working_days[]" id="selhours7" onchange="showStaffDataN(this)"/>
                                           <label class="form-check-label" for="selhours7">
                                           Sun
                                           </label>
@@ -414,7 +396,7 @@
                                  </div>
                                  <div class="d-flex">
                                     <label class="form-check form-switch form-check-custom form-check-solid">
-                                    <input class="form-check-input" type="checkbox" value="" onchange="showStaffSettingDiv(this)"/>
+                                    <input class="form-check-input" type="checkbox" name="staff_advance_setting" onchange="showStaffSettingDiv(this)"/>
                                     <span class="form-check-label">
                                     Advance setting
                                     </span>
@@ -430,33 +412,31 @@
                                                    <label class="required fw-semibold fs-6 mb-2">Schedule type</label>
                                                    <!--end::Label-->
                                                    <!--begin::Input-->
-                                                   <select class="form-select" data-control="select2" data-placeholder="Every week" data-dropdown-parent="#kt_modal_scrollable22" onchange="weekSelect(this)">
+                                                   <select class="form-select" data-control="select2" data-placeholder="Every week" data-dropdown-parent="#kt_modal_scrollable22" onchange="weekSelect(this)" name="schedule_type">
                                                       <option></option>
-                                                      <option value="1">Every week</option>
-                                                      <option value="2">Every two week</option>
-                                                      <option value="3">Every three week</option>
-                                                      <option value="4">Every month</option>
-                                                      <option value="5">Every six month</option>
+                                                      @foreach(scheduleType() as $key => $schedule_type) @endphp
+                                                      <option value="{{ $key }}">{{ $schedule_type }}</option>
+                                                      @endforeach
                                                    </select>
                                                    <!--end::Input-->
                                                 </div>
                                                 <div class="col-md-4 mb-7 mb-md-0">
                                                    <label for="" class="form-label">Start date</label>
-                                                   <input class="form-control kt_datepicker w-100" placeholder="Start date"/> 
+                                                   <input class="form-control kt_datepicker w-100" placeholder="Start date" name="start_date"/> 
                                                 </div>
                                                 <div class="col-md-4">
                                                    <!--begin::Label-->
                                                    <label class="required fw-semibold fs-6 mb-2">Ends</label>
                                                    <!--end::Label-->
                                                    <div class="d-flex gap-4 posrel d-none">
-                                                      <input class="form-control kt_datepicker w-100" placeholder="End date"/> 
+                                                      <input class="form-control kt_datepicker w-100" placeholder="End date" name="end_date" /> 
                                                       <div class="btn btn-icon btn-sm btn-active-light-primary ms-auto endsbtncls" onclick="delworkinghrend(this)">
                                                          <i class="ki-duotone ki-cross fs-2x"><span class="path1"></span><span class="path2"></span></i>
                                                       </div>
                                                    </div>
                                                    <div>
                                                       <!--begin::Input-->
-                                                      <select class="form-select end-date" data-control="select2" data-dropdown-parent="#kt_modal_scrollable22" data-placeholder="Ends" onchange="workinghrend(this)">
+                                                      <select class="form-select end-date" data-control="select2" data-dropdown-parent="#kt_modal_scrollable22" data-placeholder="Ends" onchange="workinghrend(this)" name="end_date_type">
                                                          <option></option>
                                                          <option value="1">Never</option>
                                                          <option value="2">Specific date</option>
@@ -478,13 +458,13 @@
                                                    <div class="d-flex flex-column gap-3">
                                                       <div class="d-flex flex-wrap gap-5 single-add-shift-div">
                                                          <div class="input-group kt_td_picker_time_only" data-td-target-input="nearest" data-td-target-toggle="nearest">
-                                                            <input type="text" class="form-control" data-td-target=".kt_td_picker_time_only" placeholder="start"/>
+                                                            <input type="text" class="form-control" data-td-target=".kt_td_picker_time_only" placeholder="start" name="monday_hours['start'][]"/>
                                                             <span class="input-group-text" data-td-target=".kt_td_picker_time_only" data-td-toggle="datetimepicker">
                                                             <i class="ki-outline ki-time fs-3"></i>
                                                             </span>
                                                          </div>
                                                          <div class="input-group kt_td_picker_time_only" data-td-target-input="nearest" data-td-target-toggle="nearest">
-                                                            <input type="text" class="form-control" data-td-target=".kt_td_picker_time_only" placeholder="end"/>
+                                                            <input type="text" class="form-control" data-td-target=".kt_td_picker_time_only" placeholder="end" name="monday_hours['end'][]"/>
                                                             <span class="input-group-text" data-td-target=".kt_td_picker_time_only" data-td-toggle="datetimepicker">
                                                             <i class="ki-outline ki-time fs-3"></i>
                                                             </span>
@@ -506,13 +486,13 @@
                                                    <div class="d-flex flex-column gap-3">
                                                       <div class="d-flex flex-wrap gap-5 single-add-shift-div">
                                                          <div class="input-group kt_td_picker_time_only" data-td-target-input="nearest" data-td-target-toggle="nearest">
-                                                            <input type="text" class="form-control" data-td-target=".kt_td_picker_time_only" placeholder="start"/>
+                                                            <input type="text" class="form-control" data-td-target=".kt_td_picker_time_only" placeholder="start" name="tuesday_hours['start'][]"/>
                                                             <span class="input-group-text" data-td-target=".kt_td_picker_time_only" data-td-toggle="datetimepicker">
                                                             <i class="ki-outline ki-time fs-3"></i>
                                                             </span>
                                                          </div>
                                                          <div class="input-group kt_td_picker_time_only" data-td-target-input="nearest" data-td-target-toggle="nearest">
-                                                            <input type="text" class="form-control" data-td-target=".kt_td_picker_time_only" placeholder="end"/>
+                                                            <input type="text" class="form-control" data-td-target=".kt_td_picker_time_only" placeholder="end" name="tuesday_hours['end'][]"/>
                                                             <span class="input-group-text" data-td-target=".kt_td_picker_time_only" data-td-toggle="datetimepicker">
                                                             <i class="ki-outline ki-time fs-3"></i>
                                                             </span>
@@ -534,13 +514,13 @@
                                                    <div class="d-flex flex-column gap-3">
                                                       <div class="d-flex flex-wrap gap-5 single-add-shift-div">
                                                          <div class="input-group kt_td_picker_time_only" data-td-target-input="nearest" data-td-target-toggle="nearest">
-                                                            <input type="text" class="form-control" data-td-target=".kt_td_picker_time_only" placeholder="start"/>
+                                                            <input type="text" class="form-control" data-td-target=".kt_td_picker_time_only" placeholder="start" name="wednesday_hours['start'][]"/>
                                                             <span class="input-group-text" data-td-target=".kt_td_picker_time_only" data-td-toggle="datetimepicker">
                                                             <i class="ki-outline ki-time fs-3"></i>
                                                             </span>
                                                          </div>
                                                          <div class="input-group kt_td_picker_time_only" data-td-target-input="nearest" data-td-target-toggle="nearest">
-                                                            <input type="text" class="form-control" data-td-target=".kt_td_picker_time_only" placeholder="end"/>
+                                                            <input type="text" class="form-control" data-td-target=".kt_td_picker_time_only" placeholder="end" name="wednesday_hours['end'][]"/>
                                                             <span class="input-group-text" data-td-target=".kt_td_picker_time_only" data-td-toggle="datetimepicker">
                                                             <i class="ki-outline ki-time fs-3"></i>
                                                             </span>
@@ -562,13 +542,13 @@
                                                    <div class="d-flex flex-column gap-3">
                                                       <div class="d-flex flex-wrap gap-5 single-add-shift-div">
                                                          <div class="input-group kt_td_picker_time_only" data-td-target-input="nearest" data-td-target-toggle="nearest">
-                                                            <input type="text" class="form-control" data-td-target=".kt_td_picker_time_only" placeholder="start"/>
+                                                            <input type="text" class="form-control" data-td-target=".kt_td_picker_time_only" placeholder="start" name="thursday_hours['start'][]"/>
                                                             <span class="input-group-text" data-td-target=".kt_td_picker_time_only" data-td-toggle="datetimepicker">
                                                             <i class="ki-outline ki-time fs-3"></i>
                                                             </span>
                                                          </div>
                                                          <div class="input-group kt_td_picker_time_only" data-td-target-input="nearest" data-td-target-toggle="nearest">
-                                                            <input type="text" class="form-control" data-td-target=".kt_td_picker_time_only" placeholder="end"/>
+                                                            <input type="text" class="form-control" data-td-target=".kt_td_picker_time_only" placeholder="end" name="thursday_hours['end'][]"/>
                                                             <span class="input-group-text" data-td-target=".kt_td_picker_time_only" data-td-toggle="datetimepicker">
                                                             <i class="ki-outline ki-time fs-3"></i>
                                                             </span>
@@ -590,13 +570,13 @@
                                                    <div class="d-flex flex-column gap-3">
                                                       <div class="d-flex flex-wrap gap-5 single-add-shift-div">
                                                          <div class="input-group kt_td_picker_time_only" data-td-target-input="nearest" data-td-target-toggle="nearest">
-                                                            <input type="text" class="form-control" data-td-target=".kt_td_picker_time_only" placeholder="start"/>
+                                                            <input type="text" class="form-control" data-td-target=".kt_td_picker_time_only" placeholder="start" name="friday_hours['start'][]"/>
                                                             <span class="input-group-text" data-td-target=".kt_td_picker_time_only" data-td-toggle="datetimepicker">
                                                             <i class="ki-outline ki-time fs-3"></i>
                                                             </span>
                                                          </div>
                                                          <div class="input-group kt_td_picker_time_only" data-td-target-input="nearest" data-td-target-toggle="nearest">
-                                                            <input type="text" class="form-control" data-td-target=".kt_td_picker_time_only" placeholder="end"/>
+                                                            <input type="text" class="form-control" data-td-target=".kt_td_picker_time_only" placeholder="end" name="friday_hours['end'][]"/>
                                                             <span class="input-group-text" data-td-target=".kt_td_picker_time_only" data-td-toggle="datetimepicker">
                                                             <i class="ki-outline ki-time fs-3"></i>
                                                             </span>
@@ -618,13 +598,13 @@
                                                    <div class="d-flex flex-column gap-3">
                                                       <div class="d-flex flex-wrap gap-5 single-add-shift-div">
                                                          <div class="input-group kt_td_picker_time_only" data-td-target-input="nearest" data-td-target-toggle="nearest">
-                                                            <input type="text" class="form-control" data-td-target=".kt_td_picker_time_only" placeholder="start"/>
+                                                            <input type="text" class="form-control" data-td-target=".kt_td_picker_time_only" placeholder="start" name="saturday_hours['start'][]"/>
                                                             <span class="input-group-text" data-td-target=".kt_td_picker_time_only" data-td-toggle="datetimepicker">
                                                             <i class="ki-outline ki-time fs-3"></i>
                                                             </span>
                                                          </div>
                                                          <div class="input-group kt_td_picker_time_only" data-td-target-input="nearest" data-td-target-toggle="nearest">
-                                                            <input type="text" class="form-control" data-td-target=".kt_td_picker_time_only" placeholder="end"/>
+                                                            <input type="text" class="form-control" data-td-target=".kt_td_picker_time_only" placeholder="end" name="saturday_hours['end'][]" />
                                                             <span class="input-group-text" data-td-target=".kt_td_picker_time_only" data-td-toggle="datetimepicker">
                                                             <i class="ki-outline ki-time fs-3"></i>
                                                             </span>
@@ -646,13 +626,13 @@
                                                    <div class="d-flex flex-column gap-3">
                                                       <div class="d-flex flex-wrap gap-5 single-add-shift-div">
                                                          <div class="input-group kt_td_picker_time_only" data-td-target-input="nearest" data-td-target-toggle="nearest">
-                                                            <input type="text" class="form-control" data-td-target=".kt_td_picker_time_only" placeholder="start"/>
+                                                            <input type="text" class="form-control" data-td-target=".kt_td_picker_time_only" placeholder="start" name="sunday_hours['start'][]"/>
                                                             <span class="input-group-text" data-td-target=".kt_td_picker_time_only" data-td-toggle="datetimepicker">
                                                             <i class="ki-outline ki-time fs-3"></i>
                                                             </span>
                                                          </div>
                                                          <div class="input-group kt_td_picker_time_only" data-td-target-input="nearest" data-td-target-toggle="nearest">
-                                                            <input type="text" class="form-control" data-td-target=".kt_td_picker_time_only" placeholder="end"/>
+                                                            <input type="text" class="form-control" data-td-target=".kt_td_picker_time_only" placeholder="end" name="sunday_hours['end'][]"/>
                                                             <span class="input-group-text" data-td-target=".kt_td_picker_time_only" data-td-toggle="datetimepicker">
                                                             <i class="ki-outline ki-time fs-3"></i>
                                                             </span>
