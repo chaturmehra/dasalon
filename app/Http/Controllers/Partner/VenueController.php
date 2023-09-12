@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Partner;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Admin\Amenity;
+use App\Models\Admin\AmenityCategory;
 use App\Models\Admin\BusinessType;
 use App\Models\Partner\Venue;
 use App\Models\Partner\VenueMeta;
@@ -19,24 +20,26 @@ class VenueController extends Controller
 		$meta_description  = "";
 		$meta_keywords     = "";
 
-		$get_amenities = Amenity::where('status', 1)->get();
-		$businesstypes = BusinessType::where('is_active', 1)->get();
+		//$get_amenities = Amenity::where('status', 1)->get();
+		$get_amenities = Amenity::leftjoin('amenity_categories', 'amenities.amenity_category', '=', 'amenity_categories.id')->where('amenities.status', 1)->get(['amenities.id as am_id', 'amenities.amenity_name','amenities.amenity_icon','amenities.partner_type','amenities.amenity_type','amenities.amenity_category as ac_id','amenity_categories.amenity_category as ac_name']);
 
+		$businesstypes = BusinessType::where('is_active', 1)->get();
 		$amenities = [];
 		if (!empty($get_amenities)) {
 			foreach ($get_amenities as $key => $amenity) {
-				$amenity_arr['id'] 					= $amenity['id'];
+				$amenity_arr['id'] 					= $amenity['am_id'];
 				$amenity_arr['amenity_name'] 		= $amenity['amenity_name'];
 				$amenity_arr['partner_type'] 		= $amenity['partner_type'];
 				$amenity_arr['amenity_icon'] 		= $amenity['amenity_icon'];
 				$amenity_arr['amenity_type'] 		= $amenity['amenity_type'];
-				$amenity_arr['amenity_category'] 	= $amenity['amenity_category'];
-				$amenity_arr['status'] 				= $amenity['status'];
+				$amenity_arr['amenity_category'] 	= $amenity['ac_name'];
+				$amenity_arr['amenity_category_id'] = $amenity['ac_id'];
+				//$amenity_arr['status'] 				= $amenity['status'];
 
-				$amenities[$amenity['amenity_category']][] = $amenity_arr;
+				$amenities[$amenity['ac_id']][] = $amenity_arr;
 			}
 		}
-
+// echo "<pre>"; print_r($amenities); die;
 		$venues 	= Venue::get()->toArray();
 
 		$venue_data_array 	= $this->array_by_ids($venues, "id");

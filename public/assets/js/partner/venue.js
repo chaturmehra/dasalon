@@ -674,8 +674,23 @@ function addDragendMarker(latitude, longitude) {
             sublocality_level_1 = component.long_name;
           }
         });
-
-        address = street_number+', '+route+', '+sublocality_level_2+', '+sublocality_level_1;
+        var add1;
+        var add2;
+        var add3;
+        var add4;
+        if (street_number) {
+          add1 = street_number+', ';
+        }
+        if (route) {
+          add2 = route+', ';
+        }
+        if (sublocality_level_2) {
+          add3 = sublocality_level_2+', ';
+        }
+        if (sublocality_level_1) {
+          add4 = sublocality_level_1;
+        }
+        address = add1+add2+add3+add4;
 
         var latitude = draggedPosition.lat();
         var longitude = draggedPosition.lng();
@@ -757,7 +772,23 @@ function editDragendMarker(latitude, longitude) {
           }
         });
 
-        address = street_number+', '+route+', '+sublocality_level_2+', '+sublocality_level_1;
+        var add1;
+        var add2;
+        var add3;
+        var add4;
+        if (street_number) {
+          add1 = street_number+', ';
+        }
+        if (route) {
+          add2 = route+', ';
+        }
+        if (sublocality_level_2) {
+          add3 = sublocality_level_2+', ';
+        }
+        if (sublocality_level_1) {
+          add4 = sublocality_level_1;
+        }
+        address = add1+add2+add3+add4;
 
         var latitude = draggedPosition.lat();
         var longitude = draggedPosition.lng();
@@ -779,52 +810,3 @@ function editDragendMarker(latitude, longitude) {
     });
   });
 }
-
-/*function initMap() {
-  function initialize() {
-    var area = new google.maps.places.Autocomplete(
-      document.getElementById('business_location'),
-      { 
-        types: ['(cities)']
-      });
-    google.maps.event.addListener(area, 'place_changed', function() {
-      var place = area.getPlace();
-      console.log(place);
-            // $("#area").val(place.formatted_address);
-            // $("#city").val(place.name);
-            // $("#lat").val(place.geometry.location.lat());
-            // $("#lng").val(place.geometry.location.lng());
-          });
-  }
-  google.maps.event.addDomListener(window, 'load', initialize);
-}*/
-
-/*function initMap() {
-
-  function initialize() {
-    var input = document.getElementById('business_location');
-    var autocomplete = new google.maps.places.Autocomplete(input);
-    autocomplete.addListener('place_changed', function () {
-      var place = autocomplete.getPlace();
-      console.log("place", place);
-
-        $("#edit_venue_business_address").val(venues_meta.business_address);
-        $("#edit_venue_business_aptsuite").val(venues_meta.business_aptsuite);
-        $("#edit_venue_business_location").val(venues_meta.business_location);
-        $("#edit_venue_city").val(venues_meta.city);
-        $("#edit_venue_country").val(venues_meta.country);
-        $("#edit_venue_directions").val(venues_meta.directions);
-        $("#edit_venue_district").val(venues_meta.district);
-        $("#edit_venue_region").val(venues_meta.region);
-        $("#edit_venue_postcode").val(venues_meta.postcode);
-
-        $('#latitude').val(place.geometry['location'].lat());
-        $('#longitude').val(place.geometry['location'].lng());
-
-        $("#latitudeArea").removeClass("d-none");
-        $("#longtitudeArea").removeClass("d-none");
-      });
-  }
-  google.maps.event.addDomListener(window, 'load', initialize);
-
-}*/

@@ -1821,9 +1821,8 @@ title="Remove avatar">
                         <div class="d-flex flex-column me-n7 pe-7 gap-7 amenities-tab">
                            @if($amenities)
                            @foreach($amenities as $key => $amenity)
-
-                           @if($key == "Venue")
-                           <span class="card-label fw-bold text-gray-800 mb-4">{{ $key }}</span>
+                           @if($key == $amenity[0]['amenity_category_id'])
+                           <span class="card-label fw-bold text-gray-800 mb-4">{{ $amenity[0]['amenity_category'] }}</span>
                            <div class="row">
                               @foreach($amenity as $am_val)
                               <div class="col-md-4 mb-5">
@@ -1831,87 +1830,6 @@ title="Remove avatar">
                                     <!--begin::Radio-->
                                     <span class="form-check form-check-custom form-check-solid form-check-sm align-items-start mt-1">
                                        <input class="form-check-input" type="checkbox" value="{{ $am_val['id'] }}" id="flexCheckammenity{{$key}}" name="amenity[]" />
-                                    </span>
-                                    <!--end::Radio-->
-                                    <div class="icn ms-3">
-                                       <img src="{{ asset('public'.$am_val['amenity_icon']) }}">
-                                    </div>
-                                    <!--begin::Info-->
-                                    <span class="ms-3">
-                                       <h3 class="card-title align-items-start flex-column">
-                                          <span class="card-label fw-bold text-gray-800 fs-4 mb-4">{{ $am_val['amenity_name'] }}</span>
-                                       </h3>
-                                    </span>
-                                    <!--end::Info-->
-                                 </label>
-                              </div>
-                              @endforeach
-                           </div>
-                           @endif
-
-                           @if($key == "Access")
-                           <span class="card-label fw-bold text-gray-800 mb-4">{{ $key }}</span>
-                           <div class="row">
-                              @foreach($amenity as $am_val)
-                              <div class="col-md-4 mb-5">
-                                 <label class="btn btn-outline btn-outline-dashed btn-active-light-primary d-flex text-start p-6 align-items-center" for="flexCheckammenity1">
-                                    <!--begin::Radio-->
-                                    <span class="form-check form-check-custom form-check-solid form-check-sm align-items-start mt-1">
-                                       <input class="form-check-input" type="checkbox" value="{{ $am_val['id'] }}" id="flexCheckammenityaccess{{$key}}" name="amenity[]"/>
-                                    </span>
-                                    <!--end::Radio-->
-                                    <div class="icn ms-3">
-                                       <img src="{{ asset('public'.$am_val['amenity_icon']) }}">
-                                    </div>
-                                    <!--begin::Info-->
-                                    <span class="ms-3">
-                                       <h3 class="card-title align-items-start flex-column">
-                                          <span class="card-label fw-bold text-gray-800 fs-4 mb-4">{{ $am_val['amenity_name'] }}</span>
-                                       </h3>
-                                    </span>
-                                    <!--end::Info-->
-                                 </label>
-                              </div>
-                              @endforeach
-                           </div>
-                           @endif
-
-                           @if($key == "Products Used")
-                           <span class="card-label fw-bold text-gray-800 mb-4">{{ $key }}</span>
-                           <div class="row">
-                              @foreach($amenity as $am_val)
-                              <div class="col-md-4 mb-5">
-                                 <label class="btn btn-outline btn-outline-dashed btn-active-light-primary d-flex text-start p-6 align-items-center" for="flexCheckammenity1">
-                                    <!--begin::Radio-->
-                                    <span class="form-check form-check-custom form-check-solid form-check-sm align-items-start mt-1">
-                                       <input class="form-check-input" type="checkbox" value="{{ $am_val['id'] }}" id="flexCheckammenityprod{{$key}}" name="amenity[]"/>
-                                    </span>
-                                    <!--end::Radio-->
-                                    <div class="icn ms-3">
-                                       <img src="{{ asset('public'.$am_val['amenity_icon']) }}">
-                                    </div>
-                                    <!--begin::Info-->
-                                    <span class="ms-3">
-                                       <h3 class="card-title align-items-start flex-column">
-                                          <span class="card-label fw-bold text-gray-800 fs-4 mb-4">{{ $am_val['amenity_name'] }}</span>
-                                       </h3>
-                                    </span>
-                                    <!--end::Info-->
-                                 </label>
-                              </div>
-                              @endforeach
-                           </div>
-                           @endif
-
-                           @if($key == "Brands")
-                           <span class="card-label fw-bold text-gray-800 mb-4">{{ $key }}</span>
-                           <div class="row">
-                              @foreach($amenity as $am_val)
-                              <div class="col-md-4 mb-5">
-                                 <label class="btn btn-outline btn-outline-dashed btn-active-light-primary d-flex text-start p-6 align-items-center" for="flexCheckammenity1">
-                                    <!--begin::Radio-->
-                                    <span class="form-check form-check-custom form-check-solid form-check-sm align-items-start mt-1">
-                                       <input class="form-check-input" type="checkbox" value="{{ $am_val['id'] }}" id="flexCheckammenitybrand{{$key}}" name="amenity[]"/>
                                     </span>
                                     <!--end::Radio-->
                                     <div class="icn ms-3">

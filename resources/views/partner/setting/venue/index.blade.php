@@ -684,33 +684,7 @@
    }
 </script>
 
-<script type="text/javascript">
-	
-
-</script>
-<!-- <script type="text/javascript" src="https://maps.google.com/maps/api/js?key={{ env('GOOGLE_MAP_KEY') }}&libraries=places&callback=initMap" async defer></script> -->
 <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?libraries=places&key={{ env('GOOGLE_MAP_KEY') }}&callback=initMap" async defer></script>
-
-<script>
-
-	// Add a click event listener to the marker
-	/*google.maps.event.addListener(marker, 'click', function() {
-        // Perform reverse geocoding to get the address
-        var geocoder = new google.maps.Geocoder();
-        var latlng = new google.maps.LatLng(marker.getPosition().lat(), marker.getPosition().lng());
-
-        geocoder.geocode({'latLng': latlng}, function(results, status) {
-        	if (status == google.maps.GeocoderStatus.OK) {
-        		if (results[0]) {
-                    // Display the address in an alert or another element on your webpage
-                    alert("Address: " + results[0].formatted_address);
-                }
-            } else {
-            	alert("Geocoder failed due to: " + status);
-            }
-        });
-    });*/
-</script>
 
 <script src="{{asset('/public/assets/js/partner/venue.js')}}" type="text/javascript"></script>
 @endpush
