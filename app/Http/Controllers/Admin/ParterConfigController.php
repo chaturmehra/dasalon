@@ -19,13 +19,29 @@ class ParterConfigController extends Controller
         $showallp = PartnerTypeProperty::leftJoin('partner_type_property_permissions', 'partner_type_properties.id', '=', 'partner_type_property_permissions.partner_type_property_id')->get();
         // $querylog =  DB::getQueryLog();
         // dd($querylog);
-        $showpfp = ProfileFeature::leftJoin('profile_feature_permissions', 'profile_features.id', '=', 'profile_feature_permissions.profilefeature_id')->get();
+        // DB::enableQueryLog();
+        $showpfp = ProfileFeature::leftJoin('profile_feature_permissions', 'profile_features.id', '=', 'profile_feature_permissions.profilefeature_id')->get()->toArray();
         // $showpfp = $showpfp->toArray();
-        //  echo "<pre>";print_r($showallp);die;
+        //  echo "<pre>";print_r($showpfp);die;
+        // $querylog =  DB::getQueryLog();
+        //  dd($querylog);
+
+        $profile_feature_perm = [];
+        if( !empty($showpfp) ) {
+          foreach($showpfp as $key => $arr ) {
+            $profile_feature_perm[$arr["profilefeature_id"]][$arr["role_id"]] = $arr;
+            // $profile_feature_perm [  1 ][2] = $rowdata;
+            // $profile_feature_perm [  1 ][3] = $rowdata;
+          }
+        }
+
+        // echo "profile_feature_perm <pre>";
+        //  print_r($profile_feature_perm);
+        //  die;
 
         $showall=PartnerType::all();
         $roleall=Role::all();
-        return view('admin/setting/partner_config/index', compact('showallp','showall','showpfp','roleall')); 
+        return view('admin/setting/partner_config/index', compact('showallp','showall','showpfp','roleall','profile_feature_perm')); 
        
     }
 

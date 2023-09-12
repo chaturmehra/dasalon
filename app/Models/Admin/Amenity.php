@@ -12,6 +12,7 @@ class Amenity extends Model
     protected $primaryKey = 'id';
     protected $fillable = [
         'amenity_name',
+        'amenity_category',
         'partner_type',
         'amenity_icon',
         'amenity_type',

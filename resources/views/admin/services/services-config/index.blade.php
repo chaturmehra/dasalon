@@ -139,7 +139,7 @@
                                                       <!--begin::Label-->
                                                       <label for="kt_docs_select2_country" class="form-label">Select a country</label>
                                                       <div class="form-floating border rounded">
-                                                         <select class="form-select" name="country" placeholder="..." id="kt_docs_select2_country">
+                                                         <select class="form-select" name="country" placeholder="..." id="kt_docs_select2_country" required>
                                                          <option value="">Select Country</option>
                                                          @foreach(getCountryList() as $con_val)
                                                            <option value="{{$con_val->iso2}}" data-kt-select2-country="{{asset('/public/assets/media/flags/'.strtolower(str_replace(' ','-',$con_val->name.'.svg')))}}">{{$con_val->name}}</option>
@@ -155,7 +155,7 @@
                                                       <label class="required fw-semibold fs-6 mb-2">Category</label>
                                                       <!--end::Label-->
                                                       <!--begin::Input-->
-                                                      <input type="text" name="category" class="form-control form-control-solid mb-3 mb-lg-0" placeholder="Category"/>
+                                                      <input type="text" name="category" class="form-control form-control-solid mb-3 mb-lg-0" placeholder="Category"   autocomplete="off" required/>
                                                       <!--end::Input-->
                                                    </div>
                                                    <!--end::Input group-->
@@ -171,10 +171,10 @@
                                                             data-kt-image-input-action="change"
                                                             data-bs-toggle="tooltip"
                                                             data-bs-dismiss="click"
-                                                            title="Change avatar">
+                                                            title="Please select icon">
                                                             <i class="ki-duotone ki-pencil fs-6"><span class="path1"></span><span class="path2"></span></i>
                                                             <!--begin::Inputs-->
-                                                            <input type="file" name="icon" accept=".png, .jpg, .jpeg" />
+                                                            <input type="file" name="icon" accept=".png, .jpg, .jpeg" required/>
                                                             <input type="hidden" name="avatar_remove" />
                                                             <!--end::Inputs-->
                                                          </label>
@@ -339,11 +339,10 @@
                            <td>{{ $ser->country }}</td>
                            <td>{{ $ser->category }}</td>
                                 
-                                    
                                     <!-- <td>
                                        <div class="d-flex align-items-center gap-3">
                                           <div class="d-flex flex-column text-muted">
-                                             <a href="#" class="text-dark text-hover-primary fw-bold" data-kt-docs-datatable-subtable="subcat_name">Sub category name</a>
+                                             <a href="#" class="text-dark text-hover-primary fw-bold" data-kt-docs-datatable-subtable="subcat_name">Hair Color</a>
                                           </div>
                                        </div>
                                     </td> -->
@@ -638,7 +637,7 @@
                                              <label class="required fw-semibold fs-6 mb-2">Package name</label>
                                              <!--end::Label-->
                                              <!--begin::Input-->
-                                             <input type="text" name="packagename" class="form-control form-control-solid mb-3 mb-lg-0" placeholder="Package name" required/>
+                                             <input type="text" name="packagename" class="form-control form-control-solid mb-3 mb-lg-0" placeholder="Package name" autocomplete="off" required/>
                                              <!--end::Input-->
                                           </div>
                                           <!--end::Input group-->
@@ -1238,8 +1237,9 @@
                 $('#kt_docs_datatable_subtable1').DataTable().ajax.reload();
                 }
             });
-         });
-   $(document).on('click', '.edit-service', function(){
+         })
+
+        $(document).on('click', '.edit-service', function(){
         event.preventDefault();
         var serviceid = $(this).attr('service-id');
         

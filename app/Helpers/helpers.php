@@ -5,6 +5,8 @@ use Illuminate\Support\Str;
 use App\Models\Admin\PartnerType;
 use App\Models\Admin\Country;
 use App\Models\Admin\CountryConfig;
+use App\Models\Admin\Amenity;
+use App\Models\Admin\AmenityCategory;
 
 function getPartnerType(){
 	$partnertype = PartnerType::get();
@@ -44,5 +46,12 @@ if (!function_exists('loadScript')) {
         }
     } 
 }
+function getAmenityCategory(){
+	$amenitycategories = AmenityCategory::get()->toArray();
 
-?>
+	$amenitycategory = array_column($amenitycategories, 'amenity_category');
+	// $amenitycategory0 = array_values($amenitycategory);
+
+	// echo "<pre>"; print_r($amenitycategory); 
+	return $amenitycategory;
+}
