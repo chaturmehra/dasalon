@@ -1,8 +1,8 @@
-<div class="modal fade" id="kt_modal_scrollable22" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-hidden="true">
+<div class="modal fade" id="kt_modal_update_scrollable22" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-hidden="true">
    <div class="modal-dialog modal-xl">
       <div class="modal-content">
          <div class="modal-header">
-            <h1 class="fw-bold text-dark">Add Staff details</h1>
+            <h1 class="fw-bold text-dark">Update Staff details</h1>
             <!--begin::Close-->
             <div class="btn btn-icon btn-sm btn-active-light-primary ms-2" data-bs-dismiss="modal" aria-label="Close">
                <i class="ki-duotone ki-cross fs-2x"><span class="path1"></span><span class="path2"></span></i>
@@ -13,9 +13,11 @@
             <!--begin::Scroll-->
             <div class="d-flex flex-column scroll-y me-n7 pe-7">
                <!--begin::Form-->
-               <form class="form d-flex flex-column flex-lg-row" method="post" action="{{ url('partner/staff/store') }}" enctype="multipart/form-data">
+               <form class="form d-flex flex-column flex-lg-row" method="post" action="{{ url('partner/staff/update-staff') }}" enctype="multipart/form-data">
                   @csrf
-                  <input type="hidden" name="commission_data" id="add_commission_data">
+                  <input type="hidden" name="user_id" id="edit_staff_id">
+                  <input type="hidden" name="staff_id" id="main_staff_id">
+                  <input type="hidden" name="commission_data" id="edit_commission_data">
                   <!--begin::Aside column-->
                   <div class="d-flex flex-column gap-7 gap-lg-10 w-100 w-lg-400px mb-7 me-lg-10">
                      <!--begin::Thumbnail settings-->
@@ -38,7 +40,7 @@
                            <!--begin::Image input-->
                            <div class="image-input image-input-empty image-input-outline image-input-placeholder mb-3" data-kt-image-input="true">
                               <!--begin::Preview existing avatar-->
-                              <div class="image-input-wrapper w-150px h-150px"></div>
+                              <div class="image-input-wrapper w-150px h-150px edit-profile-image"></div>
                               <!--end::Preview existing avatar-->
                               <!--begin::Label-->
                               <label class="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-body shadow" data-kt-image-input-action="change" data-bs-toggle="tooltip" title="Change avatar">
@@ -50,6 +52,7 @@
                                  <!--end::Icon-->
                                  <!--begin::Inputs-->
                                  <input type="file" name="profile_image" accept=".png, .jpg, .jpeg" />
+                                 <input type="hidden" name="old_profile_image" id="old_profile_image" />
                                  <input type="hidden" name="avatar_remove" />
                                  <!--end::Inputs-->
                               </label>
@@ -93,7 +96,7 @@
                         <!--begin::Card body-->
                         <div class="card-body pt-0">
                            <!--begin::Select2-->
-                           <select class="form-select mb-2" data-control="select2" data-hide-search="true" data-placeholder="Select an option" name="staff_role" required="required">
+                           <select class="form-select mb-2" data-control="select2" data-hide-search="true" data-placeholder="Select an option" name="staff_role" required="required" id="edit-role">
                               <option value="">Please select role</option>
                               @if($roles)
                               @foreach($roles as $key => $role)
@@ -113,7 +116,7 @@
                            <!--end::Card title-->
                            <div class="card-toolbar">
                               <label class="form-check form-switch form-check-custom form-check-solid">
-                              <input class="form-check-input" type="checkbox" checked="checked" name="online_status" />
+                              <input class="form-check-input" type="checkbox" name="online_status" id="edit-online-status" />
                               </label>
                            </div>
                         </div>
@@ -134,7 +137,7 @@
                            <!--end::Card title-->
                            <div class="card-toolbar">
                               <label class="form-check form-switch form-check-custom form-check-solid">
-                              <input class="form-check-input" type="checkbox" checked="checked" name="staff_status" />
+                              <input class="form-check-input" type="checkbox" name="staff_status" id="edit-staff-status" />
                               </label>
                            </div>
                         </div>
@@ -157,7 +160,7 @@
                         <!--end::Card header-->
                         <!--begin::Card body-->
                         <div class="card-body pt-0">
-                           <input class="form-control kt_datepicker" placeholder="Joining date" name="joining_date" /> 
+                           <input class="form-control kt_datepicker" placeholder="Joining date" name="joining_date" id="edit-joining-date" /> 
                         </div>
                         <!--end::Card body-->
                      </div>
@@ -172,7 +175,7 @@
                            </div>
                            <!--end::Card title-->
                            <div class="ht-fc">
-                              <a href="#" class="btn btn-sm btn-secondary" data-bs-toggle="modal" data-bs-target="#commission" data-bs-dismiss="modal">Add</a>
+                              <a href="javascript:void(0)" class="btn btn-sm btn-secondary get-commission-by-id" data-bs-toggle="modal" data-bs-target="#edit-commission" data-bs-dismiss="modal">Edit</a>
                            </div>
                         </div>
                         <!--end::Card header-->
@@ -203,7 +206,7 @@
                                  <label class="btn btn-outline btn-outline-dashed btn-active-light-primary d-flex text-start p-6 align-items-center flex-wrap">
                                     <!--begin::Radio-->
                                     <span class="form-check form-check-custom form-check-solid form-check-sm align-items-start mt-1">
-                                    <input class="form-check-input" type="checkbox" name="venues[]" value="{{ $venue_data['id'] }}" />
+                                    <input class="form-check-input edit-venues" type="checkbox" name="venues[]" value="{{ $venue_data['id'] }}" />
                                     </span>
                                     <!--end::Radio-->
                                     <div class="quantity-icn ms-3">
@@ -246,7 +249,7 @@
                                     </div>
                                     <div class="fv-row">
                                        <!--begin::Input-->
-                                       <input type="text" class="form-control form-control-solid" name="name" placeholder="Staff Name" required="required" />
+                                       <input type="text" class="form-control form-control-solid" name="name" placeholder="Staff Name" id="edit-staff-name" required="required" />
                                        <!--end::Input-->
                                     </div>
                                  </div>
@@ -256,7 +259,7 @@
                                     </div>
                                     <div class="fv-row">
                                        <!--begin::Input-->
-                                       <select class="form-select form-select-solid" data-control="select2" data-placeholder="Select Role" data-hide-search="true" name="gender" required="required">
+                                       <select class="form-select form-select-solid" data-control="select2" data-placeholder="Select Role" data-hide-search="true" name="gender" required="required" id="edit-gender">
                                           <option value="">Please select</option>
                                           <option value="Male">Male</option>
                                           <option value="Female">Female</option>
@@ -272,7 +275,7 @@
                                     </div>
                                     <div class="fv-row">
                                        <!--begin::Input-->
-                                       <input type="text" class="form-control form-control-solid" name="phone" placeholder="Phone no." required="required"/>
+                                       <input type="text" class="form-control form-control-solid" name="phone" placeholder="Phone no." id="edit-staff-phone" required="required"/>
                                        <!--end::Input-->
                                     </div>
                                  </div>
@@ -282,12 +285,12 @@
                                     </div>
                                     <div class="fv-row">
                                        <!--begin::Input-->
-                                       <input type="email" class="form-control form-control-solid" name="email" placeholder="Email" required="required"/>
+                                       <input type="email" class="form-control form-control-solid" name="email" placeholder="Email" id="edit-staff-email" required="required"/>
                                        <!--end::Input-->
                                     </div>
                                  </div>
                                  <div class="col-md-12">
-                                    <a href="#" class="d-flex align-items-center gap-2 icnclr pt-0 pb-0 mt-7 justify-content-end" data-bs-toggle="modal" data-bs-target="#synccalendar">
+                                    <a href="#" class="d-flex align-items-center gap-2 icnclr pt-0 pb-0 mt-7 justify-content-end" data-bs-toggle="modal" data-bs-target="#editsynccalendar">
                                     <i class="bi bi-plus-circle fs-2"></i>
                                     <span>Sync a calendar</span>
                                     </a>
@@ -306,7 +309,7 @@
                               <!--begin::Input group-->
                               <div class="fv-row">
                                  <!--begin::Input-->
-                                 <textarea class="form-control mb-2" data-kt-autosize="true" placeholder="Description" name="profile_description"></textarea>
+                                 <textarea class="form-control mb-2" data-kt-autosize="true" placeholder="Description" name="profile_description" id="edit-profile-description"></textarea>
                                  <!--end::Input-->
                               </div>
                               <!--end::Input group-->
@@ -325,7 +328,7 @@
                                     </div>
                                     <div class="fv-row">
                                        <!--begin::Input-->
-                                       <input type="text" class="form-control form-control-solid" name="facebook" placeholder="Facebook" />
+                                       <input type="text" class="form-control form-control-solid" name="facebook" placeholder="Facebook" id="edit-facebook" />
                                        <!--end::Input-->
                                     </div>
                                  </div>
@@ -335,7 +338,7 @@
                                     </div>
                                     <div class="fv-row">
                                        <!--begin::Input-->
-                                       <input type="text" class="form-control form-control-solid" name="instagram" placeholder="Instagram" />
+                                       <input type="text" class="form-control form-control-solid" name="instagram" placeholder="Instagram" id="edit-instagram" />
                                        <!--end::Input-->
                                     </div>
                                  </div>
@@ -351,45 +354,45 @@
                                     <span class="card-label fw-bold text-gray-800">Working days</span>
                                  </h3>
                                  <div class="d-flex align-items-center flex-wrap gap-4 mb-10">
-                                    <div class="form-check d-flex align-items-center gap-5 px-0 staffworkingdays">
+                                    <div class="form-check d-flex align-items-center gap-5 px-0 editstaffworkingdays">
                                        <div class="form-check">
-                                          <input class="form-check-input" type="checkbox" value="mon" id="selhours1" onchange="showStaffDataN(this)" name="staff_working_days[]" />
+                                          <input class="form-check-input edit-working-days" type="checkbox" value="mon" id="selhours1" onchange="showEditStaffDataN(this)" name="staff_working_days[]" />
                                           <label class="form-check-label" for="selhours1">
                                           Mon
                                           </label>
                                        </div>
                                        <div class="form-check">
-                                          <input class="form-check-input" type="checkbox" value="tue" name="staff_working_days[]" id="selhours2" onchange="showStaffDataN(this)"/>
+                                          <input class="form-check-input edit-working-days" type="checkbox" value="tue" name="staff_working_days[]" id="selhours2" onchange="showEditStaffDataN(this)"/>
                                           <label class="form-check-label" for="selhours2">
                                           Tue
                                           </label>
                                        </div>
                                        <div class="form-check">
-                                          <input class="form-check-input" type="checkbox" value="wed" name="staff_working_days[]" id="selhours3" onchange="showStaffDataN(this)"/>
+                                          <input class="form-check-input edit-working-days" type="checkbox" value="wed" name="staff_working_days[]" id="selhours3" onchange="showEditStaffDataN(this)"/>
                                           <label class="form-check-label" for="selhours3">
                                           Wed
                                           </label>
                                        </div>
                                        <div class="form-check">
-                                          <input class="form-check-input" type="checkbox" value="thu" name="staff_working_days[]" id="selhours4" onchange="showStaffDataN(this)"/>
+                                          <input class="form-check-input edit-working-days" type="checkbox" value="thu" name="staff_working_days[]" id="selhours4" onchange="showEditStaffDataN(this)"/>
                                           <label class="form-check-label" for="selhours4">
                                           Thu
                                           </label>
                                        </div>
                                        <div class="form-check">
-                                          <input class="form-check-input" type="checkbox" value="fri" name="staff_working_days[]" id="selhours5" onchange="showStaffDataN(this)"/>
+                                          <input class="form-check-input edit-working-days" type="checkbox" value="fri" name="staff_working_days[]" id="selhours5" onchange="showEditStaffDataN(this)"/>
                                           <label class="form-check-label" for="selhours5">
                                           Fri
                                           </label>
                                        </div>
                                        <div class="form-check">
-                                          <input class="form-check-input" type="checkbox" value="sat" name="staff_working_days[]" id="selhours6" onchange="showStaffDataN(this)"/>
+                                          <input class="form-check-input edit-working-days" type="checkbox" value="sat" name="staff_working_days[]" id="selhours6" onchange="showEditStaffDataN(this)"/>
                                           <label class="form-check-label" for="selhours6">
                                           Sat
                                           </label>
                                        </div>
                                        <div class="form-check">
-                                          <input class="form-check-input" type="checkbox" value="sun" name="staff_working_days[]" id="selhours7" onchange="showStaffDataN(this)"/>
+                                          <input class="form-check-input edit-working-days" type="checkbox" value="sun" name="staff_working_days[]" id="selhours7" onchange="showEditStaffDataN(this)"/>
                                           <label class="form-check-label" for="selhours7">
                                           Sun
                                           </label>
@@ -398,13 +401,13 @@
                                  </div>
                                  <div class="d-flex">
                                     <label class="form-check form-switch form-check-custom form-check-solid">
-                                    <input class="form-check-input" type="checkbox" name="staff_advance_setting" onchange="showStaffSettingDiv(this)"/>
+                                    <input class="form-check-input edit_advance_setting" type="checkbox" name="staff_advance_setting" onchange="showEditStaffSettingDiv(this)"/>
                                     <span class="form-check-label">
                                     Advance setting
                                     </span>
                                     </label>
                                  </div>
-                                 <div class="staff-add-setting-div d-none">
+                                 <div class="edit staff-add-setting-div d-none">
                                     <div class="row">
                                        <div class="col-md-12 mb-7">
                                           <div class="card card-body">
@@ -414,7 +417,7 @@
                                                    <label class="required fw-semibold fs-6 mb-2">Schedule type</label>
                                                    <!--end::Label-->
                                                    <!--begin::Input-->
-                                                   <select class="form-select" data-control="select2" data-placeholder="Every week" data-dropdown-parent="#kt_modal_scrollable22" onchange="weekSelect(this)" name="schedule_type">
+                                                   <select class="form-select" data-control="select2" data-placeholder="Every week" data-dropdown-parent="#kt_modal_update_scrollable22" onchange="weekSelect(this)" name="schedule_type" id="edit-schedule-type">
                                                       <option></option>
                                                       @foreach(scheduleType() as $key => $schedule_type)
                                                       <option value="{{ $key }}">{{ $schedule_type }}</option>
@@ -424,21 +427,21 @@
                                                 </div>
                                                 <div class="col-md-4 mb-7 mb-md-0">
                                                    <label for="" class="form-label">Start date</label>
-                                                   <input class="form-control kt_datepicker w-100" placeholder="Start date" name="start_date"/> 
+                                                   <input class="form-control kt_datepicker w-100" placeholder="Start date" name="start_date" id="edit-start-date"/> 
                                                 </div>
                                                 <div class="col-md-4">
                                                    <!--begin::Label-->
                                                    <label class="required fw-semibold fs-6 mb-2">Ends</label>
                                                    <!--end::Label-->
-                                                   <div class="d-flex gap-4 posrel d-none">
-                                                      <input class="form-control kt_datepicker w-100" placeholder="End date" name="end_date" /> 
+                                                   <div class="d-flex gap-4 edit posrel d-none">
+                                                      <input class="form-control kt_datepicker w-100" placeholder="End date" name="end_date" id="edit-end-date" /> 
                                                       <div class="btn btn-icon btn-sm btn-active-light-primary ms-auto endsbtncls" onclick="delworkinghrend(this)">
                                                          <i class="ki-duotone ki-cross fs-2x"><span class="path1"></span><span class="path2"></span></i>
                                                       </div>
                                                    </div>
-                                                   <div>
+                                                   <div class="end-date-type-option">
                                                       <!--begin::Input-->
-                                                      <select class="form-select end-date" data-control="select2" data-dropdown-parent="#kt_modal_scrollable22" data-placeholder="Ends" onchange="workinghrend(this)" name="end_date_type">
+                                                      <select class="form-select end-date" data-control="select2" data-dropdown-parent="#kt_modal_update_scrollable22" data-placeholder="Ends" onchange="workinghrend(this)" name="end_date_type" id="edit-end-date-type">
                                                          <option></option>
                                                          <option value="1">Never</option>
                                                          <option value="2">Specific date</option>
@@ -450,29 +453,31 @@
                                           </div>
                                        </div>
                                        <div class="col-md-12">
-                                          <div class="card card-body advancesettingdiv">
+                                          <div class="card card-body editadvancesettingdiv">
                                              <div class="d-flex flex-column add-staff-days gap-5">
-                                                <div class="d-flex justify-content-between staff-ind-shift flex-wrap d-none">
+                                                <div class="d-flex justify-content-between mon edit staff-ind-shift flex-wrap d-none">
                                                    <div class="workingdays d-flex flex-column">
                                                       <h4>Monday</h4>
                                                       <span attr-hour="hour">hours</span>
                                                    </div>
                                                    <div class="d-flex flex-column gap-3">
-                                                      <div class="d-flex flex-wrap gap-5 single-add-shift-div">
-                                                         <div class="input-group kt_td_picker_time_only" data-td-target-input="nearest" data-td-target-toggle="nearest">
-                                                            <input type="text" class="form-control" data-td-target=".kt_td_picker_time_only" placeholder="start" name="monday_hours['start'][]"/>
-                                                            <span class="input-group-text" data-td-target=".kt_td_picker_time_only" data-td-toggle="datetimepicker">
-                                                            <i class="ki-outline ki-time fs-3"></i>
-                                                            </span>
-                                                         </div>
-                                                         <div class="input-group kt_td_picker_time_only" data-td-target-input="nearest" data-td-target-toggle="nearest">
-                                                            <input type="text" class="form-control" data-td-target=".kt_td_picker_time_only" placeholder="end" name="monday_hours['end'][]"/>
-                                                            <span class="input-group-text" data-td-target=".kt_td_picker_time_only" data-td-toggle="datetimepicker">
-                                                            <i class="ki-outline ki-time fs-3"></i>
-                                                            </span>
-                                                         </div>
-                                                         <div class="btn btn-icon btn-sm btn-active-light-primary ms-auto btncls" onclick="delStaffTime(this)">
-                                                            <i class="ki-duotone ki-cross fs-2x"><span class="path1"></span><span class="path2"></span></i>
+                                                      <div class="monday d-flex flex-column gap-3">
+                                                         <div class="d-flex flex-wrap gap-5 single-add-shift-div">
+                                                            <div class="input-group kt_td_picker_time_only" data-td-target-input="nearest" data-td-target-toggle="nearest">
+                                                               <input type="text" class="form-control" data-td-target=".kt_td_picker_time_only" placeholder="start" name="monday_hours['start'][]" />
+                                                               <span class="input-group-text" data-td-target=".kt_td_picker_time_only" data-td-toggle="datetimepicker">
+                                                               <i class="ki-outline ki-time fs-3"></i>
+                                                               </span>
+                                                            </div>
+                                                            <div class="input-group kt_td_picker_time_only" data-td-target-input="nearest" data-td-target-toggle="nearest">
+                                                               <input type="text" class="form-control" data-td-target=".kt_td_picker_time_only" placeholder="end" name="monday_hours['end'][]" />
+                                                               <span class="input-group-text" data-td-target=".kt_td_picker_time_only" data-td-toggle="datetimepicker">
+                                                               <i class="ki-outline ki-time fs-3"></i>
+                                                               </span>
+                                                            </div>
+                                                            <div class="btn btn-icon btn-sm btn-active-light-primary ms-auto btncls" onclick="delStaffTime(this)">
+                                                               <i class="ki-duotone ki-cross fs-2x"><span class="path1"></span><span class="path2"></span></i>
+                                                            </div>
                                                          </div>
                                                       </div>
                                                       <div>
@@ -480,27 +485,29 @@
                                                       </div>
                                                    </div>
                                                 </div>
-                                                <div class="d-flex justify-content-between staff-ind-shift flex-wrap d-none">
+                                                <div class="d-flex justify-content-between tue edit staff-ind-shift flex-wrap d-none">
                                                    <div class="workingdays d-flex flex-column">
                                                       <h4>Tuesday</h4>
                                                       <span attr-hour="hour">hours</span>
                                                    </div>
                                                    <div class="d-flex flex-column gap-3">
-                                                      <div class="d-flex flex-wrap gap-5 single-add-shift-div">
-                                                         <div class="input-group kt_td_picker_time_only" data-td-target-input="nearest" data-td-target-toggle="nearest">
-                                                            <input type="text" class="form-control" data-td-target=".kt_td_picker_time_only" placeholder="start" name="tuesday_hours['start'][]"/>
-                                                            <span class="input-group-text" data-td-target=".kt_td_picker_time_only" data-td-toggle="datetimepicker">
-                                                            <i class="ki-outline ki-time fs-3"></i>
-                                                            </span>
-                                                         </div>
-                                                         <div class="input-group kt_td_picker_time_only" data-td-target-input="nearest" data-td-target-toggle="nearest">
-                                                            <input type="text" class="form-control" data-td-target=".kt_td_picker_time_only" placeholder="end" name="tuesday_hours['end'][]"/>
-                                                            <span class="input-group-text" data-td-target=".kt_td_picker_time_only" data-td-toggle="datetimepicker">
-                                                            <i class="ki-outline ki-time fs-3"></i>
-                                                            </span>
-                                                         </div>
-                                                         <div class="btn btn-icon btn-sm btn-active-light-primary ms-auto btncls" onclick="delStaffTime(this)">
-                                                            <i class="ki-duotone ki-cross fs-2x"><span class="path1"></span><span class="path2"></span></i>
+                                                      <div class="tuesday d-flex flex-column gap-3">
+                                                         <div class="d-flex flex-wrap gap-5 single-add-shift-div">
+                                                            <div class="input-group kt_td_picker_time_only" data-td-target-input="nearest" data-td-target-toggle="nearest">
+                                                               <input type="text" class="form-control" data-td-target=".kt_td_picker_time_only" placeholder="start" name="tuesday_hours['start'][]"/>
+                                                               <span class="input-group-text" data-td-target=".kt_td_picker_time_only" data-td-toggle="datetimepicker">
+                                                               <i class="ki-outline ki-time fs-3"></i>
+                                                               </span>
+                                                            </div>
+                                                            <div class="input-group kt_td_picker_time_only" data-td-target-input="nearest" data-td-target-toggle="nearest">
+                                                               <input type="text" class="form-control" data-td-target=".kt_td_picker_time_only" placeholder="end" name="tuesday_hours['end'][]"/>
+                                                               <span class="input-group-text" data-td-target=".kt_td_picker_time_only" data-td-toggle="datetimepicker">
+                                                               <i class="ki-outline ki-time fs-3"></i>
+                                                               </span>
+                                                            </div>
+                                                            <div class="btn btn-icon btn-sm btn-active-light-primary ms-auto btncls" onclick="delStaffTime(this)">
+                                                               <i class="ki-duotone ki-cross fs-2x"><span class="path1"></span><span class="path2"></span></i>
+                                                            </div>
                                                          </div>
                                                       </div>
                                                       <div>
@@ -508,27 +515,29 @@
                                                       </div>
                                                    </div>
                                                 </div>
-                                                <div class="d-flex justify-content-between staff-ind-shift flex-wrap d-none">
+                                                <div class="d-flex justify-content-between wed edit staff-ind-shift flex-wrap d-none">
                                                    <div class="workingdays d-flex flex-column">
                                                       <h4>Wednesday</h4>
                                                       <span attr-hour="hour">hours</span>
                                                    </div>
                                                    <div class="d-flex flex-column gap-3">
-                                                      <div class="d-flex flex-wrap gap-5 single-add-shift-div">
-                                                         <div class="input-group kt_td_picker_time_only" data-td-target-input="nearest" data-td-target-toggle="nearest">
-                                                            <input type="text" class="form-control" data-td-target=".kt_td_picker_time_only" placeholder="start" name="wednesday_hours['start'][]"/>
-                                                            <span class="input-group-text" data-td-target=".kt_td_picker_time_only" data-td-toggle="datetimepicker">
-                                                            <i class="ki-outline ki-time fs-3"></i>
-                                                            </span>
-                                                         </div>
-                                                         <div class="input-group kt_td_picker_time_only" data-td-target-input="nearest" data-td-target-toggle="nearest">
-                                                            <input type="text" class="form-control" data-td-target=".kt_td_picker_time_only" placeholder="end" name="wednesday_hours['end'][]"/>
-                                                            <span class="input-group-text" data-td-target=".kt_td_picker_time_only" data-td-toggle="datetimepicker">
-                                                            <i class="ki-outline ki-time fs-3"></i>
-                                                            </span>
-                                                         </div>
-                                                         <div class="btn btn-icon btn-sm btn-active-light-primary ms-auto btncls" onclick="delStaffTime(this)">
-                                                            <i class="ki-duotone ki-cross fs-2x"><span class="path1"></span><span class="path2"></span></i>
+                                                      <div class="wednesday d-flex flex-column gap-3">
+                                                         <div class="d-flex flex-wrap gap-5 single-add-shift-div">
+                                                            <div class="input-group kt_td_picker_time_only" data-td-target-input="nearest" data-td-target-toggle="nearest">
+                                                               <input type="text" class="form-control" data-td-target=".kt_td_picker_time_only" placeholder="start" name="wednesday_hours['start'][]"/>
+                                                               <span class="input-group-text" data-td-target=".kt_td_picker_time_only" data-td-toggle="datetimepicker">
+                                                               <i class="ki-outline ki-time fs-3"></i>
+                                                               </span>
+                                                            </div>
+                                                            <div class="input-group kt_td_picker_time_only" data-td-target-input="nearest" data-td-target-toggle="nearest">
+                                                               <input type="text" class="form-control" data-td-target=".kt_td_picker_time_only" placeholder="end" name="wednesday_hours['end'][]"/>
+                                                               <span class="input-group-text" data-td-target=".kt_td_picker_time_only" data-td-toggle="datetimepicker">
+                                                               <i class="ki-outline ki-time fs-3"></i>
+                                                               </span>
+                                                            </div>
+                                                            <div class="btn btn-icon btn-sm btn-active-light-primary ms-auto btncls" onclick="delStaffTime(this)">
+                                                               <i class="ki-duotone ki-cross fs-2x"><span class="path1"></span><span class="path2"></span></i>
+                                                            </div>
                                                          </div>
                                                       </div>
                                                       <div>
@@ -536,27 +545,29 @@
                                                       </div>
                                                    </div>
                                                 </div>
-                                                <div class="d-flex justify-content-between staff-ind-shift flex-wrap d-none">
+                                                <div class="d-flex justify-content-between thu edit staff-ind-shift flex-wrap d-none">
                                                    <div class="workingdays d-flex flex-column">
                                                       <h4>Thursday</h4>
                                                       <span attr-hour="hour">hours</span>
                                                    </div>
                                                    <div class="d-flex flex-column gap-3">
-                                                      <div class="d-flex flex-wrap gap-5 single-add-shift-div">
-                                                         <div class="input-group kt_td_picker_time_only" data-td-target-input="nearest" data-td-target-toggle="nearest">
-                                                            <input type="text" class="form-control" data-td-target=".kt_td_picker_time_only" placeholder="start" name="thursday_hours['start'][]"/>
-                                                            <span class="input-group-text" data-td-target=".kt_td_picker_time_only" data-td-toggle="datetimepicker">
-                                                            <i class="ki-outline ki-time fs-3"></i>
-                                                            </span>
-                                                         </div>
-                                                         <div class="input-group kt_td_picker_time_only" data-td-target-input="nearest" data-td-target-toggle="nearest">
-                                                            <input type="text" class="form-control" data-td-target=".kt_td_picker_time_only" placeholder="end" name="thursday_hours['end'][]"/>
-                                                            <span class="input-group-text" data-td-target=".kt_td_picker_time_only" data-td-toggle="datetimepicker">
-                                                            <i class="ki-outline ki-time fs-3"></i>
-                                                            </span>
-                                                         </div>
-                                                         <div class="btn btn-icon btn-sm btn-active-light-primary ms-auto btncls" onclick="delStaffTime(this)">
-                                                            <i class="ki-duotone ki-cross fs-2x"><span class="path1"></span><span class="path2"></span></i>
+                                                      <div class="thursday d-flex flex-column gap-3">
+                                                         <div class="d-flex flex-wrap gap-5 single-add-shift-div">
+                                                            <div class="input-group kt_td_picker_time_only" data-td-target-input="nearest" data-td-target-toggle="nearest">
+                                                               <input type="text" class="form-control" data-td-target=".kt_td_picker_time_only" placeholder="start" name="thursday_hours['start'][]"/>
+                                                               <span class="input-group-text" data-td-target=".kt_td_picker_time_only" data-td-toggle="datetimepicker">
+                                                               <i class="ki-outline ki-time fs-3"></i>
+                                                               </span>
+                                                            </div>
+                                                            <div class="input-group kt_td_picker_time_only" data-td-target-input="nearest" data-td-target-toggle="nearest">
+                                                               <input type="text" class="form-control" data-td-target=".kt_td_picker_time_only" placeholder="end" name="thursday_hours['end'][]"/>
+                                                               <span class="input-group-text" data-td-target=".kt_td_picker_time_only" data-td-toggle="datetimepicker">
+                                                               <i class="ki-outline ki-time fs-3"></i>
+                                                               </span>
+                                                            </div>
+                                                            <div class="btn btn-icon btn-sm btn-active-light-primary ms-auto btncls" onclick="delStaffTime(this)">
+                                                               <i class="ki-duotone ki-cross fs-2x"><span class="path1"></span><span class="path2"></span></i>
+                                                            </div>
                                                          </div>
                                                       </div>
                                                       <div>
@@ -564,27 +575,29 @@
                                                       </div>
                                                    </div>
                                                 </div>
-                                                <div class="d-flex justify-content-between staff-ind-shift flex-wrap d-none">
+                                                <div class="d-flex justify-content-between fri edit staff-ind-shift flex-wrap d-none">
                                                    <div class="workingdays d-flex flex-column">
                                                       <h4>Friday</h4>
                                                       <span attr-hour="hour">hours</span>
                                                    </div>
                                                    <div class="d-flex flex-column gap-3">
-                                                      <div class="d-flex flex-wrap gap-5 single-add-shift-div">
-                                                         <div class="input-group kt_td_picker_time_only" data-td-target-input="nearest" data-td-target-toggle="nearest">
-                                                            <input type="text" class="form-control" data-td-target=".kt_td_picker_time_only" placeholder="start" name="friday_hours['start'][]"/>
-                                                            <span class="input-group-text" data-td-target=".kt_td_picker_time_only" data-td-toggle="datetimepicker">
-                                                            <i class="ki-outline ki-time fs-3"></i>
-                                                            </span>
-                                                         </div>
-                                                         <div class="input-group kt_td_picker_time_only" data-td-target-input="nearest" data-td-target-toggle="nearest">
-                                                            <input type="text" class="form-control" data-td-target=".kt_td_picker_time_only" placeholder="end" name="friday_hours['end'][]"/>
-                                                            <span class="input-group-text" data-td-target=".kt_td_picker_time_only" data-td-toggle="datetimepicker">
-                                                            <i class="ki-outline ki-time fs-3"></i>
-                                                            </span>
-                                                         </div>
-                                                         <div class="btn btn-icon btn-sm btn-active-light-primary ms-auto btncls" onclick="delStaffTime(this)">
-                                                            <i class="ki-duotone ki-cross fs-2x"><span class="path1"></span><span class="path2"></span></i>
+                                                      <div class="friday d-flex flex-column gap-3">
+                                                         <div class="d-flex flex-wrap gap-5 single-add-shift-div">
+                                                            <div class="input-group kt_td_picker_time_only" data-td-target-input="nearest" data-td-target-toggle="nearest">
+                                                               <input type="text" class="form-control" data-td-target=".kt_td_picker_time_only" placeholder="start" name="friday_hours['start'][]"/>
+                                                               <span class="input-group-text" data-td-target=".kt_td_picker_time_only" data-td-toggle="datetimepicker">
+                                                               <i class="ki-outline ki-time fs-3"></i>
+                                                               </span>
+                                                            </div>
+                                                            <div class="input-group kt_td_picker_time_only" data-td-target-input="nearest" data-td-target-toggle="nearest">
+                                                               <input type="text" class="form-control" data-td-target=".kt_td_picker_time_only" placeholder="end" name="friday_hours['end'][]"/>
+                                                               <span class="input-group-text" data-td-target=".kt_td_picker_time_only" data-td-toggle="datetimepicker">
+                                                               <i class="ki-outline ki-time fs-3"></i>
+                                                               </span>
+                                                            </div>
+                                                            <div class="btn btn-icon btn-sm btn-active-light-primary ms-auto btncls" onclick="delStaffTime(this)">
+                                                               <i class="ki-duotone ki-cross fs-2x"><span class="path1"></span><span class="path2"></span></i>
+                                                            </div>
                                                          </div>
                                                       </div>
                                                       <div>
@@ -592,27 +605,29 @@
                                                       </div>
                                                    </div>
                                                 </div>
-                                                <div class="d-flex justify-content-between staff-ind-shift flex-wrap d-none">
+                                                <div class="d-flex justify-content-between sat edit staff-ind-shift flex-wrap d-none">
                                                    <div class="workingdays d-flex flex-column">
                                                       <h4>Saturday</h4>
                                                       <span attr-hour="hour">hours</span>
                                                    </div>
                                                    <div class="d-flex flex-column gap-3">
-                                                      <div class="d-flex flex-wrap gap-5 single-add-shift-div">
-                                                         <div class="input-group kt_td_picker_time_only" data-td-target-input="nearest" data-td-target-toggle="nearest">
-                                                            <input type="text" class="form-control" data-td-target=".kt_td_picker_time_only" placeholder="start" name="saturday_hours['start'][]"/>
-                                                            <span class="input-group-text" data-td-target=".kt_td_picker_time_only" data-td-toggle="datetimepicker">
-                                                            <i class="ki-outline ki-time fs-3"></i>
-                                                            </span>
-                                                         </div>
-                                                         <div class="input-group kt_td_picker_time_only" data-td-target-input="nearest" data-td-target-toggle="nearest">
-                                                            <input type="text" class="form-control" data-td-target=".kt_td_picker_time_only" placeholder="end" name="saturday_hours['end'][]" />
-                                                            <span class="input-group-text" data-td-target=".kt_td_picker_time_only" data-td-toggle="datetimepicker">
-                                                            <i class="ki-outline ki-time fs-3"></i>
-                                                            </span>
-                                                         </div>
-                                                         <div class="btn btn-icon btn-sm btn-active-light-primary ms-auto btncls" onclick="delStaffTime(this)">
-                                                            <i class="ki-duotone ki-cross fs-2x"><span class="path1"></span><span class="path2"></span></i>
+                                                      <div class="saturday d-flex flex-column gap-3">
+                                                         <div class="d-flex flex-wrap gap-5 single-add-shift-div">
+                                                            <div class="input-group kt_td_picker_time_only" data-td-target-input="nearest" data-td-target-toggle="nearest">
+                                                               <input type="text" class="form-control" data-td-target=".kt_td_picker_time_only" placeholder="start" name="saturday_hours['start'][]"/>
+                                                               <span class="input-group-text" data-td-target=".kt_td_picker_time_only" data-td-toggle="datetimepicker">
+                                                               <i class="ki-outline ki-time fs-3"></i>
+                                                               </span>
+                                                            </div>
+                                                            <div class="input-group kt_td_picker_time_only" data-td-target-input="nearest" data-td-target-toggle="nearest">
+                                                               <input type="text" class="form-control" data-td-target=".kt_td_picker_time_only" placeholder="end" name="saturday_hours['end'][]" />
+                                                               <span class="input-group-text" data-td-target=".kt_td_picker_time_only" data-td-toggle="datetimepicker">
+                                                               <i class="ki-outline ki-time fs-3"></i>
+                                                               </span>
+                                                            </div>
+                                                            <div class="btn btn-icon btn-sm btn-active-light-primary ms-auto btncls" onclick="delStaffTime(this)">
+                                                               <i class="ki-duotone ki-cross fs-2x"><span class="path1"></span><span class="path2"></span></i>
+                                                            </div>
                                                          </div>
                                                       </div>
                                                       <div>
@@ -620,27 +635,29 @@
                                                       </div>
                                                    </div>
                                                 </div>
-                                                <div class="d-flex justify-content-between staff-ind-shift flex-wrap d-none">
+                                                <div class="d-flex justify-content-between sun edit staff-ind-shift flex-wrap d-none">
                                                    <div class="workingdays d-flex flex-column">
                                                       <h4>Sunday</h4>
                                                       <span attr-hour="hour">hours</span>
                                                    </div>
                                                    <div class="d-flex flex-column gap-3">
-                                                      <div class="d-flex flex-wrap gap-5 single-add-shift-div">
-                                                         <div class="input-group kt_td_picker_time_only" data-td-target-input="nearest" data-td-target-toggle="nearest">
-                                                            <input type="text" class="form-control" data-td-target=".kt_td_picker_time_only" placeholder="start" name="sunday_hours['start'][]"/>
-                                                            <span class="input-group-text" data-td-target=".kt_td_picker_time_only" data-td-toggle="datetimepicker">
-                                                            <i class="ki-outline ki-time fs-3"></i>
-                                                            </span>
-                                                         </div>
-                                                         <div class="input-group kt_td_picker_time_only" data-td-target-input="nearest" data-td-target-toggle="nearest">
-                                                            <input type="text" class="form-control" data-td-target=".kt_td_picker_time_only" placeholder="end" name="sunday_hours['end'][]"/>
-                                                            <span class="input-group-text" data-td-target=".kt_td_picker_time_only" data-td-toggle="datetimepicker">
-                                                            <i class="ki-outline ki-time fs-3"></i>
-                                                            </span>
-                                                         </div>
-                                                         <div class="btn btn-icon btn-sm btn-active-light-primary ms-auto btncls" onclick="delStaffTime(this)">
-                                                            <i class="ki-duotone ki-cross fs-2x"><span class="path1"></span><span class="path2"></span></i>
+                                                      <div class="sunday d-flex flex-column gap-3">
+                                                         <div class="d-flex flex-wrap gap-5 single-add-shift-div">
+                                                            <div class="input-group kt_td_picker_time_only" data-td-target-input="nearest" data-td-target-toggle="nearest">
+                                                               <input type="text" class="form-control" data-td-target=".kt_td_picker_time_only" placeholder="start" name="sunday_hours['start'][]"/>
+                                                               <span class="input-group-text" data-td-target=".kt_td_picker_time_only" data-td-toggle="datetimepicker">
+                                                               <i class="ki-outline ki-time fs-3"></i>
+                                                               </span>
+                                                            </div>
+                                                            <div class="input-group kt_td_picker_time_only" data-td-target-input="nearest" data-td-target-toggle="nearest">
+                                                               <input type="text" class="form-control" data-td-target=".kt_td_picker_time_only" placeholder="end" name="sunday_hours['end'][]"/>
+                                                               <span class="input-group-text" data-td-target=".kt_td_picker_time_only" data-td-toggle="datetimepicker">
+                                                               <i class="ki-outline ki-time fs-3"></i>
+                                                               </span>
+                                                            </div>
+                                                            <div class="btn btn-icon btn-sm btn-active-light-primary ms-auto btncls" onclick="delStaffTime(this)">
+                                                               <i class="ki-duotone ki-cross fs-2x"><span class="path1"></span><span class="path2"></span></i>
+                                                            </div>
                                                          </div>
                                                       </div>
                                                       <div>

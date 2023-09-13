@@ -29,6 +29,7 @@ use App\Http\Controllers\Admin\RecommendationsController;
 use App\Http\Controllers\Admin\OffersManagementController;
 use App\Http\Controllers\TwilioSMSController;
 use App\Http\Controllers\Partner\StaffController;
+use App\Http\Controllers\Partner\StaffAttendanceController;
 
 
 /*
@@ -193,8 +194,11 @@ Route::middleware(['auth'])->group(function () {
     Route::get('partner/staff/edit-staff-status/{id}/{status}', [StaffController::class, 'changeStaffStatus']);
     Route::get('partner/staff/delete-staff/{id}', [StaffController::class, 'deleteStaff']);
     Route::get('partner/staff/view-staff/{id}', [StaffController::class, 'viewStaff']);
-    /*Route::post('partner/staff/update-venue-setting', [StaffController::class, 'updateVenues']);
-    Route::get('partner/staff/get-venue-detail-by-id/{id}', [StaffController::class, 'getVenueDetailById']);*/
+    Route::get('partner/staff/get-staff-detail-by-id/{id}', [StaffController::class, 'getStaffDetailById']);
+    Route::get('partner/staff/get-commission-by-staff-id/{id}', [StaffController::class, 'getCommissionByStaffId']);
+    Route::post('partner/staff/update-staff', [StaffController::class, 'updateStaff']);
+
+    Route::get('partner/staff/attendance', [StaffAttendanceController::class, 'index'])->name('attendance.index');
 
 });
 

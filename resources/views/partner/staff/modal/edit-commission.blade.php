@@ -1,10 +1,10 @@
-<div class="modal fade" tabindex="-1" id="commission">
+<div class="modal fade" tabindex="-1" id="edit-commission">
    <div class="modal-dialog modal-dialog-scrollable">
       <div class="modal-content">
          <div class="modal-header">
-            <h5 class="modal-title">Add Commission %</h5>
+            <h5 class="modal-title">Update Commission %</h5>
             <!--begin::Close-->
-            <div class="btn btn-icon btn-sm btn-active-light-primary ms-2" data-bs-toggle="modal" data-bs-target="#kt_modal_scrollable22" data-bs-dismiss="modal" aria-label="Close">
+            <div class="btn btn-icon btn-sm btn-active-light-primary ms-2" data-bs-toggle="modal" data-bs-target="#kt_modal_update_scrollable22" data-bs-dismiss="modal" aria-label="Close">
                <i class="ki-duotone ki-cross fs-2x"><span class="path1"></span><span class="path2"></span></i>
             </div>
             <!--end::Close-->
@@ -23,7 +23,7 @@
                            </div>
                            <div class="col-md-6 mb-7">
                               <!--begin::Input-->
-                              <input type="text" name="" class="form-control mb-3 mb-lg-0" placeholder="commission"/>
+                              <input type="text" name="service" id="edit_service" class="form-control mb-3 mb-lg-0" placeholder="commission" onchange="numberHandler(this)"/>
                               <!--end::Input-->
                            </div>
                            <div class="col-md-6 mb-7">
@@ -33,7 +33,7 @@
                            </div>
                            <div class="col-md-6 mb-7">
                               <!--begin::Input-->
-                              <input type="text" name="" class="form-control mb-3 mb-lg-0" placeholder="commission"/>
+                              <input type="text" name="book_look" id="edit_book_look" class="form-control mb-3 mb-lg-0" placeholder="commission" onchange="numberHandler(this)"/>
                               <!--end::Input-->
                            </div>
                            <div class="col-md-6 mb-7">
@@ -43,7 +43,7 @@
                            </div>
                            <div class="col-md-6 mb-7">
                               <!--begin::Input-->
-                              <input type="text" name="" class="form-control mb-3 mb-lg-0" placeholder="commission"/>
+                              <input type="text" name="package" id="edit_package" class="form-control mb-3 mb-lg-0" placeholder="commission" onchange="numberHandler(this)"/>
                               <!--end::Input-->
                            </div>
                            <div class="col-md-6 mb-7">
@@ -53,7 +53,7 @@
                            </div>
                            <div class="col-md-6 mb-7">
                               <!--begin::Input-->
-                              <input type="text" name="" class="form-control mb-3 mb-lg-0" placeholder="commission"/>
+                              <input type="text" name="voucher" id="edit_voucher" class="form-control mb-3 mb-lg-0" placeholder="commission" onchange="numberHandler(this)"/>
                               <!--end::Input-->
                            </div>
                            <div class="col-md-6 mb-7">
@@ -63,7 +63,7 @@
                            </div>
                            <div class="col-md-6 mb-7">
                               <!--begin::Input-->
-                              <input type="text" name="" class="form-control mb-3 mb-lg-0" placeholder="commission"/>
+                              <input type="text" name="membership" id="edit_membership" class="form-control mb-3 mb-lg-0" placeholder="commission" onchange="numberHandler(this)"/>
                               <!--end::Input-->
                            </div>
                            <div class="col-md-6 mb-7">
@@ -73,14 +73,14 @@
                            </div>
                            <div class="col-md-6">
                               <!--begin::Input-->
-                              <input type="text" name="" class="form-control mb-3 mb-lg-0" placeholder="commission"/>
+                              <input type="text" name="product" id="edit_product" class="form-control mb-3 mb-lg-0" placeholder="commission" onchange="numberHandler(this)"/>
                               <!--end::Input-->
                            </div>
                         </div>
                      </div>
                   </div>
                   <div class="col-12 d-flex justify-content-end">
-                     <button type="button" class="btn btn-primary my-5">
+                     <button type="button" class="btn btn-primary my-5 update-commission" data-bs-toggle="modal" data-bs-target="#kt_modal_update_scrollable22" data-bs-dismiss="modal">
                         Save
                      </button>
                      <!--end::Input group-->

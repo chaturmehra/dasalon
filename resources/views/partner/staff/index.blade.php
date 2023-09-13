@@ -46,39 +46,9 @@
             @include('partner.staff.tab')
             <!--end::Navbar-->
             <div class="d-flex flex-column flex-row-fluid gap-7">
-               <div class="card card-flush">
-                  <div class="card-header align-items-center pt-5 gap-2 gap-md-5">
-                     <ul class="nav nav-stretch nav-line-tabs nav-line-tabs-2x border-transparent fs-5 fw-bold">
-                        <li class="nav-item mt-2">
-                           <a class="nav-link text-active-primary ms-0 me-10 py-5 " href="attendance.html">
-                           Attendance                    
-                           </a>
-                        </li>
-                        <!--end::Nav item-->
-                        <!--begin::Nav item-->
-                        <li class="nav-item mt-2">
-                           <a class="nav-link text-active-primary ms-0 me-10 py-5" href="leave.html">
-                           Leave                    
-                           </a>
-                        </li>
-                        <!--end::Nav item-->
-                        <!--begin::Nav item-->
-                        <li class="nav-item mt-2">
-                           <a class="nav-link text-active-primary ms-0 me-10 py-5" href="permission.html">
-                           Permission                   
-                           </a>
-                        </li>
-                        <!--end::Nav item-->
-                        <!--begin::Nav item-->
-                        <li class="nav-item mt-2">
-                           <a class="nav-link text-active-primary ms-0 me-10 py-5 " href="user-authorization.html">
-                           User Authorization                  
-                           </a>
-                        </li>
-                        <!--end::Nav item-->
-                     </ul>
-                  </div>
-               </div>
+               
+               @include('partner.staff.staff-sub-tab')
+               
                <div class="card card-flush">
                   <div class="card-body pb-0">
                      <!--begin::Wrapper-->
@@ -317,12 +287,12 @@
                   <!--begin::Card body-->
                   <div class="card-body py-4">
                      <!--begin::Table-->
-                     <table class="table align-middle table-row-dashed fs-6 gy-5" id="staff_table">
+                     <table class="table align-middle table-row-dashed fs-6 gy-5" id="kt_table_users">
                         <thead>
                            <tr class="text-start text-muted fw-bold fs-7 text-uppercase gs-0">
                               <th class="w-10px pe-2">
                                  <div class="form-check form-check-sm form-check-custom form-check-solid me-3">
-                                    <input class="form-check-input" type="checkbox" data-kt-check="true" data-kt-check-target="#staff_table .form-check-input" value="1" />
+                                    <input class="form-check-input" type="checkbox" data-kt-check="true" data-kt-check-target="#kt_table_users .form-check-input" value="1" />
                                  </div>
                               </th>
                               <th class="min-w-125px">User</th>
@@ -364,7 +334,7 @@
                                  <!--end::Avatar-->
                                  <!--begin::User details-->
                                  <div class="d-flex flex-column">
-                                    <a href="#" class="text-gray-800 text-hover-primary mb-1">{{ $staff->name }}</a>
+                                    <a href="javascript:void(0)" class="text-gray-800 text-hover-primary mb-1 view-staff" staff-id="{{ $staff->user_id }}">{{ $staff->name }}</a>
                                     <span>{{ $staff->email }}</span>
                                  </div>
                                  <!--begin::User details-->
@@ -441,15 +411,18 @@
 <!--end:::Main-->
 
 <!--begin::Modal - Add commission-->
-@include('partner.staff.modal.commission')
+@include('partner.staff.modal.add-commission')
+@include('partner.staff.modal.edit-commission')
 <!--end::Modal - Add commission-->
 
 <!--begin::Modal - Add task-->
 @include('partner.staff.modal.synccalendar')
+@include('partner.staff.modal.edit-synccalendar')
 <!--end::Modal - Add task-->
 
 <!--begin::Modal - Add task-->
 @include('partner.staff.modal.add-staff')
+@include('partner.staff.modal.edit-staff')
 <!--end::Modal - Add task-->
 <!--begin::Drawer-->
 <div
@@ -2687,12 +2660,45 @@
 
    }
 
+   function showEditStaffDataN(e) {
+
+      let checkBoxInput = document.querySelector('.editstaffworkingdays').children;
+      let advancesettingdiv = document.querySelectorAll('.editadvancesettingdiv');
+      let staffInd = document.querySelectorAll('.edit.staff-ind-shift');
+
+      for(let i=0; i<checkBoxInput.length; i++) {
+         if(e.checked && checkBoxInput[i].querySelector('input') == e) {
+            for(let j=0; j<advancesettingdiv.length; j++) {
+               let staffInd = advancesettingdiv[j].querySelectorAll('.edit.staff-ind-shift');
+               staffInd[i].classList.remove('d-none');
+            }
+         }
+         else if(!e.checked && checkBoxInput[i].querySelector('input') == e) {
+            for(let j=0; j<advancesettingdiv.length; j++) {
+               let staffInd = advancesettingdiv[j].querySelectorAll('.edit.staff-ind-shift');
+               staffInd[i].classList.add('d-none') 
+            }            
+         }
+      }
+
+   }
+
    function delStaffTime(e) {
       e.parentElement.remove();
    }
 
    function showStaffSettingDiv(e) {
       let staffDiv = document.querySelector('.staff-add-setting-div');
+      if(e.checked && staffDiv.classList.contains('d-none')) {
+         staffDiv.classList.remove('d-none');
+      }
+      else {
+         staffDiv.classList.add('d-none')
+      }
+   }
+
+   function showEditStaffSettingDiv(e) {
+      let staffDiv = document.querySelector('.edit.staff-add-setting-div');
       if(e.checked && staffDiv.classList.contains('d-none')) {
          staffDiv.classList.remove('d-none');
       }

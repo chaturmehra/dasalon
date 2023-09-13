@@ -46,7 +46,8 @@
                   </div>
                   <!--end::Content-->
                   <div class="d-flex justify-content-end w-150px">
-                     <a href="#" class="btn btn-bg-light btn-color-muted btn-active-color-primary btn-sm px-4">Edit</a>
+                     <a href="javascript:void(0)" class="btn btn-bg-light btn-color-muted btn-active-color-primary btn-sm px-4 update-staff-detail" data-bs-toggle="modal" data-bs-target="#kt_modal_update_scrollable22" >Edit</a>
+                     <input type="hidden" name="staff_id" id="staff_id">
                   </div>
                </div>
                <!--end::Section-->
@@ -62,10 +63,6 @@
                      <span class="text-gray-400 fw-semibold fs-6" id="staff-email"></span>
                      <!--end::Title-->
                   </div>
-                  <!--end::Content-->
-                  <div class="d-flex justify-content-end w-150px">
-                     <a href="#" class="btn btn-bg-light btn-color-muted btn-active-color-primary btn-sm px-4">Edit</a>
-                  </div>
                </div>
                <!--end::Section-->
                <!--begin::Separator-->
@@ -76,14 +73,24 @@
                   <!--begin::Content-->
                   <div class="d-flex flex-column">
                      <!--begin::Title-->
-                     <span class="text-gray-800 fw-bold fs-6">Primary mobile number:</span>
+                     <span class="text-gray-800 fw-bold fs-6">Phone:</span>
                      <span class="text-gray-400 fw-semibold fs-6" id="staff-phone"></span>
                      <span class="text-gray-400 fw-semibold fs-6 mt-1">Quickly sign in, easily recover passwords, and receive security notifications with this mobile number.</span>
                      <!--end::Title-->
                   </div>
-                  <!--end::Content-->
-                  <div class="d-flex justify-content-end w-150px">
-                     <a href="#" class="btn btn-bg-light btn-color-muted btn-active-color-primary btn-sm px-4">Edit</a>
+               </div>
+               <!--end::Section-->
+               <!--begin::Separator-->
+               <div class="separator my-3"></div>
+               <!--end::Separator-->
+               <!--begin::Section-->
+               <div class="d-flex justify-content-between align-items-start p-5">
+                  <!--begin::Content-->
+                  <div class="d-flex flex-column">
+                     <!--begin::Title-->
+                     <span class="text-gray-800 fw-bold fs-6">Gender:</span>
+                     <span class="text-gray-400 fw-semibold fs-6" id="staff-gender"></span>
+                     <!--end::Title-->
                   </div>
                </div>
                <!--end::Section-->
@@ -95,16 +102,13 @@
                   <!--begin::Content-->
                   <div class="d-flex flex-column">
                      <!--begin::Title-->
-                     <span class="text-gray-800 fw-bold fs-6">Password:</span>
-                     <span class="text-gray-400 fw-semibold fs-6">********</span>
+                     <span class="text-gray-800 fw-bold fs-6">Joining date:</span>
+                     <span class="text-gray-400 fw-semibold fs-6 mt-1" id="staff-joining-date"></span>
                      <!--end::Title-->
-                  </div>
-                  <!--end::Content-->
-                  <div class="d-flex justify-content-end w-150px">
-                     <a href="#" class="btn btn-bg-light btn-color-muted btn-active-color-primary btn-sm px-4">Edit</a>
                   </div>
                </div>
                <!--end::Section-->
+               <!--begin::Separator-->
                <!--begin::Separator-->
                <div class="separator my-3"></div>
                <!--end::Separator-->
@@ -113,16 +117,13 @@
                   <!--begin::Content-->
                   <div class="d-flex flex-column">
                      <!--begin::Title-->
-                     <span class="text-gray-800 fw-bold fs-6">2-step verification:</span>
-                     <span class="text-gray-400 fw-semibold fs-6 mt-1">Add a layer of security. Require a verification code in addition to your password</span>
+                     <span class="text-gray-800 fw-bold fs-6">Facebook:</span>
+                     <span class="text-gray-400 fw-semibold fs-6 mt-1" id="staff-facebook"></span>
                      <!--end::Title-->
-                  </div>
-                  <!--end::Content-->
-                  <div class="d-flex justify-content-end w-150px">
-                     <a href="#" class="btn btn-bg-light btn-color-muted btn-active-color-primary btn-sm px-4">Turn on</a>
                   </div>
                </div>
                <!--end::Section-->
+               <!--begin::Separator-->
                <!--begin::Separator-->
                <div class="separator my-3"></div>
                <!--end::Separator-->
@@ -131,16 +132,30 @@
                   <!--begin::Content-->
                   <div class="d-flex flex-column">
                      <!--begin::Title-->
-                     <span class="text-gray-800 fw-bold fs-6">Compromised account?</span>
-                     <span class="text-gray-400 fw-semibold fs-6 mt-1">Take steps like changing tour password and signin out everywhere</span>
+                     <span class="text-gray-800 fw-bold fs-6">Instagram:</span>
+                     <span class="text-gray-400 fw-semibold fs-6 mt-1" id="staff-instagram"></span>
                      <!--end::Title-->
-                  </div>
-                  <!--end::Content-->
-                  <div class="d-flex justify-content-end w-150px">
-                     <a href="#" class="btn btn-bg-light btn-color-muted btn-active-color-primary btn-sm px-4">Start</a>
                   </div>
                </div>
                <!--end::Section-->
+               <!--begin::Separator-->
+               <!--begin::Separator-->
+               <div class="separator my-3"></div>
+               <!--end::Separator-->
+               <!--begin::Section-->
+               <div class="d-flex justify-content-between align-items-start p-5">
+                  <!--begin::Content-->
+                  <div class="d-flex flex-column">
+                     <!--begin::Title-->
+                     <span class="text-gray-800 fw-bold fs-6">Working days:</span>
+                     <span class="text-gray-400 fw-semibold fs-6 mt-1" id="staff-working-days"></span>
+                     <!--end::Title-->
+                  </div>
+               </div>
+               <!--end::Section-->
+               <!--begin::Separator-->
+               <div class="separator my-3"></div>
+               <!--end::Separator-->
             </div>
             <!--end::Items-->
          </div>

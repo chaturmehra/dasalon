@@ -281,7 +281,7 @@
 						<div class="card card-flush h-xl-100">
 							<!--begin::Header-->
 							<div class="card-header align-items-center border-0 pt-5">
-								<a href="staff.html" class="card-title align-items-start flex-column">
+								<a href="{{ route('staff.index') }}" class="card-title align-items-start flex-column">
 									<span class="card-label fw-bold text-gray-800">Staff</span>
 									<span class="text-gray-400 mt-1 fw-semibold fs-6">Manage all setup related to your team</span>
 								</a>
@@ -297,7 +297,7 @@
 									<!--end::Value-->
 								</div>
 								<!--end::Statistics-->
-								<a href="staff.html" class="btn btn-sm btn-icon btn-bg-light btn-active-color-primary w-30px h-30px">
+								<a href="{{ route('staff.index') }}" class="btn btn-sm btn-icon btn-bg-light btn-active-color-primary w-30px h-30px">
 									<i class="ki-outline ki-arrow-right fs-2"></i>                    
 								</a>
 							</div>
