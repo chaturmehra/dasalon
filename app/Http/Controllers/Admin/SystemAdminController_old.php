@@ -14,49 +14,49 @@ class SystemAdminController extends Controller
 {
     public function __construct()
     {
-        //$this->middleware('PM');
+        
     }
 
     public function index()
     {
-    	$title = "Dasalon :: Settings";
-    	$meta_description = "";
-    	$meta_keywords = "";
+        $title             = "Dasalon :: Settings";
+        $meta_description  = "";
+        $meta_keywords     = "";
 
-    	$settings      = User::where("role", "Admin")->latest()->get();
-        $system_users   = User::where("role", "System Manager")->latest()->get();
+        $settings        = User::where("role", 0)->latest()->get();
+        $system_users    = User::where("role", 3)->latest()->get();
 
-    	return view('admin.settings.settings', compact('title', 'meta_description', 'meta_keywords', 'settings', 'system_users'));
+        return view('admin/setting/system_admin/index', compact('title', 'meta_description', 'meta_keywords', 'settings', 'system_users'));
     }
 
     public function store(Request $request): RedirectResponse
     {
-    	$validator = Validator::make($request->all(), [
-            'name' 		=> 'required|max:40',
-            'email' 	=> 'required|unique:users|max:100',
-            //'password' 	=> 'required|alpha_num|min:8',
-            'password' 	=> ['required', Password::min(8)
-			            ->letters()
-			            ->mixedCase()
-			            ->numbers()
-			            ->symbols()
-			            //->uncompromised()
-			        ]
+        $validator = Validator::make($request->all(), [
+            'name'      => 'required|max:40',
+            'email'     => 'required|unique:users|max:100',
+            //'password'    => 'required|alpha_num|min:8',
+            'password'  => ['required', Password::min(8)
+                        ->letters()
+                        ->mixedCase()
+                        ->numbers()
+                        ->symbols()
+                        //->uncompromised()
+                    ]
         ]);
  
         if ($validator->fails()) {
-            return redirect('/settings')->withErrors($validator)->withInput();
+            return redirect()->back()->withErrors($validator)->withInput();
         }
 
         $user = new User;
 
-        $user->name 		= $request->name;
-        $user->email 		= $request->email;
-        $user->password 	= Hash::make($request->password);
-        $user->phone 		= $request->phone;
-        //$user->country 		= $request->country;
-        $user->is_active 	= 1;
-        $user->role 		= "Admin";
+        $user->name         = $request->name;
+        $user->email        = $request->email;
+        $user->password     = Hash::make($request->password);
+        $user->phone        = $request->phone;
+        $user->country      = $request->country;
+        $user->is_active    = 1;
+        $user->role         = 0;
 
         $user->save();
 
@@ -71,7 +71,7 @@ class SystemAdminController extends Controller
 
         $user_detail = User::find($id);
 
-    	return view('admin.system-admin-manage', compact('title', 'meta_description', 'meta_keywords', 'user_detail'));
+        return view('admin/setting/system_admin/system-admin-manage', compact('title', 'meta_description', 'meta_keywords', 'user_detail'));
     }
 
     public function update(Request $request, $id): RedirectResponse
@@ -97,11 +97,12 @@ class SystemAdminController extends Controller
         $user->id           = $id;
         $user->name         = $request->name;
         $user->email        = $request->email;
+        $user->country      = "";
         if ($request->new_password) {
             $user->password     = Hash::make($request->new_password);
         }
         $user->phone        = $request->phone;
-        //$user->country      = $request->country;
+        $user->country      = $request->country;
 
         $user->save();
 
@@ -128,19 +129,19 @@ class SystemAdminController extends Controller
 
     public function disabled($id): RedirectResponse
     {
-    	if($id){
-	        $user = new User;
+        if($id){
+            $user = new User;
 
-	        $user->exists 		= true;
-	        $user->id 			= $id;
-	        $user->is_active 	= 0;
-	        $user->updated_at 	= date('Y-m-d H:i:s');
+            $user->exists       = true;
+            $user->id           = $id;
+            $user->is_active    = 0;
+            $user->updated_at   = date('Y-m-d H:i:s');
 
-	        $user->save();
+            $user->save();
 
-	        return redirect()->back()->with('message', 'Admin status updated successfully.');
-	    }else{
-	    	return redirect()->back()->with('error', 'Please select admin.');
-	    }
+            return redirect()->back()->with('message', 'Admin status updated successfully.');
+        }else{
+            return redirect()->back()->with('error', 'Please select admin.');
+        }
     }
 }

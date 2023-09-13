@@ -50,7 +50,7 @@
 											<!--end::Info-->
 											<!--begin::User-->
 											<div class="symbol symbol-circle symbol-25px" data-bs-toggle="tooltip" data-bs-boundary="window" data-bs-placement="top" title="Nina Nilson">
-												<img src="/dasalon/admin/assets/media/avatars/300-14.jpg" alt="img" />
+												<img src="{{ asset('/public/assets/media/avatars/300-14.jpg') }}" alt="img" />
 											</div>
 											<!--end::User-->
 										</div>
@@ -73,12 +73,12 @@
 											<div class="symbol-group symbol-hover flex-nowrap flex-grow-1 min-w-100px pe-2">
 												<!--begin::User-->
 												<div class="symbol symbol-circle symbol-25px">
-													<img src="/dasalon/admin/assets/media/avatars/300-2.jpg" alt="img" />
+													<img src="{{ asset('/public/assets/media/avatars/300-2.jpg') }}" alt="img" />
 												</div>
 												<!--end::User-->
 												<!--begin::User-->
 												<div class="symbol symbol-circle symbol-25px">
-													<img src="/dasalon/admin/assets/media/avatars/300-14.jpg" alt="img" />
+													<img src="{{ asset('/public/assets/media/avatars/300-14.jpg') }}" alt="img" />
 												</div>
 												<!--end::User-->
 												<!--begin::User-->
@@ -112,7 +112,7 @@
 											<div class="symbol-group symbol-hover flex-nowrap flex-grow-1 min-w-100px">
 												<!--begin::User-->
 												<div class="symbol symbol-circle symbol-25px">
-													<img src="/dasalon/admin/assets/media/avatars/300-20.jpg" alt="img" />
+													<img src="{{ asset('/public/assets/media/avatars/300-20.jpg') }}" alt="img" />
 												</div>
 												<!--end::User-->
 												<!--begin::User-->
@@ -164,7 +164,7 @@
 											<!--end::Info-->
 											<!--begin::User-->
 											<div class="symbol symbol-circle symbol-25px" data-bs-toggle="tooltip" data-bs-boundary="window" data-bs-placement="top" title="Alan Nilson">
-												<img src="/dasalon/admin/assets/media/avatars/300-1.jpg" alt="img" />
+												<img src="{{ asset('/public/assets/media/avatars/300-1.jpg') }}" alt="img" />
 											</div>
 											<!--end::User-->
 										</div>
@@ -201,7 +201,7 @@
 											<!--end::Info-->
 											<!--begin::User-->
 											<div class="symbol symbol-circle symbol-25px" data-bs-toggle="tooltip" data-bs-boundary="window" data-bs-placement="top" title="Jan Hummer">
-												<img src="/dasalon/admin/assets/media/avatars/300-23.jpg" alt="img" />
+												<img src="{{ asset('/public/assets/media/avatars/300-23.jpg') }}" alt="img" />
 											</div>
 											<!--end::User-->
 										</div>
@@ -214,7 +214,7 @@
 											<!--begin::Item-->
 											<div class="d-flex flex-aligns-center pe-10 pe-lg-20">
 												<!--begin::Icon-->
-												<img alt="" class="w-30px me-3" src="/dasalon/admin/assets/media/svg/files/pdf.svg" />
+												<img alt="" class="w-30px me-3" src="{{ asset('/public/assets/media/svg/files/pdf.jpg') }}" />
 												<!--end::Icon-->
 												<!--begin::Info-->
 												<div class="ms-1 fw-semibold">
@@ -231,7 +231,7 @@
 											<!--begin::Item-->
 											<div class="d-flex flex-aligns-center pe-10 pe-lg-20">
 												<!--begin::Icon-->
-												<img alt="../../demo31/dist/apps/projects/project.html" class="w-30px me-3" src="/dasalon/admin/assets/media/svg/files/doc.svg" />
+												<img alt="../../demo31/dist/apps/projects/project.html" class="w-30px me-3" src="{{ asset('/public/assets/media/svg/files/doc.jpg') }}" />
 												<!--end::Icon-->
 												<!--begin::Info-->
 												<div class="ms-1 fw-semibold">
@@ -248,7 +248,7 @@
 											<!--begin::Item-->
 											<div class="d-flex flex-aligns-center">
 												<!--begin::Icon-->
-												<img alt="../../demo31/dist/apps/projects/project.html" class="w-30px me-3" src="/dasalon/admin/assets/media/svg/files/css.svg" />
+												<img alt="../../demo31/dist/apps/projects/project.html" class="w-30px me-3" src="{{ asset('/public/assets/media/svg/files/css.jpg') }}" />
 												<!--end::Icon-->
 												<!--begin::Info-->
 												<div class="ms-1 fw-semibold">
@@ -297,7 +297,7 @@
 											<!--end::Info-->
 											<!--begin::User-->
 											<div class="symbol symbol-circle symbol-25px" data-bs-toggle="tooltip" data-bs-boundary="window" data-bs-placement="top" title="Nina Nilson">
-												<img src="/dasalon/admin/assets/media/avatars/300-14.jpg" alt="img" />
+												<img src="{{ asset('/public/assets/media/avatars/300-14.jpg') }}" alt="img" />
 											</div>
 											<!--end::User-->
 										</div>
@@ -334,7 +334,7 @@
 											<!--end::Info-->
 											<!--begin::User-->
 											<div class="symbol symbol-circle symbol-25px" data-bs-toggle="tooltip" data-bs-boundary="window" data-bs-placement="top" title="Marcus Dotson">
-												<img src="/dasalon/admin/assets/media/avatars/300-2.jpg" alt="img" />
+												<img src="{{ asset('/public/assets/media/avatars/300-2.jpg') }}" alt="img" />
 											</div>
 											<!--end::User-->
 										</div>
@@ -348,7 +348,7 @@
 											<div class="overlay me-10">
 												<!--begin::Image-->
 												<div class="overlay-wrapper">
-													<img alt="img" class="rounded w-150px" src="/dasalon/admin/assets/media/stock/600x400/img-29.jpg" />
+													<img alt="img" class="rounded w-150px" src="{{ asset('/public/assets/media/stock/600x400/img-29.jpg') }}" />
 												</div>
 												<!--end::Image-->
 												<!--begin::Link-->
@@ -362,7 +362,7 @@
 											<div class="overlay me-10">
 												<!--begin::Image-->
 												<div class="overlay-wrapper">
-													<img alt="img" class="rounded w-150px" src="/dasalon/admin/assets/media/stock/600x400/img-31.jpg" />
+													<img alt="img" class="rounded w-150px" src="{{ asset('/public/assets/media/stock/600x400/img-31.jpg') }}" />
 												</div>
 												<!--end::Image-->
 												<!--begin::Link-->
@@ -376,7 +376,7 @@
 											<div class="overlay">
 												<!--begin::Image-->
 												<div class="overlay-wrapper">
-													<img alt="img" class="rounded w-150px" src="/dasalon/admin/assets/media/stock/600x400/img-40.jpg" />
+													<img alt="img" class="rounded w-150px" src="{{ asset('/public/assets/media/stock/600x400/img-40.jpg') }}" />
 												</div>
 												<!--end::Image-->
 												<!--begin::Link-->
@@ -459,7 +459,7 @@
 											<!--end::Info-->
 											<!--begin::User-->
 											<div class="symbol symbol-circle symbol-25px" data-bs-toggle="tooltip" data-bs-boundary="window" data-bs-placement="top" title="Robert Rich">
-												<img src="/dasalon/admin/assets/media/avatars/300-4.jpg" alt="img" />
+												<img src="{{ asset('/public/assets/media/avatars/300-4.jpg') }}" alt="img" />
 											</div>
 											<!--end::User-->
 										</div>
@@ -650,7 +650,7 @@
 								<div class="d-flex align-items-center mb-2">
 									<!--begin::Avatar-->
 									<div class="symbol symbol-35px symbol-circle">
-										<img alt="Pic" src="/dasalon/admin/assets/media/avatars/300-25.jpg" />
+										<img alt="Pic" src="{{ asset('/public/assets/media/avatars/300-25.jpg') }}" />
 									</div>
 									<!--end::Avatar-->
 									<!--begin::Details-->
@@ -682,7 +682,7 @@
 									<!--end::Details-->
 									<!--begin::Avatar-->
 									<div class="symbol symbol-35px symbol-circle">
-										<img alt="Pic" src="/dasalon/admin/assets/media/avatars/300-1.jpg" />
+										<img alt="Pic" src="{{ asset('/public/assets/media/avatars/300-1.jpg') }}" />
 									</div>
 									<!--end::Avatar-->
 								</div>
@@ -702,7 +702,7 @@
 								<div class="d-flex align-items-center mb-2">
 									<!--begin::Avatar-->
 									<div class="symbol symbol-35px symbol-circle">
-										<img alt="Pic" src="/dasalon/admin/assets/media/avatars/300-25.jpg" />
+										<img alt="Pic" src="{{ asset('/public/assets/media/avatars/300-25.jpg') }}" />
 									</div>
 									<!--end::Avatar-->
 									<!--begin::Details-->
@@ -734,7 +734,7 @@
 									<!--end::Details-->
 									<!--begin::Avatar-->
 									<div class="symbol symbol-35px symbol-circle">
-										<img alt="Pic" src="/dasalon/admin/assets/media/avatars/300-1.jpg" />
+										<img alt="Pic" src="{{ asset('/public/assets/media/avatars/300-1.jpg') }}" />
 									</div>
 									<!--end::Avatar-->
 								</div>
@@ -754,7 +754,7 @@
 								<div class="d-flex align-items-center mb-2">
 									<!--begin::Avatar-->
 									<div class="symbol symbol-35px symbol-circle">
-										<img alt="Pic" src="/dasalon/admin/assets/media/avatars/300-25.jpg" />
+										<img alt="Pic" src="{{ asset('/public/assets/media/avatars/300-25.jpg') }}" />
 									</div>
 									<!--end::Avatar-->
 									<!--begin::Details-->
@@ -787,7 +787,7 @@
 									<!--end::Details-->
 									<!--begin::Avatar-->
 									<div class="symbol symbol-35px symbol-circle">
-										<img alt="Pic" src="/dasalon/admin/assets/media/avatars/300-1.jpg" />
+										<img alt="Pic" src="{{ asset('/public/assets/media/avatars/300-1.jpg') }}" />
 									</div>
 									<!--end::Avatar-->
 								</div>
@@ -807,7 +807,7 @@
 								<div class="d-flex align-items-center mb-2">
 									<!--begin::Avatar-->
 									<div class="symbol symbol-35px symbol-circle">
-										<img alt="Pic" src="/dasalon/admin/assets/media/avatars/300-25.jpg" />
+										<img alt="Pic" src="{{ asset('/public/assets/media/avatars/300-25.jpg') }}" />
 									</div>
 									<!--end::Avatar-->
 									<!--begin::Details-->
@@ -839,7 +839,7 @@
 									<!--end::Details-->
 									<!--begin::Avatar-->
 									<div class="symbol symbol-35px symbol-circle">
-										<img alt="Pic" src="/dasalon/admin/assets/media/avatars/300-1.jpg" />
+										<img alt="Pic" src="{{ asset('/public/assets/media/avatars/300-1.jpg') }}" />
 									</div>
 									<!--end::Avatar-->
 								</div>
@@ -859,7 +859,7 @@
 								<div class="d-flex align-items-center mb-2">
 									<!--begin::Avatar-->
 									<div class="symbol symbol-35px symbol-circle">
-										<img alt="Pic" src="/dasalon/admin/assets/media/avatars/300-25.jpg" />
+										<img alt="Pic" src="{{ asset('/public/assets/media/avatars/300-25.jpg') }}" />
 									</div>
 									<!--end::Avatar-->
 									<!--begin::Details-->
@@ -958,7 +958,7 @@
 						<!--end::Wrapper-->
 						<!--begin::Pic-->
 						<div class="symbol symbol-70px symbol-2by3 flex-shrink-0">
-							<img src="/dasalon/admin/assets/media/stock/600x400/img-1.jpg" alt="" />
+							<img src="{{ asset('/public/assets/media/stock/600x400/img-1.jpg') }}" alt="" />
 						</div>
 						<!--end::Pic-->
 					</div>
@@ -993,7 +993,7 @@
 						<!--end::Wrapper-->
 						<!--begin::Pic-->
 						<div class="symbol symbol-70px symbol-2by3 flex-shrink-0">
-							<img src="/dasalon/admin/assets/media/stock/600x400/img-3.jpg" alt="" />
+							<img src="{{ asset('/public/assets/media/stock/600x400/img-3.jpg') }}" alt="" />
 						</div>
 						<!--end::Pic-->
 					</div>
@@ -1028,7 +1028,7 @@
 						<!--end::Wrapper-->
 						<!--begin::Pic-->
 						<div class="symbol symbol-70px symbol-2by3 flex-shrink-0">
-							<img src="/dasalon/admin/assets/media/stock/600x400/img-8.jpg" alt="" />
+							<img src="{{ asset('/public/assets/media/stock/600x400/img-8.jpg') }}" alt="" />
 						</div>
 						<!--end::Pic-->
 					</div>
@@ -1063,7 +1063,7 @@
 						<!--end::Wrapper-->
 						<!--begin::Pic-->
 						<div class="symbol symbol-70px symbol-2by3 flex-shrink-0">
-							<img src="/dasalon/admin/assets/media/stock/600x400/img-26.jpg" alt="" />
+							<img src="{{ asset('/public/assets/media/stock/600x400/img-26.jpg') }}" alt="" />
 						</div>
 						<!--end::Pic-->
 					</div>
@@ -1098,7 +1098,7 @@
 						<!--end::Wrapper-->
 						<!--begin::Pic-->
 						<div class="symbol symbol-70px symbol-2by3 flex-shrink-0">
-							<img src="/dasalon/admin/assets/media/stock/600x400/img-21.jpg" alt="" />
+							<img src="{{ asset('/public/assets/media/stock/600x400/img-21.jpg') }}" alt="" />
 						</div>
 						<!--end::Pic-->
 					</div>
@@ -1133,7 +1133,7 @@
 						<!--end::Wrapper-->
 						<!--begin::Pic-->
 						<div class="symbol symbol-70px symbol-2by3 flex-shrink-0">
-							<img src="/dasalon/admin/assets/media/stock/600x400/img-34.jpg" alt="" />
+							<img src="{{ asset('/public/assets/media/stock/600x400/img-34.jpg') }}" alt="" />
 						</div>
 						<!--end::Pic-->
 					</div>
@@ -1168,7 +1168,7 @@
 						<!--end::Wrapper-->
 						<!--begin::Pic-->
 						<div class="symbol symbol-70px symbol-2by3 flex-shrink-0">
-							<img src="/dasalon/admin/assets/media/stock/600x400/img-27.jpg" alt="" />
+							<img src="{{ asset('/public/assets/media/stock/600x400/img-27.jpg') }}" alt="" />
 						</div>
 						<!--end::Pic-->
 					</div>
@@ -1643,7 +1643,7 @@
 						<!--end::Heading-->
 						<!--begin::Google Contacts Invite-->
 						<div class="btn btn-light-primary fw-bold w-100 mb-8">
-						<img alt="Logo" src="/dasalon/admin/assets/media/svg/brand-logos/google-icon.svg" class="h-20px me-3" />Invite Gmail Contacts</div>
+						<img alt="Logo" src="{{ asset('/public/assets/media/svg/brand-logos/google-icon.jpg') }}" class="h-20px me-3" />Invite Gmail Contacts</div>
 						<!--end::Google Contacts Invite-->
 						<!--begin::Separator-->
 						<div class="separator d-flex flex-center mb-8">
@@ -1666,7 +1666,7 @@
 									<div class="d-flex align-items-center">
 										<!--begin::Avatar-->
 										<div class="symbol symbol-35px symbol-circle">
-											<img alt="Pic" src="/dasalon/admin/assets/media/avatars/300-6.jpg" />
+											<img alt="Pic" src="{{ asset('/public/assets/media/avatars/300-6.jpg') }}" />
 										</div>
 										<!--end::Avatar-->
 										<!--begin::Details-->
@@ -1722,7 +1722,7 @@
 									<div class="d-flex align-items-center">
 										<!--begin::Avatar-->
 										<div class="symbol symbol-35px symbol-circle">
-											<img alt="Pic" src="/dasalon/admin/assets/media/avatars/300-1.jpg" />
+											<img alt="Pic" src="{{ asset('/public/assets/media/avatars/300-1.jpg') }}" />
 										</div>
 										<!--end::Avatar-->
 										<!--begin::Details-->
@@ -1750,7 +1750,7 @@
 									<div class="d-flex align-items-center">
 										<!--begin::Avatar-->
 										<div class="symbol symbol-35px symbol-circle">
-											<img alt="Pic" src="/dasalon/admin/assets/media/avatars/300-5.jpg" />
+											<img alt="Pic" src="{{ asset('/public/assets/media/avatars/300-5.jpg') }}" />
 										</div>
 										<!--end::Avatar-->
 										<!--begin::Details-->
@@ -1778,7 +1778,7 @@
 									<div class="d-flex align-items-center">
 										<!--begin::Avatar-->
 										<div class="symbol symbol-35px symbol-circle">
-											<img alt="Pic" src="/dasalon/admin/assets/media/avatars/300-25.jpg" />
+											<img alt="Pic" src="{{ asset('/public/assets/media/avatars/300-25.jpg') }}" />
 										</div>
 										<!--end::Avatar-->
 										<!--begin::Details-->
@@ -1834,7 +1834,7 @@
 									<div class="d-flex align-items-center">
 										<!--begin::Avatar-->
 										<div class="symbol symbol-35px symbol-circle">
-											<img alt="Pic" src="/dasalon/admin/assets/media/avatars/300-9.jpg" />
+											<img alt="Pic" src="{{ asset('/public/assets/media/avatars/300-9.jpg') }}" />
 										</div>
 										<!--end::Avatar-->
 										<!--begin::Details-->
@@ -1918,7 +1918,7 @@
 									<div class="d-flex align-items-center">
 										<!--begin::Avatar-->
 										<div class="symbol symbol-35px symbol-circle">
-											<img alt="Pic" src="/dasalon/admin/assets/media/avatars/300-23.jpg" />
+											<img alt="Pic" src="{{ asset('/public/assets/media/avatars/300-23.jpg') }}" />
 										</div>
 										<!--end::Avatar-->
 										<!--begin::Details-->
@@ -1974,7 +1974,7 @@
 									<div class="d-flex align-items-center">
 										<!--begin::Avatar-->
 										<div class="symbol symbol-35px symbol-circle">
-											<img alt="Pic" src="/dasalon/admin/assets/media/avatars/300-12.jpg" />
+											<img alt="Pic" src="{{ asset('/public/assets/media/avatars/300-12.jpg') }}" />
 										</div>
 										<!--end::Avatar-->
 										<!--begin::Details-->
@@ -2030,7 +2030,7 @@
 									<div class="d-flex align-items-center">
 										<!--begin::Avatar-->
 										<div class="symbol symbol-35px symbol-circle">
-											<img alt="Pic" src="/dasalon/admin/assets/media/avatars/300-13.jpg" />
+											<img alt="Pic" src="{{ asset('/public/assets/media/avatars/300-13.jpg') }}" />
 										</div>
 										<!--end::Avatar-->
 										<!--begin::Details-->
@@ -2086,7 +2086,7 @@
 									<div class="d-flex align-items-center">
 										<!--begin::Avatar-->
 										<div class="symbol symbol-35px symbol-circle">
-											<img alt="Pic" src="/dasalon/admin/assets/media/avatars/300-21.jpg" />
+											<img alt="Pic" src="{{ asset('/public/assets/media/avatars/300-21.jpg') }}" />
 										</div>
 										<!--end::Avatar-->
 										<!--begin::Details-->
@@ -2363,7 +2363,7 @@
 									<div class="d-flex">
 										<!--begin::Avatar-->
 										<div class="symbol symbol-circle symbol-45px">
-											<img src="/dasalon/admin/assets/media/avatars/300-20.jpg" alt="" />
+											<img src="{{ asset('/public/assets/media/avatars/300-20.jpg') }}" alt="" />
 										</div>
 										<!--end::Avatar-->
 										<!--begin::Details-->
@@ -2455,7 +2455,7 @@
 									<div class="d-flex">
 										<!--begin::Avatar-->
 										<div class="symbol symbol-circle symbol-45px">
-											<img src="/dasalon/admin/assets/media/avatars/300-11.jpg" alt="" />
+											<img src="{{ asset('/public/assets/media/avatars/300-11.jpg') }}" alt="" />
 										</div>
 										<!--end::Avatar-->
 										<!--begin::Details-->
@@ -2547,7 +2547,7 @@
 									<div class="d-flex">
 										<!--begin::Avatar-->
 										<div class="symbol symbol-circle symbol-45px">
-											<img src="/dasalon/admin/assets/media/avatars/300-2.jpg" alt="" />
+											<img src="{{ asset('/public/assets/media/avatars/300-2.jpg') }}" alt="" />
 										</div>
 										<!--end::Avatar-->
 										<!--begin::Details-->
@@ -2638,7 +2638,7 @@
 									<div class="d-flex">
 										<!--begin::Avatar-->
 										<div class="symbol symbol-circle symbol-45px">
-											<img src="/dasalon/admin/assets/media/avatars/300-5.jpg" alt="" />
+											<img src="{{ asset('/public/assets/media/avatars/300-5.jpg') }}" alt="" />
 										</div>
 										<!--end::Avatar-->
 										<!--begin::Details-->
@@ -3207,7 +3207,7 @@
 										<a href="#" class="d-flex align-items-center p-3 rounded bg-state-light bg-state-opacity-50 mb-1">
 											<!--begin::Avatar-->
 											<div class="symbol symbol-35px symbol-circle me-5">
-												<img alt="Pic" src="/dasalon/admin/assets/media/avatars/300-6.jpg" />
+												<img alt="Pic" src="{{ asset('/public/assets/media/avatars/300-6.jpg') }}" />
 											</div>
 											<!--end::Avatar-->
 											<!--begin::Info-->
@@ -3237,7 +3237,7 @@
 										<a href="#" class="d-flex align-items-center p-3 rounded bg-state-light bg-state-opacity-50 mb-1">
 											<!--begin::Avatar-->
 											<div class="symbol symbol-35px symbol-circle me-5">
-												<img alt="Pic" src="/dasalon/admin/assets/media/avatars/300-1.jpg" />
+												<img alt="Pic" src="{{ asset('/public/assets/media/avatars/300-1.jpg') }}" />
 											</div>
 											<!--end::Avatar-->
 											<!--begin::Info-->
@@ -3252,7 +3252,7 @@
 										<a href="#" class="d-flex align-items-center p-3 rounded bg-state-light bg-state-opacity-50 mb-1">
 											<!--begin::Avatar-->
 											<div class="symbol symbol-35px symbol-circle me-5">
-												<img alt="Pic" src="/dasalon/admin/assets/media/avatars/300-5.jpg" />
+												<img alt="Pic" src="{{ asset('/public/assets/media/avatars/300-5.jpg') }}" />
 											</div>
 											<!--end::Avatar-->
 											<!--begin::Info-->
@@ -3267,7 +3267,7 @@
 										<a href="#" class="d-flex align-items-center p-3 rounded bg-state-light bg-state-opacity-50 mb-1">
 											<!--begin::Avatar-->
 											<div class="symbol symbol-35px symbol-circle me-5">
-												<img alt="Pic" src="/dasalon/admin/assets/media/avatars/300-25.jpg" />
+												<img alt="Pic" src="{{ asset('/public/assets/media/avatars/300-25.jpg') }}" />
 											</div>
 											<!--end::Avatar-->
 											<!--begin::Info-->
@@ -3297,7 +3297,7 @@
 												<!--end::Checkbox-->
 												<!--begin::Avatar-->
 												<div class="symbol symbol-35px symbol-circle">
-													<img alt="Pic" src="/dasalon/admin/assets/media/avatars/300-6.jpg" />
+													<img alt="Pic" src="{{ asset('/public/assets/media/avatars/300-6.jpg') }}" />
 												</div>
 												<!--end::Avatar-->
 												<!--begin::Details-->
@@ -3369,7 +3369,7 @@
 												<!--end::Checkbox-->
 												<!--begin::Avatar-->
 												<div class="symbol symbol-35px symbol-circle">
-													<img alt="Pic" src="/dasalon/admin/assets/media/avatars/300-1.jpg" />
+													<img alt="Pic" src="{{ asset('/public/assets/media/avatars/300-1.jpg') }}" />
 												</div>
 												<!--end::Avatar-->
 												<!--begin::Details-->
@@ -3405,7 +3405,7 @@
 												<!--end::Checkbox-->
 												<!--begin::Avatar-->
 												<div class="symbol symbol-35px symbol-circle">
-													<img alt="Pic" src="/dasalon/admin/assets/media/avatars/300-5.jpg" />
+													<img alt="Pic" src="{{ asset('/public/assets/media/avatars/300-5.jpg') }}" />
 												</div>
 												<!--end::Avatar-->
 												<!--begin::Details-->
@@ -3441,7 +3441,7 @@
 												<!--end::Checkbox-->
 												<!--begin::Avatar-->
 												<div class="symbol symbol-35px symbol-circle">
-													<img alt="Pic" src="/dasalon/admin/assets/media/avatars/300-25.jpg" />
+													<img alt="Pic" src="{{ asset('/public/assets/media/avatars/300-25.jpg') }}" />
 												</div>
 												<!--end::Avatar-->
 												<!--begin::Details-->
@@ -3513,7 +3513,7 @@
 												<!--end::Checkbox-->
 												<!--begin::Avatar-->
 												<div class="symbol symbol-35px symbol-circle">
-													<img alt="Pic" src="/dasalon/admin/assets/media/avatars/300-9.jpg" />
+													<img alt="Pic" src="{{ asset('/public/assets/media/avatars/300-9.jpg') }}" />
 												</div>
 												<!--end::Avatar-->
 												<!--begin::Details-->
@@ -3621,7 +3621,7 @@
 												<!--end::Checkbox-->
 												<!--begin::Avatar-->
 												<div class="symbol symbol-35px symbol-circle">
-													<img alt="Pic" src="/dasalon/admin/assets/media/avatars/300-23.jpg" />
+													<img alt="Pic" src="{{ asset('/public/assets/media/avatars/300-23.jpg') }}" />
 												</div>
 												<!--end::Avatar-->
 												<!--begin::Details-->
@@ -3693,7 +3693,7 @@
 												<!--end::Checkbox-->
 												<!--begin::Avatar-->
 												<div class="symbol symbol-35px symbol-circle">
-													<img alt="Pic" src="/dasalon/admin/assets/media/avatars/300-12.jpg" />
+													<img alt="Pic" src="{{ asset('/public/assets/media/avatars/300-12.jpg') }}" />
 												</div>
 												<!--end::Avatar-->
 												<!--begin::Details-->
@@ -3765,7 +3765,7 @@
 												<!--end::Checkbox-->
 												<!--begin::Avatar-->
 												<div class="symbol symbol-35px symbol-circle">
-													<img alt="Pic" src="/dasalon/admin/assets/media/avatars/300-13.jpg" />
+													<img alt="Pic" src="{{ asset('/public/assets/media/avatars/300-13.jpg') }}" />
 												</div>
 												<!--end::Avatar-->
 												<!--begin::Details-->
@@ -3837,7 +3837,7 @@
 												<!--end::Checkbox-->
 												<!--begin::Avatar-->
 												<div class="symbol symbol-35px symbol-circle">
-													<img alt="Pic" src="/dasalon/admin/assets/media/avatars/300-21.jpg" />
+													<img alt="Pic" src="{{ asset('/public/assets/media/avatars/300-21.jpg') }}" />
 												</div>
 												<!--end::Avatar-->
 												<!--begin::Details-->
@@ -3915,7 +3915,7 @@
 									<!--end::Message-->
 									<!--begin::Illustration-->
 									<div class="text-center px-5">
-										<img src="/dasalon/admin/assets/media/illustrations/sketchy-1/1.png" alt="" class="w-100 h-200px h-sm-325px" />
+										<img src="{{ asset('/public/assets/media/illustrations/sketchy-1/1.png')}}" alt="" class="w-100 h-200px h-sm-325px" />
 									</div>
 									<!--end::Illustration-->
 								</div>
@@ -3936,12 +3936,12 @@
 		<!--begin::Javascript-->
 		<script>var hostUrl = "assets/";</script>
 		<!--begin::Global Javascript Bundle(mandatory for all pages)-->
-		<script src="{{asset('/assets/plugins/global/plugins.bundle.js')}}"></script>
-		<script src="{{asset('/assets/js/scripts.bundle.js')}}"></script>
-		<script src="{{asset('/assets/js/style.js')}}"></script>
+		<script src="{{asset('/public/assets/plugins/global/plugins.bundle.js')}}"></script>
+		<script src="{{asset('/public/assets/js/scripts.bundle.js')}}"></script>
+		<script src="{{asset('/public/assets/js/style.js')}}"></script>
 		<!--end::Global Javascript Bundle-->
 		<!--begin::Vendors Javascript(used for this page only)-->
-		<script src="{{asset('/assets/plugins/custom/fullcalendar/fullcalendar.bundle.js')}}"></script>
+		<script src="{{asset('/public/assets/plugins/custom/fullcalendar/fullcalendar.bundle.js')}}"></script>
 		<script src="https://cdn.amcharts.com/lib/5/index.js"></script>
 		<script src="https://cdn.amcharts.com/lib/5/xy.js"></script>
 		<script src="https://cdn.amcharts.com/lib/5/percent.js"></script>
@@ -3953,23 +3953,23 @@
 		<script src="https://cdn.amcharts.com/lib/5/geodata/usaLow.js"></script>
 		<script src="https://cdn.amcharts.com/lib/5/geodata/worldTimeZonesLow.js"></script>
 		<script src="https://cdn.amcharts.com/lib/5/geodata/worldTimeZoneAreasLow.js"></script>
-		<script src="{{asset('/assets/plugins/custom/datatables/datatables.bundle.js')}}"></script>
+		<script src="{{asset('/public/assets/plugins/custom/datatables/datatables.bundle.js')}}"></script>
 		<!--end::Vendors Javascript-->
 		<!--begin::Custom Javascript(used for this page only)-->
-		<!-- <script src="{{asset('/assets/js/custom/apps/ecommerce/reports/sales/sales.js')}}"></script>
-		<script src="{{asset('/assets/js/custom/apps/user-management/users/list/table.js')}}"></script>
-		<script src="{{asset('/assets/js/custom/apps/user-management/users/list/export-users.js')}}"></script>
-		<script src="{{asset('/assets/js/custom/apps/user-management/users/list/add.js')}}"></script> -->
-		<script src="{{asset('/assets/js/widgets.bundle.js')}}"></script>
-		<script src="{{asset('/assets/js/custom/widgets.js')}}"></script>
-		<script src="{{asset('/assets/js/custom/apps/chat/chat.js')}}"></script>
-		<script src="{{asset('/assets/js/custom/utilities/modals/upgrade-plan.js')}}"></script>
-		<script src="{{asset('/assets/js/custom/utilities/modals/new-target.js')}}"></script>
-		<script src="{{asset('/assets/js/custom/utilities/modals/new-address.js')}}"></script>
-		<script src="{{asset('/assets/js/custom/utilities/modals/users-search.js')}}"></script>
-		<script src="{{asset('/assets/js/custom/utilities/modals/create-campaign.js')}}"></script>
-		<script src="{{asset('/assets/js/custom/utilities/modals/create-app.js')}}"></script>
-		<script src="{{asset('/assets/js/jquery.validate.js') }}"></script>
+		<script src="{{asset('/public/assets/js/custom/apps/ecommerce/reports/sales/sales.js')}}"></script>
+		<script src="{{asset('/public/assets/js/custom/apps/user-management/users/list/table.js')}}"></script>
+		<script src="{{asset('/public/assets/js/custom/apps/user-management/users/list/export-users.js')}}"></script>
+		<script src="{{asset('/public/assets/js/custom/apps/user-management/users/list/add.js')}}"></script>
+		<script src="{{asset('/public/assets/js/widgets.bundle.js')}}"></script>
+		<script src="{{asset('/public/assets/js/custom/widgets.js')}}"></script>
+		<script src="{{asset('/public/assets/js/custom/apps/chat/chat.js')}}"></script>
+		<script src="{{asset('/public/assets/js/custom/utilities/modals/upgrade-plan.js')}}"></script>
+		<script src="{{asset('/public/assets/js/custom/utilities/modals/new-target.js')}}"></script>
+		<script src="{{asset('/public/assets/js/custom/utilities/modals/new-address.js')}}"></script>
+		<script src="{{asset('/public/assets/js/custom/utilities/modals/users-search.js')}}"></script>
+		<script src="{{asset('/public/assets/js/custom/utilities/modals/create-campaign.js')}}"></script>
+		<script src="{{asset('/public/assets/js/custom/utilities/modals/create-app.js')}}"></script>
+		<script src="{{asset('/public/assets/js/jquery.validate.js') }}"></script>
 		<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 		
 		<!--end::Custom Javascript-->
@@ -4132,8 +4132,9 @@
 			//     KTDatatablesExample3.init();
 			// });
 		</script>
-		<script src="{{asset('/assets/js/services.js')}}" type="text/javascript"></script>
-		<script src="{{asset('/assets/js/recommendedpackage.js')}}" type="text/javascript"></script>
+		<script src="{{asset('/public/assets/js/services.js')}}" type="text/javascript"></script>
+		<script src="{{asset('/public/assets/js/recommendedpackage.js')}}" type="text/javascript"></script>
+		<script src="{{asset('/public/assets/js/sysmanagerperm.js')}}" type="text/javascript"></script>
 	</body>
 	<!--end::Body-->
 </html>

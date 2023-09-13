@@ -20,6 +20,9 @@ class ParterConfigController extends Controller
         // $querylog =  DB::getQueryLog();
         // dd($querylog);
         // DB::enableQueryLog();
+        
+                //  echo "<pre>";print_r($showallp);die;
+ 
         $showpfp = ProfileFeature::leftJoin('profile_feature_permissions', 'profile_features.id', '=', 'profile_feature_permissions.profilefeature_id')->get()->toArray();
         // $showpfp = $showpfp->toArray();
         //  echo "<pre>";print_r($showpfp);die;

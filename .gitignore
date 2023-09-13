@@ -1,4 +1,72 @@
-.env
-.htaccess
 node_modules
 a1682qud_dasalon (2)
+
+### Laravel ###
+/vendor/
+node_modules/
+npm-debug.log
+yarn-error.log
+
+# Laravel 4 specific
+bootstrap/compiled.php
+app/storage/
+
+# Laravel 5 & Lumen specific
+public/storage
+public/hot
+public/uploads
+
+# Laravel 5 & Lumen specific with changed public path
+public_html/storage
+public_html/hot
+
+storage/*.key
+.env
+.env.backup
+Homestead.yaml
+Homestead.json
+/.vagrant
+.phpunit.result.cache
+
+# ignore log files and databases
+*.log
+*.sql
+*.sqlite
+
+# ignore packaged files
+*.7z
+*.dmg
+*.gz
+*.iso
+*.jar
+*.rar
+*.tar
+*.zip
+
+# ignore OS generated files
+ehthumbs.db
+Thumbs.db
+.DS_Store
+.DS_Store?
+.Trashes
+
+# ignore Editor files
+*.sublime-project
+*.sublime-workspace
+/.idea
+/.vscode
+
+# Ignore cache
+.cache/
+
+# Ignore user created files :)
+*.bak
+*.orig
+
+# Ignore system files
+.ssh/
+error_log
+.htpasswds
+/.htaccess
+php.ini.sample
+dasalon-main.zip

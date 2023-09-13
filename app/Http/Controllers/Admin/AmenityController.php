@@ -25,31 +25,35 @@ class AmenityController extends Controller
             $amenity_icon =  '/uploads/amenity/'.$amenity_icon;
         }
        
-        // DB::enableQueryLog();
-        $acat_name= AmenityCategory::where('amenity_category', $request->amenity_category);
-        // $querylog =  DB::getQueryLog();
-        // dd($querylog);  
-        // echo "<pre>";print_r($acat_name->count());die();
-        
-        
-    //    echo "<pre>";print_r($request->amenity_category);die();
-
-        if( !$acat_name->count() ) {
-            $acat_id = AmenityCategory::create([
-                'amenity_category' => $request->amenity_category,
-            ]);
+        if($request->amenity_type == 1){
+            // DB::enableQueryLog();
+            $acat_name= AmenityCategory::where('amenity_category', $request->amenity_category);
+            // $querylog =  DB::getQueryLog();
+            // dd($querylog);  
+            // echo "<pre>";print_r($acat_name->count());die();
             
-	       $acat_id = $acat_id->id;
-        } else {
-            $acat_id = $acat_name->first()->id;
+            
+        
+
+            if( !$acat_name->count() ) {
+                $acat_id = AmenityCategory::create([
+                    'amenity_category' => $request->amenity_category,
+                ]);
+                
+            $acat_id = $acat_id->id;
+            } else {
+                $acat_id = $acat_name->first()->id;
+            }
+        }else{
+            $acat_id = "";
         }
 
-       
+        // echo "<pre>";print_r($acat_id);die();
        
         //    echo "<pre>";print_r();die();
         Amenity::create([
             'amenity_name' => $request->amenity_name,
-            'amenity_category' => $acat_id,
+            'amenity_category' => isset($acat_id) ? $acat_id : "",
             'partner_type' => $request->partner_type,
             'amenity_type' => $request->amenity_type,
             'amenity_icon' => $amenity_icon,
@@ -97,7 +101,7 @@ class AmenityController extends Controller
             $id = $record->id;
 
             if($record->amenity_icon){
-                $amenity_icon = '<img src="'.asset($record->amenity_icon).'" height="95px" widht="95px">';
+                $amenity_icon = '<img src="'.asset('public'.$record->amenity_icon).'" height="95px" widht="95px">';
             }else{
                 $amenity_icon = '<img src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460__340.png" height="95px" widht="95px">';
             }
@@ -175,7 +179,7 @@ class AmenityController extends Controller
             $id = $record->id;
 
             if($record->amenity_icon){
-                $amenity_icon = '<img src="'.asset($record->amenity_icon).'" height="95px" widht="95px">';
+                $amenity_icon = '<img src="'.asset('public'.$record->amenity_icon).'" height="95px" widht="95px">';
             }else{
                 $amenity_icon = '<img src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460__340.png" height="95px" widht="95px">';
             }

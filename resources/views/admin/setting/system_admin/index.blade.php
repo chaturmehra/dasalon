@@ -127,7 +127,19 @@
                                              <!--end::Input-->
                                           </div>
                                           <!--end::Input group-->
-                                          
+                                          <div class="fv-row mb-7">
+                                                <!--begin::Label-->
+                                                <label for="kt_docs_select2_country" class="form-label">Select a country</label>
+                                                <div class="form-floating border rounded">
+                                                   <select class="form-select" name="country" placeholder="..." id="kt_docs_select2_country" required>
+                                                      <option value="">Select Country</option>
+                                                      @foreach(getCountryList() as $con_val)
+                                                      <option value="{{$con_val->id}}" data-kt-select2-country="{{asset('/public/assets/media/flags/'.strtolower(str_replace(' ','-',$con_val->name.'.svg')))}}">{{$con_val->name}}</option>
+                                                      @endforeach
+                                                   </select>
+                                                </div>
+                                                <!--end::Input-->
+                                             </div>
                                           <!--begin::Input group-->
                                           <div class="fv-row mb-7">
                                              <!--begin::Label-->
@@ -364,9 +376,9 @@
                            @endphp
                         <tr>
                            <td>{{ $key+1 }}</td>
-                           <td>{{ $system_user->name }}</td>
-                           <td>{{ $system_user->phone }}</td>
-                           <td>{{ $system_user->email }}</td>
+                           <td>{{ $system_user['name'] }}</td>
+                           <td>{{ $system_user['phone'] }}</td>
+                           <td>{{ $system_user['email'] }}</td>
                            <td>
                               <div class="badge badge-light-{{ $class }} fw-bold">{{ $status }}</div>
                            </td>
@@ -377,17 +389,17 @@
                               <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-600 menu-state-bg-light-primary fw-semibold fs-7 w-125px py-4" data-kt-menu="true">
                                  <!--begin::Menu item-->
                                  <div class="menu-item px-3">
-                                    <a href="{{ url('/admin/system-manager/enable-status/'.$system_user->id) }}" class="menu-link px-3">Enable</a>
+                                    <a href="{{ url('/admin/system-manager/enable-status/'.$system_user['id']) }}" class="menu-link px-3">Enable</a>
                                  </div>
                                  <!--end::Menu item-->
                                  <!--begin::Menu item-->
                                  <div class="menu-item px-3">
-                                    <a href="{{ url('/admin/system-manager/disable-status/'.$system_user->id) }}" class="menu-link px-3">Disable</a>
+                                    <a href="{{ url('/admin/system-manager/disable-status/'.$system_user['id']) }}" class="menu-link px-3">Disable</a>
                                  </div>
                                  <!--end::Menu item-->
                                  <!--begin::Menu item-->
                                  <div class="menu-item px-3">
-                                    <a href="{{ url('/admin/edit-system-manager/'.$system_user->id) }}" class="menu-link px-3">Edit</a>
+                                    <a href="{{ url('/admin/edit-system-manager/'.$system_user['id']) }}" class="menu-link px-3">Edit</a>
                                  </div>
                                  <!--end::Menu item-->
                               </div>

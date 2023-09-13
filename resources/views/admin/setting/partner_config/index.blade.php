@@ -583,7 +583,7 @@
   @endsection
   
   @push('scripts')
-  <script src="{{asset('/assets/js/profilefeature.js')}}" type="text/javascript"></script>
+  <script src="{{asset('/public/assets/js/profilefeature.js')}}" type="text/javascript"></script>
     
 <script>
 // Wait for the DOM to be ready

@@ -13,5 +13,9 @@ class UserDetails extends Model
     protected $fillable = [
         'user_id',
         'country',
+        'business_name',
+        'website',
+        'provider',
+        'service_provided',
     ];
 }
