@@ -24,7 +24,19 @@ class SubscriptionController extends Controller
         ,'users.is_active','users.id')->get();
         // $querylog =  DB::getQueryLog();
         // dd($querylog);
-        return view('admin/setting/subscription_config/index', compact('title', 'meta_description', 'meta_keywords','subc','subtypeOne'));
+
+        $subtypeTwo = DB::table('users')
+        ->leftjoin('user_details', 'users.id', '=', 'user_details.user_id')
+        ->leftjoin('countries', 'countries.id', '=', 'user_details.country')
+        ->select('countries.name as countryname','users.name','users.email','users.phone','user_details.business_name','user_details.country'
+        ,'users.is_active','users.id')->get();
+
+        $onboardFees = DB::table('users')
+        ->leftjoin('user_details', 'users.id', '=', 'user_details.user_id')
+        ->leftjoin('countries', 'countries.id', '=', 'user_details.country')
+        ->select('countries.name as countryname','users.name','users.email','users.phone','user_details.business_name','user_details.country'
+        ,'users.is_active','users.id')->get();
+        return view('admin/setting/subscription_config/index', compact('title', 'meta_description', 'meta_keywords','subc','subtypeOne','subtypeTwo','onboardFees'));
     }
 
     public function create(Request $request)
@@ -52,9 +64,9 @@ class SubscriptionController extends Controller
 
             $gid->save();
 
-            return redirect()->back()->with('status', 'Grace period type 1 status updated successfully.');
+            return redirect()->back()->with('status', 'status updated successfully.');
         }else{
-            return redirect()->back()->with('errorstatus', 'Please select Grace period type 1.');
+            return redirect()->back()->with('errorstatus', 'Please select Subscription.');
         }
     }
 
@@ -72,9 +84,9 @@ class SubscriptionController extends Controller
             
 	        $gid->save();
 
-	        return redirect()->back()->with('status', 'Grace period type 1 status updated successfully.');
+	        return redirect()->back()->with('status', 'status updated successfully.');
 	    }else{
-	    	return redirect()->back()->with('errorstatus', 'Please select Grace period type 1.');
+	    	return redirect()->back()->with('errorstatus', 'Please select Subscription.');
 	    }
     }
 
