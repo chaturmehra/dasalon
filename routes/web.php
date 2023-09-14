@@ -186,6 +186,9 @@ Route::middleware(['auth'])->group(function () {
     Route::post('admin/add-businesstype', [CountryController::class, 'store']);
     Route::get('admin/businesstype/enable-status/{bt_id}', [CountryController::class, 'enabledbt']);
     Route::get('admin/businesstype/disable-status/{bt_id}', [CountryController::class, 'disabledbt']);
+
+    Route::get('admin/typeone/enable-status/{id}', [SubscriptionController::class, 'enabledsub']);
+    Route::get('admin/typeone/disable-status/{id}', [SubscriptionController::class, 'disabledsub']);
 });
 
 /*Partner Route*/

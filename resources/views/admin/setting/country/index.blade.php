@@ -328,6 +328,7 @@
 													<th class="min-w-125px">Currency Code</th>
 													<th class="min-w-125px">Currency Sign</th>
 													<th class="min-w-125px">Status</th>
+													<th class="min-w-125px">Action</th>
 												</tr>
 											</thead>
 											<tbody class="text-gray-600 fw-semibold">
@@ -1065,8 +1066,10 @@ $(function() {
 		{ data: 'currency_code' },
 		{ data: 'currency_sign' },
 		{ data: 'status' },
+		{ data: 'action' },
 		]
 	});
+	MenuComponent.reinitialization()
 oTable1 = $('#country-table').DataTable();   //pay attention to capital D, which is mandatory to retrieve "api" datatables' object, as @Lionel said
 $('#search_country').keyup(function(){
 	oTable1.search($(this).val()).draw() ;

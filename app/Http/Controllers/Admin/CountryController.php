@@ -157,11 +157,26 @@ class CountryController extends Controller
    
         $data_arr = array();
 		   
+
         foreach($records as $record){
-			$status = '<button type="submit" class="badge badge-danger on_status" data-id="1" id="' . $record->id . '">DEACTIVE</button>';
+   
+            $action='<a href="#" class="btn btn-light btn-active-light-primary btn-flex btn-center btn-sm" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end">Actions
+                     <i class="ki-duotone ki-down fs-5 ms-1"></i></a>
+                  <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-600 menu-state-bg-light-primary fw-semibold fs-7 w-125px py-4" data-kt-menu="true">
+                         
+                 <div class="menu-item px-3">
+                     <a href="javascript:void(0)"  data-id="1" id="' . $record->id . '" class="menu-link px-3  on_status">Enable</a>
+                 </div>
+                 <div class="menu-item px-3">
+                 <a href="javascript:void(0)"  data-id="0" id="' . $record->id . '" class="menu-link px-3  on_status">Disable</a>
+                 </div>
+                 </div>';
+
+            $status = '<div class="badge badge-light-danger fw-bold">Disabled</div>';
             if($record->status == '1'){
-                $status = '<button type="submit" class="badge badge-success on_status" data-id="0" id="' . $record->id . '">ACTIVE</button>';
-            }
+                $status = '<div class="badge badge-light-success fw-bold">Enabled</div>';
+            }       
+		
         
            $data_arr[] = array(
              "country_id" => $record->name,
@@ -169,6 +184,7 @@ class CountryController extends Controller
 			 "currency_code" => $record->currency_code,
 			 "currency_sign" => $record->currency_sign,
 			 "status" => $status,
+             "action" => $action,
            );
         }
    

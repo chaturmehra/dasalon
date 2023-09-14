@@ -228,6 +228,38 @@ class SystemManagerController extends Controller
     	$title             = "Dasalon :: View Manager Roles";
     	$meta_description  = "";
     	$meta_keywords     = "";
-    	return view('admin/setting/system_admin/view-manager-roles', compact('title', 'meta_description', 'meta_keywords'));
+
+        // DB::enableQueryLog();
+        $viewmanagerroles= User::leftJoin('system_manager_permissions', 'system_manager_permissions.user_id', '=', 'users.id')
+                           ->get()->toArray();
+        // $querylog =  DB::getQueryLog();
+        // dd($querylog);
+        $viewroles=User::where("role", 3)->get();
+        // $adminpagewithsubpage = adminpagewithsubpage();
+        // echo "<pre>";
+        // print_r($adminpagewithsubpage);
+        // print_r($viewmanagerroles);
+        // die;
+        
+        $system_manager_perm = [];
+        if( !empty($viewmanagerroles) ) {
+          foreach($viewmanagerroles as $key => $arr ) {
+        //     echo "<pre>";
+        // print_r($arr);
+        // die;
+            $system_manager_perm[$arr["page"]][$arr["subpage"]][$arr["user_id"]] = $arr;
+           
+          }
+        }
+
+        // echo "<pre>";
+        // print_r($adminpagewithsubpage);
+        // print_r($system_manager_perm);
+        // print_r($viewmanagerroles);
+        // die;
+        // echo "system_manager_perm <pre>";
+        //  print_r($system_manager_perm);
+        //  die;
+    	return view('admin/setting/system_admin/view-manager-roles', compact('title', 'meta_description', 'meta_keywords','system_manager_perm','viewroles'));
     }
 }
