@@ -680,7 +680,7 @@ $(function() {
         var ajaxurl = '{{ url('admin/setting/edit-amenity-status/')}}'+'/' + id+'/'+data_id;
         swal({
           title: "Are you sure?",
-          text: "To change status this country?",
+          text: "To change status this amenity?",
           icon: "warning",
           buttons: true,
           dangerMode: true,
@@ -696,7 +696,7 @@ $(function() {
                 success:function(data)
                 {
                   $('.spinner-cls').hide();
-                  swal("Your country status has been changed!", {
+                  swal("Your status has been changed!", {
                 icon: "success",
               });
                 $('#amenities_table').DataTable().ajax.reload();

@@ -4134,7 +4134,7 @@
 		</script>
 		<script src="{{asset('/public/assets/js/services.js')}}" type="text/javascript"></script>
 		<script src="{{asset('/public/assets/js/recommendedpackage.js')}}" type="text/javascript"></script>
-
+		<script src="{{asset('/public/assets/js/sysmanagerperm.js')}}" type="text/javascript"></script>
 	</body>
 	<!--end::Body-->
 </html>

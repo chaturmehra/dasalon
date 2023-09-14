@@ -22,15 +22,6 @@ function getCountryConfigList(){
 	$countryList = CountryConfig::leftJoin('countries', 'country_config.country_id', '=', 'countries.id')->where('status',1)->get(['name','countries.id']);
 	return $countryList;
 }
-function adminAmenityCategories(){
-    $amenityList = [
-        'Venue'         => 'Venue',
-        'Access'        => 'Access',
-        'Products Used' => 'Products Used',
-        'Brands'        => 'Brands',
-    ];
-    return $amenityList;
-}
 
 if (!function_exists('loadScript')) {
     function loadScript( $src = "" ) {
@@ -56,7 +47,6 @@ function getAmenityCategory(){
 	return $amenitycategory;
 }
 
-
 function scheduleType(){
     $scheduleTypeList = [
         '1'  => 'Every week',
@@ -68,3 +58,24 @@ function scheduleType(){
     return $scheduleTypeList;
 }
 
+function adminpagewithsubpage(){
+    $pagewithsubpageList =
+    [
+        'Settings' => [
+            'Country Config',
+            'Partner Config',
+            'Subscription Config',
+            'Appointment Config',
+            'Amenity & Special Attributes',
+            'Payment Gateway'
+        ],
+        'Service' => [
+            'Order Management',
+            'Service Config',
+            'Partner - Service mapping',
+            'Recommendations (package)', 
+            'Offers Management'
+        ]
+        ];
+        return $pagewithsubpageList;
+    }
