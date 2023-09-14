@@ -1,8 +1,7 @@
-$(document).on('click', '.get-commission-by-id', function(){
+$(document).on('click', '.modal_attendance_check', function(event){
   event.preventDefault();
-
-  var staff_id    = $('#main_staff_id').val();
-  var ajaxurl     = baseurl+'partner/staff/get-commission-by-staff-id'+'/' + staff_id;
+  var staff_id    = $(this).attr('staff-id');
+  var ajaxurl     = baseurl+'partner/staff/get-staff-detail-fill-attendance'+'/' + staff_id;
   
   $.ajax({
     url:ajaxurl,
@@ -16,16 +15,25 @@ $(document).on('click', '.get-commission-by-id', function(){
       response = JSON.parse(response);
 
       if (response.status) {
-        var commission_data = response.data;
+        var staff_data = response.data;
 
-        $("#edit_service").val(commission_data[0].service);
-        $("#edit_book_look").val(commission_data[0].book_look);
-        $("#edit_package").val(commission_data[0].package);
-        $("#edit_voucher").val(commission_data[0].voucher);
-        $("#edit_membership").val(commission_data[0].membership);
-        $("#edit_product").val(commission_data[0].product);
+        $(".att_staff_name").text(staff_data[0].name);
+        $(".att_staff_id").val(staff_data[0].id);
       }
     }
   });
+});
 
+$(document).on('click', '.show_hide_staff_attendance', function(event){
+  event.preventDefault();
+  var staff_id    = $(this).attr('staff-id');
+  var trClass   = 'staff_'+staff_id;
+
+  if (staff_id == "all") {
+    $('.attendance-register tr').removeClass('d-none');
+  }else {
+    $('.attendance-register tr').addClass('d-none');
+    $('.attendance-register tr.'+trClass).removeClass('d-none');
+  }
+  
 });

@@ -10,6 +10,8 @@ use App\Models\Partner\Venue;
 use App\Models\Partner\VenueMeta;
 use Illuminate\Support\Facades\Auth;
 use DB;
+use App\Models\User;
+use App\Models\UserDetails;
 
 class VenueController extends Controller
 {
@@ -81,9 +83,11 @@ class VenueController extends Controller
 			}
 		}
 
-		// echo "<pre>"; print_r($venue_data_arr); die;
+		$loggedUserDetail = User::leftjoin('user_details', 'users.id', '=', 'user_details.user_id')->where('users.is_active', 1)->get();
 
-		return view('partner/setting/venue/index', compact('title', 'meta_description', 'meta_keywords', 'amenities', 'venue_data_arr', 'businesstypes'));
+		// echo "<pre>"; print_r($getLoggedUser); die;
+
+		return view('partner/setting/venue/index', compact('title', 'meta_description', 'meta_keywords', 'amenities', 'venue_data_arr', 'businesstypes', 'loggedUserDetail'));
 	}
 
 	public function storeVenues(Request $request)

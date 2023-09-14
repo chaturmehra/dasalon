@@ -30,6 +30,8 @@ use App\Http\Controllers\Admin\OffersManagementController;
 use App\Http\Controllers\TwilioSMSController;
 use App\Http\Controllers\Partner\StaffController;
 use App\Http\Controllers\Partner\StaffAttendanceController;
+use App\Http\Controllers\Partner\StaffLeaveController;
+use App\Http\Controllers\Partner\StaffUserAuthorizationController;
 
 
 /*
@@ -199,6 +201,15 @@ Route::middleware(['auth'])->group(function () {
     Route::post('partner/staff/update-staff', [StaffController::class, 'updateStaff']);
 
     Route::get('partner/staff/attendance', [StaffAttendanceController::class, 'index'])->name('attendance.index');
+    Route::get('partner/staff/get-staff-detail-fill-attendance/{id}', [StaffAttendanceController::class, 'getStaffDetailFillAttendance']);
+
+    Route::post('partner/staff/checkin-attendance', [StaffAttendanceController::class, 'checkinAttendance']);
+    Route::post('partner/staff/checkout-attendance', [StaffAttendanceController::class, 'checkoutAttendance']);
+
+    Route::get('partner/staff/leave', [StaffLeaveController::class, 'index'])->name('leave.index');
+    Route::post('partner/staff/leave', [StaffLeaveController::class, 'storeLeave']);
+
+    Route::get('partner/staff/user-authorization', [StaffUserAuthorizationController::class, 'index'])->name('user-authorization.index');
 
 });
 

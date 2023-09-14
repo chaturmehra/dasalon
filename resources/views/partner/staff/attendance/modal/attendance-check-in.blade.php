@@ -11,16 +11,18 @@
             <!--end::Close-->
          </div>
          <div class="modal-body">
-            <form class="form">
+            <form class="form" method="post" action="{{ url('partner/staff/checkin-attendance') }}">
+               @csrf
+               <input type="hidden" name="staff_id" class="att_staff_id">
                <!--begin::Scroll-->
                <div class="d-flex flex-column scroll-y me-n7 pe-7">
                   <div class="d-flex flex-column gap-5 mb-7">
                      <div>
-                        <h4>Harry</h4>
+                        <h4><span class="att_staff_name"></span></h4>
                      </div>
                      <div class="fv-row">
                         <div class="input-group kt_td_picker_time_only" data-td-target-input="nearest" data-td-target-toggle="nearest">
-                           <input type="text" class="form-control" data-td-target=".kt_td_picker_time_only" placeholder="Check-in" value="10:00"/>
+                           <input type="text" name="check_in" class="form-control" data-td-target=".kt_td_picker_time_only" placeholder="Check-in" value="10:00" required="required" />
                            <span class="input-group-text" data-td-target=".kt_td_picker_time_only" data-td-toggle="datetimepicker">
                            <i class="ki-outline ki-time fs-3"></i>
                            </span>

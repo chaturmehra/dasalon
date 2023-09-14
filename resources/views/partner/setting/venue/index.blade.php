@@ -67,7 +67,11 @@
                   <!--begin::Details-->
                   <div class="d-flex flex-wrap flex-sm-nowrap gap-8">
                      <div class="symbol symbol-100px symbol-lg-160px symbol-fixed position-relative">
-                        <img src="{{ asset('/public/partner/assets/media/avatars/300-1.jpg') }}" alt="image">
+                        @if($loggedUserDetail[0]->business_logo)
+                           <img src="{{ asset('/public/partner/assets/media/avatars/300-1.jpg') }}" alt="image">
+                        @else
+                           <img src="{{ asset('/public/partner/assets/media/avatars/300-1.jpg') }}" alt="image">
+                        @endif
                         <div class="position-absolute translate-middle bottom-0 start-100 mb-6 bg-success rounded-circle border border-4 border-body h-20px w-20px"></div>
                      </div>
                      <!--begin::Info-->
@@ -87,29 +91,35 @@
                         </div>
                         <!--end::Title-->
                         <div class="d-flex flex-wrap gap-5 mb-5 cntct-info">
+                           @if($loggedUserDetail[0]->website)
                            <div>
-                              <a href="">
+                              <a href="{{ $loggedUserDetail[0]->website }}" target="_blank">
                               <i class="fas fa-globe fs-1"></i>
                               </a>
                            </div>
+                           @endif
+                           @if($loggedUserDetail[0]->facebook)
                            <div>
-                              <a href="">
+                              <a href="{{ $loggedUserDetail[0]->facebook }}" target="_blank">
                               <i class="fab fa-facebook-f fs-1"></i>
                               </a>
                            </div>
+                           @endif
+                           @if($loggedUserDetail[0]->instagram)
                            <div>
-                              <a href="">
+                              <a href="{{ $loggedUserDetail[0]->instagram }}" target="_blank">
                               <i class="fab fa-instagram fs-1"></i>
                               </a>
                            </div>
+                           @endif
                            <div>
-                              <a href="">
+                              <a href="tel:{{@Auth::user()->phone}}">
                               <i class="fas fa-phone"></i>
                               <span class="text-gray-400 fw-semibold fs-6">{{@Auth::user()->phone}}</span>
                               </a>
                            </div>
                            <div>
-                              <a href="">
+                              <a href="mailto:{{@Auth::user()->email}}">
                               <i class="fas fa-envelope"></i>
                               <span class="text-gray-400 fw-semibold fs-6">{{@Auth::user()->email}}</span>
                               </a>
@@ -170,7 +180,10 @@
                      <!--end::Info-->
                      <div class="card-toolbar flex-row-fluid justify-content-end gap-5">
                         <div class="card-toolbar">
-                           <div class="d-flex justify-content-end" data-kt-user-table-toolbar="base">
+                           <div class="d-flex justify-content-end gap-3" data-kt-user-table-toolbar="base">
+                              <span data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-original-title="Edit customer details" data-kt-initialized="1">
+                                 <a href="#" class="btn btn-light-primary on-business-detail" data-bs-toggle="modal" data-bs-target="#kt_modal_businessdetail" partner-id="{{@Auth::user()->id}}">Edit</a>
+                              </span>
                               <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#kt_modal_scrollable">
                               <i class="ki-duotone ki-plus fs-2"></i>Add new Venue
                               </button>
@@ -179,42 +192,58 @@
                      </div>
                   </div>
                   <!--end::Details-->
-                  <ul class="nav nav-stretch nav-line-tabs nav-line-tabs-2x border-transparent fs-5 fw-bold">
-                     <li class="nav-item mt-2">
-                        <a class="nav-link text-active-primary ms-0 me-10 py-5 active" href="venue-setting.html">
-                        Venue                    
-                        </a>
-                     </li>
-                     <!--end::Nav item-->
-                     <!--begin::Nav item-->
-                     <li class="nav-item mt-2">
-                        <a class="nav-link text-active-primary ms-0 me-10 py-5" href="{{ route('staff.index') }}">
-                        Staff                    
-                        </a>
-                     </li>
-                     <!--end::Nav item-->
-                     <!--begin::Nav item-->
-                     <li class="nav-item mt-2">
-                        <a class="nav-link text-active-primary ms-0 me-10 py-5" href="">
-                        Online Booking                    
-                        </a>
-                     </li>
-                     <!--end::Nav item-->
-                     <!--begin::Nav item-->
-                     <li class="nav-item mt-2">
-                        <a class="nav-link text-active-primary ms-0 me-10 py-5 " href="">
-                        Account Info                  
-                        </a>
-                     </li>
-                     <!--end::Nav item-->
-                     <!--begin::Nav item-->
-                     <li class="nav-item mt-2">
-                        <a class="nav-link text-active-primary ms-0 me-10 py-5 " href="">
-                        Integration              
-                        </a>
-                     </li>
-                     <!--end::Nav item-->
-                  </ul>
+                  <div class="d-flex justify-content-between">
+                     <ul class="nav nav-stretch nav-line-tabs nav-line-tabs-2x border-transparent fs-5 fw-bold">
+                        <li class="nav-item mt-2">
+                           <a class="nav-link text-active-primary ms-0 me-10 py-5 active" href="venue-setting.html">
+                           Venue                    
+                           </a>
+                        </li>
+                        <!--end::Nav item-->
+                        <!--begin::Nav item-->
+                        <li class="nav-item mt-2">
+                           <a class="nav-link text-active-primary ms-0 me-10 py-5" href="{{ route('staff.index') }}">
+                           Staff                    
+                           </a>
+                        </li>
+                        <!--end::Nav item-->
+                        <!--begin::Nav item-->
+                        <li class="nav-item mt-2">
+                           <a class="nav-link text-active-primary ms-0 me-10 py-5" href="">
+                           Online Booking                    
+                           </a>
+                        </li>
+                        <!--end::Nav item-->
+                        <!--begin::Nav item-->
+                        <li class="nav-item mt-2">
+                           <a class="nav-link text-active-primary ms-0 me-10 py-5 " href="">
+                           Account Info                  
+                           </a>
+                        </li>
+                        <!--end::Nav item-->
+                        <!--begin::Nav item-->
+                        <li class="nav-item mt-2">
+                           <a class="nav-link text-active-primary ms-0 me-10 py-5 " href="">
+                           Integration              
+                           </a>
+                        </li>
+                        <!--end::Nav item-->
+                     </ul>
+                     <div class="mb-5">
+                        <!--begin::Label-->
+                        <label class="required fw-semibold fs-6 mb-2">Select Venue</label>
+                        <!--end::Label-->
+                        <!--begin::Input-->
+                        <select class="form-select form-select-solid" data-control="select2" data-placeholder="Select an option" data-allow-clear="true">
+                           <option></option>
+                           <option value="1">Venue1</option>
+                           <option value="2" selected>Venue2</option>
+                           <option value="3">Venue3</option>
+                           <option value="4">Venue4</option>
+                        </select>
+                        <!--end::Input-->
+                     </div>
+                  </div>
                </div>
             </div>
             <!--begin::Layout-->
@@ -540,6 +569,9 @@
 @include('partner.setting.venue.modal.add-venue-modal')
 
 @include('partner.setting.venue.modal.update-venue-modal')
+@include('partner.setting.venue.modal.update-business-detail')
+@include('partner.setting.venue.modal.change-email')
+@include('partner.setting.venue.modal.change-phone')
 
 @endsection
 @push('scripts')
