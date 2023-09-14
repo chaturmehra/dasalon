@@ -27,7 +27,6 @@
 		<link href="{{ asset('/public/assets/css/style.css') }}" rel="stylesheet" type="text/css" />
 		<link href="{{ asset('/public/assets/css/custom.css') }}" rel="stylesheet" type="text/css" />
 		<!--end::Global Stylesheets Bundle-->
-
 	</head>
 	<!--end::Head-->
 	<!--begin::Body-->

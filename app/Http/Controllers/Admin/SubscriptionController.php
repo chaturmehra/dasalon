@@ -5,6 +5,9 @@ use Illuminate\Http\RedirectResponse;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\SubscriptionPlan;
+use Illuminate\Support\Facades\DB;
+use App\Models\User;
+
 class SubscriptionController extends Controller
 {
     public function index()
@@ -13,7 +16,15 @@ class SubscriptionController extends Controller
     	$meta_description  = "";
     	$meta_keywords     = "";
         $subc=SubscriptionPlan::all();
-        return view('admin/setting/subscription_config/index', compact('title', 'meta_description', 'meta_keywords','subc'));
+        // DB::enableQueryLog();
+        $subtypeOne = DB::table('users')
+        ->leftjoin('user_details', 'users.id', '=', 'user_details.user_id')
+        ->leftjoin('countries', 'countries.id', '=', 'user_details.country')
+        ->select('countries.name as countryname','users.name','users.email','users.phone','user_details.business_name','user_details.country'
+        ,'users.is_active','users.id')->get();
+        // $querylog =  DB::getQueryLog();
+        // dd($querylog);
+        return view('admin/setting/subscription_config/index', compact('title', 'meta_description', 'meta_keywords','subc','subtypeOne'));
     }
 
     public function create(Request $request)
@@ -27,6 +38,44 @@ class SubscriptionController extends Controller
         $sp->is_active 	= 1;
         $sp->save();
         return redirect()->back()->with('message', 'Subscription Plan created successfully.');
+    }
+
+    public function enabledsub($id): RedirectResponse
+    {
+        if($id){
+            $gid = new User;
+
+            $gid->exists       = true;
+            $gid->id           = $id;
+            $gid->is_active    = 1;
+            $gid->updated_at   = date('Y-m-d H:i:s');
+
+            $gid->save();
+
+            return redirect()->back()->with('status', 'Grace period type 1 status updated successfully.');
+        }else{
+            return redirect()->back()->with('errorstatus', 'Please select Grace period type 1.');
+        }
+    }
+
+    public function disabledsub($id): RedirectResponse
+    {
+    	if($id){
+	        $gid = new User;
+
+	        $gid->exists 		= true;
+	        $gid->id 			= $id;
+	        $gid->is_active 	= 0;
+	        $gid->updated_at 	= date('Y-m-d H:i:s');
+            
+            // echo "<pre>"; print_r($s->is_active);die;
+            
+	        $gid->save();
+
+	        return redirect()->back()->with('status', 'Grace period type 1 status updated successfully.');
+	    }else{
+	    	return redirect()->back()->with('errorstatus', 'Please select Grace period type 1.');
+	    }
     }
 
     public function enabled($id): RedirectResponse

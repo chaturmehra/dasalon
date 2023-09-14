@@ -129,4 +129,35 @@ class StaffAttendanceController extends Controller
 		
 		echo json_encode($response);
 	}
+
+	public function filterAttendanceByDate($start_date, $end_date)
+	{
+		/*if ($start_date != $end_date)
+    		whereBetween('staff_attendance.date', [$start_date, $end_date]);
+    	}else{
+        	->where('staff_attendance.date', $start_date)
+        }*/
+		$partner_id 	= Auth::user()->id;
+		$staff 			= Staff::where('partner_id', $partner_id);
+		$staffAttendance 	= $staff->select(['staff.staff_id', 'staff.user_id', 'users.name', 'users.email', 'users.phone', 'staff_attendance.date', 'staff_attendance.check_in', 'staff_attendance.check_out'])
+                ->leftJoin('users', 'users.id', '=', 'staff.user_id')
+                ->leftJoin('staff_attendance', 'staff_attendance.staff_id', '=', 'staff.user_id')
+                ->orderBy('staff.staff_id', 'DESC')
+            	->where('staff_attendance.date', $start_date)
+                ->get();
+
+		if ( !$staffAttendance->isEmpty() ) {
+			$response = array(
+				"status" 	=> 1,
+				"data" 		=> $staffAttendance,
+			);
+		}else{
+			$response = array(
+				"status" 	=> 0,
+				"message" 	=> "Data not found",
+			);
+		}
+		
+		echo json_encode($response);
+	}
 }

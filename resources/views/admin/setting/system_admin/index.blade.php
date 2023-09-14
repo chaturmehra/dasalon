@@ -146,7 +146,7 @@
                                              <label class="required fw-semibold fs-6 mb-2">Phone</label>
                                              <!--end::Label-->
                                              <!--begin::Input-->
-                                             <input type="text" name="phone" class="form-control form-control-solid mb-3 mb-lg-0" placeholder="Phone"/>
+                                             <input type="number" name="phone" class="form-control form-control-solid mb-3 mb-lg-0" placeholder="Phone"/>
                                              <!--end::Input-->
                                           </div>
                                           <!--end::Input group-->
