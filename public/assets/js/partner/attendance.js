@@ -42,11 +42,37 @@ $('.attendance-daterangepicker').on('apply.daterangepicker', function (ev, picke
     var startDate = picker.startDate.format('YYYY-MM-DD');
     var endDate   = picker.endDate.format('YYYY-MM-DD');
 
-    // You can use the selected start and end date as needed
-    console.log('Start Date: ' + startDate);
-    console.log('End Date: ' + endDate);
-
     var ajaxurl     = baseurl+'partner/staff/filter-attendance-by-date'+'/'+startDate+'/'+endDate;
+
+    $.ajax({
+      url:ajaxurl,
+      type:'GET',
+      beforeSend:function(){
+        $('.spinner-cls').show();
+      },
+      success:function(response)
+      {
+        $('.spinner-cls').hide();
+        response = JSON.parse(response);
+        $('.attendance-register').html('');
+        if (response.status) {
+          var staff_data = response.data;
+          $('.attendance-register').append(staff_data);
+        }else{
+          var staff_data = response.data;
+          $('.attendance-register').append(staff_data);
+        }
+      }
+    });
+});
+
+$('.attendance-analytics-filter').on('apply.daterangepicker', function (ev, picker) {
+
+    // The selected date range will be available in the 'picker' object
+    var startDate = picker.startDate.format('YYYY-MM-DD');
+    var endDate   = picker.endDate.format('YYYY-MM-DD');
+
+    var ajaxurl     = baseurl+'partner/staff/attendance-analytics'+'/'+startDate+'/'+endDate;
 
     $.ajax({
       url:ajaxurl,
@@ -60,10 +86,44 @@ $('.attendance-daterangepicker').on('apply.daterangepicker', function (ev, picke
         response = JSON.parse(response);
 
         if (response.status) {
-          var staff_data = response.data;
 
-          $(".att_staff_name").text(staff_data[0].name);
-          $(".att_staff_id").val(staff_data[0].id);
+          var apexChartArray       = response.apexChartArray;
+          var apexChartAvgArray   = response.apexChartAvgArray;
+
+          var seriesData = Object.values(apexChartArray).map(value => value.toString());
+          var categoriesData = Object.keys(apexChartArray);
+          var seriesAvgData = Object.values(apexChartAvgArray).map(value => value.toString());
+
+          //console.log("chart", chart)
+          
+          chart.updateOptions({
+            xaxis: {
+              categories: categoriesData,
+            },
+          });
+          chart.updateSeries([{
+            name: 'Spent time',
+            data: seriesData
+          }]);
+          chart.updateSeries([{
+            name: 'Average Working Hour',
+            data: seriesAvgData
+          }]);
+
+        }else{
+          chart.updateSeries([{
+            name: 'Spent time',
+            data: ""
+          }]);
+          chart.updateSeries([{
+            name: 'Average Working Hour',
+            data: ""
+          }]);
+          chart.updateOptions({
+            xaxis: {
+              categories: ""
+            },
+          });
         }
       }
     });

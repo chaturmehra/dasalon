@@ -32,6 +32,7 @@ use App\Http\Controllers\Partner\StaffController;
 use App\Http\Controllers\Partner\StaffAttendanceController;
 use App\Http\Controllers\Partner\StaffLeaveController;
 use App\Http\Controllers\Partner\StaffUserAuthorizationController;
+use App\Http\Controllers\Partner\ExportController;
 
 
 /*
@@ -199,12 +200,15 @@ Route::middleware(['auth'])->group(function () {
     Route::get('partner/staff/get-staff-detail-by-id/{id}', [StaffController::class, 'getStaffDetailById']);
     Route::get('partner/staff/get-commission-by-staff-id/{id}', [StaffController::class, 'getCommissionByStaffId']);
     Route::post('partner/staff/update-staff', [StaffController::class, 'updateStaff']);
+    Route::get('partner/staff/filter-by-role/{id}', [StaffController::class, 'filterByRole']);
+    Route::get('partner/staff/filter-reset', [StaffController::class, 'filterReset']);
 
     Route::get('partner/staff/attendance', [StaffAttendanceController::class, 'index'])->name('attendance.index');
     Route::get('partner/staff/get-staff-detail-fill-attendance/{id}', [StaffAttendanceController::class, 'getStaffDetailFillAttendance']);
     Route::post('partner/staff/checkin-attendance', [StaffAttendanceController::class, 'checkinAttendance']);
     Route::post('partner/staff/checkout-attendance', [StaffAttendanceController::class, 'checkoutAttendance']);
     Route::get('partner/staff/filter-attendance-by-date/{start_date}/{end_date}', [StaffAttendanceController::class, 'filterAttendanceByDate']);
+    Route::get('partner/staff/attendance-analytics/{start_date}/{end_date}', [StaffAttendanceController::class, 'attendanceAnalytics']);
 
     Route::get('partner/staff/leave', [StaffLeaveController::class, 'index'])->name('leave.index');
     Route::post('partner/staff/leave', [StaffLeaveController::class, 'storeLeave']);
@@ -213,6 +217,8 @@ Route::middleware(['auth'])->group(function () {
 
     Route::get('admin/typeone/enable-status/{id}', [SubscriptionController::class, 'enabledsub']);
     Route::get('admin/typeone/disable-status/{id}', [SubscriptionController::class, 'disabledsub']);
+
+    Route::get('partner/staff/export-staff-by-role/{id}/{type}', [ExportController::class, 'exportStaffByRole']);
 });
 
 /*Partner Route*/

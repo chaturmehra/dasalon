@@ -96,35 +96,39 @@
                                  <td></td>
                                  <td></td>
                               </tr>
+                              @foreach(userAuthorization() as $page => $subpages)
                               <tr>
-                                 <td>Home</td>
+                                 <td><input type="hidden" name="page[]" value="{{$page}}" />{{ $page }}</td>
                                  <td></td>
                                  <td>
                                     <label class="form-check form-switch form-check-custom form-check-solid">
-                                       <input class="form-check-input" type="checkbox" checked="checked" value="" />
+                                       <input class="form-check-input" type="checkbox" name="property_value[{{$page}}]" data-role="1" data-page="{{$page}}" />
                                     </label>
                                  </td>
                                  <td>
                                     <label class="form-check form-switch form-check-custom form-check-solid">
-                                       <input class="form-check-input" type="checkbox" checked="checked" value="" />
+                                       <input class="form-check-input" type="checkbox" name="property_value[{{$page}}]" data-role="2" data-page="{{$page}}"/>
                                     </label>
                                  </td>
                               </tr>
+                              @foreach( $subpages as $key => $subpage )
                               <tr>
                                  <td></td>
-                                 <td>Sales(button)</td>
+                                 <td><input type="hidden" name="subpage[]" value="{{$subpage}}" />{{ $subpage }}</td>
                                  <td>
                                     <label class="form-check form-switch form-check-custom form-check-solid">
-                                       <input class="form-check-input" type="checkbox" checked="checked" value="" />
+                                       <input class="form-check-input" type="checkbox" name="property_value[{{$page}}][{{$subpage}}]" data-role="1"/>
                                     </label>
                                  </td>
                                  <td>
                                     <label class="form-check form-switch form-check-custom form-check-solid">
-                                       <input class="form-check-input" type="checkbox" checked="checked" value="" />
+                                       <input class="form-check-input" type="checkbox" data-page="{{$page}}" data-subpage="{{$subpage}}" data-role="2"/>
                                     </label>
                                  </td>
                               </tr>
-                              <tr>
+                              @endforeach
+                              @endforeach
+                              {{-- <tr>
                                  <td></td>
                                  <td>Appointment(button)</td>
                                  <td>
@@ -983,7 +987,7 @@
                                        <input class="form-check-input" type="checkbox" checked="checked" value="" />
                                     </label>
                                  </td>
-                              </tr>
+                              </tr> --}}
                            </tbody>
                         </table>
                         <!--end::Table-->

@@ -76,6 +76,33 @@ function adminpagewithsubpage(){
             'Recommendations (package)', 
             'Offers Management'
         ]
-        ];
-        return $pagewithsubpageList;
-    }
+    ];
+    return $pagewithsubpageList;
+}
+
+function userAuthorization(){
+    $userAuthorization =
+    [
+        'Home' => [
+            'Sales(button)',
+            'Appointment(button)',
+        ],
+        'Calendar' => [
+            'Add appointment',
+            'Change appointment',
+            'View Calendar',
+            'View all staff calendar',
+        ],
+        'Clients' => [
+            'Create client',
+            'import clients, upload client register, export clients',
+            'Reviews - view',
+            'Review - reply/report',
+        ],
+        'Sales' => [
+            'Export',
+            'Options Button',
+        ]
+    ];
+    return $userAuthorization;
+}

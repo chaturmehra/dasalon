@@ -144,7 +144,7 @@
                      <!--begin::Toolbar-->
                      <div class="card-toolbar">
                         <!--begin::Daterangepicker(defined in src/js/layout/app.js)-->
-                        <div data-kt-daterangepicker="true" data-kt-daterangepicker-opens="left" class="btn btn-sm btn-light d-flex align-items-center px-4">
+                        <div data-kt-daterangepicker="true" data-kt-daterangepicker-opens="left" class="btn btn-sm btn-light d-flex align-items-center px-4 attendance-analytics-filter">
                            <!--begin::Display range-->
                            <div class="text-gray-600 fw-bold">Loading date range...</div>
                            <!--end::Display range-->
@@ -335,6 +335,13 @@
 @push('scripts')
 
 <script type="text/javascript">
+   var seriesData = "@php echo implode(',', array_values($apexChartArray)); @endphp";
+   seriesData = seriesData.split(",");
+   var seriesAvgData = "@php echo implode(',', array_values($apexChartAvgArray)); @endphp";
+   seriesAvgData = seriesAvgData.split(",");
+   var categoriesData = "@php echo implode(',', array_keys($apexChartArray)); @endphp";
+   categoriesData = categoriesData.split(",");
+
    var KTChartsWidgetAttendance = (function () {
     var e = { self: null, rendered: !1 },
         t = function (e) {
@@ -344,7 +351,7 @@
                     l = KTUtil.getCssVariableValue("--bs-gray-900"),
                     r = KTUtil.getCssVariableValue("--bs-border-dashed-color"),
                     o = {
-                        series: [{ name: "Spent time", data: [54, 42, 75, 110, 23, 87, 50] }],
+                        series: [{ name: "Spent time", data: seriesData }],
                         chart: { fontFamily: "inherit", type: "bar", height: a, toolbar: { show: !1 } },
                         plotOptions: { bar: { horizontal: !1, columnWidth: ["28%"], borderRadius: 5, dataLabels: { position: "top" }, startingShape: "flat" } },
                         legend: { show: !1 },
@@ -358,7 +365,7 @@
                         },
                         stroke: { show: !0, width: 2, colors: ["transparent"] },
                         xaxis: {
-                            categories: ["Harry", "Lisa", "Tom", "Sam", "Dazy", "Simon", "Ron"],
+                            categories: categoriesData,
                             axisBorder: { show: !1 },
                             axisTicks: { show: !1 },
                             labels: { style: { colors: KTUtil.getCssVariableValue("--bs-gray-500"), fontSize: "13px" } },
@@ -413,14 +420,14 @@
             if (t) {
                 var a = KTUtil.getCssVariableValue("--bs-border-dashed-color"),
                     l = {
-                        series: [{ data: [15, 12, 10, 8, 7, 4, 3], show: !1 }],
+                        series: [{ name: "Average Working Hour", data: seriesAvgData, show: !1 }],
                         chart: { type: "bar", height: 350, toolbar: { show: !1 } },
                         plotOptions: { bar: { borderRadius: 4, horizontal: !0, distributed: !0, barHeight: 50 } },
                         dataLabels: { enabled: !1 },
                         legend: { show: !1 },
                         colors: ["#3E97FF", "#F1416C", "#50CD89", "#FFC700", "#7239EA", "#50CDCD", "#3F4254"],
                         xaxis: {
-                            categories: ["Harry", "Lisa", "Tom", "Sam", "Dazy", "Simon", "Ron"],
+                            categories: categoriesData,
                             labels: {
                                 formatter: function (e) {
                                     return e + "K";

@@ -32,11 +32,51 @@ class StaffAttendanceController extends Controller
 		$staffAttendance 	= $staffs->select(['staff.staff_id', 'staff.user_id', 'users.name', 'users.email', 'users.phone', 'staff_attendance.date', 'staff_attendance.check_in', 'staff_attendance.check_out'])
                 ->leftJoin('users', 'users.id', '=', 'staff.user_id')
                 ->leftJoin('staff_attendance', 'staff_attendance.staff_id', '=', 'staff.user_id')
-                ->orderBy('staff.staff_id', 'DESC')
+                ->orderBy('staff_attendance.sa_id', 'DESC')
                 ->where('users.is_active', 1)
                 ->get();
-        // echo "<pre>"; print_r($staffAttendance); die;
-		return view('partner/staff/attendance/index', compact('title', 'meta_description', 'meta_keywords', 'getStaff', 'staffAttendance'));
+
+        // By default get last 30 days data of Attendance Analytics 
+        $today_date 	= date('Y-m-d');
+        $last_30_date 	= date('Y-m-d', strtotime('today - 30 days'));
+       	$Apexstaff 		= Staff::where('partner_id', $partner_id);
+
+		$apexStaffAttendance 	= $Apexstaff->select(['staff.staff_id', 'staff.user_id', 'users.name', 'users.email', 'users.phone', 'staff_attendance.date', 'staff_attendance.check_in', 'staff_attendance.check_out'])
+                ->leftJoin('users', 'users.id', '=', 'staff.user_id')
+                ->leftJoin('staff_attendance', 'staff_attendance.staff_id', '=', 'staff.user_id')
+                ->orderBy('staff_attendance.sa_id', 'DESC')
+                ->where('users.is_active', 1)
+                ->whereBetween('staff_attendance.date', [$last_30_date, $today_date])
+                ->get();
+        $apexChartArray = "";
+        if (!$apexStaffAttendance->isEmpty()) {
+        	$apexCart = "";
+        	foreach ($apexStaffAttendance as $key => $value) {
+        		$ts1 = strtotime($value['check_in']);
+				$ts2 = strtotime($value['check_out']);    
+				if($ts1 && $ts2){
+					$seconds_diff = $ts2 - $ts1;                            
+					$time = ($seconds_diff/3600);
+				}else{
+					$time = 0;
+				}
+        		$staffdata[$value['name']][] = $time;
+
+        		$apexCart = $staffdata;
+        	}
+        	$apexChartArray = array();
+        	$apexChartAvgArray = array();
+
+        	foreach ($apexCart as $sumkey => $apexChartArr) {
+        		$sum = array_sum($apexChartArr);
+        		$apexChartArray[$sumkey] = $sum;
+
+        		$average = array_sum($apexChartArr) / count($apexChartArr);
+        		$apexChartAvgArray[$sumkey] = $average;
+        	}
+        }
+
+		return view('partner/staff/attendance/index', compact('title', 'meta_description', 'meta_keywords', 'getStaff', 'staffAttendance', 'apexChartArray', 'apexChartAvgArray'));
 	}
 
 	public function checkinAttendance(Request $request)
@@ -56,7 +96,7 @@ class StaffAttendanceController extends Controller
         	$staffAttendance = StaffAttendance::where('staff_id', $request->staff_id)->where('date', $todayDate)->get();
 
         	if ( !$staffAttendance->isEmpty() ) {
-        		StaffAttendance::where('staff_id', $request->staff_id)->update([
+        		StaffAttendance::where('staff_id', $request->staff_id)->where('date', $todayDate)->update([
         			'date'     		=> $todayDate,
         			'check_in'     	=> $request->check_in,
         		]);
@@ -90,7 +130,7 @@ class StaffAttendanceController extends Controller
 	        $staffAttendance = StaffAttendance::where('staff_id', $request->staff_id)->where('date', $todayDate)->get();
 
 	        if ( !$staffAttendance->isEmpty() ) {
-	        	StaffAttendance::where('staff_id', $request->staff_id)->update([
+	        	StaffAttendance::where('staff_id', $request->staff_id)->where('date', $todayDate)->update([
 	        		'date'     		=> $todayDate,
 	        		'check_out'     => $request->check_out,
 	        	]);
@@ -132,29 +172,98 @@ class StaffAttendanceController extends Controller
 
 	public function filterAttendanceByDate($start_date, $end_date)
 	{
-		/*if ($start_date != $end_date)
-    		whereBetween('staff_attendance.date', [$start_date, $end_date]);
-    	}else{
-        	->where('staff_attendance.date', $start_date)
-        }*/
+		
 		$partner_id 	= Auth::user()->id;
 		$staff 			= Staff::where('partner_id', $partner_id);
 		$staffAttendance 	= $staff->select(['staff.staff_id', 'staff.user_id', 'users.name', 'users.email', 'users.phone', 'staff_attendance.date', 'staff_attendance.check_in', 'staff_attendance.check_out'])
                 ->leftJoin('users', 'users.id', '=', 'staff.user_id')
                 ->leftJoin('staff_attendance', 'staff_attendance.staff_id', '=', 'staff.user_id')
                 ->orderBy('staff.staff_id', 'DESC')
-            	->where('staff_attendance.date', $start_date)
+            	->whereBetween('staff_attendance.date', [$start_date, $end_date])
                 ->get();
-
+        $html = "";
 		if ( !$staffAttendance->isEmpty() ) {
+			foreach($staffAttendance as $key => $value){
+				$date = $value->date; 
+				$formatted_date = date("d M, D", strtotime($date));
+				$ts1 = strtotime($value->check_in);
+				$ts2 = strtotime($value->check_out);    
+				if($ts1 && $ts2){
+					$seconds_diff = $ts2 - $ts1;                            
+					$time = ($seconds_diff/3600)." hr";
+				}else{
+					$time = "NA";
+				}
+
+				$html.= '<tr class="staff_'.$value->user_id.'">
+				<td>'.$value->name.'</td>
+				<td>'.$formatted_date.'</td>
+				<td>'.$value->check_in.'</td>
+				<td>'.$value->check_out.'</td>
+				<td>'.$time.'</td>
+				</tr>';
+			}
 			$response = array(
 				"status" 	=> 1,
-				"data" 		=> $staffAttendance,
+				"data" 		=> $html,
 			);
 		}else{
+			$html = '<tr>
+			<td colspan="5">No Data Found.</td>
+			</tr>';
 			$response = array(
 				"status" 	=> 0,
+				"data" 		=> $html,
 				"message" 	=> "Data not found",
+			);
+		}
+		
+		echo json_encode($response);
+	}
+
+	public function attendanceAnalytics($start_date, $end_date)
+	{
+		
+		$partner_id 	= Auth::user()->id;
+		$staff 			= Staff::where('partner_id', $partner_id);
+		$apexStaffAttendance 	= $staff->select(['staff.staff_id', 'staff.user_id', 'users.name', 'users.email', 'users.phone', 'staff_attendance.date', 'staff_attendance.check_in', 'staff_attendance.check_out'])
+                ->leftJoin('users', 'users.id', '=', 'staff.user_id')
+                ->leftJoin('staff_attendance', 'staff_attendance.staff_id', '=', 'staff.user_id')
+                ->orderBy('staff_attendance.sa_id', 'DESC')
+            	->whereBetween('staff_attendance.date', [$start_date, $end_date])
+                ->get();
+
+        $html = "";
+		if ( !$apexStaffAttendance->isEmpty() ) {
+			$apexCart = "";
+			foreach ($apexStaffAttendance as $key => $value) {
+				$ts1 = strtotime($value['check_in']);
+				$ts2 = strtotime($value['check_out']);    
+				if($ts1 && $ts2){
+					$seconds_diff = $ts2 - $ts1;                            
+					$time = ($seconds_diff/3600);
+				}else{
+					$time = 0;
+				}
+				$staffdata[$value['name']][] = $time;
+
+				$apexCart = $staffdata;
+			}
+			$apexChartArray = array();
+			$apexChartAvgArray = array();
+
+			foreach ($apexCart as $sumkey => $apexChartArr) {
+				$sum = array_sum($apexChartArr);
+				$apexChartArray[$sumkey] = $sum;
+
+				$average = array_sum($apexChartArr) / count($apexChartArr);
+				$apexChartAvgArray[$sumkey] = $average;
+			}
+			
+			$response = array(
+				"status" 			=> 1,
+				"apexChartArray" 	=> $apexChartArray,
+				"apexChartAvgArray" => $apexChartAvgArray,
 			);
 		}
 		
