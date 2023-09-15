@@ -197,7 +197,7 @@ class StaffController extends Controller
 		$staff 		= Staff::where('user_id', $id);
 		$getStaff 	= $staff->select(['staff.staff_id', 'staff.user_id', 'staff.partner_id', 'users.name', 'users.email', 'users.phone', 'users.is_active', 'staff.profile_image', 'role.role_name', 'staff.gender', 'staff.facebook', 'staff.instagram', 'staff.profile_description', 'staff.joining_date', 'staff.staff_working_days'])
                 ->leftJoin('users', 'users.id', '=', 'staff.user_id')
-                ->leftJoin('role', 'role.id', '=', 'Staff.staff_role')
+                ->leftJoin('role', 'role.id', '=', 'staff.staff_role')
                 ->orderBy('staff.staff_id', 'DESC')
                 ->get();
         if ( !empty($getStaff) ) {
