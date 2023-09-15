@@ -603,156 +603,49 @@
                                  </tr>
                               </thead>
                               <tbody class="text-gray-600 fw-semibold">
-                                 <tr>
-                                    <td>1</td>
-                                    <td>America</td>
-                                    <td>Javed Habib</td>
-                                    <td>Salon</td>
-                                    <td>Harry</td>
-                                    <td>harry@gmail.com</td>
-                                    <td>5247185642</td>
-                                    <td>
-                                       <div class="badge badge-light-success fw-bold">Enabled</div>
-                                    </td>
-                                    <td class="text-end">
-                                       <a href="#" class="btn btn-light btn-active-light-primary btn-flex btn-center btn-sm" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end">Actions
-                                       <i class="ki-duotone ki-down fs-5 ms-1"></i></a>
-                                       <!--begin::Menu-->
-                                       <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-600 menu-state-bg-light-primary fw-semibold fs-7 w-125px py-4" data-kt-menu="true">
-                                          <!--begin::Menu item-->
-                                          <div class="menu-item px-3">
-                                             <a href="" class="menu-link px-3">Enable</a>
-                                          </div>
-                                          <!--end::Menu item-->
-                                          <!--begin::Menu item-->
-                                          <div class="menu-item px-3">
-                                             <a href="" class="menu-link px-3">Disable</a>
-                                          </div>
-                                          <!--end::Menu item-->
-                                       </div>
-                                       <!--end::Menu-->
-                                    </td>
-                                 </tr>
-                                 <tr>
-                                    <td>2</td>
-                                    <td>India</td>
-                                    <td>Javed Habib</td>
-                                    <td>Salon</td>
-                                    <td>Harry</td>
-                                    <td>harry@gmail.com</td>
-                                    <td>5247185642</td>
-                                    <td>
-                                       <div class="badge badge-light-success fw-bold">Enabled</div>
-                                    </td>
-                                    <td class="text-end">
-                                       <a href="#" class="btn btn-light btn-active-light-primary btn-flex btn-center btn-sm" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end">Actions
-                                       <i class="ki-duotone ki-down fs-5 ms-1"></i></a>
-                                       <!--begin::Menu-->
-                                       <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-600 menu-state-bg-light-primary fw-semibold fs-7 w-125px py-4" data-kt-menu="true">
-                                          <!--begin::Menu item-->
-                                          <div class="menu-item px-3">
-                                             <a href="" class="menu-link px-3">Enable</a>
-                                          </div>
-                                          <!--end::Menu item-->
-                                          <!--begin::Menu item-->
-                                          <div class="menu-item px-3">
-                                             <a href="" class="menu-link px-3">Disable</a>
-                                          </div>
-                                          <!--end::Menu item-->
-                                       </div>
-                                       <!--end::Menu-->
-                                    </td>
-                                 </tr>
-                                 <tr>
-                                    <td>3</td>
-                                    <td>Argentina</td>
-                                    <td>Javed Habib</td>
-                                    <td>Salon</td>
-                                    <td>Harry</td>
-                                    <td>harry@gmail.com</td>
-                                    <td>5247185642</td>
-                                    <td>
-                                       <div class="badge badge-light-success fw-bold">Enabled</div>
-                                    </td>
-                                    <td class="text-end">
-                                       <a href="#" class="btn btn-light btn-active-light-primary btn-flex btn-center btn-sm" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end">Actions
-                                       <i class="ki-duotone ki-down fs-5 ms-1"></i></a>
-                                       <!--begin::Menu-->
-                                       <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-600 menu-state-bg-light-primary fw-semibold fs-7 w-125px py-4" data-kt-menu="true">
-                                          <!--begin::Menu item-->
-                                          <div class="menu-item px-3">
-                                             <a href="" class="menu-link px-3">Enable</a>
-                                          </div>
-                                          <!--end::Menu item-->
-                                          <!--begin::Menu item-->
-                                          <div class="menu-item px-3">
-                                             <a href="" class="menu-link px-3">Disable</a>
-                                          </div>
-                                          <!--end::Menu item-->
-                                       </div>
-                                       <!--end::Menu-->
-                                    </td>
-                                 </tr>
-                                 <tr>
-                                    <td>4</td>
-                                    <td>America</td>
-                                    <td>Javed Habib</td>
-                                    <td>Salon</td>
-                                    <td>Harry</td>
-                                    <td>harry@gmail.com</td>
-                                    <td>5247185642</td>
-                                    <td>
-                                       <div class="badge badge-light-success fw-bold">Enabled</div>
-                                    </td>
-                                    <td class="text-end">
-                                       <a href="#" class="btn btn-light btn-active-light-primary btn-flex btn-center btn-sm" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end">Actions
-                                       <i class="ki-duotone ki-down fs-5 ms-1"></i></a>
-                                       <!--begin::Menu-->
-                                       <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-600 menu-state-bg-light-primary fw-semibold fs-7 w-125px py-4" data-kt-menu="true">
-                                          <!--begin::Menu item-->
-                                          <div class="menu-item px-3">
-                                             <a href="" class="menu-link px-3">Enable</a>
-                                          </div>
-                                          <!--end::Menu item-->
-                                          <!--begin::Menu item-->
-                                          <div class="menu-item px-3">
-                                             <a href="" class="menu-link px-3">Disable</a>
-                                          </div>
-                                          <!--end::Menu item-->
-                                       </div>
-                                       <!--end::Menu-->
-                                    </td>
-                                 </tr>
-                                 <tr>
-                                    <td>5</td>
-                                    <td>India</td>
-                                    <td>Javed Habib</td>
-                                    <td>Salon</td>
-                                    <td>Harry</td>
-                                    <td>harry@gmail.com</td>
-                                    <td>5247185642</td>
-                                    <td>
-                                       <div class="badge badge-light-success fw-bold">Enabled</div>
-                                    </td>
-                                    <td class="text-end">
-                                       <a href="#" class="btn btn-light btn-active-light-primary btn-flex btn-center btn-sm" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end">Actions
-                                       <i class="ki-duotone ki-down fs-5 ms-1"></i></a>
-                                       <!--begin::Menu-->
-                                       <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-600 menu-state-bg-light-primary fw-semibold fs-7 w-125px py-4" data-kt-menu="true">
-                                          <!--begin::Menu item-->
-                                          <div class="menu-item px-3">
-                                             <a href="" class="menu-link px-3">Enable</a>
-                                          </div>
-                                          <!--end::Menu item-->
-                                          <!--begin::Menu item-->
-                                          <div class="menu-item px-3">
-                                             <a href="" class="menu-link px-3">Disable</a>
-                                          </div>
-                                          <!--end::Menu item-->
-                                       </div>
-                                       <!--end::Menu-->
-                                    </td>
-                                 </tr>
+                              @php $countTwo=1; @endphp
+                              @foreach($subtypeTwo as $typeTwo)
+                                @php
+                                $statusTwo = $typeTwo->is_active;
+                                                       if($statusTwo==1){
+                                                       $statusTwo = "Enabled";
+                                                       $classTwo 	= "success";
+                                                   }else{
+                                                   $statusTwo = "Disabled";
+                                                   $classTwo 	= "danger";
+                                               }
+                                @endphp
+                                <tr>
+                                   <td>{{$countTwo++}}</td>
+                                   <td>{{$typeTwo->countryname}}</td>
+                                   <td>{{$typeTwo->business_name}}</td>
+                                   <td>Salon</td>
+                                   <td>{{$typeTwo->name}}</td>
+                                   <td>{{$typeTwo->email}}</td>
+                                   <td>{{$typeTwo->phone}}</td>
+                                   <td>
+                                      <div class="badge badge-light-{{$classTwo}} fw-bold">{{$statusTwo}}</div>
+                                   </td>
+                                   <td class="text-end">
+                                      <a href="#" class="btn btn-light btn-active-light-primary btn-flex btn-center btn-sm" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end">Actions
+                                      <i class="ki-duotone ki-down fs-5 ms-1"></i></a>
+                                      <!--begin::Menu-->
+                                      <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-600 menu-state-bg-light-primary fw-semibold fs-7 w-125px py-4" data-kt-menu="true">
+                                         <!--begin::Menu item-->
+                                         <div class="menu-item px-3">
+                                            <a href="{{ url('/admin/typeone/enable-status/'.$typeTwo->id) }}" class="menu-link px-3">Enable</a>
+                                         </div>
+                                         <!--end::Menu item-->
+                                         <!--begin::Menu item-->
+                                         <div class="menu-item px-3">
+                                            <a href="{{ url('/admin/typeone/disable-status/'.$typeTwo->id) }}" class="menu-link px-3">Disable</a>
+                                         </div>
+                                         <!--end::Menu item-->
+                                      </div>
+                                      <!--end::Menu-->
+                                   </td>
+                                </tr>
+                               @endforeach  
                               </tbody>
                            </table>
                            <!--end::Table-->
@@ -1102,156 +995,49 @@
                                  </tr>
                               </thead>
                               <tbody class="text-gray-600 fw-semibold">
-                                 <tr>
-                                    <td>1</td>
-                                    <td>America</td>
-                                    <td>Javed Habib</td>
-                                    <td>Salon</td>
-                                    <td>Harry</td>
-                                    <td>harry@gmail.com</td>
-                                    <td>5247185642</td>
-                                    <td>
-                                       <div class="badge badge-light-success fw-bold">Enabled</div>
-                                    </td>
-                                    <td class="text-end">
-                                       <a href="#" class="btn btn-light btn-active-light-primary btn-flex btn-center btn-sm" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end">Actions
-                                       <i class="ki-duotone ki-down fs-5 ms-1"></i></a>
-                                       <!--begin::Menu-->
-                                       <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-600 menu-state-bg-light-primary fw-semibold fs-7 w-125px py-4" data-kt-menu="true">
-                                          <!--begin::Menu item-->
-                                          <div class="menu-item px-3">
-                                             <a href="" class="menu-link px-3">Enable</a>
-                                          </div>
-                                          <!--end::Menu item-->
-                                          <!--begin::Menu item-->
-                                          <div class="menu-item px-3">
-                                             <a href="" class="menu-link px-3">Disable</a>
-                                          </div>
-                                          <!--end::Menu item-->
-                                       </div>
-                                       <!--end::Menu-->
-                                    </td>
-                                 </tr>
-                                 <tr>
-                                    <td>2</td>
-                                    <td>India</td>
-                                    <td>Javed Habib</td>
-                                    <td>Salon</td>
-                                    <td>Harry</td>
-                                    <td>harry@gmail.com</td>
-                                    <td>5247185642</td>
-                                    <td>
-                                       <div class="badge badge-light-success fw-bold">Enabled</div>
-                                    </td>
-                                    <td class="text-end">
-                                       <a href="#" class="btn btn-light btn-active-light-primary btn-flex btn-center btn-sm" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end">Actions
-                                       <i class="ki-duotone ki-down fs-5 ms-1"></i></a>
-                                       <!--begin::Menu-->
-                                       <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-600 menu-state-bg-light-primary fw-semibold fs-7 w-125px py-4" data-kt-menu="true">
-                                          <!--begin::Menu item-->
-                                          <div class="menu-item px-3">
-                                             <a href="" class="menu-link px-3">Enable</a>
-                                          </div>
-                                          <!--end::Menu item-->
-                                          <!--begin::Menu item-->
-                                          <div class="menu-item px-3">
-                                             <a href="" class="menu-link px-3">Disable</a>
-                                          </div>
-                                          <!--end::Menu item-->
-                                       </div>
-                                       <!--end::Menu-->
-                                    </td>
-                                 </tr>
-                                 <tr>
-                                    <td>3</td>
-                                    <td>Argentina</td>
-                                    <td>Javed Habib</td>
-                                    <td>Salon</td>
-                                    <td>Harry</td>
-                                    <td>harry@gmail.com</td>
-                                    <td>5247185642</td>
-                                    <td>
-                                       <div class="badge badge-light-success fw-bold">Enabled</div>
-                                    </td>
-                                    <td class="text-end">
-                                       <a href="#" class="btn btn-light btn-active-light-primary btn-flex btn-center btn-sm" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end">Actions
-                                       <i class="ki-duotone ki-down fs-5 ms-1"></i></a>
-                                       <!--begin::Menu-->
-                                       <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-600 menu-state-bg-light-primary fw-semibold fs-7 w-125px py-4" data-kt-menu="true">
-                                          <!--begin::Menu item-->
-                                          <div class="menu-item px-3">
-                                             <a href="" class="menu-link px-3">Enable</a>
-                                          </div>
-                                          <!--end::Menu item-->
-                                          <!--begin::Menu item-->
-                                          <div class="menu-item px-3">
-                                             <a href="" class="menu-link px-3">Disable</a>
-                                          </div>
-                                          <!--end::Menu item-->
-                                       </div>
-                                       <!--end::Menu-->
-                                    </td>
-                                 </tr>
-                                 <tr>
-                                    <td>4</td>
-                                    <td>America</td>
-                                    <td>Javed Habib</td>
-                                    <td>Salon</td>
-                                    <td>Harry</td>
-                                    <td>harry@gmail.com</td>
-                                    <td>5247185642</td>
-                                    <td>
-                                       <div class="badge badge-light-success fw-bold">Enabled</div>
-                                    </td>
-                                    <td class="text-end">
-                                       <a href="#" class="btn btn-light btn-active-light-primary btn-flex btn-center btn-sm" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end">Actions
-                                       <i class="ki-duotone ki-down fs-5 ms-1"></i></a>
-                                       <!--begin::Menu-->
-                                       <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-600 menu-state-bg-light-primary fw-semibold fs-7 w-125px py-4" data-kt-menu="true">
-                                          <!--begin::Menu item-->
-                                          <div class="menu-item px-3">
-                                             <a href="" class="menu-link px-3">Enable</a>
-                                          </div>
-                                          <!--end::Menu item-->
-                                          <!--begin::Menu item-->
-                                          <div class="menu-item px-3">
-                                             <a href="" class="menu-link px-3">Disable</a>
-                                          </div>
-                                          <!--end::Menu item-->
-                                       </div>
-                                       <!--end::Menu-->
-                                    </td>
-                                 </tr>
-                                 <tr>
-                                    <td>5</td>
-                                    <td>India</td>
-                                    <td>Javed Habib</td>
-                                    <td>Salon</td>
-                                    <td>Harry</td>
-                                    <td>harry@gmail.com</td>
-                                    <td>5247185642</td>
-                                    <td>
-                                       <div class="badge badge-light-success fw-bold">Enabled</div>
-                                    </td>
-                                    <td class="text-end">
-                                       <a href="#" class="btn btn-light btn-active-light-primary btn-flex btn-center btn-sm" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end">Actions
-                                       <i class="ki-duotone ki-down fs-5 ms-1"></i></a>
-                                       <!--begin::Menu-->
-                                       <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-600 menu-state-bg-light-primary fw-semibold fs-7 w-125px py-4" data-kt-menu="true">
-                                          <!--begin::Menu item-->
-                                          <div class="menu-item px-3">
-                                             <a href="" class="menu-link px-3">Enable</a>
-                                          </div>
-                                          <!--end::Menu item-->
-                                          <!--begin::Menu item-->
-                                          <div class="menu-item px-3">
-                                             <a href="" class="menu-link px-3">Disable</a>
-                                          </div>
-                                          <!--end::Menu item-->
-                                       </div>
-                                       <!--end::Menu-->
-                                    </td>
-                                 </tr>
+                              @php $countFees=1; @endphp
+                              @foreach($onboardFees as $fees)
+                                @php
+                                $statusFee = $fees->is_active;
+                                                       if($statusFee==1){
+                                                       $statusFee = "Enabled";
+                                                       $classFee 	= "success";
+                                                   }else{
+                                                   $statusFee = "Disabled";
+                                                   $classFee 	= "danger";
+                                               }
+                                @endphp
+                                <tr>
+                                   <td>{{$countFees++}}</td>
+                                   <td>{{$fees->countryname}}</td>
+                                   <td>{{$fees->business_name}}</td>
+                                   <td>Salon</td>
+                                   <td>{{$fees->name}}</td>
+                                   <td>{{$fees->email}}</td>
+                                   <td>{{$fees->phone}}</td>
+                                   <td>
+                                      <div class="badge badge-light-{{$classFee}} fw-bold">{{$statusFee}}</div>
+                                   </td>
+                                   <td class="text-end">
+                                      <a href="#" class="btn btn-light btn-active-light-primary btn-flex btn-center btn-sm" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end">Actions
+                                      <i class="ki-duotone ki-down fs-5 ms-1"></i></a>
+                                      <!--begin::Menu-->
+                                      <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-600 menu-state-bg-light-primary fw-semibold fs-7 w-125px py-4" data-kt-menu="true">
+                                         <!--begin::Menu item-->
+                                         <div class="menu-item px-3">
+                                            <a href="{{ url('/admin/typeone/enable-status/'.$fees->id) }}" class="menu-link px-3">Enable</a>
+                                         </div>
+                                         <!--end::Menu item-->
+                                         <!--begin::Menu item-->
+                                         <div class="menu-item px-3">
+                                            <a href="{{ url('/admin/typeone/disable-status/'.$fees->id) }}" class="menu-link px-3">Disable</a>
+                                         </div>
+                                         <!--end::Menu item-->
+                                      </div>
+                                      <!--end::Menu-->
+                                   </td>
+                                </tr>
+                               @endforeach 
                               </tbody>
                            </table>
                            <!--end::Table-->
