@@ -189,6 +189,11 @@ Route::middleware(['auth'])->group(function () {
 
     Route::get('admin/typeone/enable-status/{id}', [SubscriptionController::class, 'enabledsub']);
     Route::get('admin/typeone/disable-status/{id}', [SubscriptionController::class, 'disabledsub']);
+
+    Route::post('admin/settings/onboarding', [SubscriptionController::class, 'createOnboarding']);
+    Route::get('admin/settings/subscription/get-typeone/{id}', [SubscriptionController::class, 'gettypeOneAjax']);
+    Route::get('admin/settings/subscription/get-typetwo/{id}', [SubscriptionController::class, 'gettypeTwoAjax']);
+    Route::get('admin/settings/subscription/get-fees/{id}', [SubscriptionController::class, 'getfeeAjax']);
 });
 
 /*Partner Route*/

@@ -347,9 +347,9 @@
                                        </div>
                                     </td> -->
                                     <td>
-                                       
-                               <img id="avatar" name="avatar" accept=".png, .jpg, .jpeg" src="{{asset('/public/uploads/category')}}/{{ $ser->icon }}" style="width: 2em;"/>
-                                    
+                                 @if( !empty( $ser->icon) )
+                                    <img id="avatar" name="avatar" accept=".png, .jpg, .jpeg" src="{{asset('/public/uploads/category')}}/{{ $ser->icon }}" style="width: 2em;"/>
+                                 @endif
                                     </td>
                                     <td>
                                        <div class="badge badge-light-{{ $class }} fw-bold" data-kt-docs-datatable-subtable="subcat_status">{{ $status }}</div>
