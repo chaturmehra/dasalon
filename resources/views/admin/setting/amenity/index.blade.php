@@ -710,7 +710,7 @@ swal({
 event.preventDefault();
 var id = $(this).attr('id');
 var data_id = $(this).attr('data-id');
-var ajaxurl = 'https://webpristine.co.in/admin/setting/edit-amenity-status/' + id+'/'+data_id;
+var ajaxurl = '{{ url('admin/setting/edit-amenity-status/')}}'+"/"+ id+'/'+data_id;
 swal({
   title: "Are you sure?",
   text: "To change status this country?",

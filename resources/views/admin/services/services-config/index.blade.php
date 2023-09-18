@@ -70,14 +70,19 @@
                </div>
                <!--begin::Tab content-->
                <div class="tab-content">
-                  <!--begin::Tab pane-->
-                  <div class="tab-pane fade active show" id="serviceconfig1" role="tab-panel">
-                     <!--begin::Products-->
-                     <div class="card card-flush">
-                        <div class="card-header">
-                           <h2 class="page-heading d-flex text-dark fw-bold fs-3 flex-column justify-content-center my-0">Category</h2>
-                        </div>
-                        @if(session()->has('message'))
+             
+
+
+
+
+
+
+<div class="card card-flush">
+
+                                       <div class="card-header">
+                                          <h2 class="page-heading d-flex text-dark fw-bold fs-3 flex-column justify-content-center my-0">Category</h2>
+                                       </div>
+        @if(session()->has('message'))
                <div class="card-header display-message">
                   <div class="alert alert-success">
                      {{ session()->get('message') }}
@@ -91,32 +96,32 @@
                   </div>
                </div>
                @endif
-                        <!--begin::Card header-->
-                        <div class="card-header align-items-center pb-5 gap-2 gap-md-5 pt-5">
-                           <!--begin::Card title-->
-                           <div class="card-title">
-                              <!--begin::Search-->
-                              <div class="d-flex align-items-center position-relative my-1">
-                                 <i class="ki-outline ki-magnifier fs-3 position-absolute ms-4"></i>
-                                 <input type="text" data-kt-filter-subtable1="search" class="form-control form-control-solid w-250px ps-12" placeholder="Search Report" />
-                              </div>
-                              <!--end::Search-->
-                           </div>
-                           <!--end::Card title-->
-                           <!--begin::Card toolbar-->
-                           <div class="card-toolbar flex-row-fluid justify-content-end gap-5">
-                              <!--begin::Card toolbar-->
-                              <div class="card-toolbar">
-                                 <!--begin::Toolbar-->
-                                 <div class="d-flex justify-content-end" data-kt-user-table-toolbar="base">
-                                    <!--begin::Add Country-->
-                                    <button type="button" class="btn btn-primary me-4" data-bs-toggle="modal" data-bs-target="#kt_modal_scrollable">
-                                    <i class="ki-duotone ki-plus fs-2"></i>Add Category
-                                    </button>
-                                    <!--end::Add Country-->
-                                 </div>
-                                 <!--end::Toolbar-->
-                                 <!--begin::Modal - Add task-->
+                                       <!--begin::Card header-->
+                                       <div class="card-header align-items-center pb-5 gap-2 gap-md-5 pt-5">
+
+                                          <!--begin::Card title-->
+                                          <div class="card-title">
+                                             <!--begin::Search-->
+                                             <div class="d-flex align-items-center position-relative my-1">
+                                                <i class="ki-outline ki-magnifier fs-3 position-absolute ms-4"></i>
+                                                <input type="text" data-kt-filter="search" class="form-control form-control-solid w-250px ps-12" placeholder="Search Report">
+                                             </div>
+                                             <!--end::Search-->
+                                          </div>
+                                          <!--end::Card title-->
+
+                                          <!--begin::Card toolbar-->
+                                          <div class="card-toolbar">
+                                             <!--begin::Add Country-->
+                                             <button type="button" class="btn btn-primary me-4" data-bs-toggle="modal" data-bs-target="#kt_modal_scrollable">
+                                                 <i class="ki-duotone ki-plus fs-2"></i>Add Category
+                                             </button>
+                                             <!--end::Add Country-->
+                                          </div>
+                                          <!--end::Toolbar-->
+
+
+   <!--begin::Modal - Add task-->
                                  <div class="modal fade" tabindex="-1" id="kt_modal_scrollable">
                                     <div class="modal-dialog modal-dialog-scrollable">
                                        <div class="modal-content">
@@ -221,17 +226,151 @@
                                     </div>
                                  </div>
                                  <!--end::Modal - Add task-->
-                                 <!--begin::Toolbar-->
-                                 <div class="d-flex justify-content-end" data-kt-user-table-toolbar="base">
-                                    <!--begin::Add Country-->
-                                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#kt_modal_scrollable_2">
-                                    <i class="ki-duotone ki-plus fs-2"></i>Add Sub Category
-                                    </button>
-                                    <!--end::Add Country-->
-                                 </div>
-                                 <!--end::Toolbar-->
-                                 <!--begin::Modal - Add task-->
-                                 <div class="modal fade" tabindex="-1" id="kt_modal_scrollable_2">
+
+
+
+
+
+
+                                       </div>
+                                       <!--end::Card header-->
+
+                                       <!--begin::Card body-->
+                                       <div class="card-body pt-0">
+
+                                          <div id="kt_datatable_example1_wrapper" class="dataTables_wrapper dt-bootstrap4 no-footer"><div class="table-responsive"><table class="table align-middle table-row-dashed fs-6 gy-4 dataTable no-footer" id="kt_datatable_example1">
+                                             <!--begin::Table head-->
+                                             <thead>
+                                                <!--begin::Table row-->
+                                                <tr class="text-start text-gray-400 fw-bold fs-7 text-uppercase gs-0"><th class="min-w-100px sorting" tabindex="0" aria-controls="kt_datatable_example1" rowspan="1" colspan="1" aria-label="S No.: activate to sort column ascending" style="width: 108.219px;">S No.</th><th class="min-w-150px sorting" tabindex="0" aria-controls="kt_datatable_example1" rowspan="1" colspan="1" aria-label="Country: activate to sort column ascending" style="width: 163.062px;">Country</th><th class="min-w-150px sorting" tabindex="0" aria-controls="kt_datatable_example1" rowspan="1" colspan="1" aria-label="Category: activate to sort column ascending" style="width: 163.062px;">Category</th><th class="min-w-150px sorting" tabindex="0" aria-controls="kt_datatable_example1" rowspan="1" colspan="1" aria-label="Icon: activate to sort column ascending" style="width: 163.062px;">Icon</th><th class="min-w-50px sorting" tabindex="0" aria-controls="kt_datatable_example1" rowspan="1" colspan="1" aria-label="Status: activate to sort column ascending" style="width: 66.5781px;">Status</th><th class="text-end min-w-100px sorting" tabindex="0" aria-controls="kt_datatable_example1" rowspan="1" colspan="1" aria-label="Actions: activate to sort column ascending" style="width: 109.016px;">Actions</th></tr>
+                                                <!--end::Table row-->
+                                             </thead>
+                                             <!--end::Table head-->
+
+
+                                             <!--begin::Table body-->
+                                             <tbody class="fw-bold text-gray-600">
+                                       
+ @if( !empty($sercat) )
+                        @foreach($sercat as $key => $ser)
+                           @php 
+                              $status = $ser->is_active;
+                              if($status == 1 ){
+                                 $status = "Enabled";
+                                 $class   = "success";
+                              }else{
+                                 $status = "Disabled";
+                                 $class   = "danger";
+                              }
+                           @endphp
+                         <!--begin::SubTable template-->
+                         <tr>
+                           <td>{{ $key+1 }}</td>
+                           <td>{{ $ser->country }}</td>
+                           <td>{{ $ser->category }}</td>
+                                
+                                    <!-- <td>
+                                       <div class="d-flex align-items-center gap-3">
+                                          <div class="d-flex flex-column text-muted">
+                                             <a href="#" class="text-dark text-hover-primary fw-bold" data-kt-docs-datatable-subtable="subcat_name">Hair Color</a>
+                                          </div>
+                                       </div>
+                                    </td> -->
+                                    <td>
+                                 @if( !empty( $ser->icon) )
+                                    <img id="avatar" name="avatar" accept=".png, .jpg, .jpeg" src="{{asset('/public/uploads/category')}}/{{ $ser->icon }}" style="width: 2em;"/>
+                                 @endif
+                                    </td>
+                                    <td>
+                                       <div class="badge badge-light-{{ $class }} fw-bold" data-kt-docs-datatable-subtable="subcat_status">{{ $status }}</div>
+                                    </td>
+                                 
+                                    <td class="text-end">
+                                       <a href="#" class="btn btn-light btn-active-light-primary btn-flex btn-center btn-sm" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end">Actions
+                                       <i class="ki-duotone ki-down fs-5 ms-1"></i></a>
+                                       <!--begin::Menu-->
+                                       <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-600 menu-state-bg-light-primary fw-semibold fs-7 w-125px py-4" data-kt-menu="true">
+                                          <!--begin::Menu item-->
+                                          <div class="menu-item px-3">
+                                             <a href="{{ url('/admin/add-servicecategory/enable-status/'.$ser->id) }}" class="menu-link px-3">Enable</a>
+                                          </div>
+                                          <!--end::Menu item-->
+                                          <!--begin::Menu item-->
+                                          <div class="menu-item px-3">
+                                             <a href="{{ url('/admin/add-servicecategory/disable-status/'.$ser->id) }}" class="menu-link px-3">Disable</a>
+                                          </div>
+                                          <!--end::Menu item-->
+                                          <div class="menu-item px-3">
+                                             <a href="javascript:void(0)" category-id="{{ $ser->id}}" data-bs-toggle="modal" data-bs-target="#kt_modal_cat" class="menu-link px-3 edit-category">Edit</a>
+                                          </div>
+                                       </div>
+                                       <!--end::Menu-->
+                                    </td>
+                               
+                                 </tr>
+                                 @endforeach
+                        @endif
+
+
+                                       </tbody>
+                                             <!--end::Table body-->
+                                          </table></div></div>
+
+                                       </div>
+                                       <!--end::Card body-->
+
+                                    </div>
+
+                  <div class="card card-flush mt-8">
+
+                                       <div class="card-header">
+                                          <h2 class="page-heading d-flex text-dark fw-bold fs-3 flex-column justify-content-center my-0">Sub Category</h2>
+                                       </div>
+                                        @if(session()->has('messagessc'))
+               <div class="card-header display-message">
+                  <div class="alert alert-success">
+                     {{ session()->get('messagessc') }}
+                  </div>
+               </div>
+               @endif
+               @if(session()->has('errorssc'))
+               <div class="card-header display-message">
+                  <div class="alert alert-danger">
+                     {{ session()->get('errorssc') }}
+                  </div>
+               </div>
+               @endif
+   @if(session()->has('messagesubcat'))
+               <div class="card-header display-message">
+                  <div class="alert alert-success">
+                     {{ session()->get('messagesubcat') }}
+                  </div>
+               </div>
+               @endif
+                                       <!--begin::Card header-->
+                                       <div class="card-header align-items-center pb-5 gap-2 gap-md-5 pt-5">
+
+                                          <!--begin::Card title-->
+                                          <div class="card-title">
+                                             <!--begin::Search-->
+                                             <div class="d-flex align-items-center position-relative my-1">
+                                                <i class="ki-outline ki-magnifier fs-3 position-absolute ms-4"></i>
+                                                <input type="text" data-kt-filter2="search" class="form-control form-control-solid w-250px ps-12" placeholder="Search Report">
+                                             </div>
+                                             <!--end::Search-->
+                                          </div>
+                                          <!--end::Card title-->
+
+                                          <!--begin::Card toolbar-->
+                                          <div class="card-toolbar">
+                                             <!--begin::Add Country-->
+                                             <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#kt_modal_scrollable_2">
+                                                 <i class="ki-duotone ki-plus fs-2"></i>Add Sub Category
+                                             </button>
+                                             <!--end::Add Country-->
+                                          </div>
+                                          <!--end::Toolbar-->
+<div class="modal fade" tabindex="-1" id="kt_modal_scrollable_2">
                                     <div class="modal-dialog modal-dialog-scrollable">
                                        <div class="modal-content">
                                           <div class="modal-header">
@@ -294,106 +433,85 @@
                                        </div>
                                     </div>
                                  </div>
-                                 <!--end::Modal - Add task-->
-                              </div>
-                              <!--end::Card toolbar-->
-                           </div>
-                           <!--end::Card toolbar-->
-                        </div>
-                        <!--end::Card header-->
-                        <!--begin::Card body-->
-                        <div class="card-body pt-0">
-                           <table class="table align-middle table-row-dashed fs-6 gy-4" id="kt_docs_datatable_subtable1">
-                              <!--begin::Table head-->
-                              <thead>
-                                 <!--begin::Table row-->
-                                 <tr class="text-start text-gray-400 fw-bold fs-7 text-uppercase gs-0">
-                                    <th class="min-w-100px">S No.</th>
-                                    <th class="min-w-150px">Country</th>
-                                    <th class="min-w-150px">Category</th>
-                                    <th class="min-w-150px">Icon</th>
-                                    <th class="min-w-50px">Status</th>
-                                    <th class="text-end min-w-100px">Actions</th>
-                                    <th class="text-end"></th>
-                                 </tr>
-                                 <!--end::Table row-->
-                              </thead>
-                              <!--end::Table head-->
-                              <!--begin::Table body-->
-                              <tbody class="fw-bold text-gray-600">
-                              @if( !empty($sercat) )
-                        @foreach($sercat as $key => $ser)
+                                       </div>
+                                       <!--end::Card header-->
+
+                                       <!--begin::Card body-->
+                                       <div class="card-body pt-0">
+
+                                          <div id="kt_datatable_example2_wrapper" class="dataTables_wrapper dt-bootstrap4 no-footer"><div class="table-responsive"><table class="table align-middle table-row-dashed fs-6 gy-4 dataTable no-footer" id="kt_datatable_example2">
+                                             <!--begin::Table head-->
+                                             <thead>
+                                                <!--begin::Table row-->
+                                                <tr class="text-start text-gray-400 fw-bold fs-7 text-uppercase gs-0"><th class="min-w-100px sorting" tabindex="0" aria-controls="kt_datatable_example2" rowspan="1" colspan="1" aria-label="S No.: activate to sort column ascending" style="width: 108.219px;">S No.</th><th class="min-w-150px sorting" tabindex="0" aria-controls="kt_datatable_example2" rowspan="1" colspan="1" aria-label="Country: activate to sort column ascending" style="width: 163.062px;">Country</th><th class="min-w-150px sorting" tabindex="0" aria-controls="kt_datatable_example2" rowspan="1" colspan="1" aria-label="Category: activate to sort column ascending" style="width: 163.062px;">Category</th><th class="min-w-150px sorting" tabindex="0" aria-controls="kt_datatable_example2" rowspan="1" colspan="1" aria-label="Subcategory: activate to sort column ascending" style="width: 163.062px;">Subcategory</th><th class="min-w-50px sorting" tabindex="0" aria-controls="kt_datatable_example2" rowspan="1" colspan="1" aria-label="Status: activate to sort column ascending" style="width: 66.5781px;">Status</th><th class="text-end min-w-100px sorting" tabindex="0" aria-controls="kt_datatable_example2" rowspan="1" colspan="1" aria-label="Actions: activate to sort column ascending" style="width: 109.016px;">Actions</th></tr>
+                                                <!--end::Table row-->
+                                             </thead>
+                                             <!--end::Table head-->
+
+
+                                             <!--begin::Table body-->
+                                             <tbody class="fw-bold text-gray-600">
+
+                                                @if( !empty($serSubcat) )
+                        @foreach($serSubcat as $sKey => $serSub)
                            @php 
-                              $status = $ser->is_active;
-                              if($status == 1 ){
-                                 $status = "Enabled";
-                                 $class   = "success";
+                              $statusS = $serSub->status;
+                              if($statusS == 1 ){
+                                 $statusS = "Enabled";
+                                 $classS   = "success";
                               }else{
-                                 $status = "Disabled";
-                                 $class   = "danger";
+                                 $statusS = "Disabled";
+                                 $classS   = "danger";
                               }
-                           @endphp
-                         <!--begin::SubTable template-->
-                         <tr>
-                           <td>{{ $key+1 }}</td>
-                           <td>{{ $ser->country }}</td>
-                           <td>{{ $ser->category }}</td>
-                                
-                                    <!-- <td>
-                                       <div class="d-flex align-items-center gap-3">
-                                          <div class="d-flex flex-column text-muted">
-                                             <a href="#" class="text-dark text-hover-primary fw-bold" data-kt-docs-datatable-subtable="subcat_name">Hair Color</a>
-                                          </div>
+                           @endphp 
+
+                                                
+
+                                                
+
+                                             <tr class="odd">
+                                                   <td>{{ $sKey+1 }}</td>
+                                                   <td>{{$serSub->country}}</td>
+                                                   <td>{{$serSub->category}}</td>
+                                                   <td data-order="Invalid date">{{$serSub->servicesubcategory}}</td>
+                                                   <td>
+                                                      <div class="badge badge-light-{{$classS}} fw-bold">{{$statusS }}</div>
+                                                   </td>
+                                                   <td class="text-end">
+                                                      <a href="#" class="btn btn-light btn-active-light-primary btn-flex btn-center btn-sm" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end">Actions
+                                                      <i class="ki-duotone ki-down fs-5 ms-1"></i></a>
+                                                      <!--begin::Menu-->
+                                                      <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-600 menu-state-bg-light-primary fw-semibold fs-7 w-125px py-4" data-kt-menu="true">
+                                                         <!--begin::Menu item-->
+                                                         <div class="menu-item px-3">
+                                                            <a href="{{ url('/admin/subcategory/enable-status/'.$serSub->servicesubcategoryid ) }}" class="menu-link px-3">Enable</a>
+                                                         </div>
+                                                         <!--end::Menu item-->
+                                                         <!--begin::Menu item-->
+                                                         <div class="menu-item px-3">
+                                                            <a href="{{ url('/admin/subcategory/disable-status/'.$serSub->servicesubcategoryid ) }}" class="menu-link px-3">Disable</a>
+                                                         </div>
+                                                         <!--end::Menu item-->
+                                                         <div class="menu-item px-3">
+                                                            <a href="javascript:void(0)" subcategory-id="{{ $serSub->servicesubcategoryid}}" data-bs-toggle="modal" data-bs-target="#kt_modal_subcat" class="menu-link px-3 edit-subcategory">Edit</a>
+                                                         </div>
+
+                                                      </div>
+                                                      <!--end::Menu-->
+                                                   </td>
+                                                
+                                                </tr>
+                                                 
+                                             @endforeach
+                                             @endif
+                                             </tbody>
+                                             <!--end::Table body-->
+                                          </table></div></div>
+
                                        </div>
-                                    </td> -->
-                                    <td>
-                                 @if( !empty( $ser->icon) )
-                                    <img id="avatar" name="avatar" accept=".png, .jpg, .jpeg" src="{{asset('/public/uploads/category')}}/{{ $ser->icon }}" style="width: 2em;"/>
-                                 @endif
-                                    </td>
-                                    <td>
-                                       <div class="badge badge-light-{{ $class }} fw-bold" data-kt-docs-datatable-subtable="subcat_status">{{ $status }}</div>
-                                    </td>
-                                 
-                                    <td class="text-end">
-                                       <a href="#" class="btn btn-light btn-active-light-primary btn-flex btn-center btn-sm" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end">Actions
-                                       <i class="ki-duotone ki-down fs-5 ms-1"></i></a>
-                                       <!--begin::Menu-->
-                                       <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-600 menu-state-bg-light-primary fw-semibold fs-7 w-125px py-4" data-kt-menu="true">
-                                          <!--begin::Menu item-->
-                                          <div class="menu-item px-3">
-                                             <a href="{{ url('/admin/add-servicecategory/enable-status/'.$ser->id) }}" class="menu-link px-3">Enable</a>
-                                          </div>
-                                          <!--end::Menu item-->
-                                          <!--begin::Menu item-->
-                                          <div class="menu-item px-3">
-                                             <a href="{{ url('/admin/add-servicecategory/disable-status/'.$ser->id) }}" class="menu-link px-3">Disable</a>
-                                          </div>
-                                          <!--end::Menu item-->
-                                          <div class="menu-item px-3">
-                                             <a href="javascript:void(0)" category-id="{{ $ser->id}}" data-bs-toggle="modal" data-bs-target="#kt_modal_cat" class="menu-link px-3 edit-category">Edit</a>
-                                          </div>
-                                       </div>
-                                       <!--end::Menu-->
-                                    </td>
-                                    <td>
-                                       <button type="button" class="btn btn-sm btn-icon btn-light btn-active-light-primary toggle h-25px w-25px" data-kt-docs-datatable-subtable="expand_row">
-                                       <span class="svg-icon fs-3 m-0 toggle-off">...</span>
-                                       <span class="svg-icon fs-3 m-0 toggle-on">...</span>
-                                       </button>
-                                    </td>
-                                 </tr>
-                                 @endforeach
-                        @endif
-                              </tbody>
-                              <!--end::Table body-->
-                           </table>
-                        </div>
-                        <!--end::Card body-->
-                     </div>
-                     <!--end::Products-->
-                  </div>
-                  <!--end::Tab pane-->
+                                       <!--end::Card body-->
+
+                                    </div>
                   <!--begin::Tab pane-->
                   <div class="tab-pane fade" id="serviceconfig2" role="tab-panel">
                      <!--begin::Products-->
@@ -1071,7 +1189,10 @@
 
                   <div class="modal-body">
                       <!--begin::Form-->
-                  <form class="form">
+                  <form class="form" method="post" action="{{ url('admin/update-servicesubcategory')}}" >
+                      @csrf
+
+                      <input type="hidden" name="subcategory_id" id="subcategory_id">
                      <!--begin::Scroll-->
                      <div class="d-flex flex-column scroll-y me-n7 pe-7">
 
@@ -1081,12 +1202,15 @@
                            <label class="required fw-semibold fs-6 mb-2">Category</label>
                            <!--end::Label-->
                            <!--begin::Input-->
-                           <select class="form-select mb-2" data-control="select2" data-placeholder="Select a Category...">
+                          
+                           <select class="form-select mb-2" name="scategory" id="scategory" data-control="select2" data-placeholder="Select a Category...">
+                              
                                <option></option>
-                              <option value="1" selected>Hair</option>
-                              <option value="2">Face Care</option>
-                              <option value="3">Nail</option>
+                                 @foreach($catactive as $ca)
+                               <option value="{{$ca->id}}">{{$ca->category}}</option>
+                               @endforeach
                            </select>
+                          
                            <!--end::Input-->
                         </div>
                         <!--end::Input group-->
@@ -1097,7 +1221,7 @@
                            <label class="required fw-semibold fs-6 mb-2">Sub category</label>
                            <!--end::Label-->
                            <!--begin::Input-->
-                           <input type="text" name="" class="form-control form-control-solid mb-3 mb-lg-0" placeholder="sub category" value="Hair Color" />
+                           <input type="text" name="subcategory" id="subcategory" class="form-control form-control-solid mb-3 mb-lg-0" placeholder="sub category" value="Hair Color" />
                            <!--end::Input-->
                         </div>
                         <!--end::Input group-->
@@ -1235,6 +1359,34 @@
                
                
                 $('#kt_docs_datatable_subtable1').DataTable().ajax.reload();
+                }
+            });
+         });
+
+
+
+
+   $(document).on('click', '.edit-subcategory', function(){
+        event.preventDefault();
+        var id = $(this).attr('subcategory-id');
+        
+            $.ajax({
+            url:'{{ url('admin/edit-servicesubcategory')}}'+'/' + id,
+            type:'GET',
+                beforeSend:function(){
+                     $('.spinner-cls').show();
+               },
+                success:function(data)
+                {
+                console.log("data", data)
+                
+                  $('.spinner-cls').hide();
+                  $("#scategory").val(data.categoryid).trigger('change');
+                  $("#subcategory").val(data.servicesubcategory);
+                  $("#subcategory_id").val(data.servicesubcategoryid);
+                  // $("#avatar").css('background-image', 'url('+data.icon/')');
+                  
+                $('#kt_datatable_example2').DataTable().ajax.reload();
                 }
             });
          });

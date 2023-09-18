@@ -194,6 +194,11 @@ Route::middleware(['auth'])->group(function () {
     Route::get('admin/settings/subscription/get-typeone/{id}', [SubscriptionController::class, 'gettypeOneAjax']);
     Route::get('admin/settings/subscription/get-typetwo/{id}', [SubscriptionController::class, 'gettypeTwoAjax']);
     Route::get('admin/settings/subscription/get-fees/{id}', [SubscriptionController::class, 'getfeeAjax']);
+
+    Route::get('admin/subcategory/enable-status/{id}', [ServicesConfigController::class, 'enabledSubcat']);
+    Route::get('admin/subcategory/disable-status/{id}', [ServicesConfigController::class, 'disabledSubcat']);
+Route::get('admin/edit-servicesubcategory/{id}', [ServicesConfigController::class, 'editSubcat']);
+Route::post('admin/update-servicesubcategory', [ServicesConfigController::class, 'updateSubcat']);
 });
 
 /*Partner Route*/

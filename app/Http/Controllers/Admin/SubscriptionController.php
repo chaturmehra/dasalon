@@ -106,7 +106,7 @@ class SubscriptionController extends Controller
     
         $getOnboard = Onboarding::where('gperiod_country','=',$gperiod_country_id2)->get(['gperiod_type3'])->toArray();
        
-           
+           // echo "<pre>";print_r($getOnboard);die;
         $responseO = [
             'status'=>true, 
             'gperiod_type3'=> $getOnboard[0]['gperiod_type3']
