@@ -214,127 +214,37 @@
 							</tr>
 						</thead>
 						<tbody class="text-gray-600 fw-semibold">
-							<tr>
-								<td>1</td>
-								<td>Settings</td>
-								<td>Country Config</td>
+						@php
+						$count = 0; 
+						
+								$adminpagewithsubpage = adminpagewithsubpage();
+						@endphp 
+						@foreach($adminpagewithsubpage as $page => $subpages)
+						
+							@foreach( $subpages as $key => $subpage )
+							
+							<tr>							
+								<td>{{++$count}}</td>
+                            	<td>
+									<input type="hidden" name="page[]" value="{{$page}}" />
+									{{$page}}
+								</td>
 								<td>
-									<div class="form-check form-switch form-check-custom form-check-solid">
-										<input class="form-check-input h-25px w-45px" type="checkbox" value="" id="flexSwitchDefault"/>
+								<input type="hidden" name="subpage[]" value="{{$subpage}}" />
+								{{ $subpage }}</td>
+								<td>
+									<div class="form-check form-switch form-check-custom form-check-solid checkbox-value">
+										<input class="form-check-input h-25px w-45px permission-on" 
+										type="checkbox" value="1" id="flexSwitchDefault" 
+										name="property_value[{{$page}}][{{$subpage}}]"
+										data-page="{{$page}}" data-subpage="{{$subpage}}"/>
 										<label class="form-check-label" for="flexSwitchDefault"></label>
 									</div>
 								</td>
 							</tr>
-							<tr>
-								<td>2</td>
-								<td>Settings</td>
-								<td>Partner Config</td>
-								<td>
-									<div class="form-check form-switch form-check-custom form-check-solid">
-										<input class="form-check-input h-25px w-45px" type="checkbox" value="" id="flexSwitchDefault"/>
-										<label class="form-check-label" for="flexSwitchDefault"></label>
-									</div>
-								</td>
-							</tr>
-							<tr>
-								<td>3</td>
-								<td>Settings</td>
-								<td>Subscription Config</td>
-								<td>
-									<div class="form-check form-switch form-check-custom form-check-solid">
-										<input class="form-check-input h-25px w-45px" type="checkbox" value="" id="flexSwitchDefault"/>
-										<label class="form-check-label" for="flexSwitchDefault"></label>
-									</div>
-								</td>
-							</tr>
-							<tr>
-								<td>4</td>
-								<td>Settings</td>
-								<td>Appointment Config</td>
-								<td>
-									<div class="form-check form-switch form-check-custom form-check-solid">
-										<input class="form-check-input h-25px w-45px" type="checkbox" value="" id="flexSwitchDefault"/>
-										<label class="form-check-label" for="flexSwitchDefault"></label>
-									</div>
-								</td>
-							</tr>
-							<tr>
-								<td>5</td>
-								<td>Settings</td>
-								<td>Amenity & Special Attributes</td>
-								<td>
-									<div class="form-check form-switch form-check-custom form-check-solid">
-										<input class="form-check-input h-25px w-45px" type="checkbox" value="" id="flexSwitchDefault"/>
-										<label class="form-check-label" for="flexSwitchDefault"></label>
-									</div>
-								</td>
-							</tr>
-							<tr>
-								<td>6</td>
-								<td>Settings</td>
-								<td>Payment Gateway</td>
-								<td>
-									<div class="form-check form-switch form-check-custom form-check-solid">
-										<input class="form-check-input h-25px w-45px" type="checkbox" value="" id="flexSwitchDefault"/>
-										<label class="form-check-label" for="flexSwitchDefault"></label>
-									</div>
-								</td>
-							</tr>
-							<tr>
-								<td>7</td>
-								<td>Service</td>
-								<td>Order Management</td>
-								<td>
-									<div class="form-check form-switch form-check-custom form-check-solid">
-										<input class="form-check-input h-25px w-45px" type="checkbox" value="" id="flexSwitchDefault"/>
-										<label class="form-check-label" for="flexSwitchDefault"></label>
-									</div>
-								</td>
-							</tr>
-							<tr>
-								<td>8</td>
-								<td>Service</td>
-								<td>Service Config</td>
-								<td>
-									<div class="form-check form-switch form-check-custom form-check-solid">
-										<input class="form-check-input h-25px w-45px" type="checkbox" value="" id="flexSwitchDefault"/>
-										<label class="form-check-label" for="flexSwitchDefault"></label>
-									</div>
-								</td>
-							</tr>
-							<tr>
-								<td>9</td>
-								<td>Service</td>
-								<td>Partner - Service mapping</td>
-								<td>
-									<div class="form-check form-switch form-check-custom form-check-solid">
-										<input class="form-check-input h-25px w-45px" type="checkbox" value="" id="flexSwitchDefault"/>
-										<label class="form-check-label" for="flexSwitchDefault"></label>
-									</div>
-								</td>
-							</tr>
-							<tr>
-								<td>10</td>
-								<td>Service</td>
-								<td>Recommendations (package)</td>
-								<td>
-									<div class="form-check form-switch form-check-custom form-check-solid">
-										<input class="form-check-input h-25px w-45px" type="checkbox" value="" id="flexSwitchDefault"/>
-										<label class="form-check-label" for="flexSwitchDefault"></label>
-									</div>
-								</td>
-							</tr>
-							<tr>
-								<td>11</td>
-								<td>Service</td>
-								<td>Offers Management</td>
-								<td>
-									<div class="form-check form-switch form-check-custom form-check-solid">
-										<input class="form-check-input h-25px w-45px" type="checkbox" value="" id="flexSwitchDefault"/>
-										<label class="form-check-label" for="flexSwitchDefault"></label>
-									</div>
-								</td>
-							</tr>
+							
+							@endforeach
+						@endforeach
 						</tbody>
 					</table>
 					<!--end::Table-->

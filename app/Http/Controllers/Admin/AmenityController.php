@@ -3,8 +3,9 @@
 namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Admin\Amenity;
+use App\Models\Admin\AmenityCategory;
 use Illuminate\Http\Request;
-
+use DB;
 class AmenityController extends Controller
 {
    
@@ -23,13 +24,41 @@ class AmenityController extends Controller
             $image->move($destinationPath, $amenity_icon);
             $amenity_icon =  '/uploads/amenity/'.$amenity_icon;
         }
+       
+        if($request->amenity_type == 1){
+            // DB::enableQueryLog();
+            $acat_name= AmenityCategory::where('amenity_category', $request->amenity_category);
+            // $querylog =  DB::getQueryLog();
+            // dd($querylog);  
+            // echo "<pre>";print_r($acat_name->count());die();
+            
+            
+        
 
+            if( !$acat_name->count() ) {
+                $acat_id = AmenityCategory::create([
+                    'amenity_category' => $request->amenity_category,
+                ]);
+                
+            $acat_id = $acat_id->id;
+            } else {
+                $acat_id = $acat_name->first()->id;
+            }
+        }else{
+            $acat_id = "";
+        }
+
+        // echo "<pre>";print_r($acat_id);die();
+       
+        //    echo "<pre>";print_r();die();
         Amenity::create([
             'amenity_name' => $request->amenity_name,
+            'amenity_category' => isset($acat_id) ? $acat_id : "",
             'partner_type' => $request->partner_type,
             'amenity_type' => $request->amenity_type,
             'amenity_icon' => $amenity_icon,
         ]);
+        
         
         return true;
     }
@@ -56,12 +85,13 @@ class AmenityController extends Controller
         $totalRecordswithFilter = Amenity::select('count(*) as allcount')->where('amenity_name', 'like', '%' .$searchValue . '%')->count();
 
         $records = Amenity::leftJoin('partner_type', 'amenities.partner_type', '=', 'partner_type.id')
+        ->leftJoin('amenity_categories', 'amenities.amenity_category', '=', 'amenity_categories.id')
           ->where('amenities.amenity_name', 'like', '%' .$searchValue . '%')
           ->where('amenities.amenity_type', '=', '1')
           ->skip($start)
           ->take($rowperpage)
           ->orderBy('id','desc')
-          ->get(['amenities.*','partner_type.partner_name']);
+          ->get(['amenities.*','partner_type.partner_name','amenity_categories.amenity_category']);
 
         $data_arr = array();
         $i=0;
@@ -71,7 +101,7 @@ class AmenityController extends Controller
             $id = $record->id;
 
             if($record->amenity_icon){
-                $amenity_icon = '<img src="'.asset($record->amenity_icon).'" height="95px" widht="95px">';
+                $amenity_icon = '<img src="'.asset('public'.$record->amenity_icon).'" height="95px" widht="95px">';
             }else{
                 $amenity_icon = '<img src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460__340.png" height="95px" widht="95px">';
             }
@@ -85,6 +115,7 @@ class AmenityController extends Controller
             $data_arr[] = array(
              "id" => $i,
              "amenity_name" => $record->amenity_name,
+             "amenity_category" => $record->amenity_category,
              "partner_type" => $record->partner_name,
              "amenity_icon" => $amenity_icon,
              "status" => $status,
@@ -148,7 +179,7 @@ class AmenityController extends Controller
             $id = $record->id;
 
             if($record->amenity_icon){
-                $amenity_icon = '<img src="'.asset($record->amenity_icon).'" height="95px" widht="95px">';
+                $amenity_icon = '<img src="'.asset('public'.$record->amenity_icon).'" height="95px" widht="95px">';
             }else{
                 $amenity_icon = '<img src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460__340.png" height="95px" widht="95px">';
             }

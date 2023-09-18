@@ -9,7 +9,8 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Validation\Rules\Password;
 use App\Models\User;
-
+use App\Models\Admin\SystemManagerPermission;
+use DB;
 class SystemManagerController extends Controller
 {
     public function index()
@@ -17,6 +18,7 @@ class SystemManagerController extends Controller
     	$title             = "Dasalon :: Add System Manager";
     	$meta_description  = "";
     	$meta_keywords     = "";
+
     	return view('admin/setting/system_admin/add-system-manager', compact('title', 'meta_description', 'meta_keywords'));
     }
 
@@ -46,22 +48,81 @@ class SystemManagerController extends Controller
         $user->email        = $request->email;
         $user->password     = Hash::make($request->new_password);
         $user->phone        = $request->phone;
+        $user->country      = "";
         $user->is_active    = 1;
-        $user->role         = "System Manager";
+        $user->role         = 3;
 
         $user->save();
 
-        return redirect()->back()->with('message', 'System admin created successfully.');
-    }
+        $user_id = $user->id; 
+        $property_value =  $request->get('property_value');
+        // echo "<pre>";print_r($property_value);die;
+
+        // echo "<pre>";
+        // print_r($page);
+        // print_r($subpage);
+        // print_r($property_value);
+        // die;
+
+
+    // if($page){
+    //     $page = json_encode($page);
+    // }
+    // if($subpage){
+    //     $subpage = json_encode($subpage);
+    // }
+    // if($property_value){
+    //     $property_value = json_encode($property_value);
+
+    // }
+    $adminpagewithsubpage = adminpagewithsubpage();
+    foreach($adminpagewithsubpage as $page=> $subpages)
+			{
+          foreach( $subpages as $key => $subpage )
+              {
+                // echo "<pre";print_r($property_value[$page][$subpage]);die;
+                $perm = new SystemManagerPermission; 
+                $perm->page =  $page;  
+                $perm->subpage = $subpage;
+                $perm->user_id = $user_id;  
+                $perm->property_value = isset($property_value[$page][$subpage])?$property_value[$page][$subpage]:0;   
+                $perm->save();
+
+              }        
+                        }
+           
+        return redirect('/admin/settings')->with('message', 'System admin created successfully.');
+    }       
+
 
     public function edit($id)
     {
     	$manager_detail = User::find($id);
-
+        
     	$title             = "Dasalon :: Edit System Manager";
     	$meta_description  = "";
     	$meta_keywords     = "";
-    	return view('admin/setting/system_admin/edit-system-manager', compact('title', 'meta_description', 'meta_keywords', 'manager_detail'));
+            
+    //    DB::enableQueryLog();
+         $usersysmanagerperm = SystemManagerPermission::leftJoin('users', 'users.id', '=', 'system_manager_permissions.user_id')
+         ->where('system_manager_permissions.user_id',$id)->get();
+        // $querylog =  DB::getQueryLog();
+        //  dd($querylog);
+    
+        // echo "<pre>";print_r($usersysmanagerperm);die;
+        // $prop_valu=$usersysmanagerperm->pluck('property_value');
+        // foreach($prop_valu as $prop_val ) {        
+        //   }}
+        // echo "<pre>";print_r($prop_valu);die;
+    // }
+        // if($perm==$id) {
+            
+            // echo "<pre>";print_r($perm);die;
+        // }
+        // echo "<pre>";print_r($perm);die;
+
+
+    	return view('admin/setting/system_admin/edit-system-manager', compact('title', 'meta_description', 'meta_keywords', 'manager_detail','usersysmanagerperm'));
     }
 
     public function update(Request $request, $id): RedirectResponse
@@ -88,6 +149,7 @@ class SystemManagerController extends Controller
         $user->id           = $id;
         $user->name         = $request->name;
         $user->email        = $request->email;
+        $user->country      = "";
         if ($request->new_password) {
             $user->password     = Hash::make($request->new_password);
         }
@@ -95,7 +157,34 @@ class SystemManagerController extends Controller
 
         $user->save();
 
-        return redirect()->back()->with('message', 'System admin updated successfully.');
+    $property_value =  $request->get('property_value');  
+    
+    $adminpagewithsubpage = adminpagewithsubpage();
+    foreach($adminpagewithsubpage as $page=> $subpages)
+			{
+          foreach( $subpages as $key => $subpage )
+              {
+                SystemManagerPermission::where('user_id', $user->id)->where('page', $page)
+               -> where('subpage', $subpage)->
+                update([
+                    
+                  'property_value' => 
+                  isset($property_value[$page][$subpage])?$property_value[$page][$subpage]:0,  
+                 
+                    
+                ]);
+            }
+            }
+    // DB::enableQueryLog();
+    // $getRecordperm = SystemManagerPermission::where('user_id', $user->id)->get();
+                    //  echo "<pre>";print_r($getRecordperm);die;
+        //  $querylog =  DB::getQueryLog();
+        //  dd($querylog);
+    // if($getRecordperm){
+        
+       
+         
+        return redirect('/admin/settings')->with('message', 'System admin updated successfully.');
     }
 
     public function enabled($id): RedirectResponse
@@ -139,6 +228,37 @@ class SystemManagerController extends Controller
     	$title             = "Dasalon :: View Manager Roles";
     	$meta_description  = "";
     	$meta_keywords     = "";
-    	return view('admin/setting/system_admin/view-manager-roles', compact('title', 'meta_description', 'meta_keywords'));
+
+        // DB::enableQueryLog();
+        $viewmanagerroles= User::leftJoin('system_manager_permissions', 'system_manager_permissions.user_id', '=', 'users.id')->get();
+        // $querylog =  DB::getQueryLog();
+        // dd($querylog);
+        $viewroles=User::where("role", 3)->get();
+        // $adminpagewithsubpage = adminpagewithsubpage();
+        // echo "<pre>";
+        // print_r($adminpagewithsubpage);
+        // print_r($viewmanagerroles);
+        // die;
+        
+        $system_manager_perm = [];
+        if( !empty($viewmanagerroles) ) {
+          foreach($viewmanagerroles as $key => $arr ) {
+        //     echo "<pre>";
+        // print_r($arr);
+        // die;
+            $system_manager_perm[$arr["page"]][$arr["subpage"]][$arr["user_id"]] = $arr;
+           
+          }
+        }
+
+        // echo "<pre>";
+        // print_r($adminpagewithsubpage);
+        // print_r($system_manager_perm);
+        // print_r($viewmanagerroles);
+        // die;
+        // echo "system_manager_perm <pre>";
+        //  print_r($system_manager_perm);
+        //  die;
+    	return view('admin/setting/system_admin/view-manager-roles', compact('title', 'meta_description', 'meta_keywords','system_manager_perm','viewroles'));
     }
 }

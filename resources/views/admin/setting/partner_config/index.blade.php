@@ -508,24 +508,38 @@
 																	</tr>
 																</thead>
 																<tbody class="text-gray-600 fw-semibold">
-																@foreach($showpfp as $pfp)
+																@php $count = 0; 
+																//echo "profile_feature_perm <pre>"; print_r($profile_feature_perm);die;
+																@endphp
+																@foreach($profile_feature_perm as $pkey=>$pfp)
+																@php //echo "profile_feature_perm <pre>";
+																	//print_r($pfp);
+																	//die;
+																	$index = array_keys($pfp);
+																	$profilefeature_id = $pfp[$index[0]]["id"];
+																	$count++;
+																	@endphp
 																<tr>
-																<td>{{$pfp->id}}</td>
-																<td>
-																{{$pfp->feature}}
-															</td>
+																<td>{{$count}}</td>
+																<td>{{ $pfp[$index[0]]['feature'] }}</td>
 																@foreach($roleall as $role)
 																<td>
 																@if($role->role_name)
 																 <div class="form-check form-switch form-check-custom form-check-solid me-10 checkbox-value1">
+
+																 	@php 
+																	$perm = isset( $pfp[$role->id] ) ? $pfp[$role->id] : "";
+																	@endphp 
 																				<input 
 																				class="form-check-input h-25px w-50px permission-on" 
 																				name="status" 
 																				type="checkbox" 
 																				value="1" 
-																				@if($pfp->property_value && $role->id == $pfp->role_id) checked={{ "checked" }} @endif
+																				@if( !empty($perm) && $perm["property_value"] == 1)
+																				  checked 
+																				@endif
 																				role_id="{{ $role->id }}"
-																				profilefeature_id="{{ $pfp->id }}"
+																				profilefeature_id="{{ $profilefeature_id }}"
 																				/>
 																				<label class="form-check-label" for="status"></label>
 																			</div>
@@ -569,7 +583,7 @@
   @endsection
   
   @push('scripts')
-  <script src="{{asset('/assets/js/profilefeature.js')}}" type="text/javascript"></script>
+  <script src="{{asset('/public/assets/js/profilefeature.js')}}" type="text/javascript"></script>
     
 <script>
 // Wait for the DOM to be ready

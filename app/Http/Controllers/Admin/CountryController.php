@@ -10,13 +10,16 @@ use App\Models\Admin\PartnerDetails;
 use App\Models\Admin\DisableCity;
 use App\Models\Admin\Franchise;
 use Illuminate\Http\Request;
+use App\Models\Admin\BusinessType;
+use Illuminate\Http\RedirectResponse; 
 
 class CountryController extends Controller
 {
    
     public function index()
     {
-        return view('admin/setting/country/index');
+        $bts=BusinessType::all();
+        return view('admin/setting/country/index',compact('bts'));
     }
 
     public function countryList()
@@ -70,6 +73,53 @@ class CountryController extends Controller
         ]);
 		return response()->json(['status'=>true]);
 	}
+
+    public function store(Request $request): RedirectResponse
+    {
+        $bt = new BusinessType;
+        $bt->businesstype 		= $request->businesstype;
+        $bt->is_active 	= 1;
+        $bt->save();
+        return redirect()->back()->with('message', 'Business Type created successfully.');
+    }
+
+    public function enabledbt($bt_id): RedirectResponse
+    {
+        if($bt_id){
+            $bt = new BusinessType;
+
+            $bt->exists       = true;
+            $bt->bt_id           = $bt_id;
+            $bt->is_active    = 1;
+            $bt->updated_at   = date('Y-m-d H:i:s');
+
+            $bt->save();
+
+            return redirect()->back()->with('statusbt', 'Business Type status updated successfully.');
+        }else{
+            return redirect()->back()->with('errorstatusbt', 'Please select Business Type.');
+        }
+    }
+
+    public function disabledbt($bt_id): RedirectResponse
+    {
+    	if($bt_id){
+	        $bt = new BusinessType;
+
+	        $bt->exists 		= true;
+	        $bt->bt_id 			= $bt_id;
+	        $bt->is_active 	= 0;
+	        $bt->updated_at 	= date('Y-m-d H:i:s');
+            
+            // echo "<pre>"; print_r($s->is_active);die;
+            
+	        $bt->save();
+
+	        return redirect()->back()->with('statusbt', 'Business Type status updated successfully.');
+	    }else{
+	    	return redirect()->back()->with('errorstatusbt', 'Please select Business Type.');
+	    }
+    }
 	
 	public function savePartnerDetails(Request $request){
 		
@@ -107,11 +157,26 @@ class CountryController extends Controller
    
         $data_arr = array();
 		   
+
         foreach($records as $record){
-			$status = '<button type="submit" class="badge badge-danger on_status" data-id="1" id="' . $record->id . '">DEACTIVE</button>';
+   
+            $action='<a href="#" class="btn btn-light btn-active-light-primary btn-flex btn-center btn-sm" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end">Actions
+                     <i class="ki-duotone ki-down fs-5 ms-1"></i></a>
+                  <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-600 menu-state-bg-light-primary fw-semibold fs-7 w-125px py-4" data-kt-menu="true">
+                         
+                 <div class="menu-item px-3">
+                     <a href="javascript:void(0)"  data-id="1" id="' . $record->id . '" class="menu-link px-3  on_status">Enable</a>
+                 </div>
+                 <div class="menu-item px-3">
+                 <a href="javascript:void(0)"  data-id="0" id="' . $record->id . '" class="menu-link px-3  on_status">Disable</a>
+                 </div>
+                 </div>';
+
+            $status = '<div class="badge badge-light-danger fw-bold">Disabled</div>';
             if($record->status == '1'){
-                $status = '<button type="submit" class="badge badge-success on_status" data-id="0" id="' . $record->id . '">ACTIVE</button>';
-            }
+                $status = '<div class="badge badge-light-success fw-bold">Enabled</div>';
+            }       
+		
         
            $data_arr[] = array(
              "country_id" => $record->name,
@@ -119,6 +184,7 @@ class CountryController extends Controller
 			 "currency_code" => $record->currency_code,
 			 "currency_sign" => $record->currency_sign,
 			 "status" => $status,
+             "action" => $action,
            );
         }
    

@@ -115,6 +115,7 @@ class PartnerController extends Controller
                 'name'      => $name,
                 'email'     => $email,
                 'phone'     => "",
+                'country'   => "",
                 'role'      => 1,
             ]);
 
@@ -149,7 +150,7 @@ class PartnerController extends Controller
     {
         
         $validator = Validator::make($request->all(), [
-            'email'  => 'required|unique:users|max:100',
+            'email'  => 'required|email|unique:users|max:100',
         ]);
  
         if ($validator->fails()) {
@@ -181,8 +182,9 @@ class PartnerController extends Controller
 
         $validator = Validator::make($request->all(), [
             'businessname'  => 'required|max:30',
-            'phone'         => 'required|max:15',
-            'otp'           => 'required|min:6|max:6',
+            'phone'         => 'required',
+            'otp'           => 'required|numeric',
+            'websitename'   => 'nullable|url',
         ]);
  
         if ($validator->fails()) {
@@ -205,6 +207,7 @@ class PartnerController extends Controller
                 'name'      => $request->businessname,
                 'email'     => $email,
                 'phone'     => $request->phone,
+                'country'   => "",
                 'role'      => 1,
                 'is_active' => 1,
             ]);
@@ -220,8 +223,8 @@ class PartnerController extends Controller
             $userDetails = UserDetails::create($userDetails);
 
             $this->createPasswordLinkEmail($email, $request->businessname, $user->id);
-
-            return redirect('/partner/login')->with('success', 'We have sent to a create password link in your mail. Please check.');
+            //return view('partner/user/signup-complete');
+            return redirect('partner/user/signup-complete')->with('success', 'We have sent to a create password link in your mail. Please check.');
 
         }else{
 
@@ -265,8 +268,8 @@ class PartnerController extends Controller
 
         $validator = Validator::make($request->all(), [
             'name'      => 'required|max:30',
-            'phone'     => 'required|max:15',
-            'otp'       => 'required|min:6|max:6',
+            'phone'     => 'required',
+            'otp'       => 'required|numeric',
         ]);
  
         if ($validator->fails()) {
@@ -282,6 +285,7 @@ class PartnerController extends Controller
             'name'      => $request->name,
             'email'     => $email,
             'phone'     => $request->phone,
+            'country'   => "",
             'role'      => 2,
             'is_active' => 1,
         ]);

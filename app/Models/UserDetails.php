@@ -17,5 +17,8 @@ class UserDetails extends Model
         'website',
         'provider',
         'service_provided',
+        'business_logo',
+        'facebook',
+        'instagram',
     ];
 }

@@ -12,15 +12,14 @@ class AppointmentController extends Controller
     	$title             = "Dasalon :: Appointment Config";
     	$meta_description  = "";
     	$meta_keywords     = "";
-        $task = AppointmentConfig::findOrFail(1);        
+        $task = AppointmentConfig::first();        
 
         return view('admin/setting/appointment_config/index', compact('title', 'meta_description', 'meta_keywords','task'));
     }
 
     public function create(Request $request)
-    {   
-        $id =  1;  
-        $getRecord = AppointmentConfig::where('id', $id)->first();
+    {    
+        $getRecord = AppointmentConfig::first();
         if($getRecord){ 
             AppointmentConfig::where('id', $getRecord->id)->
             update([ 
@@ -29,6 +28,14 @@ class AppointmentController extends Controller
         'latest_appointment_booking_time' => $request->latest_appointment_booking_time,  
         'max_booking_allowed' => $request->max_booking_allowed,  
     ]);}
+    else{
+        $ap = new AppointmentConfig;  
+         $ap->time_least_count =  $request->get('time_least_count');  
+         $ap->soonest_appointment_booking_time = $request->get('soonest_appointment_booking_time');  
+         $ap->latest_appointment_booking_time = $request->get('latest_appointment_booking_time');  
+         $ap->max_booking_allowed = $request->get('max_booking_allowed');  
+         $ap->save();
+    }
         return redirect()->back()->with('message', 'Appointment Config created successfully.');
     }
 }

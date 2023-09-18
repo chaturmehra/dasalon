@@ -18,8 +18,8 @@ class TwilioSMSController extends Controller
     {
     	$otp = random_int(100000, 999999);
 
-    	//$receiverNumber = $request->phone;
-    	$receiverNumber = "+917827881909";
+    	$receiverNumber = $request->phone;
+    	// $receiverNumber = "+917827881909";
     	$message 		= "Your Daslon OTP is: ".$otp;
 
     	try {

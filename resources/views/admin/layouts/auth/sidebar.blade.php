@@ -30,7 +30,7 @@
 				<!--begin::Navbar item-->
 				<li class="nav-item py-1">
 					<!--begin::Navbar link-->
-					<a href="/dasalon/admin/services-order-management.php" class="nav-link py-4 px-1 btn asidenav">
+					<a href="#" class="nav-link py-4 px-1 btn asidenav">
 						<i class="ki-outline ki-abstract-26 fs-1"></i>
 						<span class="pt-2 fs-9 fs-lg-7 fw-bold">Partners</span>
 					</a>

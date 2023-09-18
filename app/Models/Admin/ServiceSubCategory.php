@@ -9,7 +9,8 @@ class ServiceSubCategory extends Model
 {
     use HasFactory;
     protected $fillable = [
-        'category',
-        'subcategory',
+        'categoryid',
+        'servicesubcategory',
     ];
+    protected $primaryKey = 'servicesubcategoryid';
 }
