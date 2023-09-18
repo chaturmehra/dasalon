@@ -7,6 +7,7 @@ use App\Models\Admin\Country;
 use App\Models\Admin\CountryConfig;
 use App\Models\Admin\Amenity;
 use App\Models\Admin\AmenityCategory;
+use App\Models\Admin\Service;
 
 function getPartnerType(){
 	$partnertype = PartnerType::get();
@@ -37,14 +38,17 @@ if (!function_exists('loadScript')) {
         }
     } 
 }
+
 function getAmenityCategory(){
 	$amenitycategories = AmenityCategory::get()->toArray();
-
-	$amenitycategory = array_column($amenitycategories, 'amenity_category');
-	// $amenitycategory0 = array_values($amenitycategory);
-
-	// echo "<pre>"; print_r($amenitycategory); 
+	$amenitycategory   = array_column($amenitycategories, 'amenity_category');
 	return $amenitycategory;
+}
+
+function getServices(){
+    $services  = Service::where('is_active', 1)->get()->toArray();
+    $services_name  = array_column($services, 'servicename');
+    return $services_name;
 }
 
 function scheduleType(){

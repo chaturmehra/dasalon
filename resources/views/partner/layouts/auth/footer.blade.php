@@ -2272,12 +2272,13 @@
    <script src="https://cdn.amcharts.com/lib/5/geodata/worldTimeZonesLow.js"></script>
    <script src="https://cdn.amcharts.com/lib/5/geodata/worldTimeZoneAreasLow.js"></script>
    <script src="{{ asset('/public/partner/assets/plugins/custom/datatables/datatables.bundle.js')}}"></script>
+   <script src="{{ asset('/public/partner/assets/plugins/custom/formrepeater/formrepeater.bundle.js')}}"></script>
    <!--end::Vendors Javascript-->
    <!--begin::Custom Javascript(used for this page only)-->
    <script src="{{ asset('/public/partner/assets/js/custom/apps/ecommerce/reports/sales/sales.js')}}"></script>
    <script src="{{ asset('/public/partner/assets/js/custom/apps/user-management/users/list/table.js')}}"></script>
-   <script src="{{ asset('/public/partner/assets/js/custom/apps/user-management/users/list/export-users.js')}}"></script>
-   <script src="{{ asset('/public/partner/assets/js/custom/apps/user-management/users/list/add.js')}}"></script>
+   <!-- <script src="{{ asset('/public/partner/assets/js/custom/apps/user-management/users/list/export-users.js')}}"></script> -->
+   <!-- <script src="{{ asset('/public/partner/assets/js/custom/apps/user-management/users/list/add.js')}}"></script> -->
    <script src="{{ asset('/public/partner/assets/js/widgets.bundle.js')}}"></script>
    <script src="{{ asset('/public/partner/assets/js/custom/widgets.js')}}"></script>
    <script src="{{ asset('/public/partner/assets/js/custom/apps/chat/chat.js')}}"></script>
@@ -2472,11 +2473,11 @@
       var chart3 = new ApexCharts(elementapexch3, options);
       var chart4 = new ApexCharts(elementapexch4, options);
       var chart5 = new ApexCharts(elementapexch5, options);
-      chart.render();
-      chart2.render();
-      chart3.render();
-      chart4.render();
-      chart5.render();
+      // chart.render();
+      // chart2.render();
+      // chart3.render();
+      // chart4.render();
+      // chart5.render();
    </script>
    <script type="text/javascript">
       var KTChartsWidget5 = (function () {

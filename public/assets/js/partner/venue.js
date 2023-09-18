@@ -1,42 +1,42 @@
-$(document).on('click', '.update-venue-detail', function(){
+jQuery(document).on('click', '.update-venue-detail', function(){
   event.preventDefault();
-  var venue_id = $(this).attr('venue-id');
+  var venue_id = jQuery(this).attr('venue-id');
   if(venue_id){
     var ajaxurl = baseurl+'partner/get-venue-detail-by-id'+'/' + venue_id;
-    $.ajax({
+    jQuery.ajax({
       url: ajaxurl,
       type:'GET',
       beforeSend:function(){
-        $('.spinner-cls').show();
+        jQuery('.spinner-cls').show();
       },
       success:function(response)
       {
-        $('.spinner-cls').hide();
+        jQuery('.spinner-cls').hide();
         response = JSON.parse(response);
 
         if (response.status) {
           var venues_data = response.venues;
           var venues_meta = response.venue_meta;
 
-          $("#edit_venue_id").val(venues_data.id);
-          $("#edit_venue_name").val(venues_data.name);
-          $("#edit_venue_email").val(venues_data.email);
-          $("#edit_venue_phone").val(venues_data.phone);
-          $("#edit_venue_address").val(venues_data.address);
-          $("#edit_venue_billing_details").val(venues_data.billing_details);
+          jQuery("#edit_venue_id").val(venues_data.id);
+          jQuery("#edit_venue_name").val(venues_data.name);
+          jQuery("#edit_venue_email").val(venues_data.email);
+          jQuery("#edit_venue_phone").val(venues_data.phone);
+          jQuery("#edit_venue_address").val(venues_data.address);
+          jQuery("#edit_venue_billing_details").val(venues_data.billing_details);
 
-          $("#edit_venue_business_address").val(venues_meta.business_address);
-          $("#edit_venue_business_aptsuite").val(venues_meta.business_aptsuite);
-          $("#edit_venue_business_location").val(venues_meta.business_location);
-          $("#edit_venue_city").val(venues_meta.city);
-          $("#edit_venue_country").val(venues_meta.country);
-          $("#edit_venue_directions").val(venues_meta.directions);
-          $("#edit_venue_district").val(venues_meta.district);
-          $("#edit_venue_region").val(venues_meta.region);
-          $("#edit_venue_postcode").val(venues_meta.postcode);
+          jQuery("#edit_venue_business_address").val(venues_meta.business_address);
+          jQuery("#edit_venue_business_aptsuite").val(venues_meta.business_aptsuite);
+          jQuery("#edit_venue_business_location").val(venues_meta.business_location);
+          jQuery("#edit_venue_city").val(venues_meta.city);
+          jQuery("#edit_venue_country").val(venues_meta.country);
+          jQuery("#edit_venue_directions").val(venues_meta.directions);
+          jQuery("#edit_venue_district").val(venues_meta.district);
+          jQuery("#edit_venue_region").val(venues_meta.region);
+          jQuery("#edit_venue_postcode").val(venues_meta.postcode);
 
-          $(".edit_operating_open_hours").val(venues_meta.operating_open_hours);
-          $(".edit_operating_close_hours").val(venues_meta.operating_close_hours);
+          jQuery(".edit_operating_open_hours").val(venues_meta.operating_open_hours);
+          jQuery(".edit_operating_close_hours").val(venues_meta.operating_close_hours);
 
           var featured = publicurl+venues_meta.featured;
           var imgother1 = publicurl+venues_meta.imgother1;
@@ -44,11 +44,11 @@ $(document).on('click', '.update-venue-detail', function(){
           var imgother3 = publicurl+venues_meta.imgother3;
           var imgother4 = publicurl+venues_meta.imgother4;
 
-          $("#edit_featured_img").css('background-image', 'url('+featured+')');
-          $("#edit_otherimg1").css('background-image', 'url('+imgother1+')');
-          $("#edit_otherimg2").css('background-image', 'url('+imgother2+')');
-          $("#edit_otherimg3").css('background-image', 'url('+imgother3+')');
-          $("#edit_otherimg4").css('background-image', 'url('+imgother4+')');
+          jQuery("#edit_featured_img").css('background-image', 'url('+featured+')');
+          jQuery("#edit_otherimg1").css('background-image', 'url('+imgother1+')');
+          jQuery("#edit_otherimg2").css('background-image', 'url('+imgother2+')');
+          jQuery("#edit_otherimg3").css('background-image', 'url('+imgother3+')');
+          jQuery("#edit_otherimg4").css('background-image', 'url('+imgother4+')');
           
           var gender_restriction = venues_meta.gender_restriction;
           var openhours = venues_meta.openhours;
@@ -75,236 +75,236 @@ $(document).on('click', '.update-venue-detail', function(){
           var off_peak_hour_sun = venues_meta.off_peak_hour_sun;
 
           if (gender_restriction == "Unisex"){
-            $('.edit_gender_restriction#unisex').prop('checked', true);
+            jQuery('.edit_gender_restriction#unisex').prop('checked', true);
           }else if(gender_restriction == "Male"){
-            $('.edit_gender_restriction#male').prop('checked', true);
+            jQuery('.edit_gender_restriction#male').prop('checked', true);
           }else if(gender_restriction == "Female"){
-            $('.edit_gender_restriction#female').prop('checked', true);
+            jQuery('.edit_gender_restriction#female').prop('checked', true);
           }
 
           if (openhours == "open_for_selected_hours"){
-            $('.edit_openhours#openhoursnav1').prop('checked', true);
-            $('.edit#operatinghourstab1').addClass('active');
-            $('.edit#operatinghourstab2').removeClass('active');
-            $('.edit#operatinghourstab3').removeClass('active');
+            jQuery('.edit_openhours#openhoursnav1').prop('checked', true);
+            jQuery('.edit#operatinghourstab1').addClass('active');
+            jQuery('.edit#operatinghourstab2').removeClass('active');
+            jQuery('.edit#operatinghourstab3').removeClass('active');
           }else if(openhours == "always_open"){
-            $('.edit_openhours#openhoursnav2').prop('checked', true);
-            $('.edit#operatinghourstab2').addClass('active');
-            $('.edit#operatinghourstab1').removeClass('active');
-            $('.edit#operatinghourstab3').removeClass('active');
+            jQuery('.edit_openhours#openhoursnav2').prop('checked', true);
+            jQuery('.edit#operatinghourstab2').addClass('active');
+            jQuery('.edit#operatinghourstab1').removeClass('active');
+            jQuery('.edit#operatinghourstab3').removeClass('active');
           }else if(openhours == "appointment_only"){
-            $('.edit_openhours#openhoursnav3').prop('checked', true);
-            $('.edit#operatinghourstab3').addClass('active');
-            $('.edit#operatinghourstab1').removeClass('active');
-            $('.edit#operatinghourstab2').removeClass('active');
+            jQuery('.edit_openhours#openhoursnav3').prop('checked', true);
+            jQuery('.edit#operatinghourstab3').addClass('active');
+            jQuery('.edit#operatinghourstab1').removeClass('active');
+            jQuery('.edit#operatinghourstab2').removeClass('active');
           }
 
           if(business_address_check){
-            $('.edit_business_address_check').prop('checked', true);
+            jQuery('.edit_business_address_check').prop('checked', true);
           }
 
           if(advance_setting){
-            $('.edit_advance_setting').prop('checked', true);
-            $('.edit-add-close-op-hours').removeClass('d-none');
+            jQuery('.edit_advance_setting').prop('checked', true);
+            jQuery('.edit-add-close-op-hours').removeClass('d-none');
           }
 
           var amenity     = venues_meta.amenity;
           if (amenity) {
             var split_amenity = amenity.split(",");
-            $.each(split_amenity, function(index, value) {
-              $(".edit_venue_amenity[value="+value+"]").prop("checked", true);
+            jQuery.each(split_amenity, function(index, value) {
+              jQuery(".edit_venue_amenity[value="+value+"]").prop("checked", true);
             });
           }
 
           var business_type   = venues_meta.venuebusiness;
           if (business_type) {
             var split_bt = business_type.split(",");
-            $.each(split_bt, function(index, value) {
-              $(".edit_venuebusiness[value="+value+"]").prop("checked", true);
+            jQuery.each(split_bt, function(index, value) {
+              jQuery(".edit_venuebusiness[value="+value+"]").prop("checked", true);
             });
           }
 
           if (operating_days) {
             var op_days = operating_days.split(",");
-            $.each(op_days, function(index, value) {
-              $(".edit_operating_days[value="+value+"]").prop("checked", true);
-              $(".edit-advance-setting-op-hours tr."+value).removeClass('d-none');
-              $(".edit-off-peakphours tr."+value).removeClass('d-none');
+            jQuery.each(op_days, function(index, value) {
+              jQuery(".edit_operating_days[value="+value+"]").prop("checked", true);
+              jQuery(".edit-advance-setting-op-hours tr."+value).removeClass('d-none');
+              jQuery(".edit-off-peakphours tr."+value).removeClass('d-none');
             });
           }
 
           if (always_open) {
             var al_open = always_open.split(",");
-            $.each(al_open, function(index, value) {
-              $(".edit_always_open[value="+value+"]").prop("checked", true);
+            jQuery.each(al_open, function(index, value) {
+              jQuery(".edit_always_open[value="+value+"]").prop("checked", true);
             });
           }
 
           if (appointment_only) {
             var app_only = appointment_only.split(",");
-            $.each(app_only, function(index, value) {
-              $(".edit_appointment_only[value="+value+"]").prop("checked", true);
+            jQuery.each(app_only, function(index, value) {
+              jQuery(".edit_appointment_only[value="+value+"]").prop("checked", true);
             });
           }
 
           if (adv_setting_mon) {
             var json_adv_set_mon = JSON.parse(adv_setting_mon);
             var adv_set_mon_open = json_adv_set_mon["'open'"];
-            $("#edit_adv_setting_mon_open").val(adv_set_mon_open);
+            jQuery("#edit_adv_setting_mon_open").val(adv_set_mon_open);
 
             var adv_set_mon_close = json_adv_set_mon["'close'"];
-            $("#edit_adv_setting_mon_close").val(adv_set_mon_close);
+            jQuery("#edit_adv_setting_mon_close").val(adv_set_mon_close);
 
             var adv_set_mon_timeset_open = json_adv_set_mon["'timeset_open'"];
             if (adv_set_mon_timeset_open) {
-              $("#edit_adv_setting_mon_timeset_open").val(adv_set_mon_timeset_open);
-              $(".edit-mon.addweekoff").hide();
-              $(".edit-mon.divweekoff").show();
+              jQuery("#edit_adv_setting_mon_timeset_open").val(adv_set_mon_timeset_open);
+              jQuery(".edit-mon.addweekoff").hide();
+              jQuery(".edit-mon.divweekoff").show();
             }
 
             var adv_set_mon_timeset_close = json_adv_set_mon["'timeset_close'"];
             if (adv_set_mon_timeset_close) {
-              $("#edit_adv_setting_mon_timeset_close").val(adv_set_mon_timeset_close);
-              $(".edit-mon.addweekoff").hide();
-              $(".edit-mon.divweekoff").show();
+              jQuery("#edit_adv_setting_mon_timeset_close").val(adv_set_mon_timeset_close);
+              jQuery(".edit-mon.addweekoff").hide();
+              jQuery(".edit-mon.divweekoff").show();
             }
           }
 
           if (adv_setting_tue) {
             var json_adv_set_tue = JSON.parse(adv_setting_tue);
             var adv_set_tue_open = json_adv_set_tue["'open'"];
-            $("#edit_adv_setting_tue_open").val(adv_set_tue_open);
+            jQuery("#edit_adv_setting_tue_open").val(adv_set_tue_open);
 
             var adv_set_tue_close = json_adv_set_tue["'close'"];
-            $("#edit_adv_setting_tue_close").val(adv_set_tue_close);
+            jQuery("#edit_adv_setting_tue_close").val(adv_set_tue_close);
 
             var adv_set_tue_timeset_open = json_adv_set_tue["'timeset_open'"];
             if (adv_set_tue_timeset_open) {
-              $("#edit_adv_setting_tue_timeset_open").val(adv_set_tue_timeset_open);
-              $(".edit-tue.addweekoff").hide();
-              $(".edit-tue.divweekoff").show();
+              jQuery("#edit_adv_setting_tue_timeset_open").val(adv_set_tue_timeset_open);
+              jQuery(".edit-tue.addweekoff").hide();
+              jQuery(".edit-tue.divweekoff").show();
             }
 
             var adv_set_tue_timeset_close = json_adv_set_tue["'timeset_close'"];
             if (adv_set_tue_timeset_close) {
-              $("#edit_adv_setting_tue_timeset_close").val(adv_set_tue_timeset_close);
-              $(".edit-tue.addweekoff").hide();
-              $(".edit-tue.divweekoff").show();
+              jQuery("#edit_adv_setting_tue_timeset_close").val(adv_set_tue_timeset_close);
+              jQuery(".edit-tue.addweekoff").hide();
+              jQuery(".edit-tue.divweekoff").show();
             }
           }
 
           if (adv_setting_wed) {
             var json_adv_set_wed = JSON.parse(adv_setting_wed);
             var adv_set_wed_open = json_adv_set_wed["'open'"];
-            $("#edit_adv_setting_wed_open").val(adv_set_wed_open);
+            jQuery("#edit_adv_setting_wed_open").val(adv_set_wed_open);
 
             var adv_set_wed_close = json_adv_set_wed["'close'"];
-            $("#edit_adv_setting_wed_close").val(adv_set_wed_close);
+            jQuery("#edit_adv_setting_wed_close").val(adv_set_wed_close);
 
             var adv_set_wed_timeset_open = json_adv_set_wed["'timeset_open'"];
             if (adv_set_wed_timeset_open) {
-              $("#edit_adv_setting_wed_timeset_open").val(adv_set_wed_timeset_open);
-              $(".edit-wed.addweekoff").hide();
-              $(".edit-wed.divweekoff").show();
+              jQuery("#edit_adv_setting_wed_timeset_open").val(adv_set_wed_timeset_open);
+              jQuery(".edit-wed.addweekoff").hide();
+              jQuery(".edit-wed.divweekoff").show();
             }
 
             var adv_set_wed_timeset_close = json_adv_set_wed["'timeset_close'"];
             if (adv_set_wed_timeset_close) {
-              $("#edit_adv_setting_wed_timeset_close").val(adv_set_wed_timeset_close);
-              $(".edit-wed.addweekoff").hide();
-              $(".edit-wed.divweekoff").show();
+              jQuery("#edit_adv_setting_wed_timeset_close").val(adv_set_wed_timeset_close);
+              jQuery(".edit-wed.addweekoff").hide();
+              jQuery(".edit-wed.divweekoff").show();
             }
           }
 
           if (adv_setting_thu) {
             var json_adv_set_thu = JSON.parse(adv_setting_thu);
             var adv_set_thu_open = json_adv_set_thu["'open'"];
-            $("#edit_adv_setting_thu_open").val(adv_set_thu_open);
+            jQuery("#edit_adv_setting_thu_open").val(adv_set_thu_open);
 
             var adv_set_thu_close = json_adv_set_thu["'close'"];
-            $("#edit_adv_setting_thu_close").val(adv_set_thu_close);
+            jQuery("#edit_adv_setting_thu_close").val(adv_set_thu_close);
 
             var adv_set_thu_timeset_open = json_adv_set_thu["'timeset_open'"];
             if (adv_set_thu_timeset_open) {
-              $("#edit_adv_setting_thu_timeset_open").val(adv_set_thu_timeset_open);
-              $(".edit-thu.addweekoff").hide();
-              $(".edit-thu.divweekoff").show();
+              jQuery("#edit_adv_setting_thu_timeset_open").val(adv_set_thu_timeset_open);
+              jQuery(".edit-thu.addweekoff").hide();
+              jQuery(".edit-thu.divweekoff").show();
             }
 
             var adv_set_thu_timeset_close = json_adv_set_thu["'timeset_close'"];
             if (adv_set_thu_timeset_close) {
-              $("#edit_adv_setting_thu_timeset_close").val(adv_set_thu_timeset_close);
-              $(".edit-thu.addweekoff").hide();
-              $(".edit-thu.divweekoff").show();
+              jQuery("#edit_adv_setting_thu_timeset_close").val(adv_set_thu_timeset_close);
+              jQuery(".edit-thu.addweekoff").hide();
+              jQuery(".edit-thu.divweekoff").show();
             }
           }
 
           if (adv_setting_fri) {
             var json_adv_set_fri = JSON.parse(adv_setting_fri);
             var adv_set_fri_open = json_adv_set_fri["'open'"];
-            $("#edit_adv_setting_fri_open").val(adv_set_fri_open);
+            jQuery("#edit_adv_setting_fri_open").val(adv_set_fri_open);
 
             var adv_set_fri_close = json_adv_set_fri["'close'"];
-            $("#edit_adv_setting_fri_close").val(adv_set_fri_close);
+            jQuery("#edit_adv_setting_fri_close").val(adv_set_fri_close);
 
             var adv_set_fri_timeset_open = json_adv_set_fri["'timeset_open'"];
             if (adv_set_fri_timeset_open) {
-              $("#edit_adv_setting_fri_timeset_open").val(adv_set_fri_timeset_open);
-              $(".edit-fri.addweekoff").hide();
-              $(".edit-fri.divweekoff").show();
+              jQuery("#edit_adv_setting_fri_timeset_open").val(adv_set_fri_timeset_open);
+              jQuery(".edit-fri.addweekoff").hide();
+              jQuery(".edit-fri.divweekoff").show();
             }
 
             var adv_set_fri_timeset_close = json_adv_set_fri["'timeset_close'"];
             if (adv_set_fri_timeset_close) {
-              $("#edit_adv_setting_fri_timeset_close").val(adv_set_fri_timeset_close);
-              $(".edit-fri.addweekoff").hide();
-              $(".edit-fri.divweekoff").show();
+              jQuery("#edit_adv_setting_fri_timeset_close").val(adv_set_fri_timeset_close);
+              jQuery(".edit-fri.addweekoff").hide();
+              jQuery(".edit-fri.divweekoff").show();
             }
           }
 
           if (adv_setting_sat) {
             var json_adv_set_sat = JSON.parse(adv_setting_sat);
             var adv_set_sat_open = json_adv_set_sat["'open'"];
-            $("#edit_adv_setting_sat_open").val(adv_set_sat_open);
+            jQuery("#edit_adv_setting_sat_open").val(adv_set_sat_open);
 
             var adv_set_sat_close = json_adv_set_sat["'close'"];
-            $("#edit_adv_setting_sat_close").val(adv_set_sat_close);
+            jQuery("#edit_adv_setting_sat_close").val(adv_set_sat_close);
 
             var adv_set_sat_timeset_open = json_adv_set_sat["'timeset_open'"];
             if (adv_set_sat_timeset_open) {
-              $("#edit_adv_setting_sat_timeset_open").val(adv_set_sat_timeset_open);
-              $(".edit-sat.addweekoff").hide();
-              $(".edit-sat.divweekoff").show();
+              jQuery("#edit_adv_setting_sat_timeset_open").val(adv_set_sat_timeset_open);
+              jQuery(".edit-sat.addweekoff").hide();
+              jQuery(".edit-sat.divweekoff").show();
             }
 
             var adv_set_sat_timeset_close = json_adv_set_sat["'timeset_close'"];
             if (adv_set_sat_timeset_close) {
-              $("#edit_adv_setting_sat_timeset_close").val(adv_set_sat_timeset_close);
-              $(".edit-sat.addweekoff").hide();
-              $(".edit-sat.divweekoff").show();
+              jQuery("#edit_adv_setting_sat_timeset_close").val(adv_set_sat_timeset_close);
+              jQuery(".edit-sat.addweekoff").hide();
+              jQuery(".edit-sat.divweekoff").show();
             }
           }
 
           if (adv_setting_sun) {
             var json_adv_set_sun = JSON.parse(adv_setting_sun);
             var adv_set_sun_open = json_adv_set_sun["'open'"];
-            $("#edit_adv_setting_sun_open").val(adv_set_sun_open);
+            jQuery("#edit_adv_setting_sun_open").val(adv_set_sun_open);
 
             var adv_set_sun_close = json_adv_set_sun["'close'"];
-            $("#edit_adv_setting_sun_close").val(adv_set_sun_close);
+            jQuery("#edit_adv_setting_sun_close").val(adv_set_sun_close);
 
             var adv_set_sun_timeset_open = json_adv_set_sun["'timeset_open'"];
             if (adv_set_sun_timeset_open) {
-              $("#edit_adv_setting_sun_timeset_open").val(adv_set_sun_timeset_open);
-              $(".edit-sun.addweekoff").hide();
-              $(".edit-sun.divweekoff").show();
+              jQuery("#edit_adv_setting_sun_timeset_open").val(adv_set_sun_timeset_open);
+              jQuery(".edit-sun.addweekoff").hide();
+              jQuery(".edit-sun.divweekoff").show();
             }
 
             var adv_set_sun_timeset_close = json_adv_set_sun["'timeset_close'"];
             if (adv_set_sun_timeset_close) {
-              $("#edit_adv_setting_sun_timeset_close").val(adv_set_sun_timeset_close);
-              $(".edit-sun.addweekoff").hide();
-              $(".edit-sun.divweekoff").show();
+              jQuery("#edit_adv_setting_sun_timeset_close").val(adv_set_sun_timeset_close);
+              jQuery(".edit-sun.addweekoff").hide();
+              jQuery(".edit-sun.divweekoff").show();
             }
           }
 
@@ -314,19 +314,19 @@ $(document).on('click', '.update-venue-detail', function(){
             var off_peak_hour_mon_start = json_off_peak_hour_mon["'start'"];
             var off_peak_hour_mon_end = json_off_peak_hour_mon["'end'"];
             if (off_peak_hour_mon_start || off_peak_hour_mon_end) {
-              $("#edit_off_peak_hour_mon_start").val(off_peak_hour_mon_start);
-              $("#edit_off_peak_hour_mon_end").val(off_peak_hour_mon_end);
-              $(".edit-oph-mon-se.addweekoff").hide();
-              $(".edit-oph-mon-se.divweekoff").show();
+              jQuery("#edit_off_peak_hour_mon_start").val(off_peak_hour_mon_start);
+              jQuery("#edit_off_peak_hour_mon_end").val(off_peak_hour_mon_end);
+              jQuery(".edit-oph-mon-se.addweekoff").hide();
+              jQuery(".edit-oph-mon-se.divweekoff").show();
             }
 
             var off_peak_hour_mon_timeset_open = json_off_peak_hour_mon["'timeset_open'"];
             var off_peak_hour_mon_timeset_close = json_off_peak_hour_mon["'timeset_close'"];
             if (off_peak_hour_mon_timeset_open || off_peak_hour_mon_timeset_close) {
-              $("#edit_off_peak_hour_mon_timeset_open").val(off_peak_hour_mon_timeset_open);
-              $("#edit_off_peak_hour_mon_timeset_close").val(off_peak_hour_mon_timeset_close);
-              $(".edit-oph-mon-to.addweekoff").hide();
-              $(".edit-oph-mon-to.divweekoff").show();
+              jQuery("#edit_off_peak_hour_mon_timeset_open").val(off_peak_hour_mon_timeset_open);
+              jQuery("#edit_off_peak_hour_mon_timeset_close").val(off_peak_hour_mon_timeset_close);
+              jQuery(".edit-oph-mon-to.addweekoff").hide();
+              jQuery(".edit-oph-mon-to.divweekoff").show();
             }
           }
 
@@ -336,19 +336,19 @@ $(document).on('click', '.update-venue-detail', function(){
             var off_peak_hour_tue_start = json_off_peak_hour_tue["'start'"];
             var off_peak_hour_tue_end = json_off_peak_hour_tue["'end'"];
             if (off_peak_hour_tue_start || off_peak_hour_tue_end) {
-              $("#edit_off_peak_hour_tue_start").val(off_peak_hour_tue_start);
-              $("#edit_off_peak_hour_tue_end").val(off_peak_hour_tue_end);
-              $(".edit-oph-tue-se.addweekoff").hide();
-              $(".edit-oph-tue-se.divweekoff").show();
+              jQuery("#edit_off_peak_hour_tue_start").val(off_peak_hour_tue_start);
+              jQuery("#edit_off_peak_hour_tue_end").val(off_peak_hour_tue_end);
+              jQuery(".edit-oph-tue-se.addweekoff").hide();
+              jQuery(".edit-oph-tue-se.divweekoff").show();
             }
 
             var off_peak_hour_tue_timeset_open = json_off_peak_hour_tue["'timeset_open'"];
             var off_peak_hour_tue_timeset_close = json_off_peak_hour_tue["'timeset_close'"];
             if (off_peak_hour_tue_timeset_open || off_peak_hour_tue_timeset_close) {
-              $("#edit_off_peak_hour_tue_timeset_open").val(off_peak_hour_tue_timeset_open);
-              $("#edit_off_peak_hour_tue_timeset_close").val(off_peak_hour_tue_timeset_close);
-              $(".edit-oph-tue-to.addweekoff").hide();
-              $(".edit-oph-tue-to.divweekoff").show();
+              jQuery("#edit_off_peak_hour_tue_timeset_open").val(off_peak_hour_tue_timeset_open);
+              jQuery("#edit_off_peak_hour_tue_timeset_close").val(off_peak_hour_tue_timeset_close);
+              jQuery(".edit-oph-tue-to.addweekoff").hide();
+              jQuery(".edit-oph-tue-to.divweekoff").show();
             }
           }
 
@@ -358,19 +358,19 @@ $(document).on('click', '.update-venue-detail', function(){
             var off_peak_hour_wed_start = json_off_peak_hour_wed["'start'"];
             var off_peak_hour_wed_end = json_off_peak_hour_wed["'end'"];
             if (off_peak_hour_wed_start || off_peak_hour_wed_end) {
-              $("#edit_off_peak_hour_wed_start").val(off_peak_hour_wed_start);
-              $("#edit_off_peak_hour_wed_end").val(off_peak_hour_wed_end);
-              $(".edit-oph-wed-se.addweekoff").hide();
-              $(".edit-oph-wed-se.divweekoff").show();
+              jQuery("#edit_off_peak_hour_wed_start").val(off_peak_hour_wed_start);
+              jQuery("#edit_off_peak_hour_wed_end").val(off_peak_hour_wed_end);
+              jQuery(".edit-oph-wed-se.addweekoff").hide();
+              jQuery(".edit-oph-wed-se.divweekoff").show();
             }
 
             var off_peak_hour_wed_timeset_open = json_off_peak_hour_wed["'timeset_open'"];
             var off_peak_hour_wed_timeset_close = json_off_peak_hour_wed["'timeset_close'"];
             if (off_peak_hour_wed_timeset_open || off_peak_hour_wed_timeset_close) {
-              $("#edit_off_peak_hour_wed_timeset_open").val(off_peak_hour_wed_timeset_open);
-              $("#edit_off_peak_hour_wed_timeset_close").val(off_peak_hour_wed_timeset_close);
-              $(".edit-oph-wed-to.addweekoff").hide();
-              $(".edit-oph-wed-to.divweekoff").show();
+              jQuery("#edit_off_peak_hour_wed_timeset_open").val(off_peak_hour_wed_timeset_open);
+              jQuery("#edit_off_peak_hour_wed_timeset_close").val(off_peak_hour_wed_timeset_close);
+              jQuery(".edit-oph-wed-to.addweekoff").hide();
+              jQuery(".edit-oph-wed-to.divweekoff").show();
             }
           }
 
@@ -380,19 +380,19 @@ $(document).on('click', '.update-venue-detail', function(){
             var off_peak_hour_thu_start = json_off_peak_hour_thu["'start'"];
             var off_peak_hour_thu_end = json_off_peak_hour_thu["'end'"];
             if (off_peak_hour_thu_start || off_peak_hour_thu_end) {
-              $("#edit_off_peak_hour_thu_start").val(off_peak_hour_thu_start);
-              $("#edit_off_peak_hour_thu_end").val(off_peak_hour_thu_end);
-              $(".edit-oph-thu-se.addweekoff").hide();
-              $(".edit-oph-thu-se.divweekoff").show();
+              jQuery("#edit_off_peak_hour_thu_start").val(off_peak_hour_thu_start);
+              jQuery("#edit_off_peak_hour_thu_end").val(off_peak_hour_thu_end);
+              jQuery(".edit-oph-thu-se.addweekoff").hide();
+              jQuery(".edit-oph-thu-se.divweekoff").show();
             }
 
             var off_peak_hour_thu_timeset_open = json_off_peak_hour_thu["'timeset_open'"];
             var off_peak_hour_thu_timeset_close = json_off_peak_hour_thu["'timeset_close'"];
             if (off_peak_hour_thu_timeset_open || off_peak_hour_thu_timeset_close) {
-              $("#edit_off_peak_hour_thu_timeset_open").val(off_peak_hour_thu_timeset_open);
-              $("#edit_off_peak_hour_thu_timeset_close").val(off_peak_hour_thu_timeset_close);
-              $(".edit-oph-thu-to.addweekoff").hide();
-              $(".edit-oph-thu-to.divweekoff").show();
+              jQuery("#edit_off_peak_hour_thu_timeset_open").val(off_peak_hour_thu_timeset_open);
+              jQuery("#edit_off_peak_hour_thu_timeset_close").val(off_peak_hour_thu_timeset_close);
+              jQuery(".edit-oph-thu-to.addweekoff").hide();
+              jQuery(".edit-oph-thu-to.divweekoff").show();
             }
           }
 
@@ -402,19 +402,19 @@ $(document).on('click', '.update-venue-detail', function(){
             var off_peak_hour_fri_start = json_off_peak_hour_fri["'start'"];
             var off_peak_hour_fri_end = json_off_peak_hour_fri["'end'"];
             if (off_peak_hour_fri_start || off_peak_hour_fri_end) {
-              $("#edit_off_peak_hour_fri_start").val(off_peak_hour_fri_start);
-              $("#edit_off_peak_hour_fri_end").val(off_peak_hour_fri_end);
-              $(".edit-oph-fri-se.addweekoff").hide();
-              $(".edit-oph-fri-se.divweekoff").show();
+              jQuery("#edit_off_peak_hour_fri_start").val(off_peak_hour_fri_start);
+              jQuery("#edit_off_peak_hour_fri_end").val(off_peak_hour_fri_end);
+              jQuery(".edit-oph-fri-se.addweekoff").hide();
+              jQuery(".edit-oph-fri-se.divweekoff").show();
             }
 
             var off_peak_hour_fri_timeset_open = json_off_peak_hour_fri["'timeset_open'"];
             var off_peak_hour_fri_timeset_close = json_off_peak_hour_fri["'timeset_close'"];
             if (off_peak_hour_fri_timeset_open || off_peak_hour_fri_timeset_close) {
-              $("#edit_off_peak_hour_fri_timeset_open").val(off_peak_hour_fri_timeset_open);
-              $("#edit_off_peak_hour_fri_timeset_close").val(off_peak_hour_fri_timeset_close);
-              $(".edit-oph-fri-to.addweekoff").hide();
-              $(".edit-oph-fri-to.divweekoff").show();
+              jQuery("#edit_off_peak_hour_fri_timeset_open").val(off_peak_hour_fri_timeset_open);
+              jQuery("#edit_off_peak_hour_fri_timeset_close").val(off_peak_hour_fri_timeset_close);
+              jQuery(".edit-oph-fri-to.addweekoff").hide();
+              jQuery(".edit-oph-fri-to.divweekoff").show();
             }
           }
 
@@ -424,19 +424,19 @@ $(document).on('click', '.update-venue-detail', function(){
             var off_peak_hour_sat_start = json_off_peak_hour_sat["'start'"];
             var off_peak_hour_sat_end = json_off_peak_hour_sat["'end'"];
             if (off_peak_hour_sat_start || off_peak_hour_sat_end) {
-              $("#edit_off_peak_hour_sat_start").val(off_peak_hour_sat_start);
-              $("#edit_off_peak_hour_sat_end").val(off_peak_hour_sat_end);
-              $(".edit-oph-sat-se.addweekoff").hide();
-              $(".edit-oph-sat-se.divweekoff").show();
+              jQuery("#edit_off_peak_hour_sat_start").val(off_peak_hour_sat_start);
+              jQuery("#edit_off_peak_hour_sat_end").val(off_peak_hour_sat_end);
+              jQuery(".edit-oph-sat-se.addweekoff").hide();
+              jQuery(".edit-oph-sat-se.divweekoff").show();
             }
 
             var off_peak_hour_sat_timeset_open = json_off_peak_hour_sat["'timeset_open'"];
             var off_peak_hour_sat_timeset_close = json_off_peak_hour_sat["'timeset_close'"];
             if (off_peak_hour_sat_timeset_open || off_peak_hour_sat_timeset_close) {
-              $("#edit_off_peak_hour_sat_timeset_open").val(off_peak_hour_sat_timeset_open);
-              $("#edit_off_peak_hour_sat_timeset_close").val(off_peak_hour_sat_timeset_close);
-              $(".edit-oph-sat-to.addweekoff").hide();
-              $(".edit-oph-sat-to.divweekoff").show();
+              jQuery("#edit_off_peak_hour_sat_timeset_open").val(off_peak_hour_sat_timeset_open);
+              jQuery("#edit_off_peak_hour_sat_timeset_close").val(off_peak_hour_sat_timeset_close);
+              jQuery(".edit-oph-sat-to.addweekoff").hide();
+              jQuery(".edit-oph-sat-to.divweekoff").show();
             }
           }
 
@@ -446,19 +446,19 @@ $(document).on('click', '.update-venue-detail', function(){
             var off_peak_hour_sun_start = json_off_peak_hour_sun["'start'"];
             var off_peak_hour_sun_end = json_off_peak_hour_sun["'end'"];
             if (off_peak_hour_sun_start || off_peak_hour_sun_end) {
-              $("#edit_off_peak_hour_sun_start").val(off_peak_hour_sun_start);
-              $("#edit_off_peak_hour_sun_end").val(off_peak_hour_sun_end);
-              $(".edit-oph-sun-se.addweekoff").hide();
-              $(".edit-oph-sun-se.divweekoff").show();
+              jQuery("#edit_off_peak_hour_sun_start").val(off_peak_hour_sun_start);
+              jQuery("#edit_off_peak_hour_sun_end").val(off_peak_hour_sun_end);
+              jQuery(".edit-oph-sun-se.addweekoff").hide();
+              jQuery(".edit-oph-sun-se.divweekoff").show();
             }
 
             var off_peak_hour_sun_timeset_open = json_off_peak_hour_sun["'timeset_open'"];
             var off_peak_hour_sun_timeset_close = json_off_peak_hour_sun["'timeset_close'"];
             if (off_peak_hour_sun_timeset_open || off_peak_hour_sun_timeset_close) {
-              $("#edit_off_peak_hour_sun_timeset_open").val(off_peak_hour_sun_timeset_open);
-              $("#edit_off_peak_hour_sun_timeset_close").val(off_peak_hour_sun_timeset_close);
-              $(".edit-oph-sun-to.addweekoff").hide();
-              $(".edit-oph-sun-to.divweekoff").show();
+              jQuery("#edit_off_peak_hour_sun_timeset_open").val(off_peak_hour_sun_timeset_open);
+              jQuery("#edit_off_peak_hour_sun_timeset_close").val(off_peak_hour_sun_timeset_close);
+              jQuery(".edit-oph-sun-to.addweekoff").hide();
+              jQuery(".edit-oph-sun-to.divweekoff").show();
             }
           }
           
@@ -468,36 +468,36 @@ $(document).on('click', '.update-venue-detail', function(){
   }
 });
 
-$(document).on('click', '.on-business-detail', function(){
+jQuery(document).on('click', '.on-business-detail', function(){
   event.preventDefault();
-  var partner_id    = $(this).attr('partner-id');
+  var partner_id    = jQuery(this).attr('partner-id');
   var ajaxurl     = baseurl+'partner/get-business-detail'+'/' + partner_id;
   
-  $.ajax({
+  jQuery.ajax({
     url:ajaxurl,
     type:'GET',
     beforeSend:function(){
-      $('.spinner-cls').show();
+      jQuery('.spinner-cls').show();
     },
     success:function(response)
     {
-      $('.spinner-cls').hide();
+      jQuery('.spinner-cls').hide();
       response = JSON.parse(response);
 
         if (response.status) {
           var partner_data = response.data;
 
-          $("#business_name").val(partner_data[0].business_name);
-          $("#business_email").val(partner_data[0].email);
-          $("#business_phone").val(partner_data[0].phone);
-          $("#business_website").val(partner_data[0].website);
-          $("#business_instagram").val(partner_data[0].instagram);
-          $("#business_facebook").val(partner_data[0].facebook);
+          jQuery("#business_name").val(partner_data[0].business_name);
+          jQuery("#business_email").val(partner_data[0].email);
+          jQuery("#business_phone").val(partner_data[0].phone);
+          jQuery("#business_website").val(partner_data[0].website);
+          jQuery("#business_instagram").val(partner_data[0].instagram);
+          jQuery("#business_facebook").val(partner_data[0].facebook);
 
           var business_logo = partner_data[0].business_logo;
           if(business_logo){
-            $("#old_business_logo").val(business_logo);
-            $(".business-logo").css('background-image', 'url('+publicurl+business_logo+')');
+            jQuery("#old_business_logo").val(business_logo);
+            jQuery(".business-logo").css('background-image', 'url('+publicurl+business_logo+')');
           }
         }
     }
@@ -507,7 +507,7 @@ $(document).on('click', '.on-business-detail', function(){
 jQuery(document).on('click', '.phone-send-otp', function(){
   event.preventDefault();
   var phone = jQuery('.verify-phone').val();
-  //var ajaxurl = 'https://webpristine.co.in/admin/setting/edit-amenity-status/' + mobile;
+  
   if ( phone !== "" ) {
       var ajaxurl = baseurl+'sendSMS';
       jQuery.ajax({
@@ -518,7 +518,7 @@ jQuery(document).on('click', '.phone-send-otp', function(){
           success:function(response)
           {
               //response = JSON.parse(response);
-              //$('.spinner-cls').hide();
+              //jQuery('.spinner-cls').hide();
               if (response.status) {
                 Swal.fire({
                   text: "OTP sent successfully on your mobile number: "+phone,
@@ -561,7 +561,7 @@ jQuery(document).on('click', '.verify-partner-phone', function(){
   event.preventDefault();
   var otp = jQuery('.verify-phone-otp').val();
   var phone = jQuery('.verify-phone').val();
-  //var ajaxurl = 'https://webpristine.co.in/admin/setting/edit-amenity-status/' + mobile;
+
   if ( phone !== "" && otp !== "" ) {
       var ajaxurl = baseurl+'sendOTP';
       jQuery.ajax({
@@ -571,9 +571,7 @@ jQuery(document).on('click', '.verify-partner-phone', function(){
           type:'POST',
           success:function(response)
           {
-            //alert(response);
-              //response = JSON.parse(response);
-              //console.log("response", response)
+
               if (response.status) {
                 Swal.fire({
                   text: "OTP matched successfully.",
@@ -585,8 +583,8 @@ jQuery(document).on('click', '.verify-partner-phone', function(){
                   }
                 })
 
-                $("#business_phone").val(phone);
-                $(".changephoneclick").trigger("click");
+                jQuery("#business_phone").val(phone);
+                jQuery(".changephoneclick").trigger("click");
               }else{
                 Swal.fire({
                   text: "OTP not matched.",
@@ -639,8 +637,6 @@ jQuery(document).on('click', '.email-send-otp', function(){
           type:'POST',
           success:function(response)
           {
-              //response = JSON.parse(response);
-              //$('.spinner-cls').hide();
               if (response.status) {
                 Swal.fire({
                   text: "OTP sent successfully on your email address: "+email,
@@ -693,9 +689,6 @@ jQuery(document).on('click', '.verify-partner-email', function(){
           type:'POST',
           success:function(response)
           {
-            //alert(response);
-              //response = JSON.parse(response);
-              //console.log("response", response)
               if (response.status) {
                 Swal.fire({
                   text: "OTP matched successfully.",
@@ -706,8 +699,8 @@ jQuery(document).on('click', '.verify-partner-email', function(){
                     confirmButton: "btn btn-primary"
                   }
                 })
-                $("#business_email").val(email);
-                $(".changeemailclick").trigger("click");
+                jQuery("#business_email").val(email);
+                jQuery(".changeemailclick").trigger("click");
               }else{
                 Swal.fire({
                   text: "OTP not matched.",
@@ -743,6 +736,23 @@ jQuery(document).on('click', '.verify-partner-email', function(){
           confirmButton: "btn btn-primary"
         }
       })
+  }
+});
+
+
+jQuery(document).on('change', '.filter-option-venue', function(event){
+  event.preventDefault();
+
+  var venue_id   = $('.filter-option-venue option:selected').val();
+  var listClass  = 'venue_'+venue_id;
+
+  var findCLass = jQuery('#kt_app_content_container .venue-lists');
+
+  if(findCLass.hasClass(listClass)) {
+    jQuery('#kt_app_content_container .venue-lists').addClass('d-none');
+    jQuery('#kt_app_content_container .venue-lists.'+listClass).removeClass('d-none');
+  }else{
+    findCLass.addClass('d-none');
   }
 });
 
@@ -808,14 +818,14 @@ function addVenueAddress(addAutocomplete) {
           latitude = result.geometry.location.lat();
           longitude = result.geometry.location.lng();
 
-          $("#add_venue_business_address").val(address); 
-          $("#add_venue_city").val(city);
-          $("#add_venue_country").val(country);
-          $("#add_venue_district").val(district);
-          $("#add_venue_region").val(state);
-          $("#add_venue_postcode").val(postcode);
-          $("#add_venue_latitude").val(latitude);
-          $("#add_venue_longitude").val(longitude);
+          jQuery("#add_venue_business_address").val(address); 
+          jQuery("#add_venue_city").val(city);
+          jQuery("#add_venue_country").val(country);
+          jQuery("#add_venue_district").val(district);
+          jQuery("#add_venue_region").val(state);
+          jQuery("#add_venue_postcode").val(postcode);
+          jQuery("#add_venue_latitude").val(latitude);
+          jQuery("#add_venue_longitude").val(longitude);
 
           addDragendMarker(latitude, longitude);
 
@@ -871,14 +881,14 @@ function updateVenueAddress(updateAutocomplete) {
           latitude = result.geometry.location.lat();
           longitude = result.geometry.location.lng();
 
-          $("#edit_venue_business_address").val(address);
-          $("#edit_venue_city").val(city);
-          $("#edit_venue_country").val(country);
-          $("#edit_venue_district").val(district);
-          $("#edit_venue_region").val(state);
-          $("#edit_venue_postcode").val(postcode);
-          $("#edit_venue_latitude").val(latitude);
-          $("#edit_venue_longitude").val(longitude);
+          jQuery("#edit_venue_business_address").val(address);
+          jQuery("#edit_venue_city").val(city);
+          jQuery("#edit_venue_country").val(country);
+          jQuery("#edit_venue_district").val(district);
+          jQuery("#edit_venue_region").val(state);
+          jQuery("#edit_venue_postcode").val(postcode);
+          jQuery("#edit_venue_latitude").val(latitude);
+          jQuery("#edit_venue_longitude").val(longitude);
 
           editDragendMarker(latitude, longitude);
           
@@ -973,15 +983,15 @@ function addDragendMarker(latitude, longitude) {
         var longitude = draggedPosition.lng();
 
         // Use the location details as needed
-        $("#business_location").val(address);
-        $("#add_venue_business_address").val(address); 
-        $("#add_venue_city").val(city);
-        $("#add_venue_country").val(country);
-        $("#add_venue_district").val(district);
-        $("#add_venue_region").val(state);
-        $("#add_venue_postcode").val(postcode);
-        $("#add_venue_latitude").val(latitude);
-        $("#add_venue_longitude").val(longitude);
+        jQuery("#business_location").val(address);
+        jQuery("#add_venue_business_address").val(address); 
+        jQuery("#add_venue_city").val(city);
+        jQuery("#add_venue_country").val(country);
+        jQuery("#add_venue_district").val(district);
+        jQuery("#add_venue_region").val(state);
+        jQuery("#add_venue_postcode").val(postcode);
+        jQuery("#add_venue_latitude").val(latitude);
+        jQuery("#add_venue_longitude").val(longitude);
 
       } else {
         console.error('Geocoder failed due to:', status);
@@ -1071,15 +1081,15 @@ function editDragendMarker(latitude, longitude) {
         var longitude = draggedPosition.lng();
 
         // Use the location details as needed
-        $("#edit_venue_business_address").val(address);
-        $("#edit_venue_business_location").val(address);
-        $("#edit_venue_city").val(city);
-        $("#edit_venue_country").val(country);
-        $("#edit_venue_district").val(district);
-        $("#edit_venue_region").val(state);
-        $("#edit_venue_postcode").val(postcode);
-        $("#edit_venue_latitude").val(latitude);
-        $("#edit_venue_longitude").val(longitude);
+        jQuery("#edit_venue_business_address").val(address);
+        jQuery("#edit_venue_business_location").val(address);
+        jQuery("#edit_venue_city").val(city);
+        jQuery("#edit_venue_country").val(country);
+        jQuery("#edit_venue_district").val(district);
+        jQuery("#edit_venue_region").val(state);
+        jQuery("#edit_venue_postcode").val(postcode);
+        jQuery("#edit_venue_latitude").val(latitude);
+        jQuery("#edit_venue_longitude").val(longitude);
 
       } else {
         console.error('Geocoder failed due to:', status);
@@ -1091,7 +1101,7 @@ function editDragendMarker(latitude, longitude) {
 var defaultvalue = "";
 function numberHandler(input){
   const value = input.value.trim();
-  const regex = /^[0-9\b]+$/;
+  const regex = /^[0-9\b]+jQuery/;
   if (value != "" && !regex.test(value)) {
     input.value = defaultvalue;
   }else{
@@ -1100,7 +1110,7 @@ function numberHandler(input){
 }
 function numberOtpHandler(input){
   const value = input.value.trim();
-  const regex = /^[0-9\b]+$/;
+  const regex = /^[0-9\b]+jQuery/;
   if (value != "" && !regex.test(value)) {
     input.value = defaultvalue;
   }else{

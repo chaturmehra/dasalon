@@ -169,7 +169,11 @@ Route::middleware(['auth'])->group(function () {
     Route::get('partner/calender', [CalenderController::class, 'index'])->name('calender.index');
     Route::get('partner/appointments', [AppointmentsController::class, 'index'])->name('appointments.index');
     Route::get('partner/clients', [ClientsController::class, 'index'])->name('clients.index');
+
     Route::get('partner/services', [ServicesController::class, 'index'])->name('services.index');
+    Route::get('partner/get-subcategory/{id}', [ServicesController::class, 'getServiceSubcategoryByAjax']);
+    Route::get('partner/service/post', [ServicesController::class, 'serviceStore']);
+
     Route::get('partner/promote', [PromoteController::class, 'index'])->name('promote.index');
     Route::get('partner/reports', [ReportsController::class, 'index'])->name('reports.index');
 

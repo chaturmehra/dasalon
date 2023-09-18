@@ -51,6 +51,7 @@ $(document).ready(function() {
               confirmButton: "btn fw-bold btn-primary"
             }
           })
+          location.reload();
         }else{
           var msg = response.message;
           Swal.fire({
@@ -62,6 +63,8 @@ $(document).ready(function() {
               confirmButton: "btn fw-bold btn-primary"
             }
           })
+
+          location.reload();
         }
       },
       error: function(xhr, status, error) {

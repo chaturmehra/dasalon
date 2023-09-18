@@ -53,12 +53,6 @@ class VenueController extends Controller
 		$amenity_ids 		= array_column($venue_meta, 'amenity');
 		$business_types_ids = array_column($venue_meta, 'venuebusiness');
 
-		/*
-		if (!empty($amenity_ids)) {
-			$amenity_data 	= $this->get_amenity_by_ids($amenity_ids, $venue_ids);
-			echo "<pre>"; print_r($amenity_data); die;
-		}*/
-
 		$venue_data_arr = [];
 		if ( !empty($venue_data_array) ) {
 			$i=0;
@@ -829,6 +823,46 @@ class VenueController extends Controller
 		]);
 
 		return redirect()->back()->with('success', 'Partner detail successfully updated.');
+	}
+
+	public function venueSelectById($venue_id)
+	{
+		echo $venue_id; die("venue_id");
+		
+		$venues 	= Venue::get()->toArray();
+
+		$venue_data_array 	= $this->array_by_ids($venues, "id");
+		$venue_ids 			= array_column($venues, 'id');
+
+		$venue_meta 		= $this->get_venue_meta_by_venue_ids($venue_ids);
+		$amenity_ids 		= array_column($venue_meta, 'amenity');
+		$business_types_ids = array_column($venue_meta, 'venuebusiness');
+
+		$venue_data_arr = [];
+		if ( !empty($venue_data_array) ) {
+			$i=0;
+			foreach ($venue_data_array as $vkey => $venue_data) {
+				$venue_id 			= $venue_data["id"];
+				$venue_meta_data 	= $venue_meta[$venue_id];
+				// Get amenity name, icon from ids
+				if ($amenity_ids) {
+					$amenities_ids 		= explode(',', $amenity_ids[$i]);
+					$amenity_data 		= $this->get_amenity_by_ids($amenities_ids);
+				}else{
+					$amenity_data = "";
+				}
+
+				$business_type_ids 	= explode(',', $business_types_ids[$i]);
+				$business_type_data = $this->get_business_type_by_ids($business_type_ids);
+
+				$venue_data["venue_meta"] = $venue_meta_data;
+				$venue_data["amenity_data"] = $amenity_data;
+				$venue_data["business_type_data"] = $business_type_data;
+				$venue_data_arr[] = $venue_data;
+
+				$i++;
+			}
+		}
 	}
 
 	public function get_metadata($venue_id) {

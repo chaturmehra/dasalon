@@ -15,9 +15,17 @@ class StaffUserAuthorizationController extends Controller
 		$meta_description  = "";
 		$meta_keywords     = "";
 
-		$getpermission = UserAuthorization::get();
-
-		return view('partner/staff/user-authorization/index', compact('title', 'meta_description', 'meta_keywords', 'getpermission'));
+		$permissionArr = UserAuthorization::get()->toArray();
+        $finalPermArr = [];
+        foreach ($permissionArr as $key => $arr) {
+            if ($arr['subpage']) {
+                $finalPermArr[$arr['page']][$arr['subpage']][$arr["role_id"]] = $arr;
+            }else{
+                $finalPermArr[$arr['page']][$arr["role_id"]] = $arr;
+            }
+        }
+        
+		return view('partner/staff/user-authorization/index', compact('title', 'meta_description', 'meta_keywords', 'finalPermArr'));
 	}
 
 	public function storeAuthorization(Request $request)

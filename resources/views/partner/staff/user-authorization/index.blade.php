@@ -98,33 +98,46 @@
                                  <td></td>
                               </tr>
                               @foreach(userAuthorization() as $page => $subpages)
-                              
+                              @php
+                                 $owner_val = !empty( $finalPermArr[$page][1]["property_value"] ) ? $finalPermArr[$page][1]["property_value"] : ""; 
+
+                                 $checked = ( $owner_val == 1 ) ? "checked" : "";
+                                 $manager_val = !empty( $finalPermArr[$page][2]["property_value"] ) ? $finalPermArr[$page][2]["property_value"] : ""; 
+                                 $checked1 = ( $manager_val == 1 ) ? "checked" : "";
+                              @endphp
                               <tr>
                                  <td>{{ $page }}</td>
                                  <td></td>
                                  <td>
                                     <label class="form-check form-switch form-check-custom form-check-solid on-status-check">
-                                       <input class="form-check-input user-auth-permission" type="checkbox" name="property_value[{{$page}}]" data-role="1" data-page="{{$page}}" />
+                                       <input class="form-check-input user-auth-permission" type="checkbox" name="property_value[{{$page}}]" data-role="1" data-page="{{$page}}" {{ $checked }}/>
                                     </label>
                                  </td>
                                  <td>
                                     <label class="form-check form-switch form-check-custom form-check-solid on-status-check">
-                                       <input class="form-check-input user-auth-permission" type="checkbox" name="property_value[{{$page}}]" data-role="2" data-page="{{$page}}"/>
+                                       <input class="form-check-input user-auth-permission" type="checkbox" name="property_value[{{$page}}]" data-role="2" data-page="{{$page}}" {{ $checked1 }}/>
                                     </label>
                                  </td>
                               </tr>
                               @foreach( $subpages as $key => $subpage )
+                              @php
+                                 $owner_val = !empty( $finalPermArr[$page][$subpage][1]["property_value"] ) ? $finalPermArr[$page][$subpage][1]["property_value"] : ""; 
+
+                                 $checked2 = ( $owner_val == 1 ) ? "checked" : "";
+                                 $manager_val = !empty( $finalPermArr[$page][$subpage][2]["property_value"] ) ? $finalPermArr[$page][$subpage][2]["property_value"] : ""; 
+                                 $checked3 = ( $manager_val == 1 ) ? "checked" : "";
+                              @endphp
                               <tr>
                                  <td></td>
                                  <td>{{ $subpage }}</td>
                                  <td>
                                     <label class="form-check form-switch form-check-custom form-check-solid on-status-check">
-                                       <input class="form-check-input user-auth-permission" type="checkbox" name="property_value[{{$page}}][{{$subpage}}]" data-role="1" data-page="{{$page}}" data-subpage="{{$subpage}}" />
+                                       <input class="form-check-input user-auth-permission" type="checkbox" name="property_value[{{$page}}][{{$subpage}}]" data-role="1" data-page="{{$page}}" data-subpage="{{$subpage}}" {{ $checked2 }} />
                                     </label>
                                  </td>
                                  <td>
                                     <label class="form-check form-switch form-check-custom form-check-solid on-status-check">
-                                       <input class="form-check-input user-auth-permission" name="property_value[{{$page}}][{{$subpage}}]" type="checkbox" data-page="{{$page}}" data-subpage="{{$subpage}}" data-role="2" />
+                                       <input class="form-check-input user-auth-permission" name="property_value[{{$page}}][{{$subpage}}]" type="checkbox" data-page="{{$page}}" data-subpage="{{$subpage}}" data-role="2" {{ $checked3 }} />
                                     </label>
                                  </td>
                               </tr>

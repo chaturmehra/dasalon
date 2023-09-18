@@ -230,8 +230,7 @@ class SystemManagerController extends Controller
     	$meta_keywords     = "";
 
         // DB::enableQueryLog();
-        $viewmanagerroles= User::leftJoin('system_manager_permissions', 'system_manager_permissions.user_id', '=', 'users.id')
-                           ->get()->toArray();
+        $viewmanagerroles= User::leftJoin('system_manager_permissions', 'system_manager_permissions.user_id', '=', 'users.id')->get();
         // $querylog =  DB::getQueryLog();
         // dd($querylog);
         $viewroles=User::where("role", 3)->get();
