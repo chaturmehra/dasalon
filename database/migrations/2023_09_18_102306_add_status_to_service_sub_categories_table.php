@@ -11,9 +11,8 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('sub_grace_ones', function (Blueprint $table) {
-            $table->id();
-            $table->timestamps();
+        Schema::table('service_sub_categories', function (Blueprint $table) {
+            $table->integer('status')->default('0')->after('servicesubcategory');
         });
     }
 
@@ -22,6 +21,8 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('sub_grace_ones');
+        Schema::table('service_sub_categories', function (Blueprint $table) {
+            $table->dropColumn('status');
+        });
     }
 };

@@ -8,6 +8,7 @@ use App\Models\Admin\CountryConfig;
 use App\Models\Admin\Amenity;
 use App\Models\Admin\AmenityCategory;
 use App\Models\Admin\Service;
+use App\Models\Admin\ServiceCategory;
 
 function getPartnerType(){
 	$partnertype = PartnerType::get();
@@ -110,3 +111,5 @@ function userAuthorization(){
     ];
     return $userAuthorization;
 }
+
+

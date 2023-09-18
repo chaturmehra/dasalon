@@ -30,7 +30,12 @@ class ServicesConfigController extends Controller
         $pt=PartnerType::all(); 
         $rp=RecommendedPackage::all();
         $bt=BusinessType::all();
-        return view('admin/services/services-config/index', compact('title', 'meta_description', 'meta_keywords','sercat','catactive','shares','pt','rp','bt'));
+
+        $serSubcat=ServiceSubCategory::leftJoin('service_categories', 'service_categories.id', '=', 'service_sub_categories.categoryid')->get(['service_sub_categories.servicesubcategoryid',
+            'service_sub_categories.servicesubcategory','service_sub_categories.status','service_categories.category','service_categories.country']);
+
+
+        return view('admin/services/services-config/index', compact('title', 'meta_description', 'meta_keywords','sercat','serSubcat','catactive','shares','pt','rp','bt'));
     }
 
     public function create(Request $request)
@@ -64,7 +69,7 @@ class ServicesConfigController extends Controller
 
             $sc->save();
 
-            return redirect()->back()->with('message', 'Service Category status updated successfully.');
+            return redirect()->back()->with('message', 'Service category status updated successfully.');
         }else{
             return redirect()->back()->with('error', 'Please select Service Category.');
         }
@@ -82,7 +87,7 @@ class ServicesConfigController extends Controller
 
 	        $sc->save();
 
-	        return redirect()->back()->with('message', 'Service Category status updated successfully.');
+	        return redirect()->back()->with('message', 'Service category status updated successfully.');
 	    }else{
 	    	return redirect()->back()->with('error', 'Please select Service Category.');
 	    }
@@ -92,6 +97,15 @@ class ServicesConfigController extends Controller
     {
         $sc =ServiceCategory::find($id);
         return $sc;
+    }
+
+       public function editSubcat($id)
+    {
+        $ssc =ServiceSubCategory::find($id);
+        $ssc = $ssc->leftjoin('service_categories', 'service_sub_categories.categoryid', '=', 'service_categories.id')
+->where('service_sub_categories.servicesubcategoryid', $id)
+->first();
+        return $ssc;
     }
 
     public function update(Request $request)
@@ -109,6 +123,15 @@ class ServicesConfigController extends Controller
         return redirect()->back()->with('message','Service Category Updated Successfully');
     }
 
+    public function updateSubcat(Request $request)
+    {
+        $ssc = ServiceSubCategory::find($request->get('subcategory_id'));
+        $ssc->category=$request->input('scategory');
+        $ssc->servicesubcategory=$request->input('subcategory');
+        $ssc->update();
+        return redirect()->back()->with('messagesubcat','Service sub-category Updated Successfully');
+    }
+
     public function store(Request $request)
     {
     	
@@ -116,7 +139,43 @@ class ServicesConfigController extends Controller
         $ssc->categoryid =  $request->get('category');  
         $ssc->servicesubcategory = $request->get('subcategory');  
         $ssc->save();
-        return redirect()->back()->with('message', 'Service SubCategory created successfully.');
+        return redirect()->back()->with('messagesubcat', 'Service sub-category created successfully.');
+    }
+
+     public function enabledSubcat($id): RedirectResponse
+    {
+        if($id){
+            $ssc = new ServiceSubCategory;
+
+            $ssc->exists       = true;
+            $ssc->servicesubcategoryid= $id;
+            $ssc->status    = 1;
+            $ssc->updated_at   = date('Y-m-d H:i:s');
+
+            $ssc->save();
+
+            return redirect()->back()->with('messagessc', 'Service sub-category status updated successfully.');
+        }else{
+            return redirect()->back()->with('errorssc', 'Please select Service sub-category.');
+        }
+    }
+
+    public function disabledSubcat($id): RedirectResponse
+    {
+        if($id){
+            $ssc = new ServiceSubCategory;
+
+            $ssc->exists         = true;
+            $ssc->servicesubcategoryid = $id;
+            $ssc->status  = 0;
+            $ssc->updated_at     = date('Y-m-d H:i:s');
+
+            $ssc->save();
+
+            return redirect()->back()->with('messagessc', 'Service sub-category status updated successfully.');
+        }else{
+            return redirect()->back()->with('errorssc', 'Please select Service sub-category.');
+        }
     }
 
     public function getSubcategoryAjax($category_id){

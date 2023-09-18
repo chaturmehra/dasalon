@@ -14,7 +14,7 @@ $(document).ready(function(){
                   success:function(data)
                   {
                     // debugger;
-                      $('#getdis_subcategory').html(data);
+                      $('#getdis_subcategory').html(data).trigger('change');
                   }
               });
     });
@@ -34,7 +34,7 @@ $(document).ready(function(){
                   {
                     //debugger;
                     console.log(data);
-                      $('#dis_service').html(data);
+                      $('#dis_service').html(data).trigger('change');
                   }
               });
     });

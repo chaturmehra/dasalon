@@ -517,9 +517,9 @@
 																							<div class="form-floating border rounded">
 																							    <select class="form-select" placeholder="..." id="kt_docs_select2_country2" name="country_prdtl">
 																								<option value="">Select Country</option>
+																									@endforeach
 																							       @foreach(getCountryConfigList() as $con_val)
 																	                                <option value="{{$con_val->id}}" data-kt-select2-country="{{asset('/assets/media/flags/'.strtolower(str_replace(' ','-',$con_val->name.'.svg')))}}">{{$con_val->name}}</option>
-																									@endforeach
 																							    </select>
 																							</div>
 																							<!--end::Input-->
