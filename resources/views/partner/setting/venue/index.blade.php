@@ -1,5 +1,6 @@
 @extends('partner.layouts.auth.app')
 @section('content') 
+<meta name="csrf-token" content="{{ csrf_token() }}" />
 <div class="app-main flex-column flex-row-fluid" id="kt_app_main">
    <!--begin::Content wrapper-->
    <div class="d-flex flex-column flex-column-fluid">
@@ -16,7 +17,7 @@
                <ul class="breadcrumb breadcrumb-separatorless fw-semibold fs-7 my-0 pt-1">
                   <!--begin::Item-->
                   <li class="breadcrumb-item text-muted">
-                     <a href="{{ url('admin/dashboard') }}" class="text-muted text-hover-primary">Home</a>
+                     <a href="{{ url('/partner/dashboard') }}" class="text-muted text-hover-primary">Home</a>
                   </li>
                   <!--end::Item-->
                   <!--begin::Item-->
@@ -68,9 +69,9 @@
                   <div class="d-flex flex-wrap flex-sm-nowrap gap-8">
                      <div class="symbol symbol-100px symbol-lg-160px symbol-fixed position-relative">
                         @if($loggedUserDetail[0]->business_logo)
-                           <img src="{{ asset('/public/partner/assets/media/avatars/300-1.jpg') }}" alt="image">
+                           <img src="{{ asset('/public/'.$loggedUserDetail[0]->business_logo) }}" alt="{{@Auth::user()->name}}">
                         @else
-                           <img src="{{ asset('/public/partner/assets/media/avatars/300-1.jpg') }}" alt="image">
+                           <img src="{{ asset('/public/partner/assets/media/avatars/blank.png') }}" alt="{{@Auth::user()->name}}">
                         @endif
                         <div class="position-absolute translate-middle bottom-0 start-100 mb-6 bg-success rounded-circle border border-4 border-body h-20px w-20px"></div>
                      </div>
@@ -569,9 +570,9 @@
 @include('partner.setting.venue.modal.add-venue-modal')
 
 @include('partner.setting.venue.modal.update-venue-modal')
-@include('partner.setting.venue.modal.update-business-detail')
 @include('partner.setting.venue.modal.change-email')
 @include('partner.setting.venue.modal.change-phone')
+@include('partner.setting.venue.modal.update-business-detail')
 
 @endsection
 @push('scripts')

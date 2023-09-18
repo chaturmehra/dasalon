@@ -429,6 +429,7 @@ $(document).on('click', '.get-commission-by-id', function(){
     }
   });
 });
+
 $(document).on('click', '.filter-by-role', function(){
   event.preventDefault();
   var selected_id   = $('.filter-option-roles option:selected').val();
@@ -456,6 +457,7 @@ $(document).on('click', '.filter-by-role', function(){
     }
   });
 });
+
 $(document).on('click', '.filter-Reset', function(){
   event.preventDefault();
   
@@ -482,6 +484,7 @@ $(document).on('click', '.filter-Reset', function(){
     }
   });
 });
+
 $(document).on('click', '.export-staff-by-role', function(){
   event.preventDefault();
   var selected_id   = $('.export-roles option:selected').val();

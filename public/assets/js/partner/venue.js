@@ -468,6 +468,283 @@ $(document).on('click', '.update-venue-detail', function(){
   }
 });
 
+$(document).on('click', '.on-business-detail', function(){
+  event.preventDefault();
+  var partner_id    = $(this).attr('partner-id');
+  var ajaxurl     = baseurl+'partner/get-business-detail'+'/' + partner_id;
+  
+  $.ajax({
+    url:ajaxurl,
+    type:'GET',
+    beforeSend:function(){
+      $('.spinner-cls').show();
+    },
+    success:function(response)
+    {
+      $('.spinner-cls').hide();
+      response = JSON.parse(response);
+
+        if (response.status) {
+          var partner_data = response.data;
+
+          $("#business_name").val(partner_data[0].business_name);
+          $("#business_email").val(partner_data[0].email);
+          $("#business_phone").val(partner_data[0].phone);
+          $("#business_website").val(partner_data[0].website);
+          $("#business_instagram").val(partner_data[0].instagram);
+          $("#business_facebook").val(partner_data[0].facebook);
+
+          var business_logo = partner_data[0].business_logo;
+          if(business_logo){
+            $("#old_business_logo").val(business_logo);
+            $(".business-logo").css('background-image', 'url('+publicurl+business_logo+')');
+          }
+        }
+    }
+  });
+});
+
+jQuery(document).on('click', '.phone-send-otp', function(){
+  event.preventDefault();
+  var phone = jQuery('.verify-phone').val();
+  //var ajaxurl = 'https://webpristine.co.in/admin/setting/edit-amenity-status/' + mobile;
+  if ( phone !== "" ) {
+      var ajaxurl = baseurl+'sendSMS';
+      jQuery.ajax({
+          url: ajaxurl,
+          data: {phone: phone},
+          headers: {'X-CSRF-TOKEN': jQuery('meta[name="csrf-token"]').attr('content')},
+          type:'POST',
+          success:function(response)
+          {
+              //response = JSON.parse(response);
+              //$('.spinner-cls').hide();
+              if (response.status) {
+                Swal.fire({
+                  text: "OTP sent successfully on your mobile number: "+phone,
+                  icon: "success",
+                  buttonsStyling: !1,
+                  confirmButtonText: "Ok, got it!",
+                  customClass: {
+                    confirmButton: "btn btn-primary"
+                  }
+                })
+            }
+          },
+          error:function(error)
+          {
+              Swal.fire({
+                text: "Something went wrong. Please try again.",
+                icon: "error",
+                buttonsStyling: !1,
+                confirmButtonText: "Ok, got it!",
+                customClass: {
+                  confirmButton: "btn btn-primary"
+                }
+              })
+          }
+      });
+  }else{
+      Swal.fire({
+        text: "Mobile number is required.",
+        icon: "error",
+        buttonsStyling: !1,
+        confirmButtonText: "Ok, got it!",
+        customClass: {
+          confirmButton: "btn btn-primary"
+        }
+      })
+  }
+});
+
+jQuery(document).on('click', '.verify-partner-phone', function(){
+  event.preventDefault();
+  var otp = jQuery('.verify-phone-otp').val();
+  var phone = jQuery('.verify-phone').val();
+  //var ajaxurl = 'https://webpristine.co.in/admin/setting/edit-amenity-status/' + mobile;
+  if ( phone !== "" && otp !== "" ) {
+      var ajaxurl = baseurl+'sendOTP';
+      jQuery.ajax({
+          url: ajaxurl,
+          data: {otp: otp},
+          headers: {'X-CSRF-TOKEN': jQuery('meta[name="csrf-token"]').attr('content')},
+          type:'POST',
+          success:function(response)
+          {
+            //alert(response);
+              //response = JSON.parse(response);
+              //console.log("response", response)
+              if (response.status) {
+                Swal.fire({
+                  text: "OTP matched successfully.",
+                  icon: "success",
+                  buttonsStyling: !1,
+                  confirmButtonText: "Ok, got it!",
+                  customClass: {
+                    confirmButton: "btn btn-primary"
+                  }
+                })
+
+                $("#business_phone").val(phone);
+                $(".changephoneclick").trigger("click");
+              }else{
+                Swal.fire({
+                  text: "OTP not matched.",
+                  icon: "error",
+                  buttonsStyling: !1,
+                  confirmButtonText: "Ok, got it!",
+                  customClass: {
+                    confirmButton: "btn btn-primary"
+                  }
+                })
+              }
+          },
+          error:function(error)
+          {
+              Swal.fire({
+                text: "Something went wrong. Please try again.",
+                icon: "error",
+                buttonsStyling: !1,
+                confirmButtonText: "Ok, got it!",
+                customClass: {
+                  confirmButton: "btn btn-primary"
+                }
+              })
+          }
+      });
+  }else{
+      Swal.fire({
+        text: "Please fill required fields!",
+        icon: "error",
+        buttonsStyling: !1,
+        confirmButtonText: "Ok, got it!",
+        customClass: {
+          confirmButton: "btn btn-primary"
+        }
+      })
+  }
+});
+
+jQuery(document).on('click', '.email-send-otp', function(){
+  event.preventDefault();
+  var email = jQuery('.verify-email').val();
+  var name = jQuery('#business_name').val();
+
+  if ( email !== "" ) {
+      var ajaxurl = baseurl+'partner/sendEmail';
+      jQuery.ajax({
+          url: ajaxurl,
+          data: {email: email, name: name},
+          headers: {'X-CSRF-TOKEN': jQuery('meta[name="csrf-token"]').attr('content')},
+          type:'POST',
+          success:function(response)
+          {
+              //response = JSON.parse(response);
+              //$('.spinner-cls').hide();
+              if (response.status) {
+                Swal.fire({
+                  text: "OTP sent successfully on your email address: "+email,
+                  icon: "success",
+                  buttonsStyling: !1,
+                  confirmButtonText: "Ok, got it!",
+                  customClass: {
+                    confirmButton: "btn btn-primary"
+                  }
+                })
+            }
+          },
+          error:function(error)
+          {
+              Swal.fire({
+                text: "Something went wrong. Please try again.",
+                icon: "error",
+                buttonsStyling: !1,
+                confirmButtonText: "Ok, got it!",
+                customClass: {
+                  confirmButton: "btn btn-primary"
+                }
+              })
+          }
+      });
+  }else{
+      Swal.fire({
+        text: "Email is required.",
+        icon: "error",
+        buttonsStyling: !1,
+        confirmButtonText: "Ok, got it!",
+        customClass: {
+          confirmButton: "btn btn-primary"
+        }
+      })
+  }
+});
+
+jQuery(document).on('click', '.verify-partner-email', function(){
+  event.preventDefault();
+  var otp = jQuery('.verify-email-otp').val();
+  var email = jQuery('.verify-email').val();
+  
+  if ( email !== "" && otp !== "" ) {
+      var ajaxurl = baseurl+'sendOTP';
+      jQuery.ajax({
+          url: ajaxurl,
+          data: {otp: otp},
+          headers: {'X-CSRF-TOKEN': jQuery('meta[name="csrf-token"]').attr('content')},
+          type:'POST',
+          success:function(response)
+          {
+            //alert(response);
+              //response = JSON.parse(response);
+              //console.log("response", response)
+              if (response.status) {
+                Swal.fire({
+                  text: "OTP matched successfully.",
+                  icon: "success",
+                  buttonsStyling: !1,
+                  confirmButtonText: "Ok, got it!",
+                  customClass: {
+                    confirmButton: "btn btn-primary"
+                  }
+                })
+                $("#business_email").val(email);
+                $(".changeemailclick").trigger("click");
+              }else{
+                Swal.fire({
+                  text: "OTP not matched.",
+                  icon: "error",
+                  buttonsStyling: !1,
+                  confirmButtonText: "Ok, got it!",
+                  customClass: {
+                    confirmButton: "btn btn-primary"
+                  }
+                })
+              }
+          },
+          error:function(error)
+          {
+              Swal.fire({
+                text: "Something went wrong. Please try again.",
+                icon: "error",
+                buttonsStyling: !1,
+                confirmButtonText: "Ok, got it!",
+                customClass: {
+                  confirmButton: "btn btn-primary"
+                }
+              })
+          }
+      });
+  }else{
+      Swal.fire({
+        text: "Please fill required fields!",
+        icon: "error",
+        buttonsStyling: !1,
+        confirmButtonText: "Ok, got it!",
+        customClass: {
+          confirmButton: "btn btn-primary"
+        }
+      })
+  }
+});
 
 // Initialize the Google Places API
 function initMap() {
@@ -809,4 +1086,24 @@ function editDragendMarker(latitude, longitude) {
       }
     });
   });
+}
+
+var defaultvalue = "";
+function numberHandler(input){
+  const value = input.value.trim();
+  const regex = /^[0-9\b]+$/;
+  if (value != "" && !regex.test(value)) {
+    input.value = defaultvalue;
+  }else{
+    defaultvalue = input.value;
+  }
+}
+function numberOtpHandler(input){
+  const value = input.value.trim();
+  const regex = /^[0-9\b]+$/;
+  if (value != "" && !regex.test(value)) {
+    input.value = defaultvalue;
+  }else{
+    defaultvalue = input.value;
+  }
 }

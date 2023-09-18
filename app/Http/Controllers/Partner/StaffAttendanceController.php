@@ -155,10 +155,22 @@ class StaffAttendanceController extends Controller
                 ->leftJoin('users', 'users.id', '=', 'staff.user_id')
                 ->get();
 
-		if ( !empty($id) && !empty($staffDetail) ) {
+       	$todayDate 	= date('Y-m-d');
+        $staffAttendance = StaffAttendance::where('staff_id', $id)->where('date', $todayDate)->get();
+        if( !$staffAttendance->isEmpty() ) {
+        	$check_in 	= $staffAttendance[0]->check_in;
+        	$check_out 	= $staffAttendance[0]->check_out;
+        }else{
+        	$check_in 	= "";
+        	$check_out 	= "";
+        }
+
+		if ( !empty($id) && !$staffDetail->isEmpty() ) {
 			$response = array(
 				"status" 	=> 1,
 				"data" 		=> $staffDetail,
+				"check_in" 	=> $check_in,
+				"check_out" => $check_out,
 			);
 		}else{
 			$response = array(
@@ -264,6 +276,11 @@ class StaffAttendanceController extends Controller
 				"status" 			=> 1,
 				"apexChartArray" 	=> $apexChartArray,
 				"apexChartAvgArray" => $apexChartAvgArray,
+			);
+		}else{
+			$response = array(
+				"status" 		=> 0,
+				"message" 		=> "No data found.",
 			);
 		}
 		

@@ -19,6 +19,8 @@ $(document).on('click', '.modal_attendance_check', function(event){
 
         $(".att_staff_name").text(staff_data[0].name);
         $(".att_staff_id").val(staff_data[0].id);
+        $(".check-in-time").val(response.check_in);
+        $(".check-out-time").val(response.check_out);
       }
     }
   });
@@ -68,6 +70,9 @@ $('.attendance-daterangepicker').on('apply.daterangepicker', function (ev, picke
 
 $('.attendance-analytics-filter').on('apply.daterangepicker', function (ev, picker) {
 
+    var updateChart = KTChartsWidgetAttendance.getInstance().self;
+    var updateAvgChart = KTChartsWidgetAvgWrkHr.getInstance().self;
+
     // The selected date range will be available in the 'picker' object
     var startDate = picker.startDate.format('YYYY-MM-DD');
     var endDate   = picker.endDate.format('YYYY-MM-DD');
@@ -93,35 +98,33 @@ $('.attendance-analytics-filter').on('apply.daterangepicker', function (ev, pick
           var seriesData = Object.values(apexChartArray).map(value => value.toString());
           var categoriesData = Object.keys(apexChartArray);
           var seriesAvgData = Object.values(apexChartAvgArray).map(value => value.toString());
-
-          //console.log("chart", chart)
           
-          chart.updateOptions({
+          updateChart.updateOptions({
             xaxis: {
               categories: categoriesData,
             },
           });
-          chart.updateSeries([{
+          updateChart.updateSeries([{
             name: 'Spent time',
             data: seriesData
           }]);
-          chart.updateSeries([{
+          updateAvgChart.updateSeries([{
             name: 'Average Working Hour',
             data: seriesAvgData
           }]);
 
         }else{
-          chart.updateSeries([{
+          updateChart.updateSeries([{
             name: 'Spent time',
-            data: ""
+            data: [""]
           }]);
-          chart.updateSeries([{
+          updateAvgChart.updateSeries([{
             name: 'Average Working Hour',
-            data: ""
+            data: [""]
           }]);
-          chart.updateOptions({
+          updateChart.updateOptions({
             xaxis: {
-              categories: ""
+              categories: [""]
             },
           });
         }

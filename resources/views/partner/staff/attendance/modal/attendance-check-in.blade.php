@@ -22,7 +22,7 @@
                      </div>
                      <div class="fv-row">
                         <div class="input-group kt_td_picker_time_only" data-td-target-input="nearest" data-td-target-toggle="nearest">
-                           <input type="text" name="check_in" class="form-control" data-td-target=".kt_td_picker_time_only" placeholder="Check-in" value="10:00" required="required" />
+                           <input type="text" name="check_in" class="form-control check-in-time" data-td-target=".kt_td_picker_time_only" placeholder="Check in" value="10:00" required="required" />
                            <span class="input-group-text" data-td-target=".kt_td_picker_time_only" data-td-toggle="datetimepicker">
                            <i class="ki-outline ki-time fs-3"></i>
                            </span>

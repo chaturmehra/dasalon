@@ -162,6 +162,9 @@ Route::middleware(['auth'])->group(function () {
     Route::post('partner/store-venue-setting', [VenueController::class, 'storeVenues']);
     Route::post('partner/update-venue-setting', [VenueController::class, 'updateVenues']);
     Route::get('partner/get-venue-detail-by-id/{id}', [VenueController::class, 'getVenueDetailById']);
+    Route::get('partner/get-business-detail/{id}', [VenueController::class, 'getBusinessDetail']);
+    Route::post('partner/update-business-detail', [VenueController::class, 'updateBusinessDetail']);
+    Route::post('partner/sendEmail', [VenueController::class, 'sendPartnerEmail']);
 
     Route::get('partner/calender', [CalenderController::class, 'index'])->name('calender.index');
     Route::get('partner/appointments', [AppointmentsController::class, 'index'])->name('appointments.index');
@@ -214,11 +217,13 @@ Route::middleware(['auth'])->group(function () {
     Route::post('partner/staff/leave', [StaffLeaveController::class, 'storeLeave']);
 
     Route::get('partner/staff/user-authorization', [StaffUserAuthorizationController::class, 'index'])->name('user-authorization.index');
+    Route::post('partner/staff/store-user-authorization', [StaffUserAuthorizationController::class, 'storeAuthorization']);
 
     Route::get('admin/typeone/enable-status/{id}', [SubscriptionController::class, 'enabledsub']);
     Route::get('admin/typeone/disable-status/{id}', [SubscriptionController::class, 'disabledsub']);
 
     Route::get('partner/staff/export-staff-by-role/{id}/{type}', [ExportController::class, 'exportStaffByRole']);
+
 });
 
 /*Partner Route*/

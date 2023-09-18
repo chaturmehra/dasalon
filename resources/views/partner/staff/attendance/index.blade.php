@@ -398,6 +398,7 @@
                     }, 200);
             }
         };
+
     return {
         init: function () {
             t(e),
@@ -405,6 +406,9 @@
                     e.rendered && e.self.destroy(), t(e);
                 });
         },
+        getInstance: function(){
+            return e;
+        }
     };
 })();
 "undefined" != typeof module && (module.exports = KTChartsWidgetAttendance),
@@ -452,6 +456,9 @@
                     e.rendered && e.self.destroy(), t(e);
                 });
         },
+        getInstance: function(){
+            return e;
+        }
     };
 })();
 "undefined" != typeof module && (module.exports = KTChartsWidgetAvgWrkHr),

@@ -15,9 +15,9 @@
             <div style="padding:10px 0; text-align:center;"><img style="width:210px;" src="{{ asset('public/assets/media/logos/logo3.png') }}" alt="Dasalon" title="Dasalon"/></div>
             
            
-            <p style="font-size:16px; font-weight:500; color:#FFF; text-align:center; margin-bottom:15px; line-height:24px;">Hello <strong>{{ $name }}</strong></p>
+            <p style="font-size:16px; font-weight:500; color:#FFF; text-align:center; margin-bottom:15px; line-height:24px;">Dear <strong>{{ $name }}</strong></p>
  
-            <p style="font-size:15px; font-weight:500; color:#FFF; text-align:center; margin-bottom:15px; line-height:21px;"><a href="{{ route('partner.reset', $token) }}" style="color: #FFF;background: #ea2e91;text-decoration: none;padding: 5px 14px 3px;height: 25px;display: inline-block;border-radius: 100px;margin: 4px 0 0;font-size: 16px;font-weight: 500;">Reset Password</a></p>
+            <p style="font-size:15px; font-weight:500; color:#FFF; text-align:center; margin-bottom:15px; line-height:21px;">Your One Time Password is: {{ $otp }}</p>
 
             <div>
                 <div style="margin-top:30px; margin-bottom:15px; background:#FFF; padding:2px;"></div>           

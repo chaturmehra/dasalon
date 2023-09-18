@@ -12,6 +12,8 @@ use Illuminate\Support\Facades\Auth;
 use DB;
 use App\Models\User;
 use App\Models\UserDetails;
+use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Mail;
 
 class VenueController extends Controller
 {
@@ -84,8 +86,6 @@ class VenueController extends Controller
 		}
 
 		$loggedUserDetail = User::leftjoin('user_details', 'users.id', '=', 'user_details.user_id')->where('users.is_active', 1)->get();
-
-		// echo "<pre>"; print_r($getLoggedUser); die;
 
 		return view('partner/setting/venue/index', compact('title', 'meta_description', 'meta_keywords', 'amenities', 'venue_data_arr', 'businesstypes', 'loggedUserDetail'));
 	}
@@ -679,7 +679,7 @@ class VenueController extends Controller
 
 		return redirect()->back()->with('success', 'Venue updated successfully.');
 	}
-
+	
 	public function add_venue_meta($cid, $key, $value){
 		//\DB::enableQueryLog();
 		$tbl_name 	= 'venues';
@@ -777,6 +777,60 @@ class VenueController extends Controller
 		echo json_encode($response);
 	}
 
+	public function getBusinessDetail($partner_id)
+	{
+		$partnerDetail = User::leftjoin('user_details', 'users.id', '=', 'user_details.user_id')->where('users.id', $partner_id)->get();
+
+		if ( !empty($partner_id) && !$partnerDetail->isEmpty() ) {
+			
+			$response = array(
+				"status" 	=> 1,
+				"data" 		=> $partnerDetail,
+			);
+		}else{
+			$response = array(
+				"status" 	=> 0,
+				"message" 	=> "Data not found",
+			);
+		}
+		
+		echo json_encode($response);
+	}
+
+	public function updateBusinessDetail(Request $request)
+	{
+		$partner_id = Auth::user()->id;
+
+		User::where('id', $partner_id)->update([
+			'phone' 	=> $request->business_phone,
+			'email' 	=> $request->business_email,
+		]);
+
+		if ($request->hasFile('business_logo')) {
+			$image = $request->file('business_logo');
+			$business_logo = time().'_business_logo.'.$image->getClientOriginalExtension();
+			$destinationPath = public_path('/uploads/business-logo');
+			$image->move($destinationPath, $business_logo);
+			$business_logo =  '/uploads/business-logo/'.$business_logo;
+		}else{
+			if ($request->old_business_logo) {
+				$business_logo = $request->old_business_logo;
+			}else{
+				$business_logo = "";
+			}
+		}
+
+		UserDetails::where('user_id', $partner_id)->update([
+			'business_name' => $request->business_name,
+			'website' 		=> $request->website,
+			'facebook' 		=> $request->facebook,
+			'instagram' 	=> $request->instagram,
+			'business_logo' => $business_logo,
+		]);
+
+		return redirect()->back()->with('success', 'Partner detail successfully updated.');
+	}
+
 	public function get_metadata($venue_id) {
 
 		$venue_metadata = DB::table('venue_meta')->select('meta_key', 'meta_value')->where('venue_id', $venue_id)->get();
@@ -802,4 +856,27 @@ class VenueController extends Controller
 		$result 	= $query->toArray();
 		return $result;
 	}
+
+	public function sendPartnerEmail(Request $request)
+    {
+    	$otp = random_int(100000, 999999);
+
+    	$email = $request->email;
+    	$name = $request->name;
+
+    	try {
+
+    		Session::put('signin_otp', $otp);
+
+    		Mail::send('mail-template/emailOtp', ['name' => $name, 'otp' => $otp], function($message) use($request){
+    			$message->to($request->email);
+    			$message->subject('Email OTP Verification');
+    		});
+
+    		return response()->json(['status' => true]);
+
+    	} catch (Exception $e) {
+    		dd("Error: ". $e->getMessage());
+    	}
+    }
 }
