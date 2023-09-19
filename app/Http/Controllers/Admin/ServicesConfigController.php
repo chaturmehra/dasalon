@@ -126,7 +126,7 @@ class ServicesConfigController extends Controller
     public function updateSubcat(Request $request)
     {
         $ssc = ServiceSubCategory::find($request->get('subcategory_id'));
-        $ssc->category=$request->input('scategory');
+        $ssc->categoryid=$request->input('scategory');
         $ssc->servicesubcategory=$request->input('subcategory');
         $ssc->update();
         return redirect()->back()->with('messagesubcat','Service sub-category Updated Successfully');

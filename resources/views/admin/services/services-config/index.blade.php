@@ -73,26 +73,18 @@
              
 
 
+<div class="tab-pane fade active show" id="serviceconfig1" role="tab-panel">
 
-
-
-
-<div class="card card-flush">
+                                    <!--begin::Products-->
+                                    <div class="card card-flush">
 
                                        <div class="card-header">
                                           <h2 class="page-heading d-flex text-dark fw-bold fs-3 flex-column justify-content-center my-0">Category</h2>
                                        </div>
-        @if(session()->has('message'))
+     @if(session()->has('message'))
                <div class="card-header display-message">
                   <div class="alert alert-success">
                      {{ session()->get('message') }}
-                  </div>
-               </div>
-               @endif
-               @if(session()->has('error'))
-               <div class="card-header display-message">
-                  <div class="alert alert-danger">
-                     {{ session()->get('error') }}
                   </div>
                </div>
                @endif
@@ -119,6 +111,7 @@
                                              <!--end::Add Country-->
                                           </div>
                                           <!--end::Toolbar-->
+
 
 
    <!--begin::Modal - Add task-->
@@ -232,6 +225,7 @@
 
 
 
+
                                        </div>
                                        <!--end::Card header-->
 
@@ -242,7 +236,7 @@
                                              <!--begin::Table head-->
                                              <thead>
                                                 <!--begin::Table row-->
-                                                <tr class="text-start text-gray-400 fw-bold fs-7 text-uppercase gs-0"><th class="min-w-100px sorting" tabindex="0" aria-controls="kt_datatable_example1" rowspan="1" colspan="1" aria-label="S No.: activate to sort column ascending" style="width: 108.219px;">S No.</th><th class="min-w-150px sorting" tabindex="0" aria-controls="kt_datatable_example1" rowspan="1" colspan="1" aria-label="Country: activate to sort column ascending" style="width: 163.062px;">Country</th><th class="min-w-150px sorting" tabindex="0" aria-controls="kt_datatable_example1" rowspan="1" colspan="1" aria-label="Category: activate to sort column ascending" style="width: 163.062px;">Category</th><th class="min-w-150px sorting" tabindex="0" aria-controls="kt_datatable_example1" rowspan="1" colspan="1" aria-label="Icon: activate to sort column ascending" style="width: 163.062px;">Icon</th><th class="min-w-50px sorting" tabindex="0" aria-controls="kt_datatable_example1" rowspan="1" colspan="1" aria-label="Status: activate to sort column ascending" style="width: 66.5781px;">Status</th><th class="text-end min-w-100px sorting" tabindex="0" aria-controls="kt_datatable_example1" rowspan="1" colspan="1" aria-label="Actions: activate to sort column ascending" style="width: 109.016px;">Actions</th></tr>
+                                                <tr class="text-start text-gray-400 fw-bold fs-7 text-uppercase gs-0"><th class="min-w-100px sorting" tabindex="0" aria-controls="kt_datatable_example1" rowspan="1" colspan="1" aria-label="S No.: activate to sort column ascending" style="width: 108.344px;">S No.</th><th class="min-w-150px sorting" tabindex="0" aria-controls="kt_datatable_example1" rowspan="1" colspan="1" aria-label="Country: activate to sort column ascending" style="width: 163.281px;">Country</th><th class="min-w-150px sorting" tabindex="0" aria-controls="kt_datatable_example1" rowspan="1" colspan="1" aria-label="Category: activate to sort column ascending" style="width: 163.281px;">Category</th><th class="min-w-150px sorting" tabindex="0" aria-controls="kt_datatable_example1" rowspan="1" colspan="1" aria-label="Icon: activate to sort column ascending" style="width: 163.281px;">Icon</th><th class="min-w-50px sorting" tabindex="0" aria-controls="kt_datatable_example1" rowspan="1" colspan="1" aria-label="Status: activate to sort column ascending" style="width: 66.6719px;">Status</th><th class="text-end min-w-100px sorting" tabindex="0" aria-controls="kt_datatable_example1" rowspan="1" colspan="1" aria-label="Actions: activate to sort column ascending" style="width: 109.141px;">Actions</th></tr>
                                                 <!--end::Table row-->
                                              </thead>
                                              <!--end::Table head-->
@@ -250,7 +244,7 @@
 
                                              <!--begin::Table body-->
                                              <tbody class="fw-bold text-gray-600">
-                                       
+                                                
  @if( !empty($sercat) )
                         @foreach($sercat as $key => $ser)
                            @php 
@@ -310,9 +304,7 @@
                                  </tr>
                                  @endforeach
                         @endif
-
-
-                                       </tbody>
+</tbody>
                                              <!--end::Table body-->
                                           </table></div></div>
 
@@ -320,13 +312,22 @@
                                        <!--end::Card body-->
 
                                     </div>
+                                    <!--end::Products-->
 
-                  <div class="card card-flush mt-8">
+                                    <!--begin::Products-->
+                                    <div class="card card-flush mt-8">
 
                                        <div class="card-header">
                                           <h2 class="page-heading d-flex text-dark fw-bold fs-3 flex-column justify-content-center my-0">Sub Category</h2>
                                        </div>
-                                        @if(session()->has('messagessc'))
+    @if(session()->has('messagesubcat'))
+               <div class="card-header display-message">
+                  <div class="alert alert-success">
+                     {{ session()->get('messagesubcat') }}
+                  </div>
+               </div>
+               @endif
+                 @if(session()->has('messagessc'))
                <div class="card-header display-message">
                   <div class="alert alert-success">
                      {{ session()->get('messagessc') }}
@@ -337,13 +338,6 @@
                <div class="card-header display-message">
                   <div class="alert alert-danger">
                      {{ session()->get('errorssc') }}
-                  </div>
-               </div>
-               @endif
-   @if(session()->has('messagesubcat'))
-               <div class="card-header display-message">
-                  <div class="alert alert-success">
-                     {{ session()->get('messagesubcat') }}
                   </div>
                </div>
                @endif
@@ -370,6 +364,8 @@
                                              <!--end::Add Country-->
                                           </div>
                                           <!--end::Toolbar-->
+
+
 <div class="modal fade" tabindex="-1" id="kt_modal_scrollable_2">
                                     <div class="modal-dialog modal-dialog-scrollable">
                                        <div class="modal-content">
@@ -433,6 +429,11 @@
                                        </div>
                                     </div>
                                  </div>
+
+
+
+
+
                                        </div>
                                        <!--end::Card header-->
 
@@ -443,7 +444,7 @@
                                              <!--begin::Table head-->
                                              <thead>
                                                 <!--begin::Table row-->
-                                                <tr class="text-start text-gray-400 fw-bold fs-7 text-uppercase gs-0"><th class="min-w-100px sorting" tabindex="0" aria-controls="kt_datatable_example2" rowspan="1" colspan="1" aria-label="S No.: activate to sort column ascending" style="width: 108.219px;">S No.</th><th class="min-w-150px sorting" tabindex="0" aria-controls="kt_datatable_example2" rowspan="1" colspan="1" aria-label="Country: activate to sort column ascending" style="width: 163.062px;">Country</th><th class="min-w-150px sorting" tabindex="0" aria-controls="kt_datatable_example2" rowspan="1" colspan="1" aria-label="Category: activate to sort column ascending" style="width: 163.062px;">Category</th><th class="min-w-150px sorting" tabindex="0" aria-controls="kt_datatable_example2" rowspan="1" colspan="1" aria-label="Subcategory: activate to sort column ascending" style="width: 163.062px;">Subcategory</th><th class="min-w-50px sorting" tabindex="0" aria-controls="kt_datatable_example2" rowspan="1" colspan="1" aria-label="Status: activate to sort column ascending" style="width: 66.5781px;">Status</th><th class="text-end min-w-100px sorting" tabindex="0" aria-controls="kt_datatable_example2" rowspan="1" colspan="1" aria-label="Actions: activate to sort column ascending" style="width: 109.016px;">Actions</th></tr>
+                                                <tr class="text-start text-gray-400 fw-bold fs-7 text-uppercase gs-0"><th class="min-w-100px sorting" tabindex="0" aria-controls="kt_datatable_example2" rowspan="1" colspan="1" aria-label="S No.: activate to sort column ascending" style="width: 108.344px;">S No.</th><th class="min-w-150px sorting" tabindex="0" aria-controls="kt_datatable_example2" rowspan="1" colspan="1" aria-label="Country: activate to sort column ascending" style="width: 163.281px;">Country</th><th class="min-w-150px sorting" tabindex="0" aria-controls="kt_datatable_example2" rowspan="1" colspan="1" aria-label="Category: activate to sort column ascending" style="width: 163.281px;">Category</th><th class="min-w-150px sorting" tabindex="0" aria-controls="kt_datatable_example2" rowspan="1" colspan="1" aria-label="Subcategory: activate to sort column ascending" style="width: 163.281px;">Subcategory</th><th class="min-w-50px sorting" tabindex="0" aria-controls="kt_datatable_example2" rowspan="1" colspan="1" aria-label="Status: activate to sort column ascending" style="width: 66.6719px;">Status</th><th class="text-end min-w-100px sorting" tabindex="0" aria-controls="kt_datatable_example2" rowspan="1" colspan="1" aria-label="Actions: activate to sort column ascending" style="width: 109.141px;">Actions</th></tr>
                                                 <!--end::Table row-->
                                              </thead>
                                              <!--end::Table head-->
@@ -452,7 +453,10 @@
                                              <!--begin::Table body-->
                                              <tbody class="fw-bold text-gray-600">
 
-                                                @if( !empty($serSubcat) )
+                                                
+
+
+                             @if( !empty($serSubcat) )
                         @foreach($serSubcat as $sKey => $serSub)
                            @php 
                               $statusS = $serSub->status;
@@ -504,7 +508,9 @@
                                                  
                                              @endforeach
                                              @endif
-                                             </tbody>
+
+                                                
+                                                      </tbody>
                                              <!--end::Table body-->
                                           </table></div></div>
 
@@ -512,6 +518,13 @@
                                        <!--end::Card body-->
 
                                     </div>
+                                    <!--end::Products-->
+
+                                 </div>
+
+
+
+
                   <!--begin::Tab pane-->
                   <div class="tab-pane fade" id="serviceconfig2" role="tab-panel">
                      <!--begin::Products-->
@@ -1069,7 +1082,7 @@
       <!--end::Content-->
    </div>
    <!--end::Content wrapper-->
-</div>
+
 <!--Edit Category modal -->
 <div class="modal fade" tabindex="-1" id="kt_modal_cat">
           <div class="modal-dialog modal-dialog-scrollable">
