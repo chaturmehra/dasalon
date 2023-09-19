@@ -13,6 +13,7 @@ class Service extends Model
         'subcategoryid',
         'servicename',
         'is_active',
+        'created_by',
     ];
     protected $primaryKey = 'serviceid';
 }
