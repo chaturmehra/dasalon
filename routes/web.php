@@ -173,10 +173,7 @@ Route::middleware(['auth'])->group(function () {
 
     Route::post('admin/services/addservice', [ServicesConfigController::class, 'addservice']);
     //Route::post('admin/services/servicesubcategory',[ServicesConfigController::class,'store']);
-    Route::post('admin/services/recommendedpackage', [ServicesConfigController::class, 'addrecommendedpackage']);
-    Route::get('admin/rp/enable-status/{rp_id}', [ServicesConfigController::class, 'enabledrp']);
-    Route::get('admin/rp/disable-status/{rp_id}', [ServicesConfigController::class, 'disabledrp']);
-
+    
     Route::get('admin/edit-servicecategory/{id}', [ServicesConfigController::class, 'edit']);
 
     Route::post('admin/update-servicecategory', [ServicesConfigController::class, 'update']);
@@ -199,6 +196,13 @@ Route::middleware(['auth'])->group(function () {
     Route::get('admin/subcategory/disable-status/{id}', [ServicesConfigController::class, 'disabledSubcat']);
 Route::get('admin/edit-servicesubcategory/{id}', [ServicesConfigController::class, 'editSubcat']);
 Route::post('admin/update-servicesubcategory', [ServicesConfigController::class, 'updateSubcat']);
+
+
+
+Route::post('admin/services/recommendedpackage', [RecommendationsController::class, 'addrecommendedpackage']);
+    Route::get('admin/rp/enable-status/{rp_id}', [RecommendationsController::class, 'enabledrp']);
+    Route::get('admin/rp/disable-status/{rp_id}', [RecommendationsController::class, 'disabledrp']);
+
 });
 
 /*Partner Route*/
