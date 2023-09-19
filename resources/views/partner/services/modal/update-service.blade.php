@@ -42,8 +42,9 @@ data-kt-drawer-width="{default:'300px', 'md': '700px', 'xl': '950px'}"
   <div class="card-body hover-scroll-overlay-y py-10">
 
     <!--begin::Form-->
-    <form class="form d-flex flex-column flex-lg-row" id="serviceeditform">
-
+    <form class="form d-flex flex-column flex-lg-row" id="serviceeditform" method="post" action="{{ url('partner/service/update') }}">
+      @csrf
+      <input type="hidden" name="service_id" id="service_id">
       <div class="d-flex flex-column gap-7 gap-lg-10">
 
         <div class="card card-flush p-4">
@@ -56,7 +57,7 @@ data-kt-drawer-width="{default:'300px', 'md': '700px', 'xl': '950px'}"
                 <h2 class="required fs-3">Category</h2>
               </div>
 
-              <select class="form-select mb-2 service-category" data-control="select2" data-hide-search="true" data-placeholder="Select an option" name="category">
+              <select class="form-select mb-2 service-category" data-control="select2" data-hide-search="true" data-placeholder="Select an option" name="category" required="required">
                 <option></option>
                 @if( !empty($categories) )
                 @foreach($categories as $category)
@@ -76,7 +77,7 @@ data-kt-drawer-width="{default:'300px', 'md': '700px', 'xl': '950px'}"
               <!--end::Card title-->
 
               <!--begin::Select2-->
-              <select class="form-select mb-2 service-sub-category" data-control="select2" data-hide-search="true" data-placeholder="Select an option" name="sub_category">
+              <select class="form-select mb-2 service-sub-category" data-control="select2" data-hide-search="true" data-placeholder="Select an option" name="sub_category" required="required">
                 <option></option>
                 
               </select>
@@ -124,7 +125,7 @@ data-kt-drawer-width="{default:'300px', 'md': '700px', 'xl': '950px'}"
                   <label class="btn btn-outline btn-outline-dashed btn-active-light-primary d-flex text-start py-5 px-4">
                     <!--begin::Radio-->
                     <span class="form-check form-check-custom form-check-solid form-check-sm align-items-start mt-1">
-                      <input class="form-check-input gender-option" type="radio" name="gender_option" value="Male" checked="checked" />
+                      <input class="form-check-input gender-option" type="radio" name="gender_option" value="Male" />
                     </span>
                     <!--end::Radio-->
                     <!--begin::Info-->
@@ -169,7 +170,7 @@ data-kt-drawer-width="{default:'300px', 'md': '700px', 'xl': '950px'}"
               <!--end::Card title-->
 
 
-              <input type="text" class="form-control mb-3 mb-lg-0" placeholder="Duration" name="duration"/>
+              <input type="text" class="form-control mb-3 mb-lg-0" placeholder="Duration" name="duration" required="required"/>
 
             </div>
 
@@ -192,7 +193,7 @@ data-kt-drawer-width="{default:'300px', 'md': '700px', 'xl': '950px'}"
                 <label class="required fw-semibold fs-6">Walk-in price</label>
                 <div class="input-group mb-2">
                   <span class="input-group-text">$</span>
-                  <input type="text" class="form-control" aria-label="Amount (to the nearest dollar)" name="walk_in_price"/>
+                  <input type="text" class="form-control" aria-label="Amount (to the nearest dollar)" name="walk_in_price" required="required"/>
                   <span class="input-group-text">.00</span>
                 </div>
                 <div class="text-muted fs-7">Price for anyone who walks into the salon without an appointment</div>
@@ -205,7 +206,7 @@ data-kt-drawer-width="{default:'300px', 'md': '700px', 'xl': '950px'}"
                 <label class="required fw-semibold fs-6">Online Price</label>
                 <div class="input-group mb-2">
                   <span class="input-group-text">$</span>
-                  <input type="text" class="form-control" aria-label="Amount (to the nearest dollar)" name="online_price"/>
+                  <input type="text" class="form-control" aria-label="Amount (to the nearest dollar)" name="online_price" required="required"/>
                   <span class="input-group-text">.00</span>
                 </div>
                 <div class="text-muted fs-7">Price available to clients who book their services online in advance</div>
@@ -218,7 +219,7 @@ data-kt-drawer-width="{default:'300px', 'md': '700px', 'xl': '950px'}"
                 <label class="required fw-semibold fs-6">Off Peak Price</label>
                 <div class="input-group mb-2">
                   <span class="input-group-text">$</span>
-                  <input type="text" class="form-control" aria-label="Amount (to the nearest dollar)" name="off_peak_price"/>
+                  <input type="text" class="form-control" aria-label="Amount (to the nearest dollar)" name="off_peak_price" required="required"/>
                   <span class="input-group-text">.00</span>
                 </div>
                 <div class="text-muted fs-7">A discounted price, available to people who walk-in during the salon's off peak hours.</div>
@@ -256,7 +257,7 @@ data-kt-drawer-width="{default:'300px', 'md': '700px', 'xl': '950px'}"
                         <!--begin::Label-->
                         <label class="required fw-semibold fs-6 mb-2">Staff</label>
                         <div class="form-floating border rounded">
-                          <select class="form-select form-select-transparent kt_docs_select2_users" data-placeholder="Select an option" name="staff_id">
+                          <select class="form-select form-select-transparent kt_docs_select2_users" data-placeholder="Select an option" name="staff_pricing['staff_id'][]">
                             <option></option>
                             @if( !empty($getStaff) )
                             @foreach($getStaff as $staff)
@@ -272,7 +273,7 @@ data-kt-drawer-width="{default:'300px', 'md': '700px', 'xl': '950px'}"
                           <label class="fw-semibold fs-6 mb-2">Online Price</label>
                           <div class="input-group mb-0">
                             <span class="input-group-text">$</span>
-                            <input type="text" class="form-control" aria-label="Amount (to the nearest dollar)" name="staff_online_price"/>
+                            <input type="text" class="form-control" aria-label="Amount (to the nearest dollar)" name="staff_pricing['online_price'][]"/>
                             <span class="input-group-text">.00</span>
                           </div>
                           <!--end::Input group-->
@@ -284,7 +285,7 @@ data-kt-drawer-width="{default:'300px', 'md': '700px', 'xl': '950px'}"
                           <label class="fw-semibold fs-6 mb-2">Off Peak Price</label>
                           <div class="input-group mb-0">
                             <span class="input-group-text">$</span>
-                            <input type="text" class="form-control" aria-label="Amount (to the nearest dollar)" name="staff_off_peak_price"/>
+                            <input type="text" class="form-control" aria-label="Amount (to the nearest dollar)" name="staff_pricing['off_peak_price'][]"/>
                             <span class="input-group-text">.00</span>
                           </div>
                           <!--end::Input group-->

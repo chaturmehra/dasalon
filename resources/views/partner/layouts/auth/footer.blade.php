@@ -2277,6 +2277,7 @@
    <!--begin::Custom Javascript(used for this page only)-->
    <script src="{{ asset('/public/partner/assets/js/custom/apps/ecommerce/reports/sales/sales.js')}}"></script>
    <script src="{{ asset('/public/partner/assets/js/custom/apps/user-management/users/list/table.js')}}"></script>
+   <script src="{{ asset('/public/partner/assets/js/custom/apps/ecommerce/catalog/save-category.js')}}"></script>
    <!-- <script src="{{ asset('/public/partner/assets/js/custom/apps/user-management/users/list/export-users.js')}}"></script> -->
    <!-- <script src="{{ asset('/public/partner/assets/js/custom/apps/user-management/users/list/add.js')}}"></script> -->
    <script src="{{ asset('/public/partner/assets/js/widgets.bundle.js')}}"></script>

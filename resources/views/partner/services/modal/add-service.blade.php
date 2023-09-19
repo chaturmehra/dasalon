@@ -18,6 +18,8 @@
 
           <!--begin::Form-->
           <form class="form d-flex flex-column flex-lg-row" method="post" action="{{ url('partner/service/store') }}">
+            @csrf
+            <input type="hidden" name="service_type" value="at_venue">
             <!--begin::Aside column-->
             <div class="d-flex flex-column gap-7 gap-lg-10 w-100 w-lg-400px mb-7 me-lg-10">
 
@@ -35,7 +37,7 @@
                 <!--begin::Card body-->
                 <div class="card-body pt-0">
                   <!--begin::Select2-->
-                  <select class="form-select mb-2 service-category" data-control="select2" data-hide-search="true" data-placeholder="Select an option" name="category">
+                  <select class="form-select mb-2 service-category" data-control="select2" data-hide-search="true" data-placeholder="Select an option" name="category" required="required">
                     <option></option>
                     @if( !empty($categories) )
                     @foreach($categories as $category)
@@ -62,7 +64,7 @@
                 <!--begin::Card body-->
                 <div class="card-body pt-0">
                   <!--begin::Select2-->
-                  <select class="form-select mb-2 service-sub-category" data-control="select2" data-hide-search="true" data-placeholder="Select an option" name="sub_category">
+                  <select class="form-select mb-2 service-sub-category" data-control="select2" data-hide-search="true" data-placeholder="Select an option" name="sub_category" required="required">
                     
                   </select>
                   <!--end::Select2-->
@@ -182,7 +184,7 @@
                 <!--begin::Input group-->
                 <div class="fv-row">
                   <!--begin::Input-->
-                  <input class="form-control d-flex align-items-center" placeholder="Add service" id="kt_tagify_service" name="service_name"/>
+                  <input class="form-control d-flex align-items-center" placeholder="Add service" id="kt_tagify_service" name="service_name" required="required"/>
                   <!--end::Input-->
                   <!--begin::Description-->
                   <div class="text-muted fs-7 mt-1">A service name is required and recommended to be unique</div>
@@ -204,7 +206,7 @@
                 <!--begin::Input group-->
                 <div class="fv-row">
                   <!--begin::Input-->
-                  <textarea class="form-control mb-2" data-kt-autosize="true" placeholder="Description" name="description"></textarea>
+                  <textarea class="form-control mb-2" data-kt-autosize="true" placeholder="Description" name="description" required="required"></textarea>
                   <!--end::Input-->
                   <!--begin::Description-->
                   <div class="text-muted fs-7">Provide a description to the service for better understanding. This will be visible to online clients.</div>
@@ -318,7 +320,7 @@
                     <!--begin::Input group-->
                     <div class="fv-row w-100 flex-md-root">
                       <!--begin::Input-->
-                      <input type="text" class="form-control mb-2" placeholder="Duration" name="duration" />
+                      <input type="text" class="form-control mb-2" placeholder="Duration" name="duration" required="required"/>
                       <!--end::Input-->
                     </div>
                     <!--end::Input group-->
@@ -361,7 +363,7 @@
                         <label class="required fw-semibold fs-6">Walk-in price</label>
                         <div class="input-group mb-2">
                           <span class="input-group-text">$</span>
-                          <input type="text" class="form-control" aria-label="Amount (to the nearest dollar)" name="walk_in_price"/>
+                          <input type="text" class="form-control" aria-label="Amount (to the nearest dollar)" name="walk_in_price" required="required"/>
                           <span class="input-group-text">.00</span>
                         </div>
                         <div class="text-muted fs-7">Price for anyone who walks into the salon without an appointment</div>
@@ -374,7 +376,7 @@
                         <label class="required fw-semibold fs-6">Online Price</label>
                         <div class="input-group mb-2">
                           <span class="input-group-text">$</span>
-                          <input type="text" class="form-control" aria-label="Amount (to the nearest dollar)" name="online_price"/>
+                          <input type="text" class="form-control" aria-label="Amount (to the nearest dollar)" name="online_price" required="required"/>
                           <span class="input-group-text">.00</span>
                         </div>
                         <div class="text-muted fs-7">Price available to clients who book their services online in advance</div>
@@ -387,7 +389,7 @@
                         <label class="required fw-semibold fs-6">Off Peak Price</label>
                         <div class="input-group mb-2">
                           <span class="input-group-text">$</span>
-                          <input type="text" class="form-control" aria-label="Amount (to the nearest dollar)" name="off_peak_price"/>
+                          <input type="text" class="form-control" aria-label="Amount (to the nearest dollar)" name="off_peak_price" required="required"/>
                           <span class="input-group-text">.00</span>
                         </div>
                         <div class="text-muted fs-7">A discounted price, available to people who walk-in during the salon's off peak hours.</div>
@@ -441,7 +443,7 @@
                                 <!--begin::Label-->
                                 <label class="required fw-semibold fs-6 mb-2">Staff</label>
                                 <div class="form-floating border rounded">
-                                  <select class="form-select form-select-transparent kt_docs_select2_users" data-placeholder="Select an option" data-dropdown-parent="#kt_modal_scrollable22" name="staff_id">
+                                  <select class="form-select form-select-transparent kt_docs_select2_users" data-placeholder="Select an option" data-dropdown-parent="#kt_modal_scrollable22" name="staff_pricing['staff_id'][]">
                                     <option></option>
                                     @if( !empty($getStaff) )
                                       @foreach($getStaff as $staff)
@@ -458,7 +460,7 @@
                                   <label class="fw-semibold fs-6 mb-2">Online Price</label>
                                   <div class="input-group mb-0">
                                     <span class="input-group-text">$</span>
-                                    <input type="text" class="form-control" aria-label="Amount (to the nearest dollar)" name="staff_online_price" />
+                                    <input type="text" class="form-control" aria-label="Amount (to the nearest dollar)" name="staff_pricing['online_price'][]" />
                                     <span class="input-group-text">.00</span>
                                   </div>
                                   <!--end::Input group-->
@@ -470,7 +472,7 @@
                                   <label class="fw-semibold fs-6 mb-2">Off Peak Price</label>
                                   <div class="input-group mb-0">
                                     <span class="input-group-text">$</span>
-                                    <input type="text" class="form-control" aria-label="Amount (to the nearest dollar)" name="staff_off_peak_price" />
+                                    <input type="text" class="form-control" aria-label="Amount (to the nearest dollar)" name="staff_pricing['off_peak_price'][]" />
                                     <span class="input-group-text">.00</span>
                                   </div>
                                   <!--end::Input group-->
@@ -480,7 +482,7 @@
                             </div>
 
                             <!--begin::Button-->
-                            <button type="submit" data-repeater-delete="" class="btn btn-sm btn-icon btn-light-danger">
+                            <button type="button" data-repeater-delete="" class="btn btn-sm btn-icon btn-light-danger">
                               <i class="ki-duotone ki-cross fs-2">
                                 <span class="path1"></span>
                                 <span class="path2"></span>
