@@ -373,13 +373,13 @@
                                              <span class="text-dark fw-bold text-hover-primary d-block mb-1 fs-6">{{ $venue_service['walk_in_price'] }}</span>
                                           </td>
                                           <td>
-                                             <a href="#" data-bs-toggle="modal" data-bs-target="#kt_modal_scrollable4">
+                                             <a href="javascript:void(0)" data-bs-toggle="modal" data-bs-target="#kt_modal_scrollable4" class="venue-online-price-view" venue-service-id="{{ $venue_service['ps_id'] }}">
                                              <span class="text-dark fw-bold text-hover-primary d-block mb-1 fs-6 mt-5">{{ $venue_service['online_price'] }}</span>
                                              <span class="text-muted fw-semibold text-muted d-block fs-7">Contain Staff Pricing</span>
                                              </a>
                                           </td>
                                           <td>
-                                             <a href="#" data-bs-toggle="modal" data-bs-target="#kt_modal_scrollable5">
+                                             <a href="javascript:void(0)" data-bs-toggle="modal" data-bs-target="#kt_modal_scrollable5" class="venue-offpeak-price-view" venue-service-id="{{ $venue_service['ps_id'] }}">
                                              <span class="text-dark fw-bold text-hover-primary d-block mb-1 fs-6 mt-5">{{ $venue_service['off_peak_price'] }}</span>
                                              <span class="text-muted fw-semibold text-muted d-block fs-7">Contain Staff Pricing</span>
                                              </a>
@@ -1265,7 +1265,6 @@
                                           <th class="min-w-100px">Sub Category</th>
                                           <th class="min-w-70px">Gender</th>
                                           <th class="min-w-70px">Distance</th>
-                                          <th class="min-w-100px">Walk-in</th>
                                           <th class="min-w-100px">Online</th>
                                           <th class="min-w-100px">Off Peak</th>
                                           <th>Status</th>
@@ -1303,17 +1302,15 @@
                                           </td>
                                           <td>{{ $home_service['servicesubcategory'] }}</td>
                                           <td>{{ $home_service['gender'] }}</td>
+                                          <td>{{ $home_service['distance'] }}</td>
                                           <td>
-                                             <span class="text-dark fw-bold text-hover-primary d-block mb-1 fs-6">{{ $home_service['walk_in_price'] }}</span>
-                                          </td>
-                                          <td>
-                                             <a href="#" data-bs-toggle="modal" data-bs-target="#kt_modal_scrollable4">
+                                             <a href="javascript:void(0)" data-bs-toggle="modal" data-bs-target="#kt_modal_scrollable4" class="home-online-price-view" home-service-id="{{ $home_service['ps_id'] }}">
                                              <span class="text-dark fw-bold text-hover-primary d-block mb-1 fs-6 mt-5">{{ $home_service['online_price'] }}</span>
                                              <span class="text-muted fw-semibold text-muted d-block fs-7">Contain Staff Pricing</span>
                                              </a>
                                           </td>
                                           <td>
-                                             <a href="#" data-bs-toggle="modal" data-bs-target="#kt_modal_scrollable5">
+                                             <a href="javascript:void(0)" data-bs-toggle="modal" data-bs-target="#kt_modal_scrollable5" class="home-offpeak-price-view" home-service-id="{{ $home_service['ps_id'] }}">
                                              <span class="text-dark fw-bold text-hover-primary d-block mb-1 fs-6 mt-5">{{ $home_service['off_peak_price'] }}</span>
                                              <span class="text-muted fw-semibold text-muted d-block fs-7">Contain Staff Pricing</span>
                                              </a>

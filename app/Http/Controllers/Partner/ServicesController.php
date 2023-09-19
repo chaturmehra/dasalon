@@ -157,7 +157,7 @@ class ServicesController extends Controller
 			'status'      		=> isset($request->service_status) ? 1 : 0,
 		]);
 
-		return redirect()->back()->with('success', 'Sarvice created successfully.');
+		return redirect()->back()->with('success', 'Service created successfully.');
 	}
 
     public function serviceUpdate(Request $request)
@@ -237,7 +237,7 @@ class ServicesController extends Controller
 			'status'      		=> isset($request->service_status) ? 1 : 0,
 		]);
 
-		return redirect()->back()->with('success', 'Sarvice created successfully.');
+		return redirect()->back()->with('success', 'Service updated successfully.');
 	}
 
 	public function array_by_ids($array, $column, $multi_arr=false)
@@ -275,10 +275,60 @@ class ServicesController extends Controller
         echo $html;
     }
 
+	public function getOnlinePrice($id){
+
+        $getSubcategory = PartnerService::where('ps_id','=',$id)->get();
+        // echo "<pre>"; print_r($getSubcategory); die;
+        if ( !empty($id) && !$getSubcategory->isEmpty() ) {
+        	$online_price 	= $getSubcategory[0]['online_price'];
+        	$staff_pricing 	= $getSubcategory[0]['staff_pricing'];
+
+        	$json_data = "";
+        	if ( !empty($staff_pricing) ) {
+        		$json_data = json_decode($staff_pricing);
+        	}
+        	$html = '<tr>
+        	<td>Normal</td>
+        	<td>'.$online_price.'</td>
+        	</tr>';
+        	if ( !empty($json_data) ) {
+        	foreach($json_data as $key => $value){
+        		//$value = new \stdClass();
+        		echo "<pre>"; print_r($value->staff_id);
+        		echo "<pre>"; print_r($value); die;
+        		$html.= '<tr>
+        		<td>'.$value->staff_id.'</td>
+        		<td>
+        		<div class="input-group mb-5">
+        		<span class="input-group-text">$</span>
+        		<input type="text" class="form-control" aria-label="Amount (to the nearest dollar)" value="'.$value->online_price.'" disabled />
+        		<span class="input-group-text">.00</span>
+        		</div>
+        		</td>
+        		</tr>';
+        	}
+        	}
+
+        	// echo $online_price;
+        	// echo "<pre>"; print_r(json_decode($staff_pricing)); die;
+        	$response = array(
+        		"status" 	=> 1,
+        		"data" 		=> $html,
+        	);
+        }else{
+        	$response = array(
+        		"status" 	=> 0,
+        		"message" 	=> "Data not found",
+        	);
+        }
+
+        echo json_encode($response);
+    }
+
     public function partnerServicesLists($partner_id, $service_type)
     {
     	$partnerServices = PartnerService::where('partner_id', $partner_id);
-    	$partnerServicesLists	= $partnerServices->select(['partner_services.ps_id', 'partner_services.gender', 'partner_services.walk_in_price', 'partner_services.online_price', 'partner_services.off_peak_price', 'partner_services.status', 'partner_services.description', 'partner_services.duration', 'service_categories.category', 'service_categories.icon', 'service_sub_categories.servicesubcategory', 'services.servicename'])
+    	$partnerServicesLists	= $partnerServices->select(['partner_services.ps_id', 'partner_services.gender', 'partner_services.walk_in_price', 'partner_services.online_price', 'partner_services.off_peak_price', 'partner_services.status', 'partner_services.description', 'partner_services.duration', 'service_categories.category', 'service_categories.icon', 'service_sub_categories.servicesubcategory', 'services.servicename', 'partner_services.distance'])
 	    	->leftJoin('services', 'services.serviceid', '=', 'partner_services.service_id')
 	    	->leftJoin('service_categories', 'service_categories.id', '=', 'partner_services.category_id')
 	    	->leftJoin('service_sub_categories', 'service_sub_categories.servicesubcategoryid', '=', 'partner_services.sub_category_id')

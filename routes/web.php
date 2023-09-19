@@ -174,6 +174,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('partner/get-subcategory/{id}', [ServicesController::class, 'getServiceSubcategoryByAjax']);
     Route::post('partner/service/store', [ServicesController::class, 'serviceStore']);
     Route::post('partner/service/update', [ServicesController::class, 'serviceUpdate']);
+    Route::get('partner/service/get-online-price/{id}', [ServicesController::class, 'getOnlinePrice']);
 
     Route::get('partner/promote', [PromoteController::class, 'index'])->name('promote.index');
     Route::get('partner/reports', [ReportsController::class, 'index'])->name('reports.index');
