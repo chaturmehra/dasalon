@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Model;
 class ClientModel extends Model
 {
     use HasFactory;
-    protected $table = 'client_1';
+    protected $table = 'clients';
     protected $primaryKey = 'id';
     protected $fillable = [
         'client_id',

@@ -1,4 +1,4 @@
-<div class="modal fade" id="kt_modal_scrollable" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-hidden="true">
+<div class="modal fade" id="edit_client_scrollable" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-hidden="true">
 
         @if(session()->has('success'))
             <div class="card-header display-message">
@@ -32,7 +32,7 @@
                   <div class="card-header pt-7" id="kt_chat_contacts_header">
                      <!--begin::Card title-->
                      <div class="card-title">
-                        <h2>Add New Client</h2>
+                        <h2>Edit Client</h2>
                      </div>
                      <!--end::Card title-->
                   </div>
@@ -50,7 +50,9 @@
                      <!--begin::Card body-->
                      <div class="card-body pt-5">
                         <!--begin::Form-->
-                        <form id="" class="form" method="post" action="{{ url('partner/client/add') }}" enctype="multipart/form-data">
+                        <form  class="form" method="post" action="{{ url('partner/client/update') }}" enctype="multipart/form-data">
+                           <input type="hidden" name="edit_client" id="edit_client_id" value="">
+                           <input type="hidden" name="id" id="id" value="">
                            <!--begin::Row-->
                             @csrf
                            <div class="row">
@@ -73,12 +75,19 @@
                                     <!--begin::Image input wrapper-->
                                     <div class="mt-1">
                                        <!--begin::Image placeholder-->
-                                       <style>.image-input-placeholder { background-image: url('assets/media/svg/files/blank-image.svg'); } [data-bs-theme="dark"] .image-input-placeholder { background-image: url('assets/media/svg/files/blank-image-dark.svg'); }</style>
+                                    <style>
+                                         .image-input-placeholder {
+                                             background-image: url('{{ asset('assets/media/svg/files/blank-image.svg') }}');
+                                         }
+                                         [data-bs-theme="dark"] .image-input-placeholder {
+                                             background-image: url('{{ asset('assets/media/svg/files/blank-image-dark.svg') }}');
+                                         }
+                                     </style>
                                        <!--end::Image placeholder-->
                                        <!--begin::Image input-->
                                        <div class="image-input image-input-outline image-input-placeholder image-input-empty image-input-empty" data-kt-image-input="true">
                                           <!--begin::Preview existing avatar-->
-                                          <div class="image-input-wrapper w-100px h-100px" style="background-image: url('')"></div>
+                                          <div class="image-input-wrapper w-100px h-100px edit-image"></div>
                                           <!--end::Preview existing avatar-->
                                           <!--begin::Edit-->
                                           <label class="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-body shadow" data-kt-image-input-action="change" data-bs-toggle="tooltip" title="Upload Photo">
@@ -87,7 +96,8 @@
                                              <span class="path2"></span>
                                              </i>
                                              <!--begin::Inputs-->
-                                             <input type="file" name="image" accept=".png, .jpg, .jpeg" />
+                                             <input type="file"accept=".png, .jpg, .jpeg" id="image" name="image"/>
+                                             <input type="hidden" name="old_image" id="old_image" />
                                              <input type="hidden" name="image_remove" />
                                              <!--end::Inputs-->
                                           </label>
@@ -126,7 +136,7 @@
                                     </label>
                                     <!--end::Label-->
                                     <!--begin::Input-->
-                                    <input type="text" class="form-control form-control-solid" name="name" value="" />
+                                    <input type="text" class="form-control form-control-solid" name="edit_name" id="edit_name" value="" />
                                     <!--end::Input-->
                                  </div>
                                  <!--end::Input group-->
@@ -137,7 +147,7 @@
                                     <span>Gender</span>
                                     </label>
                                     <!--end::Label-->
-                                    <select class="form-select form-select-solid" data-control="select2" data-placeholder="Select an option" data-dropdown-parent="#kt_modal_scrollable" name="gender">
+                                    <select class="form-select form-select-solid" data-control="select2" data-placeholder="Select an option" data-dropdown-parent="#edit_client_scrollable" name="edit_gender"id="edit_gender">
                                        <option></option>
                                        <option value="Male">Male</option>
                                        <option value="Female">Female</option>
@@ -159,7 +169,7 @@
                               </label>
                               <!--end::Label-->
                               <!--begin::Input-->
-                              <input type="text" class="form-control form-control-solid" name="phone" value="" />
+                              <input type="text" class="form-control form-control-solid" name="edit_phone" id="edit_phone" value="" />
                               <!--end::Input-->
                            </div>
                            <!--end::Input group-->
@@ -171,7 +181,7 @@
                               </label>
                               <!--end::Label-->
                               <!--begin::Input-->
-                              <input type="email" class="form-control form-control-solid" name="email" value="" />
+                              <input type="email" class="form-control form-control-solid" name="edit_email" id="edit_email" value="" />
                               <!--end::Input-->
                            </div>
                            <!--end::Input group-->
@@ -183,7 +193,7 @@
                               </label>
                               <!--end::Label-->
                               <!--begin::Input-->
-                              <input class="form-control kt_datepicker w-100" name="dob"placeholder="DOB"/>
+                              <input class="form-control kt_datepicker w-100" name="edit_dob" id="edit_dob"  placeholder="DOB"/>
                               <!--end::Input-->
                            </div>
                            <!--end::Input group-->
@@ -199,9 +209,7 @@
                                  <!-- <a href="#" class="d-flex align-items-center gap-2 icnclr p-4 pt-0 pb-5 mt-5">
                                  <i class="bi bi-plus-circle fs-2"></i>
                                  <span>Add new address</span> </a>-->
-                                 <textarea class="form-control form-control-solid" name="address"></textarea>
-                                 
-
+                                 <textarea class="form-control form-control-solid" name="edit_address"></textarea>
                               </div>
                            </div>
                            <!--end::Input group-->
@@ -213,7 +221,7 @@
                               </label>
                               <!--end::Label-->
                               <!--begin::Input-->
-                              <textarea class="form-control form-control-solid" name="notes"></textarea>
+                              <textarea class="form-control form-control-solid" name="edit_notes" id="edit_notes"></textarea>
                               <!--end::Input-->
                            </div>
                            <!--end::Input group-->
@@ -243,4 +251,40 @@
                </div>
             </div>
          </div>
-      </div>
+</div>
+@push('scripts')
+<script>
+jQuery(document).on('click', '.client-edit_on-click', function (e) {
+    e.preventDefault();
+    var client_edit_id = jQuery(this).attr("client_edit_id");
+    if (client_edit_id) {
+        var ajaxurl = baseurl + 'partner/client/client_detail/' + client_edit_id; 
+        $.ajax({
+            url: ajaxurl,
+            type: 'GET',
+            dataType: 'json',
+            success:function(data) {
+                    $("#edit_client_id").val(data[0].client_id);
+                    $("#id").val(data[0].id);
+                    $("#edit_name").val(data[0].name);
+                    $("#edit_phone").val(data[0].phone);
+                    $("#edit_email").val(data[0].email);
+                    $("#edit_dob").val(data[0].dob);
+                    $("#edit_notes").val(data[0].notes);
+                    if (data[0].image) {
+                     var profile_image = publicurl+data[0].image;
+                     $("#old_image").val(data[0].image);
+                     $(".edit-image").css('background-image', 'url('+profile_image+')');
+                   }
+                    $("#edit_gender").val(data[0].gender).trigger('change');
+            },
+            error: function (xhr, status, error) {
+                console.error(error);
+            }
+        });
+    }
+});
+
+</script>
+
+@endpush
