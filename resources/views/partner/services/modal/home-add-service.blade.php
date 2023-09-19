@@ -17,7 +17,9 @@
         <div class="d-flex flex-column scroll-y me-n7 pe-7">
 
           <!--begin::Form-->
-          <form class="form d-flex flex-column flex-lg-row">
+          <form class="form d-flex flex-column flex-lg-row" method="post" action="{{ url('partner/service/store') }}">
+            @csrf
+            <input type="hidden" name="service_type" value="at_home">
             <!--begin::Aside column-->
             <div class="d-flex flex-column gap-7 gap-lg-10 w-100 w-lg-400px mb-7 me-lg-10">
 
@@ -35,11 +37,13 @@
                 <!--begin::Card body-->
                 <div class="card-body pt-0">
                   <!--begin::Select2-->
-                  <select class="form-select mb-2" data-control="select2" data-hide-search="true" data-placeholder="Select an option">
+                  <select class="form-select mb-2 edit-service-category" data-control="select2" data-hide-search="true" data-placeholder="Select an option" name="category" required="required">
                     <option></option>
-                    <option value="published" selected="selected">Hair</option>
-                    <option value="draft">Facial</option>
-                    <option value="scheduled">Skin care</option>
+                    @if( !empty($categories) )
+                    @foreach($categories as $category)
+                      <option value="{{ $category->id }}">{{ $category->category }}</option>
+                    @endforeach
+                    @endif
                   </select>
                   <!--end::Select2-->
                   <!--begin::Description-->
@@ -60,12 +64,8 @@
                 <!--begin::Card body-->
                 <div class="card-body pt-0">
                   <!--begin::Select2-->
-                  <select class="form-select mb-2" data-control="select2" data-hide-search="true" data-placeholder="Select an option">
-                    <option></option>
-                    <option value="published" selected="selected">Hair cut</option>
-                    <option value="draft">spa</option>
-                    <option value="scheduled">Pedicure</option>
-                    <option value="scheduled">Menicure</option>
+                  <select class="form-select mb-2" id="edit-service-sub-category" data-control="select2" data-hide-search="true" data-placeholder="Select an option" name="sub_category" required="required">
+                    
                   </select>
                   <!--end::Select2-->
                   <!--begin::Description-->
@@ -88,7 +88,7 @@
                   <!--end::Card title-->
                   <div class="card-toolbar">
                     <label class="form-check form-switch form-check-custom form-check-solid">
-                      <input class="form-check-input" type="checkbox" value="" checked="checked" />
+                      <input class="form-check-input" type="checkbox" name="service_status" checked="checked" />
                     </label>
                   </div>
                 </div>
@@ -122,7 +122,8 @@
                 <div class="card-body pt-0">
 
                   <div class="row">
-
+                    @if($venue_data_arr)
+                    @foreach($venue_data_arr as $key => $venue_data)
                     <!--begin::Col-->
                     <div class="col-md-12 mb-5">
                       <!--begin::Option-->
@@ -130,59 +131,30 @@
 
                         <!--begin::Radio-->
                         <span class="form-check form-check-custom form-check-solid form-check-sm align-items-start mt-1">
-                         <input class="form-check-input" type="checkbox" value="" checked/>
-                       </span>
-                       <!--end::Radio-->
-
-                       <div class="quantity-icn ms-3">
-                        <img src="{{ asset('/public/partner/assets/media/svg/salon.svg') }}">
-                      </div>
-
-                      <!--begin::Info-->
-                      <span class="mt-3 w-100">
-                        <h3 class="card-title align-items-start flex-column">
-                          <span class="card-label fw-bold text-gray-800 fs-4 mb-4">Alexandra road</span>
-                          <span class="text-muted d-block fw-light fs-7 mt-1">Alexandra Central Mall, 321 Alexandra Road, Singapore (Bukit Merah)
-                          </span>
-                        </h3>
-                      </span>
-                      <!--end::Info-->
-
-                    </label>
-                    <!--end::Option-->
-                  </div>
-                  <!--end::Col-->
-
-                  <!--begin::Col-->
-                  <div class="col-md-12">
-                    <!--begin::Option-->
-                    <label class="btn btn-outline btn-outline-dashed btn-active-light-primary d-flex text-start p-6 align-items-center flex-wrap">
-
-                      <!--begin::Radio-->
-                      <span class="form-check form-check-custom form-check-solid form-check-sm align-items-start mt-1">
-                       <input class="form-check-input" type="checkbox" value="" id="flexCheckVenue2" checked/>
-                     </span>
-                     <!--end::Radio-->
-
-                     <div class="quantity-icn ms-3">
-                      <img src="{{ asset('/public/partner/assets/media/svg/salon.svg') }}">
-                    </div>
-
-                    <!--begin::Info-->
-                    <span class="mt-3 w-100">
-                      <h3 class="card-title align-items-start flex-column">
-                        <span class="card-label fw-bold text-gray-800 fs-4 mb-4">YJ Salons - Punggol</span>
-                        <span class="text-muted d-block fw-light fs-7 mt-1">Punggol Park, Hougang Avenue 10, Singapore (Hougang)
+                          <input class="form-check-input" type="checkbox" name="venues[]" value="{{ $venue_data['id'] }}" />
                         </span>
-                      </h3>
-                    </span>
-                    <!--end::Info-->
+                        <!--end::Radio-->
 
-                  </label>
-                  <!--end::Option-->
-                </div>
-                <!--end::Col-->
+                        <div class="quantity-icn ms-3">
+                          <img src="{{ asset('/public/'. $venue_data['venue_meta']['featured']) }}">
+                        </div>
 
+                        <!--begin::Info-->
+                        <span class="mt-3 w-100">
+                          <h3 class="card-title align-items-start flex-column">
+                            <span class="card-label fw-bold text-gray-800 fs-4 mb-4">{{ $venue_data['name'] }}</span>
+                            <span class="text-muted d-block fw-light fs-7 mt-1">{{ $venue_data['venue_meta']['business_address'] }}
+                            </span>
+                          </h3>
+                        </span>
+                        <!--end::Info-->
+
+                      </label>
+                      <!--end::Option-->
+                    </div>
+                    <!--end::Col-->
+                    @endforeach
+                    @endif
               </div>
 
             </div>
@@ -212,7 +184,7 @@
                 <!--begin::Input group-->
                 <div class="fv-row">
                   <!--begin::Input-->
-                  <input class="form-control d-flex align-items-center" value="" placeholder="Add service" id="kt_tagify_service" />
+                  <input class="form-control d-flex align-items-center" placeholder="Add service" id="kt_tagify_home_service" name="service_name" required="required"/>
                   <!--end::Input-->
                   <!--begin::Description-->
                   <div class="text-muted fs-7 mt-1">A service name is required and recommended to be unique</div>
@@ -234,7 +206,7 @@
                 <!--begin::Input group-->
                 <div class="fv-row">
                   <!--begin::Input-->
-                  <textarea class="form-control mb-2" data-kt-autosize="true" placeholder="Description"></textarea>
+                  <textarea class="form-control mb-2" data-kt-autosize="true" placeholder="Description" name="description" required="required"></textarea>
                   <!--end::Input-->
                   <!--begin::Description-->
                   <div class="text-muted fs-7">Provide a description to the service for better understanding. This will be visible to online clients.</div>
@@ -270,7 +242,7 @@
                       <label class="btn btn-outline btn-outline-dashed btn-active-light-primary d-flex text-start p-6">
                         <!--begin::Radio-->
                         <span class="form-check form-check-custom form-check-solid form-check-sm align-items-start mt-1">
-                          <input class="form-check-input" type="radio" name="gender_option" value="1" checked="checked" />
+                          <input class="form-check-input" type="radio" name="gender_option" value="Female" checked="checked" />
                         </span>
                         <!--end::Radio-->
                         <!--begin::Info-->
@@ -289,7 +261,7 @@
                       <label class="btn btn-outline btn-outline-dashed btn-active-light-primary d-flex text-start p-6">
                         <!--begin::Radio-->
                         <span class="form-check form-check-custom form-check-solid form-check-sm align-items-start mt-1">
-                          <input class="form-check-input" type="radio" name="gender_option" value="2" />
+                          <input class="form-check-input" type="radio" name="gender_option" value="Male" />
                         </span>
                         <!--end::Radio-->
                         <!--begin::Info-->
@@ -308,7 +280,7 @@
                       <label class="btn btn-outline btn-outline-dashed btn-active-light-primary d-flex text-start p-6">
                         <!--begin::Radio-->
                         <span class="form-check form-check-custom form-check-solid form-check-sm align-items-start mt-1">
-                          <input class="form-check-input" type="radio" name="gender_option" value="3" />
+                          <input class="form-check-input" type="radio" name="gender_option" value="Unisex" />
                         </span>
                         <!--end::Radio-->
                         <!--begin::Info-->
@@ -329,70 +301,55 @@
               </div>
               <!--end::Card body-->
 
+
               <!--begin::Card body-->
               <div class="card-body pt-0">
-
                 <div class="row">
-
                   <div class="col-md-6">
-
                     <div class="card-title">
                       <h2 class="required fs-3">Duration</h2>
                     </div>
-
                     <!--begin::Input group-->
                     <div class="fv-row">
-
                       <!--begin::Tax-->
                       <div class="d-flex flex-wrap gap-5">
                         <!--begin::Input group-->
                         <div class="fv-row w-100 flex-md-root">
                           <!--begin::Input-->
-                          <input type="text" class="form-control mb-2" placeholder="Duration" value="" />
+                          <input type="text" class="form-control mb-2" placeholder="Duration" name="duration">
                           <!--end::Input-->
                         </div>
                         <!--end::Input group-->
                       </div>
                       <!--end:Tax-->
-
                     </div>
                     <!--end::Input group-->
-
                   </div>
-
                   <div class="col-md-6">
-
                     <div class="card-title">
                       <h2 class="required fs-3">Distance</h2>
                     </div>
-
                     <!--begin::Input group-->
                     <div class="fv-row">
-
                       <!--begin::Tax-->
                       <div class="d-flex flex-wrap gap-5">
                         <!--begin::Input group-->
                         <div class="fv-row w-100 flex-md-root">
                           <!--begin::Input-->
-                          <input type="text" class="form-control mb-2" placeholder="Distance" value="" />
+                          <input type="text" class="form-control mb-2" placeholder="Distance" name="distance">
                           <!--end::Input-->
                         </div>
                         <!--end::Input group-->
                       </div>
                       <!--end:Tax-->
-
                     </div>
                     <!--end::Input group-->
-
                   </div>
-
                 </div>
-
               </div>
-
+              <!--end::Card body-->
             </div>
             <!--end::Pricing-->
-
 
             <!--begin::Pricing-->
             <div class="card card-flush py-4">
@@ -420,7 +377,7 @@
                         <label class="required fw-semibold fs-6">Online Price</label>
                         <div class="input-group mb-2">
                           <span class="input-group-text">$</span>
-                          <input type="text" class="form-control" aria-label="Amount (to the nearest dollar)"/>
+                          <input type="text" class="form-control" aria-label="Amount (to the nearest dollar)" name="online_price" required="required"/>
                           <span class="input-group-text">.00</span>
                         </div>
                         <div class="text-muted fs-7">Price available to clients who book their services online in advance</div>
@@ -433,7 +390,7 @@
                         <label class="required fw-semibold fs-6">Off Peak Price</label>
                         <div class="input-group mb-2">
                           <span class="input-group-text">$</span>
-                          <input type="text" class="form-control" aria-label="Amount (to the nearest dollar)"/>
+                          <input type="text" class="form-control" aria-label="Amount (to the nearest dollar)" name="off_peak_price" required="required"/>
                           <span class="input-group-text">.00</span>
                         </div>
                         <div class="text-muted fs-7">A discounted price, available to people who walk-in during the salon's off peak hours.</div>
@@ -487,18 +444,16 @@
                                 <!--begin::Label-->
                                 <label class="required fw-semibold fs-6 mb-2">Staff</label>
                                 <div class="form-floating border rounded">
-                                  <select class="form-select form-select-transparent kt_docs_select2_users" data-placeholder="Select an option" data-dropdown-parent="#kt_modal_scrollable33">
+                                  <select class="form-select form-select-transparent kt_docs_select2_users" data-placeholder="Select an option" data-dropdown-parent="#kt_modal_scrollable33" name="staff_pricing['staff_id'][]">
                                     <option></option>
-                                    <option value="0" data-kt-select2-user="assets/media/avatars/300-25.jpg">Brian Cox</option>
-                                    <option value="1" data-kt-select2-user="assets/media/avatars/300-9.jpg">Francis Mitcham</option>
-                                    <option value="0" data-kt-select2-user="assets/media/avatars/300-23.jpg">Dan Wilson</option>
-                                    <option value="1" data-kt-select2-user="assets/media/avatars/300-12.jpg">Ana Crown</option>
-                                    <option value="0" data-kt-select2-user="assets/media/avatars/300-13.jpg">John Miller</option>
-                                    <option value="1" data-kt-select2-user="assets/media/avatars/300-21.jpg">Ethan Wilder</option>
-                                    <option value="0" data-kt-select2-user="assets/media/avatars/300-6.jpg">Emma Smith</option>
-                                    <option value="1" data-kt-select2-user="assets/media/avatars/300-1.jpg">Max Smith</option>
+                                    @if( !empty($getStaff) )
+                                      @foreach($getStaff as $staff)
+                                        <option value="{{ $staff->user_id }}" data-kt-select2-user="{{ asset('/public/'.$staff->profile_image) }}">{{ $staff->name }}</option>
+                                      @endforeach
+                                    @endif
                                   </select>
                                 </div>
+
                               </div>  
 
                               <div class="col-sm-4">
@@ -506,7 +461,7 @@
                                   <label class="fw-semibold fs-6 mb-2">Online Price</label>
                                   <div class="input-group mb-0">
                                     <span class="input-group-text">$</span>
-                                    <input type="text" class="form-control" aria-label="Amount (to the nearest dollar)"/>
+                                    <input type="text" class="form-control" aria-label="Amount (to the nearest dollar)" name="staff_pricing['online_price'][]" />
                                     <span class="input-group-text">.00</span>
                                   </div>
                                   <!--end::Input group-->
@@ -518,7 +473,7 @@
                                   <label class="fw-semibold fs-6 mb-2">Off Peak Price</label>
                                   <div class="input-group mb-0">
                                     <span class="input-group-text">$</span>
-                                    <input type="text" class="form-control" aria-label="Amount (to the nearest dollar)"/>
+                                    <input type="text" class="form-control" aria-label="Amount (to the nearest dollar)" name="staff_pricing['off_peak_price'][]" />
                                     <span class="input-group-text">.00</span>
                                   </div>
                                   <!--end::Input group-->

@@ -64,7 +64,7 @@
                 <!--begin::Card body-->
                 <div class="card-body pt-0">
                   <!--begin::Select2-->
-                  <select class="form-select mb-2 service-sub-category" data-control="select2" data-hide-search="true" data-placeholder="Select an option" name="sub_category" required="required">
+                  <select class="form-select mb-2" id="add-service-sub-category" data-control="select2" data-hide-search="true" data-placeholder="Select an option" name="sub_category" required="required">
                     
                   </select>
                   <!--end::Select2-->

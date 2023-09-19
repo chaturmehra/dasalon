@@ -44,7 +44,7 @@ data-kt-drawer-width="{default:'300px', 'md': '700px', 'xl': '950px'}"
     <!--begin::Form-->
     <form class="form d-flex flex-column flex-lg-row" id="serviceeditform" method="post" action="{{ url('partner/service/update') }}">
       @csrf
-      <input type="hidden" name="service_id" id="service_id">
+      <input type="hidden" name="ps_id" id="service_id">
       <div class="d-flex flex-column gap-7 gap-lg-10">
 
         <div class="card card-flush p-4">
@@ -77,7 +77,7 @@ data-kt-drawer-width="{default:'300px', 'md': '700px', 'xl': '950px'}"
               <!--end::Card title-->
 
               <!--begin::Select2-->
-              <select class="form-select mb-2 service-sub-category" data-control="select2" data-hide-search="true" data-placeholder="Select an option" name="sub_category" required="required">
+              <select class="form-select mb-2" id="edit-service-sub-category" data-control="select2" data-hide-search="true" data-placeholder="Select an option" name="sub_category" required="required">
                 <option></option>
                 
               </select>

@@ -268,7 +268,7 @@
                                     </span>
                                  </div>
                                  <span data-bs-toggle="tooltip" data-bs-trigger="hover" title="Edit customer details">
-                                 <a href="#" class="btn btn-sm btn-light-primary update-venue-detail" data-bs-toggle="modal" data-bs-target="#kt_modal_update_details" venue-id="{{ $venue_data['id']}}">Edit</a>
+                                 <a href="#" class="btn btn-sm btn-light-primary update-venue-detail" data-bs-toggle="modal" data-bs-target="#kt_modal_update_details" venue-id="{{ $venue_data['id'] }}">Edit</a>
                                  </span>
                               </div>
                               <!--end::Details toggle-->
@@ -279,28 +279,28 @@
                                     <!--begin::Details item-->
                                     <div class="fw-bold mt-5">Venue name</div>
                                     <div class="text-gray-600">
-                                       {{ $venue_data['name'] }}
+                                       {{ isset($venue_data['name']) ? $venue_data['name'] : "" }}
                                     </div>
                                     <!--begin::Details item-->
                                     <!--begin::Details item-->
                                     <div class="fw-bold mt-5">Address</div>
                                     <div class="text-gray-600">
-                                       {{ $venue_data['address'] }}
+                                       {{ isset($venue_data['address']) ? $venue_data['address'] : "" }}
                                     </div>
                                     <!--begin::Details item-->
                                     <!--begin::Details item-->
                                     <div class="fw-bold mt-5">Phone</div>
                                     <div class="text-gray-600">
-                                       <a href="#" class="text-gray-600 text-hover-primary">{{ $venue_data['phone'] }}</a>
+                                       <a href="#" class="text-gray-600 text-hover-primary">{{ isset($venue_data['phone']) ? $venue_data['phone'] : "" }}</a>
                                     </div>
                                     <!--begin::Details item-->
                                     <!--begin::Details item-->
                                     <div class="fw-bold mt-5">Email</div>
-                                    <div class="text-gray-600">{{ $venue_data['email'] }}</div>
+                                    <div class="text-gray-600">{{ isset($venue_data['email']) ? $venue_data['email'] : "" }}</div>
                                     <!--begin::Details item-->
                                     <!--begin::Details item-->
                                     <div class="fw-bold mt-5">Billing Details</div>
-                                    <div class="text-gray-600">{{ $venue_data['billing_details'] }}</div>
+                                    <div class="text-gray-600">{{ isset($venue_data['billing_details']) ? $venue_data['billing_details'] : "" }}</div>
                                     <!--begin::Details item-->
                                     <!--begin::Details item-->
                                     <div class="fw-bold mt-5">Last Login</div>
@@ -332,7 +332,7 @@
                                  <!--end::Icon-->
                                  <!--begin::Info-->
                                  <span class="ms-4">
-                                 <span class="fs-3 fw-bold text-gray-900 d-block">{{ $venue_data['venue_meta']['gender_restriction'] }}</span>
+                                 <span class="fs-3 fw-bold text-gray-900 d-block">{{ isset($venue_data['venue_meta']['gender_restriction']) ? $venue_data['venue_meta']['gender_restriction'] : "" }}</span>
                                  </span>
                                  <!--end::Info-->
                               </span>

@@ -172,7 +172,8 @@ Route::middleware(['auth'])->group(function () {
 
     Route::get('partner/services', [ServicesController::class, 'index'])->name('services.index');
     Route::get('partner/get-subcategory/{id}', [ServicesController::class, 'getServiceSubcategoryByAjax']);
-    Route::get('partner/service/post', [ServicesController::class, 'serviceStore']);
+    Route::post('partner/service/store', [ServicesController::class, 'serviceStore']);
+    Route::post('partner/service/update', [ServicesController::class, 'serviceUpdate']);
 
     Route::get('partner/promote', [PromoteController::class, 'index'])->name('promote.index');
     Route::get('partner/reports', [ReportsController::class, 'index'])->name('reports.index');

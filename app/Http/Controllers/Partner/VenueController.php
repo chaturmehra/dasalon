@@ -59,16 +59,20 @@ class VenueController extends Controller
 			foreach ($venue_data_array as $vkey => $venue_data) {
 				$venue_id 			= $venue_data["id"];
 				$venue_meta_data 	= $venue_meta[$venue_id];
+
 				// Get amenity name, icon from ids
-				if ($amenity_ids) {
+				if ( $amenity_ids && !empty($amenity_ids[$i]) ) {
 					$amenities_ids 		= explode(',', $amenity_ids[$i]);
 					$amenity_data 		= $this->get_amenity_by_ids($amenities_ids);
 				}else{
 					$amenity_data = "";
 				}
-
-				$business_type_ids 	= explode(',', $business_types_ids[$i]);
-				$business_type_data = $this->get_business_type_by_ids($business_type_ids);
+				if ( $business_types_ids && !empty($business_types_ids[$i]) ) {
+					$business_type_ids 	= explode(',', $business_types_ids[$i]);
+					$business_type_data = $this->get_business_type_by_ids($business_type_ids);
+				}else{
+					$business_type_data = "";
+				}
 
 				$venue_data["venue_meta"] = $venue_meta_data;
 				$venue_data["amenity_data"] = $amenity_data;
@@ -845,15 +849,18 @@ class VenueController extends Controller
 				$venue_id 			= $venue_data["id"];
 				$venue_meta_data 	= $venue_meta[$venue_id];
 				// Get amenity name, icon from ids
-				if ($amenity_ids) {
+				if ( $amenity_ids && !empty($amenity_ids[$i]) ) {
 					$amenities_ids 		= explode(',', $amenity_ids[$i]);
 					$amenity_data 		= $this->get_amenity_by_ids($amenities_ids);
 				}else{
 					$amenity_data = "";
 				}
-
-				$business_type_ids 	= explode(',', $business_types_ids[$i]);
-				$business_type_data = $this->get_business_type_by_ids($business_type_ids);
+				if ( $business_types_ids && !empty($business_types_ids[$i]) ) {
+					$business_type_ids 	= explode(',', $business_types_ids[$i]);
+					$business_type_data = $this->get_business_type_by_ids($business_type_ids);
+				}else{
+					$business_type_data = "";
+				}
 
 				$venue_data["venue_meta"] = $venue_meta_data;
 				$venue_data["amenity_data"] = $amenity_data;
