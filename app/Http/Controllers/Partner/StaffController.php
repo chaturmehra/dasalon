@@ -166,12 +166,12 @@ class StaffController extends Controller
 
 			StaffCommission::create([
 				'staff_id'      => $staff_id->staff_id,
-				'service'      	=> $commission_data->add_service,
-				'book_look'     => $commission_data->add_book_look,
-				'package'     	=> $commission_data->add_package,
-				'voucher'     	=> $commission_data->add_voucher,
-				'membership' 	=> $commission_data->add_membership,
-				'product' 		=> $commission_data->add_product,
+				'service'      	=> !empty($commission_data->add_service) ? $commission_data->add_service : NULL,
+				'book_look'     => !empty($commission_data->add_book_look) ? $commission_data->add_book_look : NULL,
+				'package'     	=> !empty($commission_data->add_package) ? $commission_data->add_package : NULL,
+				'voucher'     	=> !empty($commission_data->add_voucher) ? $commission_data->add_voucher : NULL,
+				'membership' 	=> !empty($commission_data->add_membership) ? $commission_data->add_membership : NULL,
+				'product' 		=> !empty($commission_data->add_product) ? $commission_data->add_product : NULL,
 			]);
 			
 		}
@@ -352,22 +352,22 @@ class StaffController extends Controller
 			$staffCommission = StaffCommission::where('staff_id', $staff_id)->get()->toArray();
 			if ( !empty($staffCommission) ) {
 				StaffCommission::where('staff_id', $staff_id)->update([
-					'service'      	=> $commission_data->edit_service,
-					'book_look'     => $commission_data->edit_book_look,
-					'package'     	=> $commission_data->edit_package,
-					'voucher'     	=> $commission_data->edit_voucher,
-					'membership' 	=> $commission_data->edit_membership,
-					'product' 		=> $commission_data->edit_product,
+					'service'      	=> !empty($commission_data->edit_service) ? $commission_data->edit_service : NULL,
+					'book_look'     => !empty($commission_data->edit_book_look) ? $commission_data->edit_book_look : NULL,
+					'package'     	=> !empty($commission_data->edit_package) ? $commission_data->edit_package : NULL,
+					'voucher'     	=> !empty($commission_data->edit_voucher) ? $commission_data->edit_voucher : NULL,
+					'membership' 	=> !empty($commission_data->edit_membership) ? $commission_data->edit_membership : NULL,
+					'product' 		=> !empty($commission_data->edit_product) ? $commission_data->edit_product : NULL,
 				]);
 			}else{
 				StaffCommission::create([
 					'staff_id'      => $staff_id,
-					'service'      	=> $commission_data->edit_service,
-					'book_look'     => $commission_data->edit_book_look,
-					'package'     	=> $commission_data->edit_package,
-					'voucher'     	=> $commission_data->edit_voucher,
-					'membership' 	=> $commission_data->edit_membership,
-					'product' 		=> $commission_data->edit_product,
+					'service'      	=> !empty($commission_data->edit_service) ? $commission_data->edit_service : NULL,
+					'book_look'     => !empty($commission_data->edit_book_look) ? $commission_data->edit_book_look : NULL,
+					'package'     	=> !empty($commission_data->edit_package) ? $commission_data->edit_package : NULL,
+					'voucher'     	=> !empty($commission_data->edit_voucher) ? $commission_data->edit_voucher : NULL,
+					'membership' 	=> !empty($commission_data->edit_membership) ? $commission_data->edit_membership : NULL,
+					'product' 		=> !empty($commission_data->edit_product) ? $commission_data->edit_product : NULL,
 				]);
 			}
 			

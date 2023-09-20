@@ -19,8 +19,46 @@ $(document).on('click', '.modal_attendance_check', function(event){
 
         $(".att_staff_name").text(staff_data[0].name);
         $(".att_staff_id").val(staff_data[0].id);
-        $(".check-in-time").val(response.check_in);
-        $(".check-out-time").val(response.check_out);
+        if (response.check_in) {
+          $(".check-in-time").val(response.check_in);
+        }
+        if (response.check_out) {
+          $(".check-out-time").val(response.check_out);
+        }
+      }
+    }
+  });
+});
+$(document).on('click', '.modal_attendance_check_update', function(event){
+  event.preventDefault();
+  var staff_id    = $(this).attr('staff-id');
+  var attendance_date = $(this).attr('staff-attendance-date');
+  var ajaxurl     = baseurl+'partner/staff/get-staff-attendance-by-date'+'/' + staff_id+'/' + attendance_date;
+  
+  $.ajax({
+    url:ajaxurl,
+    type:'GET',
+    beforeSend:function(){
+      $('.spinner-cls').show();
+    },
+    success:function(response)
+    {
+      $('.spinner-cls').hide();
+      response = JSON.parse(response);
+
+      if (response.status) {
+        var staff_data = response.data;
+
+        $(".update_att_staff_name").text(staff_data[0].name);
+        $(".update_att_staff_id").val(staff_data[0].id);
+        $(".formatted-date").text(response.formatted_date);
+        $(".attendance_date").val(response.date_attendance);
+        if (response.check_in) {
+          $(".check-in-time-update").val(response.check_in);
+        }
+        if (response.check_out) {
+          $(".check-out-time-update").val(response.check_out);
+        }
       }
     }
   });

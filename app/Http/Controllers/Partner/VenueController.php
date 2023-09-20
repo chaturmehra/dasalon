@@ -14,6 +14,7 @@ use App\Models\User;
 use App\Models\UserDetails;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Mail;
+use Validator;
 
 class VenueController extends Controller
 {
@@ -91,6 +92,17 @@ class VenueController extends Controller
 	public function storeVenues(Request $request)
 	{
 		$partner_id = Auth::user()->id;
+
+		$validator = Validator::make($request->all(), [
+            'name'  	=> 'required',
+            'phone'  	=> 'required',
+            'email'     => 'required',
+        ]);
+ 
+        if ($validator->fails()) {
+            return redirect()->back()->withErrors($validator)->withInput();
+        }
+
 		$venue = Venue::create([
 			'partner_id' 		=> $partner_id,
 			'name' 				=> $request->venue_name,
@@ -349,6 +361,16 @@ class VenueController extends Controller
 	{
 		$partner_id = Auth::user()->id;
 		$venue_id 	= $request->venue_id;
+
+		$validator = Validator::make($request->all(), [
+            'name'  	=> 'required',
+            'phone'  	=> 'required',
+            'email'     => 'required',
+        ]);
+ 
+        if ($validator->fails()) {
+            return redirect()->back()->withErrors($validator)->withInput();
+        }
 
 		Venue::where('id', $venue_id)->update([
 			'partner_id' 		=> $partner_id,

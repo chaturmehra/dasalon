@@ -98,7 +98,7 @@
                            <!--begin::Select2-->
                            <select class="form-select mb-2" data-control="select2" data-hide-search="true" data-placeholder="Select an option" name="staff_role" required="required" id="edit-role">
                               <option value="">Please select role</option>
-                              @if($roles)
+                              @if(!empty($roles))
                               @foreach($roles as $key => $role)
                               <option value="{{ $role->id }}">{{ $role->role_name }}</option>
                               @endforeach
@@ -198,7 +198,7 @@
                         <!--begin::Card body-->
                         <div class="card-body pt-0">
                            <div class="row">
-                              @if($venue_data_arr)
+                              @if(!empty($venue_data_arr))
                               @foreach($venue_data_arr as $key => $venue_data)
                               <!--begin::Col-->
                               <div class="col-md-12 mb-5">
@@ -209,14 +209,16 @@
                                     <input class="form-check-input edit-venues" type="checkbox" name="venues[]" value="{{ $venue_data['id'] }}" />
                                     </span>
                                     <!--end::Radio-->
+                                    @if( !empty($venue_data['venue_meta']['featured']) )
                                     <div class="quantity-icn ms-3">
                                        <img src="{{ asset('/public/'. $venue_data['venue_meta']['featured']) }}">
                                     </div>
+                                    @endif
                                     <!--begin::Info-->
                                     <span class="mt-3 w-100">
                                        <h3 class="card-title align-items-start flex-column">
-                                          <span class="card-label fw-bold text-gray-800 fs-4 mb-4">{{ $venue_data['name'] }}</span>
-                                          <span class="text-muted d-block fw-light fs-7 mt-1">{{ $venue_data['venue_meta']['business_address'] }}
+                                          <span class="card-label fw-bold text-gray-800 fs-4 mb-4">{{ isset($venue_data['name']) ? $venue_data['name'] : "" }}</span>
+                                          <span class="text-muted d-block fw-light fs-7 mt-1">{{ isset($venue_data['venue_meta']['business_address']) ? $venue_data['venue_meta']['business_address'] : "" }}
                                           </span>
                                        </h3>
                                     </span>

@@ -305,7 +305,7 @@
                         </thead>
                         <tbody class="text-gray-600 fw-semibold staff-lists">
 
-                           @if($getStaff)
+                           @if( !empty($getStaff) )
                            @foreach($getStaff as $skey => $staff)
                            @php
                            if($staff->is_active){
@@ -315,6 +315,14 @@
                               $statusVal = 1;
                               $statusText = "Enable";
                            }
+
+                           $full_name = $staff->name;
+                           $name_parts = explode(' ', $full_name);
+                           $shortName = '';
+                           foreach ($name_parts as $part) {
+                              $shortName .= substr($part, 0, 1);
+                           }
+
                            @endphp
                            <tr>
                               <td>
@@ -327,7 +335,11 @@
                                  <div class="symbol symbol-circle symbol-50px overflow-hidden cursor-pointer me-3" id="kt_drawer_editprofile_toggle">
                                     <a href="javascript:void(0)" staff-id="{{ $staff->user_id }}" class="view-staff">
                                        <div class="symbol-label">
-                                          <img src="{{asset('/public/'.$staff->profile_image)}}" alt="{{ $staff->name }}" class="w-100" />
+                                          @if(!empty($staff->profile_image))
+                                             <img src="{{asset('/public/'.$staff->profile_image)}}" alt="{{ $staff->name }}" class="w-100" />
+                                          @else
+                                             <span class="symbol-label bg-danger text-inverse-danger fw-bold">{{ $shortName }}</span>
+                                          @endif
                                        </div>
                                     </a>
                                  </div>

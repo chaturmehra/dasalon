@@ -213,8 +213,11 @@ Route::middleware(['auth'])->group(function () {
     Route::get('partner/staff/get-staff-detail-fill-attendance/{id}', [StaffAttendanceController::class, 'getStaffDetailFillAttendance']);
     Route::post('partner/staff/checkin-attendance', [StaffAttendanceController::class, 'checkinAttendance']);
     Route::post('partner/staff/checkout-attendance', [StaffAttendanceController::class, 'checkoutAttendance']);
+    Route::post('partner/staff/checkin-attendance-update', [StaffAttendanceController::class, 'checkinAttendanceUpdate']);
+    Route::post('partner/staff/checkout-attendance-update', [StaffAttendanceController::class, 'checkoutAttendanceUpdate']);
     Route::get('partner/staff/filter-attendance-by-date/{start_date}/{end_date}', [StaffAttendanceController::class, 'filterAttendanceByDate']);
     Route::get('partner/staff/attendance-analytics/{start_date}/{end_date}', [StaffAttendanceController::class, 'attendanceAnalytics']);
+    Route::get('partner/staff/get-staff-attendance-by-date/{id}/{date}', [StaffAttendanceController::class, 'getStaffAttendanceByDate']);
 
     Route::get('partner/staff/leave', [StaffLeaveController::class, 'index'])->name('leave.index');
     Route::post('partner/staff/leave', [StaffLeaveController::class, 'storeLeave']);

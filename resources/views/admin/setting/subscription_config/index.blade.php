@@ -92,7 +92,7 @@
                         <!--end::Title--> 
                         
                    
-                        <span class="text-gray-400 fw-semibold d-block fs-6">{{$onboardtype[0]['gperiod_type1']}}</span>
+                        <span class="text-gray-400 fw-semibold d-block fs-6">{{ isset($onboardtype[0]['gperiod_type1']) ? $onboardtype[0]['gperiod_type1'] : ""}}</span>
                       
                      </div>
                      <!--begin::Card header-->
@@ -281,7 +281,7 @@
                            <span class="card-label fw-bold text-gray-800">Grace period type2</span>
                         </h3>
                         <!--end::Title-->   
-                        <span class="text-gray-400 fw-semibold d-block fs-6">{{$onboardtype[0]['gperiod_type2']}}</span>
+                        <span class="text-gray-400 fw-semibold d-block fs-6">{{ isset($onboardtype[0]['gperiod_type2']) ? $onboardtype[0]['gperiod_type2'] : ""}}</span>
                      </div>
                      <!--begin::Card header-->
                      <div class="card-header align-items-center py-5 gap-2 gap-md-5">
@@ -453,7 +453,7 @@
                            <span class="card-label fw-bold text-gray-800">On-boarding fees</span>
                         </h3>
                         <!--end::Title-->   
-                        <span class="text-gray-400 fw-semibold d-block fs-6">{{$onboardtype[0]['gperiod_type3']}}</span>
+                        <span class="text-gray-400 fw-semibold d-block fs-6">{{ isset($onboardtype[0]['gperiod_type3']) ? $onboardtype[0]['gperiod_type3'] : "" }}</span>
                      </div>
                      <!--begin::Card header-->
                      <div class="card-header align-items-center py-5 gap-2 gap-md-5">
