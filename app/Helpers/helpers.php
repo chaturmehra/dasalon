@@ -7,6 +7,7 @@ use App\Models\Admin\Country;
 use App\Models\Admin\CountryConfig;
 use App\Models\Admin\Amenity;
 use App\Models\Admin\AmenityCategory;
+use App\Models\Admin\Service;
 use App\Models\Admin\ServiceCategory;
 
 function getPartnerType(){
@@ -22,25 +23,6 @@ function getCountryList(){
 function getCountryConfigList(){
 	$countryList = CountryConfig::leftJoin('countries', 'country_config.country_id', '=', 'countries.id')->where('status',1)->get(['name','iso2','countries.id']);
 	return $countryList;
-}
-function adminAmenityCategories(){
-    $amenityList = [
-        'Venue'         => 'Venue',
-        'Access'        => 'Access',
-        'Products Used' => 'Products Used',
-        'Brands'        => 'Brands',
-    ];
-    return $amenityList;
-}
-
-function getAmenityCategory(){
-	$amenitycategories = AmenityCategory::get()->toArray();
-
-	$amenitycategory = array_column($amenitycategories, 'amenity_category');
-	// $amenitycategory0 = array_values($amenitycategory);
-
-	// echo "<pre>"; print_r($amenitycategory); 
-	return $amenitycategory;
 }
 
 if (!function_exists('loadScript')) {
@@ -58,6 +40,28 @@ if (!function_exists('loadScript')) {
     } 
 }
 
+function getAmenityCategory(){
+	$amenitycategories = AmenityCategory::get()->toArray();
+	$amenitycategory   = array_column($amenitycategories, 'amenity_category');
+	return $amenitycategory;
+}
+
+function getServices(){
+    $services  = Service::where('is_active', 1)->get()->toArray();
+    $services_name  = array_column($services, 'servicename');
+    return $services_name;
+}
+
+function scheduleType(){
+    $scheduleTypeList = [
+        '1'  => 'Every week',
+        '2'  => 'Every two week',
+        '3'  => 'Every three week',
+        '4'  => 'Every month',
+        '5'  => 'Every six month',
+    ];
+    return $scheduleTypeList;
+}
 
 function adminpagewithsubpage(){
     $pagewithsubpageList =
@@ -79,6 +83,33 @@ function adminpagewithsubpage(){
         ]
     ];
     return $pagewithsubpageList;
+}
+
+function userAuthorization(){
+    $userAuthorization =
+    [
+        'Home' => [
+            'Sales(button)',
+            'Appointment(button)',
+        ],
+        'Calendar' => [
+            'Add appointment',
+            'Change appointment',
+            'View Calendar',
+            'View all staff calendar',
+        ],
+        'Clients' => [
+            'Create client',
+            'import clients, upload client register, export clients',
+            'Reviews - view',
+            'Review - reply/report',
+        ],
+        'Sales' => [
+            'Export',
+            'Options Button',
+        ]
+    ];
+    return $userAuthorization;
 }
 
 
