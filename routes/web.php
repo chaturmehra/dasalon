@@ -244,6 +244,8 @@ Route::middleware(['auth'])->group(function () {
     Route::get('admin/rp/enable-status/{rp_id}', [RecommendationsController::class, 'enabledrp']);
     Route::get('admin/rp/disable-status/{rp_id}', [RecommendationsController::class, 'disabledrp']);
 
+    Route::get('admin/services/services-config/set-country/{id}', [CountryController::class, 'setSelectedCountry']);
+
 });
 
 /*Partner Route*/

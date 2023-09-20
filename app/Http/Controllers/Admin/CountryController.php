@@ -42,6 +42,18 @@ class CountryController extends Controller
         ]);
 		return response()->json(['status'=>true]);
 	}
+
+    public function setSelectedCountry(Request $request, $countryIso){
+
+        
+        $request->session ()->put ('country', $countryIso);
+        $response = array(
+            'status' => 1,
+            'message' => 'Default country is changed successfully!' 
+        );
+
+        echo json_encode( $response );
+    }
 	
 	public function saveFranchise(Request $request){
 		
