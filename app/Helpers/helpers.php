@@ -20,7 +20,7 @@ function getCountryList(){
 }
 
 function getCountryConfigList(){
-	$countryList = CountryConfig::leftJoin('countries', 'country_config.country_id', '=', 'countries.id')->where('status',1)->get(['name','countries.id']);
+	$countryList = CountryConfig::leftJoin('countries', 'country_config.country_id', '=', 'countries.id')->where('status',1)->get(['name','iso2','countries.id']);
 	return $countryList;
 }
 function adminAmenityCategories(){
@@ -77,8 +77,11 @@ function adminpagewithsubpage(){
             'Recommendations (package)', 
             'Offers Management'
         ]
-        ];
-        return $pagewithsubpageList;
-    }
+    ];
+    return $pagewithsubpageList;
+}
 
 
+function getSelectedCountry(){
+    return $country = session ()->get('country'); 
+}

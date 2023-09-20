@@ -10,6 +10,7 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 
+
 class ServicesConfigController extends Controller
 {
     public function index()
@@ -36,10 +37,13 @@ class ServicesConfigController extends Controller
 
     public function create(Request $request)
     {
-    	
+    	// echo "<pre>";print_r($request->get('country'));die;
+      
+
     //    $request->validate(['icon'=>'required']);
+      
         $sc = new ServiceCategory;  
-        $sc->country =  $request->get('country');  
+        $sc->country =  getSelectedCountry();  
         $sc->category = $request->get('category');  
 
         if($request->file('icon')){

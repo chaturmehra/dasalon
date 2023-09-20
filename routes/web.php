@@ -28,7 +28,7 @@ use App\Http\Controllers\Admin\PartnerMappingController;
 use App\Http\Controllers\Admin\RecommendationsController;
 use App\Http\Controllers\Admin\OffersManagementController;
 use App\Http\Controllers\TwilioSMSController;
-
+use App\Http\Controllers\Controller;
 
 /*
 |--------------------------------------------------------------------------
@@ -202,6 +202,8 @@ Route::post('admin/update-servicesubcategory', [ServicesConfigController::class,
 Route::post('admin/services/recommendedpackage', [RecommendationsController::class, 'addrecommendedpackage']);
     Route::get('admin/rp/enable-status/{rp_id}', [RecommendationsController::class, 'enabledrp']);
     Route::get('admin/rp/disable-status/{rp_id}', [RecommendationsController::class, 'disabledrp']);
+
+    Route::get('admin/services/services-config/set-country/{id}', [CountryController::class, 'setSelectedCountry']);
 
 });
 
