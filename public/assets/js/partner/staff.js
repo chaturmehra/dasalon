@@ -42,6 +42,7 @@ $(document).on('click', '.status-change', function(){
   });
 });
 
+
 $(document).on('click', '.delete-staff', function(){
   event.preventDefault();
   var staff_id    = $(this).attr('staff-id');
@@ -118,6 +119,7 @@ $(document).on('click', '.view-staff', function(){
     }
   });
 });
+
 
 $(document).on('click', '.update-staff-detail', function(){
   event.preventDefault();

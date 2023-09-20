@@ -305,6 +305,7 @@
                         </thead>
                         <tbody class="text-gray-600 fw-semibold staff-lists">
 
+
                            @if($getStaff)
                            @foreach($getStaff as $skey => $staff)
                            @php
@@ -331,6 +332,7 @@
                                        </div>
                                     </a>
                                  </div>
+                                 
                                  <!--end::Avatar-->
                                  <!--begin::User details-->
                                  <div class="d-flex flex-column">

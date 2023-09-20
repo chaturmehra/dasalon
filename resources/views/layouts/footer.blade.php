@@ -9,6 +9,7 @@
 		<script src="{{asset('/public/assets/js/custom/authentication/sign-up/general.js')}}"></script>
 		<script src="{{asset('/public/assets/js/custom/authentication/reset-password/reset-password.js')}}"></script>
 		<script src="{{asset('/public/assets/js/custom/authentication/reset-password/new-password.js')}}"></script>
+		
 		<!--end::Custom Javascript-->
 		<!--end::Javascript-->
 	</body>
