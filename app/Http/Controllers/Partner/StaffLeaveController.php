@@ -22,7 +22,7 @@ class StaffLeaveController extends Controller
 
 
        	$staff 		= Staff::where('partner_id', $partner_id);
-		$staffLeave = $staff->select(['staff.staff_id', 'staff.user_id', 'users.name', 'users.email', 'users.phone', 'staff_leave.start', 'staff_leave.end', 'staff_leave.leave_remarks', 'staff_leave.leave_status'])
+		$staffLeave = $staff->select(['staff.staff_id', 'staff.user_id', 'users.name', 'users.email', 'users.phone', 'staff_leave.start', 'staff_leave.end', 'staff_leave.leave_remarks', 'staff_leave.leave_status', 'staff.profile_image'])
                 ->leftJoin('users', 'users.id', '=', 'staff.user_id')
                 ->leftJoin('staff_leave', 'staff_leave.staff_id', '=', 'staff.user_id')
                 ->orderBy('staff.staff_id', 'DESC')

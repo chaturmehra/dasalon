@@ -80,13 +80,8 @@
                      </div>
                      @endif
                      <div class="d-flex gap-3 align-items-center">
-                        <a class="prevBtn cursor-pointer">
-                        <i class="bi bi-chevron-left fs-6"></i>
-                        </a>
-                        <span class="text-gray-800 fs-4 fw-semibold dateRangeDisplay">Loading...</span>
-                        <a class="nextBtn cursor-pointer">
-                        <i class="bi bi-chevron-right fs-6"></i>
-                        </a>
+                        @php $date = date("Y-m-d"); @endphp
+                        <span class="text-gray-800 fs-4 fw-semibold">{{ date("j F, Y", strtotime($date)) }}</span>
                      </div>
                   </div>
                   <!--end::Card header-->
@@ -109,20 +104,26 @@
                         <!--end::Table head-->
                         <tbody class="fw-bold text-gray-600">
 
-                           @if($getStaff)
-                           @foreach($getStaff as $skey => $staff)
+                           @if( !empty($getStaff) )
+                           @foreach($getStaff->unique() as $skey => $staff)
+                           @php
+                              $check_in  = isset($staff->check_in) ? $staff->check_in : "";
+                              $check_out = isset($staff->check_out) ? $staff->check_out : "";  
+                              $date = isset($staff->date) ? $staff->date : "";  
+                              $todayDate = date('Y-m-d');  
+                           @endphp
                            <tr>
                               <td>{{ $skey+1 }}</td>
                               <td>{{ $staff->name }}</td>
                               <td>{{ $staff->phone }}</td>
                               <td>
                                  <button type="button" class="btn btn-primary modal_attendance_check" data-bs-toggle="modal" data-bs-target="#modal_attendance_admin_check" staff-id="{{ $staff->user_id }}">
-                                    Check in
+                                    @if( !empty($check_in) && $date == $todayDate ) {{ $check_in }} @else  Check in @endif
                                  </button>
                               </td>
                               <td>
                                  <button type="button" class="btn btn-primary modal_attendance_check" data-bs-toggle="modal" data-bs-target="#modal_attendance_admin_check_out" staff-id="{{ $staff->user_id }}">
-                                    Check out
+                                    @if( !empty($check_out) && $date == $todayDate ) {{ $check_out }} @else  Check out @endif
                                  </button>
                               </td>
                            </tr>
@@ -218,8 +219,8 @@
                            <!--end::Link-->
                         </li>
                         <!--end::Item-->
-                        @if($getStaff)
-                        @foreach($getStaff as $namekey => $staff_name)
+                        @if( !empty($getStaff) )
+                        @foreach($getStaff->unique() as $namekey => $staff_name)
                         @php
                         $full_name = $staff_name->name;
                         $name_parts = explode(' ', $full_name);
@@ -274,25 +275,33 @@
                                  <!--begin::Table row-->
                                  <tr class="text-start text-gray-400 fw-bold fs-7 text-uppercase gs-0">
                                     <th class="min-w-50px">Name</th>
+                                    <th class="min-w-50px">Status</th>
                                     <th class="min-w-50px">Date</th>
                                     <th class="min-w-50px">Check In</th>
                                     <th class="min-w-50px">Check Out</th>
                                     <th class="min-w-50px">No. of hours</th>
+                                    <th class="min-w-50px">Action</th>
                                  </tr>
                                  <!--end::Table row-->
                               </thead>
                               <!--end::Table head-->
                               <tbody class="fw-bold text-gray-600 attendance-register">
-                                 @if($staffAttendance)
+                                 @if( !empty($staffAttendance) )
                                  @foreach($staffAttendance as $sakey => $staff_att)
                                  @php 
                                     $date = $staff_att->date; 
-                                    $formatted_date = date("d M, D", strtotime($date));
+                                    if($date){
+                                       $formatted_date = date("d M, D", strtotime($date));
+                                       $date = $date;
+                                    }else{
+                                       $formatted_date = "";
+                                       $date = date('Y-m-d');
+                                    }
                                     $ts1 = strtotime($staff_att->check_in);
                                     $ts2 = strtotime($staff_att->check_out);    
                                     if($ts1 && $ts2){
                                        $seconds_diff = $ts2 - $ts1;                            
-                                       $time = ($seconds_diff/3600)." hr";
+                                       $time = round($seconds_diff / 3600, 2)." hr";
                                     }else{
                                        $time = "NA";
                                     }
@@ -300,10 +309,19 @@
                                  @endphp
                                  <tr class="staff_{{$staff_att->user_id}}">
                                     <td>{{ $staff_att->name }}</td>
+                                    <td></td>
                                     <td>{{ $formatted_date }}</td>
                                     <td>{{ $staff_att->check_in }}</td>
                                     <td>{{ $staff_att->check_out }}</td>
                                     <td>{{ $time }} </td>
+                                    <td>
+                                       <button type="button" class="btn btn-primary modal_attendance_check_update" data-bs-toggle="modal" data-bs-target="#modal_attendance_admin_check_update" staff-id="{{ $staff_att->user_id }}" staff-attendance-date="{{ $date }}">
+                                          Check in
+                                       </button>
+                                       <button type="button" class="btn btn-primary modal_attendance_check_update" data-bs-toggle="modal" data-bs-target="#modal_attendance_admin_check_out_update" staff-id="{{ $staff_att->user_id }}" staff-attendance-date="{{ $date }}">
+                                          Check Out
+                                       </button>
+                                    </td>
                                  </tr>
                                  @endforeach
                                  @endif
@@ -328,6 +346,8 @@
 <!--begin::Modal - Add commission-->
 @include('partner.staff.attendance.modal.attendance-check-in')
 @include('partner.staff.attendance.modal.attendance-check-out')
+@include('partner.staff.attendance.modal.attendance-check-in-update')
+@include('partner.staff.attendance.modal.attendance-check-out-update')
 <!--end::Modal - Add commission-->
 
 @endsection

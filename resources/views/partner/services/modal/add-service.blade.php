@@ -135,15 +135,17 @@
                         </span>
                         <!--end::Radio-->
 
+                        @if( !empty($venue_data['venue_meta']['featured']) )
                         <div class="quantity-icn ms-3">
                           <img src="{{ asset('/public/'. $venue_data['venue_meta']['featured']) }}">
                         </div>
+                        @endif
 
                         <!--begin::Info-->
                         <span class="mt-3 w-100">
                           <h3 class="card-title align-items-start flex-column">
-                            <span class="card-label fw-bold text-gray-800 fs-4 mb-4">{{ $venue_data['name'] }}</span>
-                            <span class="text-muted d-block fw-light fs-7 mt-1">{{ $venue_data['venue_meta']['business_address'] }}
+                            <span class="card-label fw-bold text-gray-800 fs-4 mb-4">{{ isset($venue_data['name']) ? $venue_data['name'] : "" }}</span>
+                            <span class="text-muted d-block fw-light fs-7 mt-1">{{ isset($venue_data['venue_meta']['business_address']) ? $venue_data['venue_meta']['business_address'] : "" }}
                             </span>
                           </h3>
                         </span>
@@ -447,7 +449,14 @@
                                     <option></option>
                                     @if( !empty($getStaff) )
                                       @foreach($getStaff as $staff)
-                                        <option value="{{ $staff->user_id }}" data-kt-select2-user="{{ asset('/public/'.$staff->profile_image) }}">{{ $staff->name }}</option>
+                                      @php 
+                                      if($staff->profile_image){
+                                        $path = asset('/public'.$staff->profile_image);
+                                      }else{
+                                        $path = asset('/public/partner/assets/media/avatars/blank.png');
+                                      }
+                                      @endphp
+                                        <option value="{{ $staff->user_id }}" data-kt-select2-user="{{ $path }}">{{ $staff->name }}</option>
                                       @endforeach
                                     @endif
                                   </select>

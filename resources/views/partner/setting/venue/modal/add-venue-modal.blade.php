@@ -174,13 +174,13 @@
                            <div class="col-12 mb-7">
                               <div class="fv-row">
                                  <h3 class="card-title align-items-start flex-column">
-                                    <span class="card-label fw-bold text-gray-800 mb-4">Venue name</span>
+                                    <span class="card-label fw-bold text-gray-800 mb-4 required ">Venue name</span>
                                     <span class="text-gray-400 fw-semibold d-block fs-6 my-3">This is the location name of your business. <br>  
                                        Recommended to enter your location name if you have multiple venues
                                     </span>
                                  </h3>
                                  <!--begin::Input-->
-                                 <input type="text" name="venue_name" class="form-control form-control-solid mb-3 mb-lg-0" placeholder="Venue name" required>
+                                 <input type="text" name="venue_name" class="form-control form-control-solid mb-3 mb-lg-0 add-venue-name" placeholder="Venue name" required>
                                  <!--end::Input-->
                               </div>
                            </div>
@@ -188,24 +188,24 @@
                            <div class="col-12 mb-7">
                               <div class="fv-row">
                                  <h3 class="card-title align-items-start flex-column">
-                                    <span class="card-label fw-bold text-gray-800 mb-4">Phone number</span>
+                                    <span class="card-label fw-bold text-gray-800 mb-4 required ">Phone number</span>
                                     <span class="text-gray-400 fw-semibold d-block fs-6 my-3">Phone number of this venue which will appear on the Business profile of this venue
                                     </span>
                                  </h3>
                                  <!--begin::Input-->
-                                 <input type="text" name="phone_number" class="form-control form-control-solid mb-3 mb-lg-0" placeholder="Phone Number" required>
+                                 <input type="text" name="phone_number" class="form-control form-control-solid mb-3 mb-lg-0 venue-phone-number" placeholder="Phone Number" required>
                                  <!--end::Input-->
                               </div>
                            </div>
                            <div class="col-12 mb-7">
                               <div class="fv-row">
                                  <h3 class="card-title align-items-start flex-column">
-                                    <span class="card-label fw-bold text-gray-800 mb-4">Email address</span>
+                                    <span class="card-label fw-bold text-gray-800 mb-4 required ">Email address</span>
                                     <span class="text-gray-400 fw-semibold d-block fs-6 my-3">Venue manager email address
                                     </span>
                                  </h3>
                                  <!--begin::Input-->
-                                 <input type="email" name="email" class="form-control form-control-solid mb-3 mb-lg-0" placeholder="Email address" required>
+                                 <input type="email" name="email" class="form-control form-control-solid mb-3 mb-lg-0" placeholder="Email address venue-email" required>
                                  <!--end::Input-->
                               </div>
                            </div>
@@ -345,7 +345,7 @@
                                     title="Change avatar">
                                     <i class="ki-duotone ki-pencil fs-6"><span class="path1"></span><span class="path2"></span></i>
                                     <!--begin::Inputs-->
-                                    <input type="file" name="featured" accept=".png, .jpg, .jpeg" required/>
+                                    <input type="file" name="featured" class="venue-featured" accept=".png, .jpg, .jpeg" required/>
                                     <input type="hidden" name="avatar_remove" />
                                     <!--end::Inputs-->
                                  </label>
@@ -1889,7 +1889,7 @@ title="Remove avatar">
                      <!--end::Wrapper-->
                      <!--begin::Wrapper-->
                      <div>
-                        <button type="submit" class="btn btn-primary" data-kt-stepper-action="submit">
+                        <button type="submit" class="btn btn-primary" data-kt-stepper-action="submit" onclick="return validateForm()">
                            <span class="indicator-label">
                               Submit
                            </span>

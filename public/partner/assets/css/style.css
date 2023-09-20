@@ -5,8 +5,8 @@ img {
     max-width: 100%;
 }
 .brdr {
-    border: 1px solid #ccc;
-    border-radius: 10px;
+    border: 1px solid var(--bs-card-border-color);
+    border-radius: 1rem;;
 }
 
 .map iframe {
@@ -678,7 +678,7 @@ span.selectdataqa {
     vertical-align: baseline;
 }
 .promvalstepper label {
-    width: 100%;
+    width: fit-content;
     cursor: pointer;
 }
 .promotionset i {
@@ -1076,4 +1076,10 @@ a.editbtn span {
 }
 .iti {
     width: 100%;
+}
+.image-input.image-input-empty, .image-input-placeholder {
+    background-image: url(https://webpristine.com/dasalon/partners/assets/media/svg/files/blank-image.svg);
+}
+.form-floating .form-select {
+    padding-top: 0.775rem!important;
 }

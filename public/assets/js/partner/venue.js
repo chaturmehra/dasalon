@@ -1117,3 +1117,25 @@ function numberOtpHandler(input){
     defaultvalue = input.value;
   }
 }
+
+function validateForm(){
+  
+    var vname      = jQuery('.add-venue-name').val();
+    var vemail     = jQuery('.venue-email').val();
+    var vphone     = jQuery('.venue-phone-number').val();
+    var vaddress   = jQuery('.venue-business-location').val();
+    var vfeatured  = jQuery('.venue-featured').val();
+    if(!vname || !vemail || !vphone || !vaddress || !vfeatured ){
+        Swal.fire({
+          text: "Please fill all the mandatory fields.",
+          icon: "error",
+          buttonsStyling: !1,
+          confirmButtonText: "Ok, got it!",
+          customClass: {
+            confirmButton: "btn btn-primary"
+          }
+        })
+        return false;    // in failure case
+    }        
+    return true;    // in success case
+}
