@@ -343,6 +343,7 @@
                                        </div>
                                     </a>
                                  </div>
+                                 
                                  <!--end::Avatar-->
                                  <!--begin::User details-->
                                  <div class="d-flex flex-column">

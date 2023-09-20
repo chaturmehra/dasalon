@@ -264,3 +264,13 @@ Route::post('account/create-password', [PartnerController::class, 'createPasswor
 
 Route::post('sendSMS', [TwilioSMSController::class, 'index']);
 Route::post('sendOTP', [TwilioSMSController::class, 'verify_otp']);
+
+
+
+
+/*--------------------client route-------------------------------------------------------------------*/
+Route::post('partner/client/add', [ClientsController::class, 'addClient'])->name('client_add');
+Route::get('partner/client/client_detail/{id}', [ClientsController::class, 'getClientDetail']);
+
+Route::post('partner/client/update', [ClientsController::class, 'updateClient'])->name('client_edit');
+
