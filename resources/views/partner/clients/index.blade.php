@@ -1,5 +1,32 @@
 @extends('partner.layouts.auth.app')
 @section('content') 
+<!--Begin:::error popup-->
+@if(session()->has('success'))
+<div class="card-header display-message">
+   <div class="alert alert-success">
+      {{ session()->get('success') }}
+   </div>
+</div>
+@endif
+@if(session()->has('error'))
+<div class="card-header display-message">
+   <div class="alert alert-danger">
+      {{ session()->get('error') }}
+   </div>
+</div>
+@endif
+@if ($errors->any())
+<div class="card-header display-message">
+   <div class="alert alert-danger">
+      <ul>
+         @foreach ($errors->all() as $error)
+         <li>{{ $error }}</li>
+         @endforeach
+      </ul>
+   </div>
+</div>
+@endif
+<!--Begin:::error popup-->
 
 <!--Begin:::Main-->
 <div class="app-main flex-column flex-row-fluid" id="kt_app_main">
@@ -2863,10 +2890,8 @@
       }
       });
 </script>
-
-
 <script>
-   jQuery(document).on("click", ".client-on-click",".client-view-click", function(e){
+   jQuery(document).on("click", ".client-on-click", function(e){
       e.preventDefault();
         var client_id = jQuery(this).attr("client-id");
         $.ajax({
@@ -2907,7 +2932,6 @@
         });
     });
 </script>
-
 <script>
    jQuery(document).on("click", ".client-view-click", function(e){
       e.preventDefault();

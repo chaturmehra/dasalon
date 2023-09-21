@@ -189,9 +189,20 @@ class ClientsController extends Controller
             case 'name_desc':
                 $client_data = ClientModel::leftJoin('users', 'users.id', '=', 'clients.client_id')->orderBy('users.name','desc')->get();
                 break;
-            
+            case 'gender_asc':
+                $client_data = ClientModel::leftJoin('users', 'users.id', '=', 'clients.client_id')->orderBy('clients.gender','asc')->get();
+                break;
+            case 'gender_desc':
+                $client_data = ClientModel::leftJoin('users', 'users.id', '=', 'clients.client_id')->orderBy('clients.gender','desc')->get();
+                break; 
+            case 'created_at_asc':
+                $client_data = ClientModel::leftJoin('users', 'users.id', '=', 'clients.client_id')->orderBy('clients.created_at','asc')->get();
+                break; 
+            case 'created_at_desc':
+                $client_data = ClientModel::leftJoin('users', 'users.id', '=', 'clients.client_id')->orderBy('clients.created_at','desc')->get();
+                break;            
             default:
-                $client_data = YourModel::all();
+                $client_data = ClientModel::all();
         }
 
         return view("partner/clients/index", ['client_data' => $client_data]);
