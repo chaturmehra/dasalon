@@ -100,7 +100,9 @@
                               <option value="">Please select role</option>
                               @if(!empty($roles))
                               @foreach($roles as $key => $role)
+                              @if($role->role_name != "Owner")
                               <option value="{{ $role->id }}">{{ $role->role_name }}</option>
+                              @endif
                               @endforeach
                               @endif
                            </select>
@@ -466,13 +468,13 @@
                                                       <div class="monday d-flex flex-column gap-3">
                                                          <div class="d-flex flex-wrap gap-5 single-add-shift-div">
                                                             <div class="input-group kt_td_picker_time_only" data-td-target-input="nearest" data-td-target-toggle="nearest">
-                                                               <input type="text" class="form-control" data-td-target=".kt_td_picker_time_only" placeholder="start" name="monday_hours['start'][]" />
+                                                               <input type="text" class="form-control" data-td-target=".kt_td_picker_time_only" placeholder="start" name="monday_hours[start][]" />
                                                                <span class="input-group-text" data-td-target=".kt_td_picker_time_only" data-td-toggle="datetimepicker">
                                                                <i class="ki-outline ki-time fs-3"></i>
                                                                </span>
                                                             </div>
                                                             <div class="input-group kt_td_picker_time_only" data-td-target-input="nearest" data-td-target-toggle="nearest">
-                                                               <input type="text" class="form-control" data-td-target=".kt_td_picker_time_only" placeholder="end" name="monday_hours['end'][]" />
+                                                               <input type="text" class="form-control" data-td-target=".kt_td_picker_time_only" placeholder="end" name="monday_hours[end][]" />
                                                                <span class="input-group-text" data-td-target=".kt_td_picker_time_only" data-td-toggle="datetimepicker">
                                                                <i class="ki-outline ki-time fs-3"></i>
                                                                </span>
@@ -496,13 +498,13 @@
                                                       <div class="tuesday d-flex flex-column gap-3">
                                                          <div class="d-flex flex-wrap gap-5 single-add-shift-div">
                                                             <div class="input-group kt_td_picker_time_only" data-td-target-input="nearest" data-td-target-toggle="nearest">
-                                                               <input type="text" class="form-control" data-td-target=".kt_td_picker_time_only" placeholder="start" name="tuesday_hours['start'][]"/>
+                                                               <input type="text" class="form-control" data-td-target=".kt_td_picker_time_only" placeholder="start" name="tuesday_hours[start][]"/>
                                                                <span class="input-group-text" data-td-target=".kt_td_picker_time_only" data-td-toggle="datetimepicker">
                                                                <i class="ki-outline ki-time fs-3"></i>
                                                                </span>
                                                             </div>
                                                             <div class="input-group kt_td_picker_time_only" data-td-target-input="nearest" data-td-target-toggle="nearest">
-                                                               <input type="text" class="form-control" data-td-target=".kt_td_picker_time_only" placeholder="end" name="tuesday_hours['end'][]"/>
+                                                               <input type="text" class="form-control" data-td-target=".kt_td_picker_time_only" placeholder="end" name="tuesday_hours[end][]"/>
                                                                <span class="input-group-text" data-td-target=".kt_td_picker_time_only" data-td-toggle="datetimepicker">
                                                                <i class="ki-outline ki-time fs-3"></i>
                                                                </span>
@@ -526,13 +528,13 @@
                                                       <div class="wednesday d-flex flex-column gap-3">
                                                          <div class="d-flex flex-wrap gap-5 single-add-shift-div">
                                                             <div class="input-group kt_td_picker_time_only" data-td-target-input="nearest" data-td-target-toggle="nearest">
-                                                               <input type="text" class="form-control" data-td-target=".kt_td_picker_time_only" placeholder="start" name="wednesday_hours['start'][]"/>
+                                                               <input type="text" class="form-control" data-td-target=".kt_td_picker_time_only" placeholder="start" name="wednesday_hours[start][]"/>
                                                                <span class="input-group-text" data-td-target=".kt_td_picker_time_only" data-td-toggle="datetimepicker">
                                                                <i class="ki-outline ki-time fs-3"></i>
                                                                </span>
                                                             </div>
                                                             <div class="input-group kt_td_picker_time_only" data-td-target-input="nearest" data-td-target-toggle="nearest">
-                                                               <input type="text" class="form-control" data-td-target=".kt_td_picker_time_only" placeholder="end" name="wednesday_hours['end'][]"/>
+                                                               <input type="text" class="form-control" data-td-target=".kt_td_picker_time_only" placeholder="end" name="wednesday_hours[end][]"/>
                                                                <span class="input-group-text" data-td-target=".kt_td_picker_time_only" data-td-toggle="datetimepicker">
                                                                <i class="ki-outline ki-time fs-3"></i>
                                                                </span>
@@ -556,13 +558,13 @@
                                                       <div class="thursday d-flex flex-column gap-3">
                                                          <div class="d-flex flex-wrap gap-5 single-add-shift-div">
                                                             <div class="input-group kt_td_picker_time_only" data-td-target-input="nearest" data-td-target-toggle="nearest">
-                                                               <input type="text" class="form-control" data-td-target=".kt_td_picker_time_only" placeholder="start" name="thursday_hours['start'][]"/>
+                                                               <input type="text" class="form-control" data-td-target=".kt_td_picker_time_only" placeholder="start" name="thursday_hours[start][]"/>
                                                                <span class="input-group-text" data-td-target=".kt_td_picker_time_only" data-td-toggle="datetimepicker">
                                                                <i class="ki-outline ki-time fs-3"></i>
                                                                </span>
                                                             </div>
                                                             <div class="input-group kt_td_picker_time_only" data-td-target-input="nearest" data-td-target-toggle="nearest">
-                                                               <input type="text" class="form-control" data-td-target=".kt_td_picker_time_only" placeholder="end" name="thursday_hours['end'][]"/>
+                                                               <input type="text" class="form-control" data-td-target=".kt_td_picker_time_only" placeholder="end" name="thursday_hours[end][]"/>
                                                                <span class="input-group-text" data-td-target=".kt_td_picker_time_only" data-td-toggle="datetimepicker">
                                                                <i class="ki-outline ki-time fs-3"></i>
                                                                </span>
@@ -586,13 +588,13 @@
                                                       <div class="friday d-flex flex-column gap-3">
                                                          <div class="d-flex flex-wrap gap-5 single-add-shift-div">
                                                             <div class="input-group kt_td_picker_time_only" data-td-target-input="nearest" data-td-target-toggle="nearest">
-                                                               <input type="text" class="form-control" data-td-target=".kt_td_picker_time_only" placeholder="start" name="friday_hours['start'][]"/>
+                                                               <input type="text" class="form-control" data-td-target=".kt_td_picker_time_only" placeholder="start" name="friday_hours[start][]"/>
                                                                <span class="input-group-text" data-td-target=".kt_td_picker_time_only" data-td-toggle="datetimepicker">
                                                                <i class="ki-outline ki-time fs-3"></i>
                                                                </span>
                                                             </div>
                                                             <div class="input-group kt_td_picker_time_only" data-td-target-input="nearest" data-td-target-toggle="nearest">
-                                                               <input type="text" class="form-control" data-td-target=".kt_td_picker_time_only" placeholder="end" name="friday_hours['end'][]"/>
+                                                               <input type="text" class="form-control" data-td-target=".kt_td_picker_time_only" placeholder="end" name="friday_hours[end][]"/>
                                                                <span class="input-group-text" data-td-target=".kt_td_picker_time_only" data-td-toggle="datetimepicker">
                                                                <i class="ki-outline ki-time fs-3"></i>
                                                                </span>
@@ -616,13 +618,13 @@
                                                       <div class="saturday d-flex flex-column gap-3">
                                                          <div class="d-flex flex-wrap gap-5 single-add-shift-div">
                                                             <div class="input-group kt_td_picker_time_only" data-td-target-input="nearest" data-td-target-toggle="nearest">
-                                                               <input type="text" class="form-control" data-td-target=".kt_td_picker_time_only" placeholder="start" name="saturday_hours['start'][]"/>
+                                                               <input type="text" class="form-control" data-td-target=".kt_td_picker_time_only" placeholder="start" name="saturday_hours[start][]"/>
                                                                <span class="input-group-text" data-td-target=".kt_td_picker_time_only" data-td-toggle="datetimepicker">
                                                                <i class="ki-outline ki-time fs-3"></i>
                                                                </span>
                                                             </div>
                                                             <div class="input-group kt_td_picker_time_only" data-td-target-input="nearest" data-td-target-toggle="nearest">
-                                                               <input type="text" class="form-control" data-td-target=".kt_td_picker_time_only" placeholder="end" name="saturday_hours['end'][]" />
+                                                               <input type="text" class="form-control" data-td-target=".kt_td_picker_time_only" placeholder="end" name="saturday_hours[end][]" />
                                                                <span class="input-group-text" data-td-target=".kt_td_picker_time_only" data-td-toggle="datetimepicker">
                                                                <i class="ki-outline ki-time fs-3"></i>
                                                                </span>
@@ -646,13 +648,13 @@
                                                       <div class="sunday d-flex flex-column gap-3">
                                                          <div class="d-flex flex-wrap gap-5 single-add-shift-div">
                                                             <div class="input-group kt_td_picker_time_only" data-td-target-input="nearest" data-td-target-toggle="nearest">
-                                                               <input type="text" class="form-control" data-td-target=".kt_td_picker_time_only" placeholder="start" name="sunday_hours['start'][]"/>
+                                                               <input type="text" class="form-control" data-td-target=".kt_td_picker_time_only" placeholder="start" name="sunday_hours[start][]"/>
                                                                <span class="input-group-text" data-td-target=".kt_td_picker_time_only" data-td-toggle="datetimepicker">
                                                                <i class="ki-outline ki-time fs-3"></i>
                                                                </span>
                                                             </div>
                                                             <div class="input-group kt_td_picker_time_only" data-td-target-input="nearest" data-td-target-toggle="nearest">
-                                                               <input type="text" class="form-control" data-td-target=".kt_td_picker_time_only" placeholder="end" name="sunday_hours['end'][]"/>
+                                                               <input type="text" class="form-control" data-td-target=".kt_td_picker_time_only" placeholder="end" name="sunday_hours[end][]"/>
                                                                <span class="input-group-text" data-td-target=".kt_td_picker_time_only" data-td-toggle="datetimepicker">
                                                                <i class="ki-outline ki-time fs-3"></i>
                                                                </span>

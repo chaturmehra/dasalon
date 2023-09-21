@@ -1304,13 +1304,13 @@
                                           <td>{{ $home_service['gender'] }}</td>
                                           <td>{{ $home_service['distance'] }}</td>
                                           <td>
-                                             <a href="javascript:void(0)" data-bs-toggle="modal" data-bs-target="#kt_modal_scrollable4" class="home-online-price-view" home-service-id="{{ $home_service['ps_id'] }}">
+                                             <a href="javascript:void(0)" data-bs-toggle="modal" data-bs-target="#kt_modal_scrollable6" class="venue-online-price-view" home-service-id="{{ $home_service['ps_id'] }}">
                                              <span class="text-dark fw-bold text-hover-primary d-block mb-1 fs-6 mt-5">{{ $home_service['online_price'] }}</span>
                                              <span class="text-muted fw-semibold text-muted d-block fs-7">Contain Staff Pricing</span>
                                              </a>
                                           </td>
                                           <td>
-                                             <a href="javascript:void(0)" data-bs-toggle="modal" data-bs-target="#kt_modal_scrollable5" class="home-offpeak-price-view" home-service-id="{{ $home_service['ps_id'] }}">
+                                             <a href="javascript:void(0)" data-bs-toggle="modal" data-bs-target="#kt_modal_scrollable7" class="venue-offpeak-price-view" home-service-id="{{ $home_service['ps_id'] }}">
                                              <span class="text-dark fw-bold text-hover-primary d-block mb-1 fs-6 mt-5">{{ $home_service['off_peak_price'] }}</span>
                                              <span class="text-muted fw-semibold text-muted d-block fs-7">Contain Staff Pricing</span>
                                              </a>
@@ -1368,6 +1368,8 @@
 
 @include('partner.services.modal.online-staff-pricing')
 @include('partner.services.modal.off-peak-staff-pricing')
+@include('partner.services.modal.home-online-staff-pricing')
+@include('partner.services.modal.home-off-peak-staff-pricing')
 @include('partner.services.modal.add-service')
 @include('partner.services.modal.home-add-service')
 @include('partner.services.modal.update-service')

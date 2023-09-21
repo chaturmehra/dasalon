@@ -316,7 +316,12 @@
                         <!--begin::Input group-->
                         <div class="fv-row w-100 flex-md-root">
                           <!--begin::Input-->
-                          <input type="text" class="form-control mb-2" placeholder="Duration" name="duration">
+                          <select name="duration" required="required" class="form-select mb-2" data-placeholder="Select an option" data-control="select2" data-hide-search="true">
+                            <option></option>
+                            @foreach(durationScheduling() as $dKey => $duration)
+                            <option value="{{ $dKey }}">{{ $duration }}</option>
+                            @endforeach
+                          </select>
                           <!--end::Input-->
                         </div>
                         <!--end::Input group-->
@@ -336,7 +341,7 @@
                         <!--begin::Input group-->
                         <div class="fv-row w-100 flex-md-root">
                           <!--begin::Input-->
-                          <input type="text" class="form-control mb-2" placeholder="Distance" name="distance">
+                          <input type="text" class="form-control mb-2" placeholder="Distance" name="distance" onchange="numberHandler(this)">
                           <!--end::Input-->
                         </div>
                         <!--end::Input group-->
@@ -377,7 +382,7 @@
                         <label class="required fw-semibold fs-6">Online Price</label>
                         <div class="input-group mb-2">
                           <span class="input-group-text">$</span>
-                          <input type="text" class="form-control" aria-label="Amount (to the nearest dollar)" name="online_price" required="required"/>
+                          <input type="text" class="form-control" aria-label="Amount (to the nearest dollar)" name="online_price" required="required" onchange="numberHandler(this)"/>
                           <span class="input-group-text">.00</span>
                         </div>
                         <div class="text-muted fs-7">Price available to clients who book their services online in advance</div>
@@ -390,7 +395,7 @@
                         <label class="required fw-semibold fs-6">Off Peak Price</label>
                         <div class="input-group mb-2">
                           <span class="input-group-text">$</span>
-                          <input type="text" class="form-control" aria-label="Amount (to the nearest dollar)" name="off_peak_price" required="required"/>
+                          <input type="text" class="form-control" aria-label="Amount (to the nearest dollar)" name="off_peak_price" required="required" onchange="numberHandler(this)"/>
                           <span class="input-group-text">.00</span>
                         </div>
                         <div class="text-muted fs-7">A discounted price, available to people who walk-in during the salon's off peak hours.</div>
@@ -444,7 +449,7 @@
                                 <!--begin::Label-->
                                 <label class="required fw-semibold fs-6 mb-2">Staff</label>
                                 <div class="form-floating border rounded">
-                                  <select class="form-select form-select-transparent kt_docs_select2_users" data-placeholder="Select an option" data-dropdown-parent="#kt_modal_scrollable33" name="staff_pricing['staff_id'][]">
+                                  <select class="form-select form-select-transparent kt_docs_select2_users" data-placeholder="Select an option" data-dropdown-parent="#kt_modal_scrollable33" name="staff_pricing[staff_id][]">
                                     <option></option>
                                     @if( !empty($getStaff) )
                                       @foreach($getStaff as $staff)
@@ -461,7 +466,7 @@
                                   <label class="fw-semibold fs-6 mb-2">Online Price</label>
                                   <div class="input-group mb-0">
                                     <span class="input-group-text">$</span>
-                                    <input type="text" class="form-control" aria-label="Amount (to the nearest dollar)" name="staff_pricing['online_price'][]" />
+                                    <input type="text" class="form-control" aria-label="Amount (to the nearest dollar)" name="staff_pricing[online_price][]" onchange="numberHandler(this)"/>
                                     <span class="input-group-text">.00</span>
                                   </div>
                                   <!--end::Input group-->
@@ -473,7 +478,7 @@
                                   <label class="fw-semibold fs-6 mb-2">Off Peak Price</label>
                                   <div class="input-group mb-0">
                                     <span class="input-group-text">$</span>
-                                    <input type="text" class="form-control" aria-label="Amount (to the nearest dollar)" name="staff_pricing['off_peak_price'][]" />
+                                    <input type="text" class="form-control" aria-label="Amount (to the nearest dollar)" name="staff_pricing[off_peak_price][]" onchange="numberHandler(this)"/>
                                     <span class="input-group-text">.00</span>
                                   </div>
                                   <!--end::Input group-->

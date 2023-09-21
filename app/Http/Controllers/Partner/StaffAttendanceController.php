@@ -243,8 +243,8 @@ class StaffAttendanceController extends Controller
 			$response = array(
 				"status" 	=> 1,
 				"data" 		=> $staffDetail,
-				"check_in" 	=> $check_in,
-				"check_out" => $check_out,
+				"check_in" 	=> isset($check_in) ? $check_in : $currTime,
+				"check_out" => isset($check_out) ? $check_out : $currTime,
 			);
 		}else{
 			$response = array(
@@ -278,12 +278,12 @@ class StaffAttendanceController extends Controller
 
 		if ( !empty($id) && !$staffDetail->isEmpty() ) {
 			$response = array(
-				"status" 	=> 1,
-				"data" 		=> $staffDetail,
-				"check_in" 	=> $check_in,
-				"check_out" => $check_out,
-				"date_attendance" => $date,
-				"formatted_date"  => $formatted_date,
+				"status" 			=> 1,
+				"data" 				=> $staffDetail,
+				"check_in" 			=> isset($check_in) ? $check_in : $currTime,
+				"check_out" 		=> isset($check_out) ? $check_out : $currTime,
+				"date_attendance" 	=> $date,
+				"formatted_date"  	=> $formatted_date,
 			);
 		}else{
 			$response = array(

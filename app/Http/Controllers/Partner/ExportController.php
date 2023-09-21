@@ -9,16 +9,12 @@ use App\Exports\ExportStaff;
 //use Barryvdh\DomPDF\Facade as PDF;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Partner\Staff;
+use SplFileObject;
 
 class ExportController extends Controller
 {
     public function exportStaffByRole($id, $type)
 	{
-
-		//return Excel::download(new ExportStaff, 'export.xlsx');
-        //return Excel::download(new InvoicesExport, 'invoices.csv', \Maatwebsite\Excel\Excel::CSV);
-        //return Excel::download(new InvoicesExport, 'invoices.xlsx', \Maatwebsite\Excel\Excel::XLSX);
-        //return Excel::download(new InvoicesExport, 'invoices.pdf', \Maatwebsite\Excel\Excel::DOMPDF);
 
         $partner_id = Auth::user()->id;
 
@@ -34,37 +30,26 @@ class ExportController extends Controller
 
             $fileName = 'export.csv';
 
-            $headers = array(
-                "Content-type"        => "text/csv",
-                "Content-Disposition" => "attachment; filename=$fileName",
-                "Pragma"              => "no-cache",
-                "Cache-Control"       => "must-revalidate, post-check=0, pre-check=0",
-                "Expires"             => "0"
-            );
+            $csvFile = new SplFileObject(storage_path('app/' . $fileName), 'w');
+            $csvFile->fputcsv([
+                'Name', 'Email', 'Phone', 'Role', 'Facebook', 'Instagram', 'Joining Date', 'Gender'
+            ]);
 
-            $columns = array('Name', 'Email', 'Phone', 'Role', 'Facebook', 'Instagram', 'Joining Date', 'Gender');
+            foreach ($getStaff as $row) {
+                $csvFile->fputcsv([
+                    $row['name'],
+                    $row['email'],
+                    $row['phone'],
+                    $row['role_name'],
+                    $row['facebook'],
+                    $row['instagram'],
+                    $row['joining_date'],
+                    $row['gender']
+                ]);
+            }
 
-            $callback = function() use($getStaff, $columns) {
-                $file = fopen('php://output', 'w');
-                fputcsv($file, $columns);
-
-                foreach ($getStaff as $task) { //echo "<pre>"; print_r($task); die;
-                    $row['Name']        = $task['name'];
-                    $row['Email']       = $task['email'];
-                    $row['Phone']       = $task['phone'];
-                    $row['Role']        = $task['role_name'];
-                    $row['Facebook']    = $task['facebook'];
-                    $row['Instagram']   = $task['instagram'];
-                    $row['Joining Date']= $task['joining_date'];
-                    $row['Gender']      = $task['gender'];
-
-                    fputcsv($file, array($row['Name'], $row['Email'], $row['Phone'], $row['Role'], $row['Facebook'], $row['Instagram'], $row['Joining Date'], $row['Gender']));
-                }
-
-                fclose($file);
-            };
-
-            return response()->stream($callback, 200, $headers);
+            $csvFile = null;
+            return response()->download(storage_path('app/' . $fileName));
         }
         if ($type == "pdf") {
             /*$csv = Writer::createFromFileObject(new \SplTempFileObject());

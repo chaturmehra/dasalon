@@ -81,37 +81,37 @@ class StaffController extends Controller
 
 		$monday_hours = $tuesday_hours = $wednesday_hours = $thursday_hours = $friday_hours = $saturday_hours = $sunday_hours = "";
 		if( !empty($request['monday_hours']) ){
-			if ( !empty($request['monday_hours']["'start'"][0]) || !empty($request['monday_hours']["'end'"][0])) {
+			if ( !empty($request['monday_hours']['start'][0]) || !empty($request['monday_hours']['end'][0])) {
 				$monday_hours 		= json_encode($request['monday_hours']);
 			}
 		}
 		if( !empty($request['tuesday_hours']) ){
-			if ( !empty($request['tuesday_hours']["'start'"][0]) || !empty($request['tuesday_hours']["'end'"][0])) {
+			if ( !empty($request['tuesday_hours']['start'][0]) || !empty($request['tuesday_hours']['end'][0])) {
 				$tuesday_hours 		= json_encode($request['tuesday_hours']);
 			}
 		}
 		if( !empty($request['wednesday_hours']) ){
-			if ( !empty($request['wednesday_hours']["'start'"][0]) || !empty($request['wednesday_hours']["'end'"][0])) {
+			if ( !empty($request['wednesday_hours']['start'][0]) || !empty($request['wednesday_hours']['end'][0])) {
 				$wednesday_hours 	= json_encode($request['wednesday_hours']);
 			}
 		}
 		if( !empty($request['thursday_hours']) ){
-			if ( !empty($request['thursday_hours']["'start'"][0]) || !empty($request['thursday_hours']["'end'"][0])) {
+			if ( !empty($request['thursday_hours']['start'][0]) || !empty($request['thursday_hours']['end'][0])) {
 				$thursday_hours 	= json_encode($request['thursday_hours']);
 			}
 		}
 		if( !empty($request['friday_hours']) ){
-			if ( !empty($request['friday_hours']["'start'"][0]) || !empty($request['friday_hours']["'end'"][0])) {
+			if ( !empty($request['friday_hours']['start'][0]) || !empty($request['friday_hours']['end'][0])) {
 				$friday_hours 		= json_encode($request['friday_hours']);
 			}
 		}
 		if( !empty($request['saturday_hours']) ){
-			if ( !empty($request['saturday_hours']["'start'"][0]) || !empty($request['saturday_hours']["'end'"][0])) {
+			if ( !empty($request['saturday_hours']['start'][0]) || !empty($request['saturday_hours']['end'][0])) {
 				$saturday_hours 	= json_encode($request['saturday_hours']);
 			}
 		}
 		if( !empty($request['sunday_hours']) ){
-			if ( !empty($request['sunday_hours']["'start'"][0]) || !empty($request['sunday_hours']["'end'"][0])) {
+			if ( !empty($request['sunday_hours']['start'][0]) || !empty($request['sunday_hours']['end'][0])) {
 				$sunday_hours 		= json_encode($request['sunday_hours']);
 			}
 		}
@@ -259,40 +259,40 @@ class StaffController extends Controller
 			'is_active' => isset($request->staff_status) ? 1 : 0,
 			'country'   => "",
 		]);
-
+		
 		$monday_hours = $tuesday_hours = $wednesday_hours = $thursday_hours = $friday_hours = $saturday_hours = $sunday_hours = "";
 		if( !empty($request['monday_hours']) ){
-			if ( !empty($request['monday_hours']["'start'"][0]) || !empty($request['monday_hours']["'end'"][0])) {
+			if ( !empty($request['monday_hours']['start'][0]) || !empty($request['monday_hours']['end'][0])) {
 				$monday_hours 		= json_encode($request['monday_hours']);
 			}
 		}
 		if( !empty($request['tuesday_hours']) ){
-			if ( !empty($request['tuesday_hours']["'start'"][0]) || !empty($request['tuesday_hours']["'end'"][0])) {
+			if ( !empty($request['tuesday_hours']['start'][0]) || !empty($request['tuesday_hours']['end'][0])) {
 				$tuesday_hours 		= json_encode($request['tuesday_hours']);
 			}
 		}
 		if( !empty($request['wednesday_hours']) ){
-			if ( !empty($request['wednesday_hours']["'start'"][0]) || !empty($request['wednesday_hours']["'end'"][0])) {
+			if ( !empty($request['wednesday_hours']['start'][0]) || !empty($request['wednesday_hours']['end'][0])) {
 				$wednesday_hours 	= json_encode($request['wednesday_hours']);
 			}
 		}
 		if( !empty($request['thursday_hours']) ){
-			if ( !empty($request['thursday_hours']["'start'"][0]) || !empty($request['thursday_hours']["'end'"][0])) {
+			if ( !empty($request['thursday_hours']['start'][0]) || !empty($request['thursday_hours']['end'][0])) {
 				$thursday_hours 	= json_encode($request['thursday_hours']);
 			}
 		}
 		if( !empty($request['friday_hours']) ){
-			if ( !empty($request['friday_hours']["'start'"][0]) || !empty($request['friday_hours']["'end'"][0])) {
+			if ( !empty($request['friday_hours']['start'][0]) || !empty($request['friday_hours']['end'][0])) {
 				$friday_hours 		= json_encode($request['friday_hours']);
 			}
 		}
 		if( !empty($request['saturday_hours']) ){
-			if ( !empty($request['saturday_hours']["'start'"][0]) || !empty($request['saturday_hours']["'end'"][0])) {
+			if ( !empty($request['saturday_hours']['start'][0]) || !empty($request['saturday_hours']['end'][0])) {
 				$saturday_hours 	= json_encode($request['saturday_hours']);
 			}
 		}
 		if( !empty($request['sunday_hours']) ){
-			if ( !empty($request['sunday_hours']["'start'"][0]) || !empty($request['sunday_hours']["'end'"][0])) {
+			if ( !empty($request['sunday_hours']['start'][0]) || !empty($request['sunday_hours']['end'][0])) {
 				$sunday_hours 		= json_encode($request['sunday_hours']);
 			}
 		}

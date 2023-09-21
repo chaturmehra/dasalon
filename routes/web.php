@@ -175,6 +175,7 @@ Route::middleware(['auth'])->group(function () {
     Route::post('partner/service/store', [ServicesController::class, 'serviceStore']);
     Route::post('partner/service/update', [ServicesController::class, 'serviceUpdate']);
     Route::get('partner/service/get-online-price/{id}', [ServicesController::class, 'getOnlinePrice']);
+    Route::get('partner/service/get-offpeak-price/{id}', [ServicesController::class, 'getOffPeakPrice']);
 
     Route::get('partner/promote', [PromoteController::class, 'index'])->name('promote.index');
     Route::get('partner/reports', [ReportsController::class, 'index'])->name('reports.index');
@@ -221,6 +222,10 @@ Route::middleware(['auth'])->group(function () {
 
     Route::get('partner/staff/leave', [StaffLeaveController::class, 'index'])->name('leave.index');
     Route::post('partner/staff/leave', [StaffLeaveController::class, 'storeLeave']);
+    Route::get('partner/staff/get-leave-status-by-staff-id/{id}', [StaffLeaveController::class, 'getLeaveStatusByStaffId']);
+    Route::get('partner/staff/get-leave-detail/{id}', [StaffLeaveController::class, 'getLeaveDetail']);
+    Route::get('partner/staff/leave-cancel/{id}', [StaffLeaveController::class, 'leaveCancel']);
+    Route::post('partner/staff/leave/update', [StaffLeaveController::class, 'updateLeave']);
 
     Route::get('partner/staff/user-authorization', [StaffUserAuthorizationController::class, 'index'])->name('user-authorization.index');
     Route::post('partner/staff/store-user-authorization', [StaffUserAuthorizationController::class, 'storeAuthorization']);

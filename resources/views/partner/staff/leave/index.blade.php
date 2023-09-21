@@ -96,7 +96,7 @@
                         <!--begin::Item-->
                         <li class="nav-item">
                            <!--begin::Link-->
-                           <a class="active show_hide_staff_leave" data-bs-toggle="pill" href="javascript:void(0)" staff-id="all">
+                           <a class="active show_hide_staff_leave" data-bs-toggle="pill" href="javascript:void(0)" staff-id="all" staff-name="All">
                               <div class="symbol symbol-35px" data-bs-toggle="tooltip" title="All">
                                  <span class="symbol-label bg-warning text-inverse-warning fw-bold">All</span>
                               </div>
@@ -116,7 +116,7 @@
                         @endphp
                         <li class="nav-item">
                            <!--begin::Link-->
-                           <a data-bs-toggle="pill" href="javascript:void(0)" staff-id="{{ $staff_name->user_id }}" class="show_hide_staff_leave">
+                           <a data-bs-toggle="pill" href="javascript:void(0)" staff-id="{{ $staff_name->user_id }}" staff-name="{{ $staff_name->name }}" class="show_hide_staff_leave">
                               <div class="symbol symbol-35px" data-bs-toggle="tooltip" title="{{ $staff_name->name }}">
                                  <span class="symbol-label bg-danger text-inverse-danger fw-bold">{{ strtoupper($shortName) }}</span>
                               </div>
@@ -133,15 +133,15 @@
                         <div class="d-flex flex-column gap-2 w-200px">
                            <div class="d-flex justify-content-between">
                               <span class="text-gray-800 fw-semibold">Name</span>
-                              <span class="text-gray-800 fw-semibold">All</span>
+                              <span class="text-gray-800 fw-semibold"><span class="staff-name">All</span></span>
                            </div>
                            <div class="d-flex justify-content-between">
                               <span class="text-gray-800 fw-semibold">Leave status(Taken)</span>
-                              <span class="text-gray-800 fw-semibold">22</span>
+                              <span class="text-gray-800 fw-semibold"><span class="count-taken-leave">{{ $countTakenLeave }}</span></span>
                            </div>
                            <div class="d-flex justify-content-between">
                               <span class="text-gray-800 fw-semibold">Leave status(Planned)</span>
-                              <span class="text-gray-800 fw-semibold">6</span>
+                              <span class="text-gray-800 fw-semibold"><span class="count-planned-leave">{{ $countPlannedLeave }}</span></span>
                            </div>
                         </div>
                      </div>
@@ -166,6 +166,7 @@
                                     <th class="min-w-100px">Total no. of days</th>
                                     <th class="min-w-50px">Leave status</th>
                                     <th class="min-w-50px">Remarks (Reason for holiday)</th>
+                                    <th class="min-w-50px">Action</th>
                                  </tr>
                                  <!--end::Table row-->
                               </thead>
@@ -174,8 +175,11 @@
                                  @if(!empty($staffLeave))
                                  @foreach($staffLeave as $key => $staff)
                                  @php 
+
+                                    $currDate = date('Y-m-d');
+                                    $leave_status = $staff->leave_status;
                                     $start_date = $staff->start; 
-                                    $start_end = $staff->end; 
+                                    $start_end  = $staff->end; 
                                     if($start_date){
                                        $formatted_start  = date("j F", strtotime($start_date));
                                     }else{
@@ -195,6 +199,16 @@
                                     }else{
                                        $days = "";
                                     }
+
+                                    if( $leave_status && ($start_date <= $currDate) ){
+                                       $status = "Taken";
+                                    } else if( $leave_status && ($start_date >= $currDate) ){
+                                       $status = "Planned";
+                                    } else if( $leave_status == 0 ) {
+                                       $status = "Cancelled";
+                                    }else{
+                                       $status = "";
+                                    }
                                  
                                  @endphp
                                  <tr class="staff_{{$staff->user_id}}">
@@ -202,8 +216,16 @@
                                     <td>{{ $formatted_start }}</td>
                                     <td>{{ $formatted_end }}</td>
                                     <td>{{ $days }}</td>
-                                    <td>{{ $staff->leave_status }}</td>
+                                    <td>{{ $status }}</td>
                                     <td>{{ $staff->leave_remarks }}</td>
+                                    <td>
+                                       <button type="button" class="btn btn-primary staff-leave-update" data-bs-toggle="modal" data-bs-target="#modal_attendance_staff_leave_update" staff-id="{{ $staff->sl_id }}">
+                                          Update
+                                       </button>
+                                       <button type="button" class="btn btn-primary staff-leave-cancel" staff-leave-id="{{ $staff->sl_id }}" @if($leave_status == 0 || $currDate > $start_date) disabled @endif>
+                                          Cancel
+                                       </button>
+                                    </td>
                                  </tr>
                                  @endforeach
                                  @endif
@@ -223,9 +245,10 @@
 
 <!--end:::Main-->
 
-<!--begin::Modal - Add commission-->
+<!--begin::Modal - Add leave-->
 @include('partner.staff.leave.modal.apply-leave')
-<!--end::Modal - Add commission-->
+@include('partner.staff.leave.modal.update-leave')
+<!--end::Modal - Add leave-->
 
 @endsection
 @push('scripts')

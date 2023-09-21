@@ -155,7 +155,9 @@
                                        <option></option>
                                        @if($roles)
                                        @foreach($roles as $key => $role)
+                                       @if($role->role_name != "Owner")
                                        <option value="{{ $role->id }}">{{ $role->role_name }}</option>
+                                       @endif
                                        @endforeach
                                        @endif
                                     </select>
@@ -237,7 +239,9 @@
                                              <option></option>
                                              @if($roles)
                                              @foreach($roles as $key => $role)
+                                             @if($role->role_name != "Owner")
                                              <option value="{{ $role->id }}">{{ $role->role_name }}</option>
+                                             @endif
                                              @endforeach
                                              @endif
                                           </select>
@@ -387,7 +391,7 @@
                                  <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-600 menu-state-bg-light-primary fw-semibold fs-7 w-125px py-4" data-kt-menu="true">
                                     <!--begin::Menu item-->
                                     <div class="menu-item px-3">
-                                       <a href="#" class="menu-link px-3 view-staff" id="kt_drawer_editprofile_toggle" staff-id="{{ $staff->user_id }}">View</a>
+                                       <a href="javascript:void(0)" class="menu-link px-3 update-staff-detail" staff-id="{{ $staff->user_id }}" data-bs-toggle="modal" data-bs-target="#kt_modal_update_scrollable22">Edit</a>
                                     </div>
                                     <!--end::Menu item-->
                                     <!--begin::Menu item-->
