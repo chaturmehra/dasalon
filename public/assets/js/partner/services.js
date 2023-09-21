@@ -80,4 +80,39 @@ $(document).ready(function(){
 			}
 		});
 	});
+
+	$(document).on('click', '.venue-offpeak-price-view', function(event){
+		event.preventDefault();
+		var service_id  = $(this).attr('venue-service-id');
+		var ajaxurl     = baseurl+'partner/service/get-offpeak-price'+'/' + service_id;
+
+		$.ajax({
+			url:ajaxurl,
+			type:'GET',
+			beforeSend:function(){
+				$('.spinner-cls').show();
+			},
+			success:function(response)
+			{
+				$('.spinner-cls').hide();
+				response = JSON.parse(response);
+				$('.off-peak-service-staff-pricing').html('');
+				if (response.status) {
+					var pricing = response.data;
+					$('.off-peak-service-staff-pricing').append(pricing);
+				}
+			}
+		});
+	});
 });
+
+var defaultvalue = "";
+function numberHandler(input){
+	const value = input.value.trim();
+	const regex = /^[0-9\b]+$/;
+	if (value != "" && !regex.test(value)) {
+		input.value = defaultvalue;
+	}else{
+		defaultvalue = input.value;
+	}
+}

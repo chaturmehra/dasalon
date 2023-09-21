@@ -1101,7 +1101,7 @@ function editDragendMarker(latitude, longitude) {
 var defaultvalue = "";
 function numberHandler(input){
   const value = input.value.trim();
-  const regex = /^[0-9\b]+jQuery/;
+  const regex = /^[0-9\b]+$/;
   if (value != "" && !regex.test(value)) {
     input.value = defaultvalue;
   }else{
@@ -1110,7 +1110,7 @@ function numberHandler(input){
 }
 function numberOtpHandler(input){
   const value = input.value.trim();
-  const regex = /^[0-9\b]+jQuery/;
+  const regex = /^[0-9\b]+$/;
   if (value != "" && !regex.test(value)) {
     input.value = defaultvalue;
   }else{

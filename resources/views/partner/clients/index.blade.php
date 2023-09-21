@@ -1,5 +1,32 @@
 @extends('partner.layouts.auth.app')
 @section('content') 
+<!--Begin:::error popup-->
+@if(session()->has('success'))
+<div class="card-header display-message">
+   <div class="alert alert-success">
+      {{ session()->get('success') }}
+   </div>
+</div>
+@endif
+@if(session()->has('error'))
+<div class="card-header display-message">
+   <div class="alert alert-danger">
+      {{ session()->get('error') }}
+   </div>
+</div>
+@endif
+@if ($errors->any())
+<div class="card-header display-message">
+   <div class="alert alert-danger">
+      <ul>
+         @foreach ($errors->all() as $error)
+         <li>{{ $error }}</li>
+         @endforeach
+      </ul>
+   </div>
+</div>
+@endif
+<!--Begin:::error popup-->
 
 <!--Begin:::Main-->
 <div class="app-main flex-column flex-row-fluid" id="kt_app_main">
@@ -181,39 +208,42 @@
                      <!--end::Filter menu-->
                      
                      <div class="m-0">
-                        <a href="#" class="btn btn-light btn-active-light-primary btn-flex btn-center btn-sm" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end">Sorting
-                        <i class="ki-duotone ki-down fs-5 ms-1"></i></a>
-                        <!--begin::Menu-->
-                       <!--   <form action="{{url('partner/client/sortAZ')}}" method="GET" >
-                              @csrf -->
-                        <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-600 menu-state-bg-light-primary fw-semibold fs-7 w-125px py-4" data-kt-menu="true">
-                           <!--begin::Menu item-->
-                           <div class="menu-item px-3">
-                              <a href="" class="menu-link px-3">name (A-Z)</a>
-                           </div>
-                           <!--end::Menu item-->
-                           <!--begin::Menu item-->
-                           <div class="menu-item px-3">
-                              <a href="" class="menu-link px-3" >name (Z-A)</a>
-                           </div>
-                           <!--end::Menu item-->
-                           <!--begin::Menu item-->
-                           <div class="menu-item px-3">
-                              <a href="" class="menu-link px-3">Gender (A-Z)</a>
-                           </div>
-                           <!--begin::Menu item-->
-                           <div class="menu-item px-3">
-                              <a href="" class="menu-link px-3">Gender (Z-A)</a>
-                           </div>
-                           <div class="menu-item px-3">
-                              <a href="" class="menu-link px-3">Created at (oldest first)</a>
-                           </div>
-                           <div class="menu-item px-3">
-                              <a href="" class="menu-link px-3">Created at (newest first)</a>
-                           </div>
-                        <!-- </form>    -->
-                        </div>
+                        <form action="{{ route('sorting') }}" method="GET">
+                             @csrf
+                             <a href="#" class="btn btn-light btn-active-light-primary btn-flex btn-center btn-sm" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end">
+                                 Sorting
+                                 <i class="ki-duotone ki-down fs-5 ms-1"></i>
+                             </a>
+                             <!--begin::Menu-->
+                             <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-600 menu-state-bg-light-primary fw-semibold fs-7 w-125px py-4" data-kt-menu="true">
+                                 <!--begin::Menu item-->
+                                 <div class="menu-item px-3">
+                                     <button type="submit" name="sort" value="name_asc" class="menu-link px-3">name (A-Z)</button>
+                                 </div>
+                                 <!--end::Menu item-->
+                                 <!--begin::Menu item-->
+                                 <div class="menu-item px-3">
+                                     <button type="submit" name="sort" value="name_desc" class="menu-link px-3">name (Z-A)</button>
+                                 </div>
+                                 <!--end::Menu item-->
+                                 <!--begin::Menu item-->
+                                 <div class="menu-item px-3">
+                                     <button type="submit" name="sort" value="gender_asc" class="menu-link px-3">Gender (A-Z)</button>
+                                 </div>
+                                 <!--begin::Menu item-->
+                                 <div class="menu-item px-3">
+                                     <button type="submit" name="sort" value="gender_desc" class="menu-link px-3">Gender (Z-A)</button>
+                                 </div>
+                                 <div class="menu-item px-3">
+                                     <button type="submit" name="sort" value="created_at_asc" class="menu-link px-3">Created at (oldest first)</button>
+                                 </div>
+                                 <div class="menu-item px-3">
+                                     <button type="submit" name="sort" value="created_at_desc" class="menu-link px-3">Created at (newest first)</button>
+                                 </div>
+                             </div>
+                         </form>
                      </div>
+
                      <div class="m-0">
                         <!--begin::Export dropdown-->
                         <button type="button" class="btn btn-sm btn-light-primary" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end">
@@ -2860,10 +2890,8 @@
       }
       });
 </script>
-
-
 <script>
-   jQuery(document).on("click", ".client-on-click",".client-view-click", function(e){
+   jQuery(document).on("click", ".client-on-click", function(e){
       e.preventDefault();
         var client_id = jQuery(this).attr("client-id");
         $.ajax({
@@ -2904,7 +2932,6 @@
         });
     });
 </script>
-
 <script>
    jQuery(document).on("click", ".client-view-click", function(e){
       e.preventDefault();

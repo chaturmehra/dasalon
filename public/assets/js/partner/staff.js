@@ -123,7 +123,8 @@ $(document).on('click', '.view-staff', function(){
 
 $(document).on('click', '.update-staff-detail', function(){
   event.preventDefault();
-  var staff_id = $('#staff_id').val();
+  //var staff_id = $('#staff_id').val();
+  var staff_id    = $(this).attr('staff-id');
   
   if(staff_id){
     var ajaxurl = baseurl+'partner/staff/get-staff-detail-by-id'+'/' + staff_id;
@@ -212,8 +213,8 @@ $(document).on('click', '.update-staff-detail', function(){
 
           if (monday_hours) {
             var json_monday_hours = JSON.parse(monday_hours);
-            var monday_hours_start = json_monday_hours["'start'"];
-            var monday_hours_end   = json_monday_hours["'end'"];
+            var monday_hours_start = json_monday_hours["start"];
+            var monday_hours_end   = json_monday_hours["end"];
 
             const combinedArray = monday_hours_start.map((startTime, index) => ({
               start: startTime,
@@ -231,8 +232,8 @@ $(document).on('click', '.update-staff-detail', function(){
           }
           if (tuesday_hours) {
             var json_tuesday_hours = JSON.parse(tuesday_hours);
-            var tuesday_hours_start = json_tuesday_hours["'start'"];
-            var tuesday_hours_end   = json_tuesday_hours["'end'"];
+            var tuesday_hours_start = json_tuesday_hours["start"];
+            var tuesday_hours_end   = json_tuesday_hours["end"];
 
             const combinedArray = tuesday_hours_start.map((startTime, index) => ({
               start: startTime,
@@ -251,8 +252,8 @@ $(document).on('click', '.update-staff-detail', function(){
           }
           if (wednesday_hours) {
             var json_wednesday_hours = JSON.parse(wednesday_hours);
-            var wednesday_hours_start = json_wednesday_hours["'start'"];
-            var wednesday_hours_end   = json_wednesday_hours["'end'"];
+            var wednesday_hours_start = json_wednesday_hours["start"];
+            var wednesday_hours_end   = json_wednesday_hours["end"];
 
             const combinedArray = wednesday_hours_start.map((startTime, index) => ({
               start: startTime,
@@ -271,8 +272,8 @@ $(document).on('click', '.update-staff-detail', function(){
           }
           if (thursday_hours) {
             var json_thursday_hours = JSON.parse(thursday_hours);
-            var thursday_hours_start = json_thursday_hours["'start'"];
-            var thursday_hours_end   = json_thursday_hours["'end'"];
+            var thursday_hours_start = json_thursday_hours["start"];
+            var thursday_hours_end   = json_thursday_hours["end"];
 
             const combinedArray = thursday_hours_start.map((startTime, index) => ({
               start: startTime,
@@ -290,8 +291,8 @@ $(document).on('click', '.update-staff-detail', function(){
           }
           if (friday_hours) {
             var json_friday_hours = JSON.parse(friday_hours);
-            var friday_hours_start = json_friday_hours["'start'"];
-            var friday_hours_end   = json_friday_hours["'end'"];
+            var friday_hours_start = json_friday_hours["start"];
+            var friday_hours_end   = json_friday_hours["end"];
 
             const combinedArray = friday_hours_start.map((startTime, index) => ({
               start: startTime,
@@ -309,8 +310,8 @@ $(document).on('click', '.update-staff-detail', function(){
           }
           if (saturday_hours) {
             var json_saturday_hours = JSON.parse(saturday_hours);
-            var saturday_hours_start = json_saturday_hours["'start'"];
-            var saturday_hours_end   = json_saturday_hours["'end'"];
+            var saturday_hours_start = json_saturday_hours["start"];
+            var saturday_hours_end   = json_saturday_hours["end"];
 
             const combinedArray = saturday_hours_start.map((startTime, index) => ({
               start: startTime,
@@ -329,8 +330,8 @@ $(document).on('click', '.update-staff-detail', function(){
           }
           if (sunday_hours) {
             var json_sunday_hours = JSON.parse(sunday_hours);
-            var sunday_hours_start = json_sunday_hours["'start'"];
-            var sunday_hours_end   = json_sunday_hours["'end'"];
+            var sunday_hours_start = json_sunday_hours["start"];
+            var sunday_hours_end   = json_sunday_hours["end"];
 
             const combinedArray = sunday_hours_start.map((startTime, index) => ({
               start: startTime,
@@ -526,8 +527,8 @@ $(document).on('click', '.export-staff-by-role', function(){
 });
 
 function addShift(index, value, day){
-  var start = day+"_hours['start'][]";
-  var end   = day+"_hours['end'][]";
+  var start = day+"_hours[start][]";
+  var end   = day+"_hours[end][]";
   var html = '<div class="d-flex flex-wrap gap-5 single-add-shift-div"><div class="input-group kt_td_picker_time_only" data-td-target-input="nearest" data-td-target-toggle="nearest"><input type="text" class="form-control" data-td-target=".kt_td_picker_time_only" placeholder="start" value="'+value.start+'" name="'+start+'" /><span class="input-group-text" data-td-target=".kt_td_picker_time_only" data-td-toggle="datetimepicker"><i class="ki-outline ki-time fs-3"></i></span></div><div class="input-group kt_td_picker_time_only" data-td-target-input="nearest" data-td-target-toggle="nearest"><input type="text" class="form-control" data-td-target=".kt_td_picker_time_only" placeholder="end" value="'+value.end+'" name="'+end+'" /><span class="input-group-text" data-td-target=".kt_td_picker_time_only" data-td-toggle="datetimepicker"><i class="ki-outline ki-time fs-3"></i></span></div><div class="btn btn-icon btn-sm btn-active-light-primary ms-auto btncls" onclick="delStaffTime(this)"><i class="ki-duotone ki-cross fs-2x"><span class="path1"></span><span class="path2"></span></i></div></div>';
   return html;
 }

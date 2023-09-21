@@ -11,6 +11,7 @@ use App\Models\Partner\PartnerService;
 use App\Models\Admin\ServiceCategory;
 use App\Models\Admin\ServiceSubCategory;
 use App\Models\Admin\Service;
+use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Validator;
 
@@ -81,11 +82,11 @@ class ServicesController extends Controller
 
         $staff_pricing = "";
 		if( !empty($request['kt_ecommerce_add_category_conditions']) ){
-			if ( !empty($request['kt_ecommerce_add_category_conditions'][0]["'staff_id'"]) || !empty($request['kt_ecommerce_add_category_conditions'][0]["'online_price'"]) || !empty($request['kt_ecommerce_add_category_conditions'][0]["'off_peak_price'"]) ) {
+			if ( !empty($request['kt_ecommerce_add_category_conditions'][0]['staff_id']) || !empty($request['kt_ecommerce_add_category_conditions'][0]['online_price']) || !empty($request['kt_ecommerce_add_category_conditions'][0]['off_peak_price']) ) {
 				$staff_pricing 		= json_encode($request['kt_ecommerce_add_category_conditions']);
 			}
 		}else if( !empty($request['staff_pricing']) ){
-			if ( !empty($request['staff_pricing']["'staff_id'"][0]) || !empty($request['kt_ecommerce_add_category_conditions']["'online_price'"][0]) || !empty($request['kt_ecommerce_add_category_conditions']["'off_peak_price'"][0]) ) {
+			if ( !empty($request['staff_pricing']['staff_id'][0]) || !empty($request['kt_ecommerce_add_category_conditions']['online_price'][0]) || !empty($request['kt_ecommerce_add_category_conditions']['off_peak_price'][0]) ) {
 				$staff_pricing 		= json_encode($request['staff_pricing']);
 			}
 		}
@@ -116,25 +117,7 @@ class ServicesController extends Controller
 				$check_service_id = isset($checkService[0]->serviceid) ? $checkService[0]->serviceid : "";
 				$service_id    = $check_service_id;
 			}
-			/*foreach ($json_data as $service) {
-				$checkService 	= Service::where('servicename', $service["value"])->get();
-				if( $checkService->isEmpty() ) {
-					$insertedID = Service::create([
-						'categoryid' 	=> $request->category,
-						'subcategoryid' => $request->sub_category,
-						'servicename' 	=> $service["value"],
-						'is_active' 	=> 1,
-						'created_by' 	=> $partner_id,
-					]);
-
-					$service_ids[] = $insertedID->serviceid;
-
-				}else{
-					$check_service_id = isset($checkService[0]->serviceid) ? $checkService[0]->serviceid : "";
-					$service_ids[]    = $check_service_id;
-				}
-				
-			}*/
+			
 		}else{
 			$service_id   = '';
 		}
@@ -180,11 +163,11 @@ class ServicesController extends Controller
         }
         
         if( !empty($request['kt_ecommerce_add_category_conditions']) ){
-			if ( !empty($request['kt_ecommerce_add_category_conditions'][0]["'staff_id'"]) || !empty($request['kt_ecommerce_add_category_conditions'][0]["'online_price'"]) || !empty($request['kt_ecommerce_add_category_conditions'][0]["'off_peak_price'"]) ) {
+			if ( !empty($request['kt_ecommerce_add_category_conditions'][0]['staff_id']) || !empty($request['kt_ecommerce_add_category_conditions'][0]['online_price']) || !empty($request['kt_ecommerce_add_category_conditions'][0]['off_peak_price']) ) {
 				$staff_pricing 		= json_encode($request['kt_ecommerce_add_category_conditions']);
 			}
 		}else if( !empty($request['staff_pricing']) ){
-			if ( !empty($request['staff_pricing']["'staff_id'"][0]) || !empty($request['kt_ecommerce_add_category_conditions']["'online_price'"][0]) || !empty($request['kt_ecommerce_add_category_conditions']["'off_peak_price'"][0]) ) {
+			if ( !empty($request['staff_pricing']['staff_id'][0]) || !empty($request['kt_ecommerce_add_category_conditions']['online_price'][0]) || !empty($request['kt_ecommerce_add_category_conditions']['off_peak_price'][0]) ) {
 				$staff_pricing 		= json_encode($request['staff_pricing']);
 			}
 		}
@@ -278,7 +261,7 @@ class ServicesController extends Controller
 	public function getOnlinePrice($id){
 
         $getSubcategory = PartnerService::where('ps_id','=',$id)->get();
-        // echo "<pre>"; print_r($getSubcategory); die;
+        
         if ( !empty($id) && !$getSubcategory->isEmpty() ) {
         	$online_price 	= $getSubcategory[0]['online_price'];
         	$staff_pricing 	= $getSubcategory[0]['staff_pricing'];
@@ -287,30 +270,77 @@ class ServicesController extends Controller
         	if ( !empty($staff_pricing) ) {
         		$json_data = json_decode($staff_pricing);
         	}
+
         	$html = '<tr>
         	<td>Normal</td>
         	<td>'.$online_price.'</td>
         	</tr>';
         	if ( !empty($json_data) ) {
-        	foreach($json_data as $key => $value){
-        		//$value = new \stdClass();
-        		echo "<pre>"; print_r($value->staff_id);
-        		echo "<pre>"; print_r($value); die;
-        		$html.= '<tr>
-        		<td>'.$value->staff_id.'</td>
-        		<td>
-        		<div class="input-group mb-5">
-        		<span class="input-group-text">$</span>
-        		<input type="text" class="form-control" aria-label="Amount (to the nearest dollar)" value="'.$value->online_price.'" disabled />
-        		<span class="input-group-text">.00</span>
-        		</div>
-        		</td>
-        		</tr>';
-        	}
+	        	foreach($json_data as $key => $value){
+
+	        		$staffName = User::where('id', $value->staff_id)->first(['name'])->name;
+
+	        		$html.= '<tr>
+	        		<td>'.$staffName.'</td>
+	        		<td>
+	        		<div class="input-group mb-5">
+	        		<span class="input-group-text">$</span>
+	        		<input type="text" class="form-control" aria-label="Amount (to the nearest dollar)" value="'.$value->online_price.'" disabled />
+	        		<span class="input-group-text">.00</span>
+	        		</div>
+	        		</td>
+	        		</tr>';
+	        	}
         	}
 
-        	// echo $online_price;
-        	// echo "<pre>"; print_r(json_decode($staff_pricing)); die;
+        	$response = array(
+        		"status" 	=> 1,
+        		"data" 		=> $html,
+        	);
+        }else{
+        	$response = array(
+        		"status" 	=> 0,
+        		"message" 	=> "Data not found",
+        	);
+        }
+
+        echo json_encode($response);
+    }
+
+	public function getOffPeakPrice($id){
+
+        $getSubcategory = PartnerService::where('ps_id','=',$id)->get();
+        
+        if ( !empty($id) && !$getSubcategory->isEmpty() ) {
+        	$off_peak_price = $getSubcategory[0]['off_peak_price'];
+        	$staff_pricing 	= $getSubcategory[0]['staff_pricing'];
+
+        	$json_data = "";
+        	if ( !empty($staff_pricing) ) {
+        		$json_data = json_decode($staff_pricing);
+        	}
+
+        	$html = '<tr>
+        	<td>Normal</td>
+        	<td>'.$off_peak_price.'</td>
+        	</tr>';
+        	if ( !empty($json_data) ) {
+	        	foreach($json_data as $key => $value){
+	        		$staffName = User::where('id', $value->staff_id)->first(['name'])->name;
+	        		
+	        		$html.= '<tr>
+	        		<td>'.$staffName.'</td>
+	        		<td>
+	        		<div class="input-group mb-5">
+	        		<span class="input-group-text">$</span>
+	        		<input type="text" class="form-control" aria-label="Amount (to the nearest dollar)" value="'.$value->off_peak_price.'" disabled />
+	        		<span class="input-group-text">.00</span>
+	        		</div>
+	        		</td>
+	        		</tr>';
+	        	}
+        	}
+
         	$response = array(
         		"status" 	=> 1,
         		"data" 		=> $html,

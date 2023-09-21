@@ -116,3 +116,15 @@ function userAuthorization(){
 function getSelectedCountry(){
     return $country = session ()->get('country'); 
 }
+
+function durationScheduling(){
+    $durationScheduling = [
+        '15 mins'           => '15 mins',
+        '30 mins'           => '30 mins',
+        '45 mins'           => '45 mins',
+        '1 hour'            => '1 hour',
+        '1 hour 30 mins'    => '1 hour 30 mins',
+        '2 hour'            => '2 hour',
+    ];
+    return $durationScheduling;
+}

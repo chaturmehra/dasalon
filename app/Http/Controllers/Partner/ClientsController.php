@@ -4,12 +4,16 @@ namespace App\Http\Controllers\Partner;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Response; 
 use App\Models\User;
 use App\Models\Partner\ClientModel;
 use Validator;
 use Illuminate\Support\Facades\Auth;
+use App\Helpers\CsvHelper;
+use SplFileObject;
 class ClientsController extends Controller
-{
+{   
+
     public function index()
     {
         $client_data = ClientModel::leftJoin('users', 'users.id', '=', 'clients.client_id')
@@ -114,5 +118,95 @@ class ClientsController extends Controller
         return redirect()->back()->with('success', 'Client updated successfully.');
 
     }
+
+
+    public function importClient(Request $request){
+        if ($request->hasFile('file')) {
+        $file     = $request->file('file');
+        $imagePath = $file->getPathName();
+        $data     = csvToArray($imagePath);
+            foreach ($data as $record) {
+                $client_id = User::create([
+                    'name'      => $record['name'],
+                    'email'     => $record['email'],
+                    'country'   => isset($record['country'])?$record['country']:"",
+                    'phone'     =>$record['phone'],
+                    'password'  =>"",
+                ]);
+                
+                $client_data = ClientModel::create([
+                     'client_id'=>$client_id->id,
+                     'image'=>isset($record['image'])?$record['image']:"",
+                     'gender'=>$record['gender'],
+                     'dob'=> $record['dob'],
+                     'address'=>$record['address'],
+                     'notes'=>$record['notes'],
+                ]);  
+            }
+
+        }
+        return redirect('index')->with('success', 'Import successfully.');
+
+    }  
+
+    public function exportClient(){
+        $client_data = ClientModel::leftJoin('users', 'users.id', '=', 'clients.client_id')
+        ->select('clients.*', 'users.name', 'users.phone','users.email')->get();
+
+        $csvFileName = "client_data.csv";
+        $csvFile = new SplFileObject(storage_path('app/' . $csvFileName), 'w');
+
+        $csvFile->fputcsv([
+        'Name', 'Phone', 'Email', 'Gender', 'Date of Birth', 'Address', 'Notes'
+        ]);
+        
+
+        foreach ($client_data as $row) {
+                $csvFile->fputcsv([
+                    $row->name,
+                    $row->phone,
+                    $row->email,
+                    $row->gender,
+                    $row->dob,
+                    $row->address,
+                    $row->notes
+            ]);
+        }
+
+        $csvFile = null;
+        return response()->download(storage_path('app/' . $csvFileName));
+
+    }
+
+
+    public function sortClient(Request $request)
+    {
+        $sortBy = $request->input('sort');
+        switch ($sortBy) {
+            case 'name_asc':
+                $client_data = ClientModel::leftJoin('users', 'users.id', '=', 'clients.client_id')->orderBy('users.name','asc')->get();
+                break;
+            case 'name_desc':
+                $client_data = ClientModel::leftJoin('users', 'users.id', '=', 'clients.client_id')->orderBy('users.name','desc')->get();
+                break;
+            case 'gender_asc':
+                $client_data = ClientModel::leftJoin('users', 'users.id', '=', 'clients.client_id')->orderBy('clients.gender','asc')->get();
+                break;
+            case 'gender_desc':
+                $client_data = ClientModel::leftJoin('users', 'users.id', '=', 'clients.client_id')->orderBy('clients.gender','desc')->get();
+                break; 
+            case 'created_at_asc':
+                $client_data = ClientModel::leftJoin('users', 'users.id', '=', 'clients.client_id')->orderBy('clients.created_at','asc')->get();
+                break; 
+            case 'created_at_desc':
+                $client_data = ClientModel::leftJoin('users', 'users.id', '=', 'clients.client_id')->orderBy('clients.created_at','desc')->get();
+                break;            
+            default:
+                $client_data = ClientModel::all();
+        }
+
+        return view("partner/clients/index", ['client_data' => $client_data]);
+    }
+
 
 }

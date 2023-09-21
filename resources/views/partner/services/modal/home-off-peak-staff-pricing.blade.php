@@ -1,8 +1,8 @@
-<div class="modal fade pricingmodal" id="kt_modal_scrollable5" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-hidden="true">
+<div class="modal fade pricingmodal" id="kt_modal_scrollable7" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-hidden="true">
   <div class="modal-dialog modal-dialog-scrollable">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title">Staff Pricing</h5>
+        <h5 class="modal-title">Staff Pricing Home</h5>
 
         <!--begin::Close-->
         <div class="btn btn-icon btn-sm btn-active-light-primary ms-2" data-bs-dismiss="modal" aria-label="Close">

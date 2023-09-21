@@ -38,7 +38,7 @@
                      <!--begin::Details-->
                      <div class="d-flex flex-wrap flex-sm-nowrap gap-8">
                         <div class="symbol symbol-100px symbol-lg-160px symbol-fixed position-relative">
-                           <img id="image" src="{{$client->image}}" alt="image" >
+                          <img id="image" src="{{$client->image}}" alt="image" >
                            <div class="position-absolute translate-middle bottom-0 start-100 mb-6 bg-success rounded-circle border border-4 border-body h-20px w-20px"></div>
                         </div>
                         <!--begin::Info-->
@@ -2871,3 +2871,4 @@
          <!--end::Card-->
       </div>
 <!--end::Drawer-->
+
