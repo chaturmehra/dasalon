@@ -1,30 +1,4 @@
 <div class="modal fade" id="kt_modal_scrollable" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-hidden="true">
-
-        @if(session()->has('success'))
-            <div class="card-header display-message">
-               <div class="alert alert-success">
-                  {{ session()->get('success') }}
-               </div>
-            </div>
-            @endif
-            @if(session()->has('error'))
-            <div class="card-header display-message">
-               <div class="alert alert-danger">
-                  {{ session()->get('error') }}
-               </div>
-            </div>
-            @endif
-            @if ($errors->any())
-            <div class="card-header display-message">
-               <div class="alert alert-danger">
-                  <ul>
-                     @foreach ($errors->all() as $error)
-                     <li>{{ $error }}</li>
-                     @endforeach
-                  </ul>
-               </div>
-            </div>
-            @endif
          <div class="modal-dialog modal-xl">
             <div class="modal-content">
                <div class="modal-header">
@@ -126,7 +100,7 @@
                                     </label>
                                     <!--end::Label-->
                                     <!--begin::Input-->
-                                    <input type="text" class="form-control form-control-solid" name="name" value="" />
+                                    <input type="text" class="form-control client_name form-control-solid" name="name" value="" />
                                     <!--end::Input-->
                                  </div>
                                  <!--end::Input group-->
@@ -154,12 +128,12 @@
                            <div class="fv-row mb-7">
                               <!--begin::Label-->
                               <label class="fs-6 fw-semibold form-label mt-3">
-                              <span>Phone no.</span>
+                              <span class="required">Phone no.</span>
                               </span>
                               </label>
                               <!--end::Label-->
                               <!--begin::Input-->
-                              <input type="text" class="form-control form-control-solid" name="phone" value="" />
+                              <input type="text" class="form-control form-control-solid client_phone" name="phone" value="" />
                               <!--end::Input-->
                            </div>
                            <!--end::Input group-->
@@ -171,7 +145,7 @@
                               </label>
                               <!--end::Label-->
                               <!--begin::Input-->
-                              <input type="email" class="form-control form-control-solid" name="email" value="" />
+                              <input type="email" class="form-control form-control-solid client_email" name="email" value="" />
                               <!--end::Input-->
                            </div>
                            <!--end::Input group-->
@@ -183,7 +157,7 @@
                               </label>
                               <!--end::Label-->
                               <!--begin::Input-->
-                              <input class="form-control kt_datepicker w-100" name="dob"placeholder="DOB"/>
+                              <input class="form-control kt_datepicker w-100 client_dob" name="dob"placeholder="DOB"  />
                               <!--end::Input-->
                            </div>
                            <!--end::Input group-->
@@ -226,7 +200,7 @@
                               <button type="reset" data-kt-contacts-type="cancel" class="btn btn-light me-3">Cancel</button>
                               <!--end::Button-->
                               <!--begin::Button-->
-                              <button type="submit" data-kt-contacts-type="submit" class="btn btn-primary">
+                              <button type="submit" data-kt-contacts-type="submit" class="btn btn-primary" onclick="return validateForm()">
                               <span class="indicator-label">Save</span>
                               <span class="indicator-progress">Please wait...
                               <span class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
@@ -244,3 +218,30 @@
             </div>
          </div>
       </div>
+
+
+
+@push('scripts')
+<script >
+function validateForm(){
+  
+    var cname      = jQuery('.client_name').val();
+    var cemail     = jQuery('.client_email').val();
+    var cdob       = jQuery('.client_dob').val();
+    var cphone       = jQuery('.client_phone').val();
+    if(!cname || !cemail || !cdob || !cphone){
+        Swal.fire({
+          text: "Please fill all the mandatory fields.",
+          icon: "error",
+          buttonsStyling: !1,
+          confirmButtonText: "Ok, got it!",
+          customClass: {
+            confirmButton: "btn btn-primary"
+          }
+        })
+        return false;    // in failure case
+    }        
+    return true;    // in success case
+}
+</script>
+@endpush
