@@ -34,7 +34,8 @@
         },
         "files": [
             "app/Helpers/helpers.php",
-            "app/Helpers/CustomHelper.php"
+            "app/Helpers/CustomHelper.php",
+            "app/Helpers/CsvHelper.php"
         ]
     },
     "autoload-dev": {

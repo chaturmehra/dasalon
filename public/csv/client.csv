@@ -1,0 +1,18 @@
+Update 
+1.Import data from the CSV file and insert it in the database.
+2.Add the template to the CSV file and attach it to the download.
+3.Export the client data and convert it into a CSV file.
+4.In the client module, if an image exists in the database, it is displayed.
+on the detail page; on the other hand, it shows two letters of the name on the image.
+5.sorting the name in Ascending order
+
+InTime 10:15 and Out time 6:55PM
+
+
+
+
+
+
+
+d::Menu-->
+                     </div>

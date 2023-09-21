@@ -274,3 +274,7 @@ Route::get('partner/client/client_detail/{id}', [ClientsController::class, 'getC
 
 Route::post('partner/client/update', [ClientsController::class, 'updateClient'])->name('client_edit');
 
+Route::post('partner/client/import', [ClientsController::class, 'importClient'])->name('client_import');
+
+Route::get('partner/client/export', [ClientsController::class, 'exportClient']);
+Route::get('partner/client/sorting', [ClientsController::class, 'sortClient'])->name('sorting');
