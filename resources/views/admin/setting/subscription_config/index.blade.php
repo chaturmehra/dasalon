@@ -148,25 +148,11 @@
                                        </div>
                                        <div class="modal-body">
                                           <!--begin::Form-->
-                                          <form class="form" action = "{{ url('admin/settings/onboarding')}}" method = "post">
+                                          <form class="form" action = "{{ url('admin/settings/onboarding/typeone')}}" method = "post">
                                               @csrf 
                                              <!--begin::Scroll-->
                                              <div class="d-flex flex-column scroll-y me-n7 pe-7">
-                                                <!--begin::Input group-->
-                                                <div class="fv-row mb-7">
-                                                   <!--begin::Label-->
-                                                   <label for="kt_docs_select2_country" class="form-label">Select a country</label>
-                                                   <div class="form-floating border rounded">
-                                                      <select class="form-select select_country8" placeholder="..." id="kt_docs_select2_country" name="gperiod_country">
-                                                      <option value="">Select Country</option>
-                                                      @foreach(getCountryConfigList() as $con_val)
-																				<option value="{{$con_val->id}}" data-kt-select2-country="{{asset('/public/assets/media/flags/'.strtolower(str_replace(' ','-',$con_val->name.'.svg')))}}">{{$con_val->name}}</option>
-																				@endforeach
-                                                      </select>
-                                                   </div>
-                                                   <!--end::Input-->
-                                                </div>
-                                                <!--end::Input group-->
+                                       
                                                 <!--begin::Input group-->
                                                 <div class="fv-row mb-7">
                                                    <!--begin::Label-->
@@ -174,7 +160,9 @@
                                                    <!--end::Label-->
                                                    <!--begin::Input-->
                                                    <input type="number" name="gperiod_type1" class="form-control form-control-solid mb-3 mb-lg-0" placeholder="Grace Period Type 1" 
-                                                   id="dis_typeone"/>
+                                                   id="dis_typeone"
+                                                   value="{{ isset($onboardtype[0]['gperiod_type1']) ? $onboardtype[0]['gperiod_type1'] : ""}}"
+                                                   />
                                                    <!--end::Input-->
                                                 </div>
                                                 <!--end::Input group-->
@@ -322,32 +310,20 @@
                                        </div>
                                        <div class="modal-body">
                                          <!--begin::Form-->
-                                          <form class="form" action = "{{ url('admin/settings/onboarding')}}" method = "post">
+                                          <form class="form" action = "{{ url('admin/settings/onboarding/typetwo')}}" method = "post">
                                                @csrf 
                                              <!--begin::Scroll-->
                                              <div class="d-flex flex-column scroll-y me-n7 pe-7">
-                                                <!--begin::Input group-->
-                                                <div class="fv-row mb-7">
-                                                   <!--begin::Label-->
-                                                   <label for="kt_docs_select2_country2" class="form-label">Select a country</label>
-                                                    <div class="form-floating border rounded">
-                                                      <select class="form-select select_country9" name="gperiod_country" placeholder="..." id="kt_docs_select2_country2">
-                                                      <option value="">Select Country</option>
-                                                      @foreach(getCountryConfigList() as $con_val)
-                                                                                <option value="{{$con_val->id}}" data-kt-select2-country="{{asset('/public/assets/media/flags/'.strtolower(str_replace(' ','-',$con_val->name.'.svg')))}}">{{$con_val->name}}</option>
-                                                                                @endforeach
-                                                      </select>
-                                                   </div>
-                                                   <!--end::Input-->
-                                                </div>
-                                                <!--end::Input group-->
+                                     
                                                 <!--begin::Input group-->
                                                 <div class="fv-row mb-7">
                                                    <!--begin::Label-->
                                                    <label class="required fw-semibold fs-6 mb-2">Grace Period Type 2</label>
                                                    <!--end::Label-->
                                                    <!--begin::Input-->
-                                                   <input type="number" name="gperiod_type2" class="form-control form-control-solid mb-3 mb-lg-0" placeholder="Grace Period Type 2" id="dis_typetwo"/>
+                                                   <input type="number" name="gperiod_type2" class="form-control form-control-solid mb-3 mb-lg-0" placeholder="Grace Period Type 2" id="dis_typetwo"
+                                                   value="{{ isset($onboardtype[0]['gperiod_type2']) ? $onboardtype[0]['gperiod_type2'] : ""}}"
+                                                   />
                                                    <!--end::Input-->
                                                 </div>
                                                 <!--end::Input group-->
@@ -498,28 +474,16 @@
                                                @csrf 
                                              <!--begin::Scroll-->
                                              <div class="d-flex flex-column scroll-y me-n7 pe-7">
-                                                <!--begin::Input group-->
-                                                <div class="fv-row mb-7">
-                                                   <!--begin::Label-->
-                                                   <label for="kt_docs_select2_country3" class="form-label">Select a country</label>
-                                                   <div class="form-floating border rounded">
-                                                      <select class="form-select select_countryon" name="gperiod_country" placeholder="..." id="kt_docs_select2_country3">
-                                                      <option value="">Select Country</option>
-                                                      @foreach(getCountryConfigList() as $con_val)
-                                                                                <option value="{{$con_val->id}}" data-kt-select2-country="{{asset('/public/assets/media/flags/'.strtolower(str_replace(' ','-',$con_val->name.'.svg')))}}">{{$con_val->name}}</option>
-                                                                                @endforeach
-                                                      </select>
-                                                   </div>
-                                                   <!--end::Input-->
-                                                </div>
-                                                <!--end::Input group-->
+
                                                 <!--begin::Input group-->
                                                 <div class="fv-row mb-7">
                                                    <!--begin::Label-->
                                                    <label class="required fw-semibold fs-6 mb-2">On-boarding fees</label>
                                                    <!--end::Label-->
                                                    <!--begin::Input-->
-                                                   <input type="number" name="gperiod_type3" class="form-control form-control-solid mb-3 mb-lg-0" placeholder="On-boarding fees" id="dis_onboardfee"/>
+                                                   <input type="number" name="gperiod_type3" class="form-control form-control-solid mb-3 mb-lg-0" placeholder="On-boarding fees" id="dis_onboardfee"
+                                                value="{{ isset($onboardtype[0]['gperiod_type3']) ? $onboardtype[0]['gperiod_type3'] : "" }}"
+                                                   />
                                                    <!--end::Input-->
                                                 </div>
                                                 <!--end::Input group-->
@@ -700,21 +664,7 @@
                                                    <!--end::Input-->
                                                 </div>
                                                 <!--end::Input group-->
-                                                <!--begin::Input group-->
-                                                <div class="fv-row mb-7">
-                                                   <!--begin::Label-->
-                                                   <label for="kt_docs_select2_country4" class="form-label">Select a country</label>
-                                                   <div class="form-floating border rounded">
-                                                      <select class="form-select" name="country" placeholder="..." id="kt_docs_select2_country4">
-                                                      <option value="">Select Country</option>
-                                                      @foreach(getCountryConfigList() as $con_val)
-                                                      <option value="{{$con_val->id}}" data-kt-select2-country="{{asset('/assets/media/flags/'.strtolower(str_replace(' ','-',$con_val->name.'.svg')))}}">{{$con_val->name}}</option>
-                                                      @endforeach
-                                                      </select>
-                                                   </div>
-                                                   <!--end::Input-->
-                                                </div>
-                                                <!--end::Input group-->
+                                           
                                                 <!--begin::Input group-->
                                                 <div class="fv-row mb-7">
                                                    <!--begin::Label-->

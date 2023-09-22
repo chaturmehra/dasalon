@@ -56,7 +56,7 @@ class SystemAdminController extends Controller
         $user->email 		= $request->email;
         $user->password 	= Hash::make($request->password);
         $user->phone 		= $request->phone;
-        $user->country 		= $request->country;
+        $user->country 		= getSelectedCountry();
         $user->is_active 	= 1;
         $user->role 		= 0;
 

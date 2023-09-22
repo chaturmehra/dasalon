@@ -19,7 +19,7 @@ class SubscriptionController extends Controller
         $subc=SubscriptionPlan::all();
         // DB::enableQueryLog();
         
-         $onboardtype=Onboarding::leftjoin('countries', 'countries.id', '=', 'onboardings.gperiod_country')->get()->toArray();
+         $onboardtype=Onboarding::leftjoin('countries', 'countries.iso2', '=', 'onboardings.gperiod_country')->get()->toArray();
         // echo "<pre>";print_r($onboardtype);die;
 
         $subtypeOne = DB::table('users')
@@ -45,28 +45,76 @@ class SubscriptionController extends Controller
         return view('admin/setting/subscription_config/index', compact('title', 'meta_description', 'meta_keywords','subc','subtypeOne','subtypeTwo','onboardFees','onboardtype'));
     }
 
+
+     public function createGraceOne(Request $request)
+    { 
+      $gp1=$request->get('gperiod_type1');
+      $gp1= isset($gp1)?$gp1: NULL;
+      
+       $getCountry = Onboarding::where('gperiod_country', getSelectedCountry())->first();
+     
+        if($getCountry){ 
+            Onboarding::where('gperiod_country', $getCountry->gperiod_country)->
+            update([   
+         'gperiod_type1' =>$gp1,         
+                  ]);
+
+        }else{
+        
+          $onb = new Onboarding;  
+          $onb->gperiod_country =  getSelectedCountry();  
+          $onb->gperiod_type1 = $gp1;  
+          $onb->save();
+              }
+           return redirect()->back()->with('messageonb', 'Grace-period-type-1 created/updated successfully.');
+    }
+
+   public function createGraceTwo(Request $request)
+    { 
+      $gp2=$request->get('gperiod_type2');
+      $gp2= isset($gp2)?$gp2: NULL;
+      
+       $getCountry = Onboarding::where('gperiod_country', getSelectedCountry())->first();
+     
+        if($getCountry){ 
+            Onboarding::where('gperiod_country', $getCountry->gperiod_country)->
+            update([   
+         'gperiod_type2' =>$gp2,         
+                  ]);
+
+        }else{
+        
+          $onb = new Onboarding;  
+          $onb->gperiod_country =  getSelectedCountry();  
+          $onb->gperiod_type2 = $gp2;  
+          $onb->save();
+              }
+           return redirect()->back()->with('messageonb', 'Grace-period-type-2 created/updated successfully.');
+    }
+
     public function createOnboarding(Request $request)
-    {
-    $gp1=$request->get('gperiod_type1');  
-      $gp1=isset($gp1)?$gp1: NULL;
-               
-      $gp2 = $request->get('gperiod_type2');
-       $gp2=isset($gp2)?$gp2: NULL;
-       
+    { 
       $gp3=$request->get('gperiod_type3');
       $gp3= isset($gp3)?$gp3: NULL;
       
-      
+       $getCountry = Onboarding::where('gperiod_country', getSelectedCountry())->first();
+     
+        if($getCountry){ 
+            Onboarding::where('gperiod_country', $getCountry->gperiod_country)->
+            update([   
+         'gperiod_type3' =>$gp3,         
+                  ]);
 
-        $onb = new Onboarding;  
-        $onb->gperiod_country =  $request->get('gperiod_country');  
-        $onb->gperiod_type1 = $gp1;  
-        $onb->gperiod_type2 =  $gp2;  
-        $onb->gperiod_type3 = $gp3;  
+        }else{
         
-        $onb->save();
-        return redirect()->back()->with('messageonb', 'Onboarding created successfully.');
+          $onb = new Onboarding;  
+          $onb->gperiod_country =  getSelectedCountry();  
+          $onb->gperiod_type3 = $gp3;  
+          $onb->save();
+              }
+           return redirect()->back()->with('messageonb', 'Onboarding-fees created/updated successfully.');
     }
+
 
      public function gettypeOneAjax($gperiod_country_id){ 
          // DB::enableQueryLog();
@@ -121,7 +169,7 @@ class SubscriptionController extends Controller
         $sp = new SubscriptionPlan;  
         $sp->planname =  $request->get('planname');  
         $sp->cost = $request->get('cost');  
-        $sp->country = $request->get('country');  
+        $sp->country =getSelectedCountry();  
         $sp->frequency = $request->get('frequency');  
         $sp->is_active 	= 1;
         $sp->save();
