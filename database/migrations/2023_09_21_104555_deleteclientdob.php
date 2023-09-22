@@ -11,13 +11,8 @@ return new class extends Migration
      */
     public function up(): void
     {
-<<<<<<<< HEAD:database/migrations/2023_09_19_052555_add_created_by_to_services_table.php
-        Schema::table('services', function (Blueprint $table) {
-            $table->integer('created_by')->default(0)->after('is_active');
-========
          Schema::table('clients', function (Blueprint $table) {
              $table->dropColumn('dob');
->>>>>>>> e9659ffbfd287cd2c2e7735cb24e2436186200af:database/migrations/2023_09_21_104555_deleteclientdob.php
         });
     }
 
@@ -26,12 +21,8 @@ return new class extends Migration
      */
     public function down(): void
     {
-<<<<<<<< HEAD:database/migrations/2023_09_19_052555_add_created_by_to_services_table.php
-        Schema::table('services', function (Blueprint $table) {
+        Schema::table('clients', function (Blueprint $table) {
             //
         });
-========
-        //
->>>>>>>> e9659ffbfd287cd2c2e7735cb24e2436186200af:database/migrations/2023_09_21_104555_deleteclientdob.php
     }
 };
