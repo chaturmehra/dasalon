@@ -1,31 +1,7 @@
 @extends('partner.layouts.auth.app')
 @section('content') 
 <!--Begin:::error popup-->
-@if(session()->has('success'))
-<div class="card-header display-message">
-   <div class="alert alert-success">
-      {{ session()->get('success') }}
-   </div>
-</div>
-@endif
-@if(session()->has('error'))
-<div class="card-header display-message">
-   <div class="alert alert-danger">
-      {{ session()->get('error') }}
-   </div>
-</div>
-@endif
-@if ($errors->any())
-<div class="card-header display-message">
-   <div class="alert alert-danger">
-      <ul>
-         @foreach ($errors->all() as $error)
-         <li>{{ $error }}</li>
-         @endforeach
-      </ul>
-   </div>
-</div>
-@endif
+
 <!--Begin:::error popup-->
 
 <!--Begin:::Main-->
@@ -33,6 +9,7 @@
    <!--begin::Content wrapper-->
    <div id="kt_app_content" class="app-content flex-column-fluid">
       <div id="kt_app_content_container" class="app-container container-xl">
+        
          <div class="row mb-7 nav nav-stretch nav-pills nav-pills-custom nav-pills-active-custom apptmntnav">
             <div class="col mb-4 mb-md-0">
                <a class=" active" data-bs-toggle="tab" href="#appointmentall" aria-selected="true" role="tab" tabindex="-1">
@@ -44,10 +21,20 @@
                      </div>
                      <span class="text-gray-400 pt-1 fw-semibold fs-6">Clients</span> 
                      <div class="d-flex align-items-center justify-content-between mt-10 w-100">
-                        <div class="d-flex flex-column">
-                           <span class="fs-2 fw-bold text-dark me-2 lh-1 ls-n2">87</span>
+                        <div class="d-flex flex-column"> 
+                           @php
+                           if($client_data){
+                              $total_client=0;
+                              foreach($client_data as $client){
+                                   $client->id;
+                                   $total_client++;
+                              }
+                           } 
+                           @endphp
+                           <span class="fs-2 fw-bold text-dark me-2 lh-1 ls-n2">{{$total_client}}</span>
                            <span class="text-gray-400 pt-1 fw-semibold fs-8">Total no.</span>
                         </div>
+                        
                         <div class="d-flex flex-column">
                            <span class="fs-2 fw-bold text-dark me-2 lh-1 ls-n2 text-end">$1834</span>
                            <span class="text-gray-400 pt-1 fw-semibold fs-8 text-end">Expected sales</span>
@@ -67,6 +54,16 @@
                      <span class="text-gray-400 pt-1 fw-semibold fs-6">Clients visited this month</span>
                      <div class="d-flex align-items-center justify-content-between mt-10 w-100">
                         <div class="d-flex flex-column">
+                           @php
+                           if($client_data){
+                              $total_this_month=0;
+                              foreach($client_data as $client){
+                                   $client->id;
+                                   if($client->created_at)
+                                   $total_client++;
+                              }
+                           } 
+                           @endphp
                            <span class="fs-2 fw-bold text-dark me-2 lh-1 ls-n2">87</span>
                            <span class="text-gray-400 pt-1 fw-semibold fs-8">Total no.</span>
                         </div>
@@ -146,6 +143,31 @@
             </div>
          </div>
          <div class="card card-flush">
+            @if(session()->has('success'))
+                        <div class="card-header display-message">
+                           <div class="alert alert-success">
+                              {{ session()->get('success') }}
+                           </div>
+                        </div>
+                        @endif
+                        @if(session()->has('error'))
+                        <div class="card-header display-message">
+                           <div class="alert alert-danger">
+                              {{ session()->get('error') }}
+                           </div>
+                        </div>
+                        @endif
+                        @if ($errors->any())
+                        <div class="card-header display-message">
+                           <div class="alert alert-danger">
+                              <ul>
+                                 @foreach ($errors->all() as $error)
+                                 <li>{{ $error }}</li>
+                                 @endforeach
+                              </ul>
+                           </div>
+                        </div>
+                     @endif
             <div class="card-header align-items-center py-5 gap-2 gap-md-5">
                <!--begin::Card title-->
                <div class="card-title">
@@ -160,6 +182,7 @@
                <div class="card-toolbar flex-row-fluid justify-content-end gap-5">
                   <!--begin::Actions-->
                   <div class="d-flex align-items-center gap-2 gap-lg-3">
+                     
                      <!--begin::Filter menu-->
                      <div class="m-0">
                         <!--begin::Menu toggle-->
@@ -210,35 +233,35 @@
                      <div class="m-0">
                         <form action="{{ route('sorting') }}" method="GET">
                              @csrf
-                             <a href="#" class="btn btn-light btn-active-light-primary btn-flex btn-center btn-sm" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end">
+                             <button href="#" class="btn btn-light btn-active-light-primary btn-flex btn-center btn-sm" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end">
                                  Sorting
                                  <i class="ki-duotone ki-down fs-5 ms-1"></i>
-                             </a>
+                             </button>
                              <!--begin::Menu-->
                              <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-600 menu-state-bg-light-primary fw-semibold fs-7 w-125px py-4" data-kt-menu="true">
                                  <!--begin::Menu item-->
                                  <div class="menu-item px-3">
-                                     <button type="submit" name="sort" value="name_asc" class="menu-link px-3">name (A-Z)</button>
+                                     <a href="{{url('partner/client/sorting?sort=name_asc')}}" title="" class="menu-link px-3" data-bs-toggle="modal">Name (A-Z) </a>
                                  </div>
                                  <!--end::Menu item-->
                                  <!--begin::Menu item-->
                                  <div class="menu-item px-3">
-                                     <button type="submit" name="sort" value="name_desc" class="menu-link px-3">name (Z-A)</button>
+                                     <a href="{{url('partner/client/sorting?sort=name_desc')}}" title=""class="menu-link px-3" data-bs-toggle="modal">Name (Z-A) </a>
                                  </div>
                                  <!--end::Menu item-->
                                  <!--begin::Menu item-->
                                  <div class="menu-item px-3">
-                                     <button type="submit" name="sort" value="gender_asc" class="menu-link px-3">Gender (A-Z)</button>
+                                    <a href="{{url('partner/client/sorting?sort=gender_asc')}}" title=""class="menu-link px-3" data-bs-toggle="modal">Gender(A-Z)</a>
                                  </div>
                                  <!--begin::Menu item-->
                                  <div class="menu-item px-3">
-                                     <button type="submit" name="sort" value="gender_desc" class="menu-link px-3">Gender (Z-A)</button>
+                                    <a href="{{url('partner/client/sorting?sort=gender_desc')}}" title="" class="menu-link px-3" data-bs-toggle="modal">Gender(Z-A)</a>
                                  </div>
                                  <div class="menu-item px-3">
-                                     <button type="submit" name="sort" value="created_at_asc" class="menu-link px-3">Created at (oldest first)</button>
+                                     <a href="{{url('partner/client/sorting?sort=created_at_asc')}}" title="" class="menu-link px-3" data-bs-toggle="modal">Created at (oldest first)</a>
                                  </div>
                                  <div class="menu-item px-3">
-                                     <button type="submit" name="sort" value="created_at_desc" class="menu-link px-3">Created at (newest first)</button>
+                                    <a href="{{url('partner/client/sorting?sort=created_at_desc')}}" title="" class="menu-link px-3" data-bs-toggle="modal">Created at (newest first)</a>
                                  </div>
                              </div>
                          </form>
@@ -268,6 +291,9 @@
                            <!--end::Menu item-->
                            <!--begin::Menu item-->
                            <div class="menu-item px-3">
+                              <!-- <a id="exportLink" class="menu-link px-3" href="{{url('partner/client/export?export=export_client')}}">
+                              Export clients (csv)
+                              </a> -->
                                <form action="{{url('partner/client/export')}}" method="GET">
                                   @csrf
                                  <button class="menu-link px-3" >
@@ -312,6 +338,26 @@
                   <tbody>
                      @if($client_data)
                         @foreach($client_data as $client)
+                        @php
+                         $birth_day = isset($client->birth_day)?$client->birth_day:0;
+
+                         $birth_month = isset($client->birth_month)?$client->birth_month:0;
+
+                         $birth_year = $client->birth_year;
+ 
+                         if( $birth_year){
+                           $birth_year = '-'.$birth_year;
+                         }
+                         else{
+                            $birth_year = '' ;
+                         }
+                         $monthNames = [
+                           '','Jan', 'Feb', 'Mar', 'Apr',
+                          'May', 'Jun', 'Jul', 'Aug',
+                          'Sep', 'Oct', 'Nov', 'Dec'
+                        ];
+                         $dob = $birth_day.'-'.$monthNames[$birth_month].''.$birth_year;
+                         @endphp
                      <tr>
                         <td>
                            <a href="#" class="client-on-click" id="kt_drawer_example_permanent_toggle" client-id="{{ $client->id }}">
@@ -342,7 +388,7 @@
                         </td>
                         <td>
                            <span class="text-gray-800 fw-bold d-block mb-1 fs-6">{{$client->gender}}</span>
-                           <span class="fw-semibold text-gray-400 d-block">{{\Carbon\Carbon::parse($client->dob)->format('d-M-Y')}}</span>
+                           <span class="fw-semibold text-gray-400 d-block">{{$dob}}</span>
                         </td>
                         <td>
                            <span class="text-gray-800 fw-bold d-block mb-1 fs-6">$876</span>
@@ -2903,18 +2949,15 @@
                  $('#phone').text(data[0].phone);
                  $('#email').text(data[0].email);
                  $('#address').text(data[0].address);
-                 var dob = data[0].dob; 
-                 var date = new Date(dob);
-                 var day = date.getDate();
+                 var birth_day = data[0].birth_day; 
+                 var birth_month = data[0].birth_month; 
+                 var birth_year = data[0].birth_year; 
                  var monthNames = [
-                    'Jan', 'Feb', 'Mar', 'Apr',
+                     '','Jan', 'Feb', 'Mar', 'Apr',
                     'May', 'Jun', 'Jul', 'Aug',
                     'Sep', 'Oct', 'Nov', 'Dec'
                   ];
-                  var monthIndex = date.getMonth();
-                  var year = date.getFullYear();
-
-                  var formattedDob = day + '-' + monthNames[monthIndex] + '-' + year;
+                  var formattedDob = birth_day + '-' + monthNames[birth_month] + '-' + birth_year;
                  $('#dob').text(formattedDob)
                  if(data[0].image){
                        $('#image').attr('src',baseurl + 'public' + data[0].image);
@@ -2945,18 +2988,15 @@
                  $('#phone').text(data[0].phone);
                  $('#email').text(data[0].email);
                  $('#address').text(data[0].address);
-                 var dob = data[0].dob; 
-                 var date = new Date(dob);
-                 var day = date.getDate();
+                 var birth_day = data[0].birth_day; 
+                 var birth_month = data[0].birth_month; 
+                 var birth_year = data[0].birth_year; 
                  var monthNames = [
-                    'Jan', 'Feb', 'Mar', 'Apr',
+                     '','Jan', 'Feb', 'Mar', 'Apr',
                     'May', 'Jun', 'Jul', 'Aug',
                     'Sep', 'Oct', 'Nov', 'Dec'
                   ];
-                  var monthIndex = date.getMonth();
-                  var year = date.getFullYear();
-
-                  var formattedDob = day + '-' + monthNames[monthIndex] + '-' + year;
+                  var formattedDob = birth_day + '-' + monthNames[birth_month] + '-' + birth_year;
                  $('#dob').text(formattedDob)
                  if(data[0].image){
                        $('#image').attr('src',baseurl + 'public' + data[0].image);
@@ -2974,6 +3014,4 @@
         });
     });
 </script>
-
-
 @endpush

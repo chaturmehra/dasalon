@@ -28,7 +28,8 @@ class ClientsController extends Controller
         $validator = Validator::make($request->all(), [
             'name'          => 'required|max:30',
             'email'         => 'required|email|unique:users|max:100',
-            'dob'           => 'required',
+            'birth_day'     => 'required',
+            'birth_month'   =>  'required',
             'phone'         => 'numeric',
         ]);
         if ($validator->fails()) {
@@ -52,12 +53,13 @@ class ClientsController extends Controller
         }else{
             $profile_image = "";
         }
-
         $client_data = ClientModel::create([
              'client_id'=>$client_id->id,
              'image'=>$profile_image,
              'gender'=>$request->gender,
-             'dob'=>$request->dob,
+             'birth_day'=>isset($request->birth_day)?$request->birth_day:0,
+             'birth_month'=>$request->birth_month,
+             'birth_year'=>$request->birth_year,
              'address'=>$request->address,
              'notes'=>$request->notes,
         ]);
@@ -76,7 +78,8 @@ class ClientsController extends Controller
         $validator = Validator::make($request->all(), [
             'edit_name'          => 'required|max:30',
             'edit_email'         => 'required|email|max:100',
-            'edit_dob'           => 'required',
+            'edit_birth_day'     => 'required',
+            'edit_birth_month'   => 'required',
             'edit_phone'         => 'numeric',
         ]);
         if ($validator->fails()) {
@@ -110,7 +113,9 @@ class ClientsController extends Controller
         ClientModel::where('client_id', $client_id)->update([
              'image'=>$profile_image,
              'gender'=>$request->edit_gender,
-             'dob'=>$request->edit_dob,
+             'birth_day'=>$request->edit_birth_day,
+             'birth_month'=>$request->edit_birth_month,
+             'birth_year'=>$request->edit_birth_year,
              'address'=>$request->edit_address,
              'notes'=>$request->edit_notes,
         ]);
@@ -138,7 +143,9 @@ class ClientsController extends Controller
                      'client_id'=>$client_id->id,
                      'image'=>isset($record['image'])?$record['image']:"",
                      'gender'=>$record['gender'],
-                     'dob'=> $record['dob'],
+                     'birth_day'=> $record['birth_day'],
+                     'birth_month'=> $record['birth_month'],
+                     'birth_year'=> $record['birth_year'],
                      'address'=>$record['address'],
                      'notes'=>$record['notes'],
                 ]);  
@@ -157,7 +164,7 @@ class ClientsController extends Controller
         $csvFile = new SplFileObject(storage_path('app/' . $csvFileName), 'w');
 
         $csvFile->fputcsv([
-        'Name', 'Phone', 'Email', 'Gender', 'Date of Birth', 'Address', 'Notes'
+        'Name', 'Phone', 'Email', 'Gender', 'Birth Days','Birth Months','Birth Years', 'Address', 'Notes'
         ]);
         
 
@@ -167,7 +174,9 @@ class ClientsController extends Controller
                     $row->phone,
                     $row->email,
                     $row->gender,
-                    $row->dob,
+                    $row->birth_day,
+                    $row->birth_month,
+                    $row->birth_year,
                     $row->address,
                     $row->notes
             ]);
