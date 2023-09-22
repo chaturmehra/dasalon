@@ -570,12 +570,21 @@ $getPartnerType = getPartnerType();
 						swal("The amenity name has already been taken!", {
 							icon:"error",
 						});
+					$("form[name='amenity-form']")[0].reset();
+					
+					$("form[name='amenity-form'] .image-input-wrapper ").css('background-image', 'none');
+					$("form[name='amenity-form'] select").trigger('change');
+
 					} else {
 						$('#kt_modal_scrollable_1').modal('hide');
 						$('#amenities_table').DataTable().ajax.reload();
 						swal("Your amenity has been created!", {
 							icon: "success",
 						});
+					$("form[name='amenity-form']")[0].reset();
+					
+					$("form[name='amenity-form'] .image-input-wrapper ").css('background-image', 'none');
+					$("form[name='amenity-form'] select").trigger('change');
 					}					
 				},
 
@@ -670,6 +679,10 @@ $getPartnerType = getPartnerType();
 					swal("Your amenity has been created!", {
 						icon: "success",
 					});
+					$("form[name='special-amenity-form']")[0].reset();
+					$("form[name='special-amenity-form'] select").trigger('change');
+					$("form[name='special-amenity-form'] .image-input-wrapper ").css('background-image', 'none');
+					
 				},
 
 				error: (response) => {
@@ -722,7 +735,7 @@ $getPartnerType = getPartnerType();
 		var ajaxurl = '{{ url('admin/setting/edit-amenity-status/')}}'+"/"+ id+'/'+data_id;
 		swal({
 			title: "Are you sure?",
-			text: "To change status this country?",
+			text: "To change status this special-attribute?",
 			icon: "warning",
 			buttons: true,
 			dangerMode: true,
@@ -738,7 +751,7 @@ $getPartnerType = getPartnerType();
 					success:function(data)
 					{
 						$('.spinner-cls').hide();
-						swal("Your country status has been changed!", {
+						swal("Your special-attribute status has been changed!", {
 							icon: "success",
 						});
 						$('#special_amenities_table').DataTable().ajax.reload();

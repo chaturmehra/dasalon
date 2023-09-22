@@ -238,6 +238,10 @@ Route::middleware(['auth'])->group(function () {
     Route::get('partner/staff/export-staff-by-role/{id}/{type}', [ExportController::class, 'exportStaffByRole']);
 
     Route::post('admin/settings/onboarding', [SubscriptionController::class, 'createOnboarding']);
+ Route::post('admin/settings/onboarding/typeone', [SubscriptionController::class, 'createGraceOne']);
+Route::post('admin/settings/onboarding/typetwo', [SubscriptionController::class, 'createGraceTwo']);
+
+
     Route::get('admin/settings/subscription/get-typeone/{id}', [SubscriptionController::class, 'gettypeOneAjax']);
     Route::get('admin/settings/subscription/get-typetwo/{id}', [SubscriptionController::class, 'gettypeTwoAjax']);
     Route::get('admin/settings/subscription/get-fees/{id}', [SubscriptionController::class, 'getfeeAjax']);
@@ -251,7 +255,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('admin/rp/enable-status/{rp_id}', [RecommendationsController::class, 'enabledrp']);
     Route::get('admin/rp/disable-status/{rp_id}', [RecommendationsController::class, 'disabledrp']);
 
-    Route::get('admin/services/services-config/set-country/{id}', [CountryController::class, 'setSelectedCountry']);
+    Route::get('admin/set-country/{id}', [CountryController::class, 'setSelectedCountry']);
 
 });
 

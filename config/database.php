@@ -4,6 +4,7 @@ use Illuminate\Support\Str;
 
 return [
 
+
     /*
     |--------------------------------------------------------------------------
     | Default Database Connection Name
@@ -147,5 +148,6 @@ return [
         ],
 
     ],
+
 
 ];

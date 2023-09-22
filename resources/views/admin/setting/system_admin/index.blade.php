@@ -126,20 +126,7 @@
                                              <input type="text" name="name" class="form-control form-control-solid mb-3 mb-lg-0" placeholder="Name"/>
                                              <!--end::Input-->
                                           </div>
-                                          <!--end::Input group-->
-                                          <div class="fv-row mb-7">
-                                                <!--begin::Label-->
-                                                <label for="kt_docs_select2_country" class="form-label">Select a country</label>
-                                                <div class="form-floating border rounded">
-                                                   <select class="form-select" name="country" placeholder="..." id="kt_docs_select2_country" required>
-                                                      <option value="">Select Country</option>
-                                                      @foreach(getCountryList() as $con_val)
-                                                      <option value="{{$con_val->id}}" data-kt-select2-country="{{asset('/public/assets/media/flags/'.strtolower(str_replace(' ','-',$con_val->name.'.svg')))}}">{{$con_val->name}}</option>
-                                                      @endforeach
-                                                   </select>
-                                                </div>
-                                                <!--end::Input-->
-                                             </div>
+                                       
                                           <!--begin::Input group-->
                                           <div class="fv-row mb-7">
                                              <!--begin::Label-->

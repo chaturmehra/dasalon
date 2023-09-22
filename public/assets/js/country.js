@@ -9,7 +9,7 @@ $("#kt_docs_select2_country").on('change', function(){
 	var country_code = $(this).val();
 	// Set the value of the select element to match the data-value of the item
 	$.ajax({
-		url: 'services-config/set-country'+'/' + country_code,
+		url: 'set-country'+'/' + country_code,
 		type:'GET',
 		beforeSend:function(){
 			$('.spinner-cls').show();
