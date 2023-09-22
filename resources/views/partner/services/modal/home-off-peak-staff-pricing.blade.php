@@ -2,7 +2,7 @@
   <div class="modal-dialog modal-dialog-scrollable">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title">Staff Pricing Home</h5>
+        <h5 class="modal-title">Staff Pricing</h5>
 
         <!--begin::Close-->
         <div class="btn btn-icon btn-sm btn-active-light-primary ms-2" data-bs-dismiss="modal" aria-label="Close">

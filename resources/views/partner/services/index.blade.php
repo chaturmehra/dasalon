@@ -349,16 +349,20 @@
                                           if($status){
                                              $text = "Enabled";
                                              $class = "success";
+                                             $statusVal = 0;
+                                             $statusText = "Disable";
                                           }else{
                                              $text = "Disabled";
                                              $class = "danger";
+                                             $statusVal = 1;
+                                             $statusText = "Enable";
                                           }
                                        @endphp
                                        <tr class="partner_venue_service_{{ $venue_service['ps_id'] }}">
                                           <td>
                                              <div class="d-flex align-items-center">
                                                 <div class="d-flex justify-content-start flex-column">
-                                                   <a href="#" id="kt_drawer_example_permanent_toggle22">
+                                                   <a href="javascript:void(0)" id="kt_drawer_example_permanent_toggle2 get-service-detail-by-id" service-id="{{ $venue_service['ps_id'] }}">
                                                    <span class="text-dark fw-bold text-hover-primary mb-1 fs-6">{{ $venue_service['servicename'] }}</span>
                                                    <span class="text-muted fw-semibold text-muted d-block fs-7">{{ $venue_service['duration'] }}<br>
                                                    {{ $venue_service['description'] }}
@@ -373,13 +377,13 @@
                                              <span class="text-dark fw-bold text-hover-primary d-block mb-1 fs-6">{{ $venue_service['walk_in_price'] }}</span>
                                           </td>
                                           <td>
-                                             <a href="javascript:void(0)" data-bs-toggle="modal" data-bs-target="#kt_modal_scrollable4" class="venue-online-price-view" venue-service-id="{{ $venue_service['ps_id'] }}">
+                                             <a href="javascript:void(0)" data-bs-toggle="modal" data-bs-target="#kt_modal_scrollable4" class="venue-online-price-view" service-id="{{ $venue_service['ps_id'] }}">
                                              <span class="text-dark fw-bold text-hover-primary d-block mb-1 fs-6 mt-5">{{ $venue_service['online_price'] }}</span>
                                              <span class="text-muted fw-semibold text-muted d-block fs-7">Contain Staff Pricing</span>
                                              </a>
                                           </td>
                                           <td>
-                                             <a href="javascript:void(0)" data-bs-toggle="modal" data-bs-target="#kt_modal_scrollable5" class="venue-offpeak-price-view" venue-service-id="{{ $venue_service['ps_id'] }}">
+                                             <a href="javascript:void(0)" data-bs-toggle="modal" data-bs-target="#kt_modal_scrollable5" class="venue-offpeak-price-view" service-id="{{ $venue_service['ps_id'] }}">
                                              <span class="text-dark fw-bold text-hover-primary d-block mb-1 fs-6 mt-5">{{ $venue_service['off_peak_price'] }}</span>
                                              <span class="text-muted fw-semibold text-muted d-block fs-7">Contain Staff Pricing</span>
                                              </a>
@@ -394,744 +398,21 @@
                                              <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-600 menu-state-bg-light-primary fw-semibold fs-7 w-125px py-4" data-kt-menu="true">
                                                 <!--begin::Menu item-->
                                                 <div class="menu-item px-3">
-                                                   <a href="#" id="kt_drawer_example_permanent_toggle22" class="menu-link px-3">Edit</a>
+                                                   <a href="javascript:void(0)" id="kt_drawer_example_permanent_toggle2" class="menu-link px-3 get-service-detail-by-id" service-id="{{ $venue_service['ps_id'] }}">Edit</a>
                                                 </div>
                                                 <!--end::Menu item-->
                                                 <!--begin::Menu item-->
                                                 <div class="menu-item px-3">
-                                                   <a href="" class="menu-link px-3">Enable</a>
+                                                   <a href="javascript:void(0)" class="menu-link px-3 venue-status-change"  status-value="{{ $statusVal }}" service-id="{{ $venue_service['ps_id'] }}">{{ $statusText }}
+                                                   </a>
                                                 </div>
                                                 <!--end::Menu item-->
-                                                <!--begin::Menu item-->
-                                                <div class="menu-item px-3">
-                                                   <a href="" class="menu-link px-3">Disable</a>
-                                                </div>
                                              </div>
                                              <!--end::Menu-->
                                           </td>
                                        </tr>
                                        @endforeach
                                        @endif
-                                    </tbody>
-                                    <!--end::Table body-->
-                                 </table>
-                              </div>
-                              <div class="tab-pane fade" id="manageservicecat1">
-                                 <table class="table align-middle table-hover gs-4 gy-4 tdmid" id="kt_datatable_example1">
-                                    <!--begin::Table head-->
-                                    <thead>
-                                       <tr class="fw-bold text-muted bg-light">
-                                          <th class="ps-4 rounded-start min-w-150px">Service Name</th>
-                                          <th class="min-w-100px">Sub Category</th>
-                                          <th class="min-w-70px">Gender</th>
-                                          <th class="min-w-100px">Walk-in</th>
-                                          <th class="min-w-100px">Online</th>
-                                          <th class="min-w-100px">Off Peak</th>
-                                          <th>Status</th>
-                                          <th class="text-end">Action</th>
-                                       </tr>
-                                    </thead>
-                                    <!--end::Table head-->
-                                    <!--begin::Table body-->
-                                    <tbody>
-                                       <tr>
-                                          <td>
-                                             <div class="d-flex align-items-center">
-                                                <div class="d-flex justify-content-start flex-column">
-                                                   <a href="#" id="kt_drawer_example_permanent_toggle2">
-                                                   <span class="text-dark fw-bold text-hover-primary mb-1 fs-6">Hair cut</span>
-                                                   <span class="text-muted fw-semibold text-muted d-block fs-7">2hr 30min <br>
-                                                   lorem ipsum dolar sit amet
-                                                   </span>
-                                                   </a>
-                                                </div>
-                                             </div>
-                                          </td>
-                                          <td>Sub Category2</td>
-                                          <td>Male</td>
-                                          <td>
-                                             <span class="text-dark fw-bold text-hover-primary d-block mb-1 fs-6">$8,000,000</span>
-                                          </td>
-                                          <td>
-                                             <a href="#" data-bs-toggle="modal" data-bs-target="#kt_modal_scrollable4">
-                                             <span class="text-dark fw-bold text-hover-primary d-block mb-1 fs-6 mt-5">$5,400</span>
-                                             <span class="text-muted fw-semibold text-muted d-block fs-7">Contain Staff Pricing</span>
-                                             </a>
-                                          </td>
-                                          <td>
-                                             <a href="#" data-bs-toggle="modal" data-bs-target="#kt_modal_scrollable5">
-                                             <span class="text-dark fw-bold text-hover-primary d-block mb-1 fs-6 mt-5">$5,400</span>
-                                             <span class="text-muted fw-semibold text-muted d-block fs-7">Contain Staff Pricing</span>
-                                             </a>
-                                          </td>
-                                          <td>
-                                             <span class="badge badge-light-success">Enabled</span>
-                                          </td>
-                                          <td class="text-end">
-                                             <a href="#" class="btn btn-light btn-active-light-primary btn-flex btn-center btn-sm" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end">Actions
-                                             <i class="ki-duotone ki-down fs-5 ms-1"></i></a>
-                                             <!--begin::Menu-->
-                                             <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-600 menu-state-bg-light-primary fw-semibold fs-7 w-125px py-4" data-kt-menu="true">
-                                                <!--begin::Menu item-->
-                                                <div class="menu-item px-3">
-                                                   <a href="#" id="kt_drawer_example_permanent_toggle2" class="menu-link px-3">Edit</a>
-                                                </div>
-                                                <!--end::Menu item-->
-                                                <!--begin::Menu item-->
-                                                <div class="menu-item px-3">
-                                                   <a href="" class="menu-link px-3">Enable</a>
-                                                </div>
-                                                <!--end::Menu item-->
-                                                <!--begin::Menu item-->
-                                                <div class="menu-item px-3">
-                                                   <a href="" class="menu-link px-3">Disable</a>
-                                                </div>
-                                             </div>
-                                             <!--end::Menu-->
-                                          </td>
-                                       </tr>
-                                       <tr>
-                                          <td>
-                                             <div class="d-flex align-items-center">
-                                                <div class="d-flex justify-content-start flex-column">
-                                                   <a href="#" id="kt_drawer_example_permanent_toggle2">
-                                                   <span class="text-dark fw-bold text-hover-primary mb-1 fs-6">Hair cut</span>
-                                                   <span class="text-muted fw-semibold text-muted d-block fs-7">2hr 30min <br>
-                                                   lorem ipsum dolar sit amet
-                                                   </span>
-                                                   </a>
-                                                </div>
-                                             </div>
-                                          </td>
-                                          <td>Sub Category2</td>
-                                          <td>Unisex</td>
-                                          <td>
-                                             <span class="text-dark fw-bold text-hover-primary d-block mb-1 fs-6">$8,000,000</span>
-                                          </td>
-                                          <td>
-                                             <a href="#" data-bs-toggle="modal" data-bs-target="#kt_modal_scrollable4">
-                                             <span class="text-dark fw-bold text-hover-primary d-block mb-1 fs-6">$5,400</span>
-                                             </a>
-                                          </td>
-                                          <td>
-                                             <a href="#" data-bs-toggle="modal" data-bs-target="#kt_modal_scrollable5">
-                                             <span class="text-dark fw-bold text-hover-primary d-block mb-1 fs-6">$5,400</span>
-                                             </a>
-                                          </td>
-                                          <td>
-                                             <span class="badge badge-light-success">Enabled</span>
-                                          </td>
-                                          <td class="text-end">
-                                             <a href="#" class="btn btn-light btn-active-light-primary btn-flex btn-center btn-sm" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end">Actions
-                                             <i class="ki-duotone ki-down fs-5 ms-1"></i></a>
-                                             <!--begin::Menu-->
-                                             <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-600 menu-state-bg-light-primary fw-semibold fs-7 w-125px py-4" data-kt-menu="true">
-                                                <!--begin::Menu item-->
-                                                <div class="menu-item px-3">
-                                                   <a href="#" id="kt_drawer_example_permanent_toggle2" class="menu-link px-3">Edit</a>
-                                                </div>
-                                                <!--end::Menu item-->
-                                                <!--begin::Menu item-->
-                                                <div class="menu-item px-3">
-                                                   <a href="" class="menu-link px-3">Enable</a>
-                                                </div>
-                                                <!--end::Menu item-->
-                                                <!--begin::Menu item-->
-                                                <div class="menu-item px-3">
-                                                   <a href="" class="menu-link px-3">Disable</a>
-                                                </div>
-                                             </div>
-                                             <!--end::Menu-->
-                                          </td>
-                                       </tr>
-                                       <tr>
-                                          <td>
-                                             <div class="d-flex align-items-center">
-                                                <div class="d-flex justify-content-start flex-column">
-                                                   <a href="#" id="kt_drawer_example_permanent_toggle2">
-                                                   <span class="text-dark fw-bold text-hover-primary mb-1 fs-6">Hair cut</span>
-                                                   <span class="text-muted fw-semibold text-muted d-block fs-7">2hr 30min <br>
-                                                   lorem ipsum dolar sit amet
-                                                   </span>
-                                                   </a>
-                                                </div>
-                                             </div>
-                                          </td>
-                                          <td>Sub Category2</td>
-                                          <td>Female</td>
-                                          <td>
-                                             <span class="text-dark fw-bold text-hover-primary d-block mb-1 fs-6">$8,000,000</span>
-                                          </td>
-                                          <td>
-                                             <a href="#" data-bs-toggle="modal" data-bs-target="#kt_modal_scrollable4">
-                                             <span class="text-dark fw-bold text-hover-primary d-block mb-1 fs-6">$5,400</span>
-                                             </a>
-                                          </td>
-                                          <td>
-                                             <a href="#" data-bs-toggle="modal" data-bs-target="#kt_modal_scrollable5">
-                                             <span class="text-dark fw-bold text-hover-primary d-block mb-1 fs-6">$5,400</span>
-                                             </a>
-                                          </td>
-                                          <td>
-                                             <span class="badge badge-light-success">Enabled</span>
-                                          </td>
-                                          <td class="text-end">
-                                             <a href="#" class="btn btn-light btn-active-light-primary btn-flex btn-center btn-sm" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end">Actions
-                                             <i class="ki-duotone ki-down fs-5 ms-1"></i></a>
-                                             <!--begin::Menu-->
-                                             <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-600 menu-state-bg-light-primary fw-semibold fs-7 w-125px py-4" data-kt-menu="true">
-                                                <!--begin::Menu item-->
-                                                <div class="menu-item px-3">
-                                                   <a href="#" id="kt_drawer_example_permanent_toggle2" class="menu-link px-3">Edit</a>
-                                                </div>
-                                                <!--end::Menu item-->
-                                                <!--begin::Menu item-->
-                                                <div class="menu-item px-3">
-                                                   <a href="" class="menu-link px-3">Enable</a>
-                                                </div>
-                                                <!--end::Menu item-->
-                                                <!--begin::Menu item-->
-                                                <div class="menu-item px-3">
-                                                   <a href="" class="menu-link px-3">Disable</a>
-                                                </div>
-                                             </div>
-                                             <!--end::Menu-->
-                                          </td>
-                                       </tr>
-                                       <tr>
-                                          <td>
-                                             <div class="d-flex align-items-center">
-                                                <div class="d-flex justify-content-start flex-column">
-                                                   <a href="#" id="kt_drawer_example_permanent_toggle2">
-                                                   <span class="text-dark fw-bold text-hover-primary mb-1 fs-6">Hair cut</span>
-                                                   <span class="text-muted fw-semibold text-muted d-block fs-7">2hr 30min <br>
-                                                   lorem ipsum dolar sit amet
-                                                   </span>
-                                                   </a>
-                                                </div>
-                                             </div>
-                                          </td>
-                                          <td>Sub Category2</td>
-                                          <td>Male</td>
-                                          <td>
-                                             <span class="text-dark fw-bold text-hover-primary d-block mb-1 fs-6">$8,000,000</span>
-                                          </td>
-                                          <td>
-                                             <a href="#" data-bs-toggle="modal" data-bs-target="#kt_modal_scrollable4">
-                                             <span class="text-dark fw-bold text-hover-primary d-block mb-1 fs-6">$5,400</span>
-                                             </a>
-                                          </td>
-                                          <td>
-                                             <a href="#" data-bs-toggle="modal" data-bs-target="#kt_modal_scrollable5">
-                                             <span class="text-dark fw-bold text-hover-primary d-block mb-1 fs-6">$5,400</span>
-                                             </a>
-                                          </td>
-                                          <td>
-                                             <span class="badge badge-light-danger">Disabled</span>
-                                          </td>
-                                          <td class="text-end">
-                                             <a href="#" class="btn btn-light btn-active-light-primary btn-flex btn-center btn-sm" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end">Actions
-                                             <i class="ki-duotone ki-down fs-5 ms-1"></i></a>
-                                             <!--begin::Menu-->
-                                             <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-600 menu-state-bg-light-primary fw-semibold fs-7 w-125px py-4" data-kt-menu="true">
-                                                <!--begin::Menu item-->
-                                                <div class="menu-item px-3">
-                                                   <a href="#" id="kt_drawer_example_permanent_toggle2" class="menu-link px-3">Edit</a>
-                                                </div>
-                                                <!--end::Menu item-->
-                                                <!--begin::Menu item-->
-                                                <div class="menu-item px-3">
-                                                   <a href="" class="menu-link px-3">Enable</a>
-                                                </div>
-                                                <!--end::Menu item-->
-                                                <!--begin::Menu item-->
-                                                <div class="menu-item px-3">
-                                                   <a href="" class="menu-link px-3">Disable</a>
-                                                </div>
-                                             </div>
-                                             <!--end::Menu-->
-                                          </td>
-                                       </tr>
-                                    </tbody>
-                                    <!--end::Table body-->
-                                 </table>
-                              </div>
-                              <div class="tab-pane fade" id="manageservicecat2">
-                                 <table class="table align-middle table-hover gs-4 gy-4 tdmid" id="kt_datatable_example1">
-                                    <!--begin::Table head-->
-                                    <thead>
-                                       <tr class="fw-bold text-muted bg-light">
-                                          <th class="ps-4 rounded-start min-w-150px">Service Name</th>
-                                          <th class="min-w-100px">Sub Category</th>
-                                          <th class="min-w-70px">Gender</th>
-                                          <th class="min-w-100px">Walk-in</th>
-                                          <th class="min-w-100px">Online</th>
-                                          <th class="min-w-100px">Off Peak</th>
-                                          <th>Status</th>
-                                          <th class="text-end">Action</th>
-                                       </tr>
-                                    </thead>
-                                    <!--end::Table head-->
-                                    <!--begin::Table body-->
-                                    <tbody>
-                                       <tr>
-                                          <td>
-                                             <div class="d-flex align-items-center">
-                                                <div class="d-flex justify-content-start flex-column">
-                                                   <a href="#" id="kt_drawer_example_permanent_toggle2">
-                                                   <span class="text-dark fw-bold text-hover-primary mb-1 fs-6">Hair cut</span>
-                                                   <span class="text-muted fw-semibold text-muted d-block fs-7">2hr 30min <br>
-                                                   lorem ipsum dolar sit amet
-                                                   </span>
-                                                   </a>
-                                                </div>
-                                             </div>
-                                          </td>
-                                          <td>Sub Category3</td>
-                                          <td>Male</td>
-                                          <td>
-                                             <span class="text-dark fw-bold text-hover-primary d-block mb-1 fs-6">$8,000,000</span>
-                                          </td>
-                                          <td>
-                                             <a href="#" data-bs-toggle="modal" data-bs-target="#kt_modal_scrollable4">
-                                             <span class="text-dark fw-bold text-hover-primary d-block mb-1 fs-6 mt-5">$5,400</span>
-                                             <span class="text-muted fw-semibold text-muted d-block fs-7">Contain Staff Pricing</span>
-                                             </a>
-                                          </td>
-                                          <td>
-                                             <a href="#" data-bs-toggle="modal" data-bs-target="#kt_modal_scrollable5">
-                                             <span class="text-dark fw-bold text-hover-primary d-block mb-1 fs-6 mt-5">$5,400</span>
-                                             <span class="text-muted fw-semibold text-muted d-block fs-7">Contain Staff Pricing</span>
-                                             </a>
-                                          </td>
-                                          <td>
-                                             <span class="badge badge-light-success">Enabled</span>
-                                          </td>
-                                          <td class="text-end">
-                                             <a href="#" class="btn btn-light btn-active-light-primary btn-flex btn-center btn-sm" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end">Actions
-                                             <i class="ki-duotone ki-down fs-5 ms-1"></i></a>
-                                             <!--begin::Menu-->
-                                             <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-600 menu-state-bg-light-primary fw-semibold fs-7 w-125px py-4" data-kt-menu="true">
-                                                <!--begin::Menu item-->
-                                                <div class="menu-item px-3">
-                                                   <a href="#" id="kt_drawer_example_permanent_toggle2" class="menu-link px-3">Edit</a>
-                                                </div>
-                                                <!--end::Menu item-->
-                                                <!--begin::Menu item-->
-                                                <div class="menu-item px-3">
-                                                   <a href="" class="menu-link px-3">Enable</a>
-                                                </div>
-                                                <!--end::Menu item-->
-                                                <!--begin::Menu item-->
-                                                <div class="menu-item px-3">
-                                                   <a href="" class="menu-link px-3">Disable</a>
-                                                </div>
-                                             </div>
-                                             <!--end::Menu-->
-                                          </td>
-                                       </tr>
-                                       <tr>
-                                          <td>
-                                             <div class="d-flex align-items-center">
-                                                <div class="d-flex justify-content-start flex-column">
-                                                   <a href="#" id="kt_drawer_example_permanent_toggle2">
-                                                   <span class="text-dark fw-bold text-hover-primary mb-1 fs-6">Hair cut</span>
-                                                   <span class="text-muted fw-semibold text-muted d-block fs-7">2hr 30min <br>
-                                                   lorem ipsum dolar sit amet
-                                                   </span>
-                                                   </a>
-                                                </div>
-                                             </div>
-                                          </td>
-                                          <td>Sub Category3</td>
-                                          <td>Unisex</td>
-                                          <td>
-                                             <span class="text-dark fw-bold text-hover-primary d-block mb-1 fs-6">$8,000,000</span>
-                                          </td>
-                                          <td>
-                                             <a href="#" data-bs-toggle="modal" data-bs-target="#kt_modal_scrollable4">
-                                             <span class="text-dark fw-bold text-hover-primary d-block mb-1 fs-6">$5,400</span>
-                                             </a>
-                                          </td>
-                                          <td>
-                                             <a href="#" data-bs-toggle="modal" data-bs-target="#kt_modal_scrollable5">
-                                             <span class="text-dark fw-bold text-hover-primary d-block mb-1 fs-6">$5,400</span>
-                                             </a>
-                                          </td>
-                                          <td>
-                                             <span class="badge badge-light-success">Enabled</span>
-                                          </td>
-                                          <td class="text-end">
-                                             <a href="#" class="btn btn-light btn-active-light-primary btn-flex btn-center btn-sm" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end">Actions
-                                             <i class="ki-duotone ki-down fs-5 ms-1"></i></a>
-                                             <!--begin::Menu-->
-                                             <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-600 menu-state-bg-light-primary fw-semibold fs-7 w-125px py-4" data-kt-menu="true">
-                                                <!--begin::Menu item-->
-                                                <div class="menu-item px-3">
-                                                   <a href="#" id="kt_drawer_example_permanent_toggle2" class="menu-link px-3">Edit</a>
-                                                </div>
-                                                <!--end::Menu item-->
-                                                <!--begin::Menu item-->
-                                                <div class="menu-item px-3">
-                                                   <a href="" class="menu-link px-3">Enable</a>
-                                                </div>
-                                                <!--end::Menu item-->
-                                                <!--begin::Menu item-->
-                                                <div class="menu-item px-3">
-                                                   <a href="" class="menu-link px-3">Disable</a>
-                                                </div>
-                                             </div>
-                                             <!--end::Menu-->
-                                          </td>
-                                       </tr>
-                                       <tr>
-                                          <td>
-                                             <div class="d-flex align-items-center">
-                                                <div class="d-flex justify-content-start flex-column">
-                                                   <a href="#" id="kt_drawer_example_permanent_toggle2">
-                                                   <span class="text-dark fw-bold text-hover-primary mb-1 fs-6">Hair cut</span>
-                                                   <span class="text-muted fw-semibold text-muted d-block fs-7">2hr 30min <br>
-                                                   lorem ipsum dolar sit amet
-                                                   </span>
-                                                   </a>
-                                                </div>
-                                             </div>
-                                          </td>
-                                          <td>Sub Category3</td>
-                                          <td>Female</td>
-                                          <td>
-                                             <span class="text-dark fw-bold text-hover-primary d-block mb-1 fs-6">$8,000,000</span>
-                                          </td>
-                                          <td>
-                                             <a href="#" data-bs-toggle="modal" data-bs-target="#kt_modal_scrollable4">
-                                             <span class="text-dark fw-bold text-hover-primary d-block mb-1 fs-6">$5,400</span>
-                                             </a>
-                                          </td>
-                                          <td>
-                                             <a href="#" data-bs-toggle="modal" data-bs-target="#kt_modal_scrollable5">
-                                             <span class="text-dark fw-bold text-hover-primary d-block mb-1 fs-6">$5,400</span>
-                                             </a>
-                                          </td>
-                                          <td>
-                                             <span class="badge badge-light-success">Enabled</span>
-                                          </td>
-                                          <td class="text-end">
-                                             <a href="#" class="btn btn-light btn-active-light-primary btn-flex btn-center btn-sm" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end">Actions
-                                             <i class="ki-duotone ki-down fs-5 ms-1"></i></a>
-                                             <!--begin::Menu-->
-                                             <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-600 menu-state-bg-light-primary fw-semibold fs-7 w-125px py-4" data-kt-menu="true">
-                                                <!--begin::Menu item-->
-                                                <div class="menu-item px-3">
-                                                   <a href="#" id="kt_drawer_example_permanent_toggle2" class="menu-link px-3">Edit</a>
-                                                </div>
-                                                <!--end::Menu item-->
-                                                <!--begin::Menu item-->
-                                                <div class="menu-item px-3">
-                                                   <a href="" class="menu-link px-3">Enable</a>
-                                                </div>
-                                                <!--end::Menu item-->
-                                                <!--begin::Menu item-->
-                                                <div class="menu-item px-3">
-                                                   <a href="" class="menu-link px-3">Disable</a>
-                                                </div>
-                                             </div>
-                                             <!--end::Menu-->
-                                          </td>
-                                       </tr>
-                                       <tr>
-                                          <td>
-                                             <div class="d-flex align-items-center">
-                                                <div class="d-flex justify-content-start flex-column">
-                                                   <a href="#" id="kt_drawer_example_permanent_toggle2">
-                                                   <span class="text-dark fw-bold text-hover-primary mb-1 fs-6">Hair cut</span>
-                                                   <span class="text-muted fw-semibold text-muted d-block fs-7">2hr 30min <br>
-                                                   lorem ipsum dolar sit amet
-                                                   </span>
-                                                   </a>
-                                                </div>
-                                             </div>
-                                          </td>
-                                          <td>Sub Category3</td>
-                                          <td>Male</td>
-                                          <td>
-                                             <span class="text-dark fw-bold text-hover-primary d-block mb-1 fs-6">$8,000,000</span>
-                                          </td>
-                                          <td>
-                                             <a href="#" data-bs-toggle="modal" data-bs-target="#kt_modal_scrollable4">
-                                             <span class="text-dark fw-bold text-hover-primary d-block mb-1 fs-6">$5,400</span>
-                                             </a>
-                                          </td>
-                                          <td>
-                                             <a href="#" data-bs-toggle="modal" data-bs-target="#kt_modal_scrollable5">
-                                             <span class="text-dark fw-bold text-hover-primary d-block mb-1 fs-6">$5,400</span>
-                                             </a>
-                                          </td>
-                                          <td>
-                                             <span class="badge badge-light-danger">Disabled</span>
-                                          </td>
-                                          <td class="text-end">
-                                             <a href="#" class="btn btn-light btn-active-light-primary btn-flex btn-center btn-sm" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end">Actions
-                                             <i class="ki-duotone ki-down fs-5 ms-1"></i></a>
-                                             <!--begin::Menu-->
-                                             <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-600 menu-state-bg-light-primary fw-semibold fs-7 w-125px py-4" data-kt-menu="true">
-                                                <!--begin::Menu item-->
-                                                <div class="menu-item px-3">
-                                                   <a href="#" id="kt_drawer_example_permanent_toggle2" class="menu-link px-3">Edit</a>
-                                                </div>
-                                                <!--end::Menu item-->
-                                                <!--begin::Menu item-->
-                                                <div class="menu-item px-3">
-                                                   <a href="" class="menu-link px-3">Enable</a>
-                                                </div>
-                                                <!--end::Menu item-->
-                                                <!--begin::Menu item-->
-                                                <div class="menu-item px-3">
-                                                   <a href="" class="menu-link px-3">Disable</a>
-                                                </div>
-                                             </div>
-                                             <!--end::Menu-->
-                                          </td>
-                                       </tr>
-                                    </tbody>
-                                    <!--end::Table body-->
-                                 </table>
-                              </div>
-                              <div class="tab-pane fade" id="manageservicecat3">
-                                 <table class="table align-middle table-hover gs-4 gy-4 tdmid" id="kt_datatable_example1">
-                                    <!--begin::Table head-->
-                                    <thead>
-                                       <tr class="fw-bold text-muted bg-light">
-                                          <th class="ps-4 rounded-start min-w-150px">Service Name</th>
-                                          <th class="min-w-100px">Sub Category</th>
-                                          <th class="min-w-70px">Gender</th>
-                                          <th class="min-w-100px">Walk-in</th>
-                                          <th class="min-w-100px">Online</th>
-                                          <th class="min-w-100px">Off Peak</th>
-                                          <th>Status</th>
-                                          <th class="text-end">Action</th>
-                                       </tr>
-                                    </thead>
-                                    <!--end::Table head-->
-                                    <!--begin::Table body-->
-                                    <tbody>
-                                       <tr>
-                                          <td>
-                                             <div class="d-flex align-items-center">
-                                                <div class="d-flex justify-content-start flex-column">
-                                                   <a href="#" id="kt_drawer_example_permanent_toggle2">
-                                                   <span class="text-dark fw-bold text-hover-primary mb-1 fs-6">Hair cut</span>
-                                                   <span class="text-muted fw-semibold text-muted d-block fs-7">2hr 30min <br>
-                                                   lorem ipsum dolar sit amet
-                                                   </span>
-                                                   </a>
-                                                </div>
-                                             </div>
-                                          </td>
-                                          <td>Sub Category3</td>
-                                          <td>Male</td>
-                                          <td>
-                                             <span class="text-dark fw-bold text-hover-primary d-block mb-1 fs-6">$8,000,000</span>
-                                          </td>
-                                          <td>
-                                             <a href="#" data-bs-toggle="modal" data-bs-target="#kt_modal_scrollable4">
-                                             <span class="text-dark fw-bold text-hover-primary d-block mb-1 fs-6 mt-5">$5,400</span>
-                                             <span class="text-muted fw-semibold text-muted d-block fs-7">Contain Staff Pricing</span>
-                                             </a>
-                                          </td>
-                                          <td>
-                                             <a href="#" data-bs-toggle="modal" data-bs-target="#kt_modal_scrollable5">
-                                             <span class="text-dark fw-bold text-hover-primary d-block mb-1 fs-6 mt-5">$5,400</span>
-                                             <span class="text-muted fw-semibold text-muted d-block fs-7">Contain Staff Pricing</span>
-                                             </a>
-                                          </td>
-                                          <td>
-                                             <span class="badge badge-light-success">Enabled</span>
-                                          </td>
-                                          <td class="text-end">
-                                             <a href="#" class="btn btn-light btn-active-light-primary btn-flex btn-center btn-sm" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end">Actions
-                                             <i class="ki-duotone ki-down fs-5 ms-1"></i></a>
-                                             <!--begin::Menu-->
-                                             <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-600 menu-state-bg-light-primary fw-semibold fs-7 w-125px py-4" data-kt-menu="true">
-                                                <!--begin::Menu item-->
-                                                <div class="menu-item px-3">
-                                                   <a href="#" id="kt_drawer_example_permanent_toggle2" class="menu-link px-3">Edit</a>
-                                                </div>
-                                                <!--end::Menu item-->
-                                                <!--begin::Menu item-->
-                                                <div class="menu-item px-3">
-                                                   <a href="" class="menu-link px-3">Enable</a>
-                                                </div>
-                                                <!--end::Menu item-->
-                                                <!--begin::Menu item-->
-                                                <div class="menu-item px-3">
-                                                   <a href="" class="menu-link px-3">Disable</a>
-                                                </div>
-                                             </div>
-                                             <!--end::Menu-->
-                                          </td>
-                                       </tr>
-                                       <tr>
-                                          <td>
-                                             <div class="d-flex align-items-center">
-                                                <div class="d-flex justify-content-start flex-column">
-                                                   <a href="#" id="kt_drawer_example_permanent_toggle2">
-                                                   <span class="text-dark fw-bold text-hover-primary mb-1 fs-6">Hair cut</span>
-                                                   <span class="text-muted fw-semibold text-muted d-block fs-7">2hr 30min <br>
-                                                   lorem ipsum dolar sit amet
-                                                   </span>
-                                                   </a>
-                                                </div>
-                                             </div>
-                                          </td>
-                                          <td>Sub Category3</td>
-                                          <td>Unisex</td>
-                                          <td>
-                                             <span class="text-dark fw-bold text-hover-primary d-block mb-1 fs-6">$8,000,000</span>
-                                          </td>
-                                          <td>
-                                             <a href="#" data-bs-toggle="modal" data-bs-target="#kt_modal_scrollable4">
-                                             <span class="text-dark fw-bold text-hover-primary d-block mb-1 fs-6">$5,400</span>
-                                             </a>
-                                          </td>
-                                          <td>
-                                             <a href="#" data-bs-toggle="modal" data-bs-target="#kt_modal_scrollable5">
-                                             <span class="text-dark fw-bold text-hover-primary d-block mb-1 fs-6">$5,400</span>
-                                             </a>
-                                          </td>
-                                          <td>
-                                             <span class="badge badge-light-success">Enabled</span>
-                                          </td>
-                                          <td class="text-end">
-                                             <a href="#" class="btn btn-light btn-active-light-primary btn-flex btn-center btn-sm" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end">Actions
-                                             <i class="ki-duotone ki-down fs-5 ms-1"></i></a>
-                                             <!--begin::Menu-->
-                                             <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-600 menu-state-bg-light-primary fw-semibold fs-7 w-125px py-4" data-kt-menu="true">
-                                                <!--begin::Menu item-->
-                                                <div class="menu-item px-3">
-                                                   <a href="#" id="kt_drawer_example_permanent_toggle2" class="menu-link px-3">Edit</a>
-                                                </div>
-                                                <!--end::Menu item-->
-                                                <!--begin::Menu item-->
-                                                <div class="menu-item px-3">
-                                                   <a href="" class="menu-link px-3">Enable</a>
-                                                </div>
-                                                <!--end::Menu item-->
-                                                <!--begin::Menu item-->
-                                                <div class="menu-item px-3">
-                                                   <a href="" class="menu-link px-3">Disable</a>
-                                                </div>
-                                             </div>
-                                             <!--end::Menu-->
-                                          </td>
-                                       </tr>
-                                       <tr>
-                                          <td>
-                                             <div class="d-flex align-items-center">
-                                                <div class="d-flex justify-content-start flex-column">
-                                                   <a href="#" id="kt_drawer_example_permanent_toggle2">
-                                                   <span class="text-dark fw-bold text-hover-primary mb-1 fs-6">Hair cut</span>
-                                                   <span class="text-muted fw-semibold text-muted d-block fs-7">2hr 30min <br>
-                                                   lorem ipsum dolar sit amet
-                                                   </span>
-                                                   </a>
-                                                </div>
-                                             </div>
-                                          </td>
-                                          <td>Sub Category3</td>
-                                          <td>Female</td>
-                                          <td>
-                                             <span class="text-dark fw-bold text-hover-primary d-block mb-1 fs-6">$8,000,000</span>
-                                          </td>
-                                          <td>
-                                             <a href="#" data-bs-toggle="modal" data-bs-target="#kt_modal_scrollable4">
-                                             <span class="text-dark fw-bold text-hover-primary d-block mb-1 fs-6">$5,400</span>
-                                             </a>
-                                          </td>
-                                          <td>
-                                             <a href="#" data-bs-toggle="modal" data-bs-target="#kt_modal_scrollable5">
-                                             <span class="text-dark fw-bold text-hover-primary d-block mb-1 fs-6">$5,400</span>
-                                             </a>
-                                          </td>
-                                          <td>
-                                             <span class="badge badge-light-success">Enabled</span>
-                                          </td>
-                                          <td class="text-end">
-                                             <a href="#" class="btn btn-light btn-active-light-primary btn-flex btn-center btn-sm" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end">Actions
-                                             <i class="ki-duotone ki-down fs-5 ms-1"></i></a>
-                                             <!--begin::Menu-->
-                                             <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-600 menu-state-bg-light-primary fw-semibold fs-7 w-125px py-4" data-kt-menu="true">
-                                                <!--begin::Menu item-->
-                                                <div class="menu-item px-3">
-                                                   <a href="#" id="kt_drawer_example_permanent_toggle2" class="menu-link px-3">Edit</a>
-                                                </div>
-                                                <!--end::Menu item-->
-                                                <!--begin::Menu item-->
-                                                <div class="menu-item px-3">
-                                                   <a href="" class="menu-link px-3">Enable</a>
-                                                </div>
-                                                <!--end::Menu item-->
-                                                <!--begin::Menu item-->
-                                                <div class="menu-item px-3">
-                                                   <a href="" class="menu-link px-3">Disable</a>
-                                                </div>
-                                             </div>
-                                             <!--end::Menu-->
-                                          </td>
-                                       </tr>
-                                       <tr>
-                                          <td>
-                                             <div class="d-flex align-items-center">
-                                                <div class="d-flex justify-content-start flex-column">
-                                                   <a href="#" id="kt_drawer_example_permanent_toggle2">
-                                                   <span class="text-dark fw-bold text-hover-primary mb-1 fs-6">Hair cut</span>
-                                                   <span class="text-muted fw-semibold text-muted d-block fs-7">2hr 30min <br>
-                                                   lorem ipsum dolar sit amet
-                                                   </span>
-                                                   </a>
-                                                </div>
-                                             </div>
-                                          </td>
-                                          <td>Sub Category3</td>
-                                          <td>Male</td>
-                                          <td>
-                                             <span class="text-dark fw-bold text-hover-primary d-block mb-1 fs-6">$8,000,000</span>
-                                          </td>
-                                          <td>
-                                             <a href="#" data-bs-toggle="modal" data-bs-target="#kt_modal_scrollable4">
-                                             <span class="text-dark fw-bold text-hover-primary d-block mb-1 fs-6">$5,400</span>
-                                             </a>
-                                          </td>
-                                          <td>
-                                             <a href="#" data-bs-toggle="modal" data-bs-target="#kt_modal_scrollable5">
-                                             <span class="text-dark fw-bold text-hover-primary d-block mb-1 fs-6">$5,400</span>
-                                             </a>
-                                          </td>
-                                          <td>
-                                             <span class="badge badge-light-danger">Disabled</span>
-                                          </td>
-                                          <td class="text-end">
-                                             <a href="#" class="btn btn-light btn-active-light-primary btn-flex btn-center btn-sm" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end">Actions
-                                             <i class="ki-duotone ki-down fs-5 ms-1"></i></a>
-                                             <!--begin::Menu-->
-                                             <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-600 menu-state-bg-light-primary fw-semibold fs-7 w-125px py-4" data-kt-menu="true">
-                                                <!--begin::Menu item-->
-                                                <div class="menu-item px-3">
-                                                   <a href="#" id="kt_drawer_example_permanent_toggle2" class="menu-link px-3">Edit</a>
-                                                </div>
-                                                <!--end::Menu item-->
-                                                <!--begin::Menu item-->
-                                                <div class="menu-item px-3">
-                                                   <a href="" class="menu-link px-3">Enable</a>
-                                                </div>
-                                                <!--end::Menu item-->
-                                                <!--begin::Menu item-->
-                                                <div class="menu-item px-3">
-                                                   <a href="" class="menu-link px-3">Disable</a>
-                                                </div>
-                                             </div>
-                                             <!--end::Menu-->
-                                          </td>
-                                       </tr>
                                     </tbody>
                                     <!--end::Table body-->
                                  </table>
@@ -1280,18 +561,22 @@
                                        @php 
                                           $status = $home_service['status']; 
                                           if($status){
-                                             $text = "Enabled";
-                                             $class = "success";
+                                             $text       = "Enabled";
+                                             $class      = "success";
+                                             $statusVal  = 0;
+                                             $statusText = "Disable";
                                           }else{
-                                             $text = "Disabled";
-                                             $class = "danger";
+                                             $text       = "Disabled";
+                                             $class      = "danger";
+                                             $statusVal  = 1;
+                                             $statusText = "Enable";
                                           }
                                        @endphp
                                        <tr class="partner_home_service_{{ $home_service['ps_id'] }}">
                                           <td>
                                              <div class="d-flex align-items-center">
                                                 <div class="d-flex justify-content-start flex-column">
-                                                   <a href="#" id="kt_drawer_example_permanent_toggle22">
+                                                   <a href="javascript:void(0)" id="kt_drawer_example_permanent_toggle22 get-service-detail-by-id" service-id="{{ $home_service['ps_id'] }}">
                                                    <span class="text-dark fw-bold text-hover-primary mb-1 fs-6">{{ $home_service['servicename'] }}</span>
                                                    <span class="text-muted fw-semibold text-muted d-block fs-7">{{ $home_service['duration'] }}<br>
                                                    {{ $home_service['description'] }}
@@ -1304,13 +589,13 @@
                                           <td>{{ $home_service['gender'] }}</td>
                                           <td>{{ $home_service['distance'] }}</td>
                                           <td>
-                                             <a href="javascript:void(0)" data-bs-toggle="modal" data-bs-target="#kt_modal_scrollable6" class="venue-online-price-view" home-service-id="{{ $home_service['ps_id'] }}">
+                                             <a href="javascript:void(0)" data-bs-toggle="modal" data-bs-target="#kt_modal_scrollable6" class="venue-online-price-view" service-id="{{ $home_service['ps_id'] }}">
                                              <span class="text-dark fw-bold text-hover-primary d-block mb-1 fs-6 mt-5">{{ $home_service['online_price'] }}</span>
                                              <span class="text-muted fw-semibold text-muted d-block fs-7">Contain Staff Pricing</span>
                                              </a>
                                           </td>
                                           <td>
-                                             <a href="javascript:void(0)" data-bs-toggle="modal" data-bs-target="#kt_modal_scrollable7" class="venue-offpeak-price-view" home-service-id="{{ $home_service['ps_id'] }}">
+                                             <a href="javascript:void(0)" data-bs-toggle="modal" data-bs-target="#kt_modal_scrollable7" class="venue-offpeak-price-view" service-id="{{ $home_service['ps_id'] }}">
                                              <span class="text-dark fw-bold text-hover-primary d-block mb-1 fs-6 mt-5">{{ $home_service['off_peak_price'] }}</span>
                                              <span class="text-muted fw-semibold text-muted d-block fs-7">Contain Staff Pricing</span>
                                              </a>
@@ -1325,17 +610,13 @@
                                              <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-600 menu-state-bg-light-primary fw-semibold fs-7 w-125px py-4" data-kt-menu="true">
                                                 <!--begin::Menu item-->
                                                 <div class="menu-item px-3">
-                                                   <a href="#" id="kt_drawer_example_permanent_toggle22" class="menu-link px-3">Edit</a>
+                                                   <a href="javascript:void(0)" id="kt_drawer_example_permanent_toggle22" class="menu-link px-3 get-service-detail-by-id" service-id="{{ $home_service['ps_id'] }}">Edit</a>
                                                 </div>
                                                 <!--end::Menu item-->
                                                 <!--begin::Menu item-->
                                                 <div class="menu-item px-3">
-                                                   <a href="" class="menu-link px-3">Enable</a>
-                                                </div>
-                                                <!--end::Menu item-->
-                                                <!--begin::Menu item-->
-                                                <div class="menu-item px-3">
-                                                   <a href="" class="menu-link px-3">Disable</a>
+                                                   <a href="javascript:void(0)" class="menu-link px-3 venue-status-change" status-value="{{ $statusVal }}" service-id="{{ $home_service['ps_id'] }}">{{ $statusText }}
+                                                   </a>
                                                 </div>
                                              </div>
                                              <!--end::Menu-->

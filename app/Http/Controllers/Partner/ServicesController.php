@@ -52,13 +52,14 @@ class ServicesController extends Controller
 		}
 
 		$categories = ServiceCategory::where('is_active', '=', 1)->get();
+		$subcategories = ServiceSubCategory::where('status', '=', 1)->get();
 
 		$partnerVenueServicesLists 	= $this->partnerServicesLists($partner_id, 'at_venue');
 		$partnerHomeServicesLists 	= $this->partnerServicesLists($partner_id, 'at_home');
 
         // echo "<pre>"; print_r($partnerServicesDet); die;
 
-        return view('partner/services/index', compact('title', 'meta_description', 'meta_keywords', 'getStaff', 'venue_data_arr', 'categories', 'partnerVenueServicesLists', 'partnerHomeServicesLists'));
+        return view('partner/services/index', compact('title', 'meta_description', 'meta_keywords', 'getStaff', 'venue_data_arr', 'categories', 'subcategories', 'partnerVenueServicesLists', 'partnerHomeServicesLists'));
     }
 
     public function serviceStore(Request $request)
@@ -250,7 +251,7 @@ class ServicesController extends Controller
 
 	public function getServiceSubcategoryByAjax($category_id){
 
-        $getSubcategory = ServiceSubCategory::where('categoryid','=',$category_id)->orderBy('servicesubcategoryid','asc')->get();
+        $getSubcategory = ServiceSubCategory::where('categoryid','=',$category_id)->where('status', '=', 1)->orderBy('servicesubcategoryid','asc')->get();
         $html = "<option></option>";
         foreach ($getSubcategory as $subcategory) {
             $html .= '<option value="'.$subcategory->servicesubcategoryid.'">'.$subcategory->servicesubcategory.'</option>';
@@ -367,4 +368,98 @@ class ServicesController extends Controller
 
     	return $partnerServicesLists;
     }
+
+    public function changeServiceStatus($id,$status){
+		$statusupdate = PartnerService::where('ps_id', $id)->update([
+			'status' => $status,
+		]);
+
+		return true;
+	}
+
+	public function getServiceDetailById($ps_id)
+	{
+    	//$partnerServicesLists	= PartnerService::where('ps_id', $id)->get();
+
+    	$partnerServices = PartnerService::where('ps_id', $ps_id);
+    	$partnerServicesLists	= $partnerServices->select(['partner_services.*', 'services.servicename'])
+	    	->leftJoin('services', 'services.serviceid', '=', 'partner_services.service_id')
+	    	->get();
+
+    	$partner_id 		= Auth::user()->id;
+
+    	$staff 		= Staff::where('partner_id', $partner_id);
+    	$getStaff 	= $staff->select(['staff.staff_id', 'staff.user_id', 'staff.partner_id', 'users.name', 'staff.profile_image'])
+    	->leftJoin('users', 'users.id', '=', 'staff.user_id')
+    	->orderBy('staff.staff_id', 'DESC')
+    	->get();
+
+		if ( !empty($ps_id) && !$partnerServicesLists->isEmpty() ) {
+			$staff_pricing = $partnerServicesLists[0]->staff_pricing;
+			$staff_pricing_html = "";
+			if ($staff_pricing) {
+				$json_data = json_decode($staff_pricing);
+				if ( !empty($json_data) ) {
+					foreach($json_data as $key => $value){
+						// echo "<pre>"; print_r($value); die;
+						$staff_id = $value->staff_id;
+						$staff_pricing_html.= '<div class="col-sm-4">
+                        <label class="required fw-semibold fs-6 mb-2">Staff</label>
+                        <div class="form-floating border rounded">
+                          <select class="form-select form-select-transparent kt_docs_select2_users" data-placeholder="Select an option" name="staff_pricing[staff_id][]">
+                            <option></option>';
+                            if( !empty($getStaff) ){
+	                            foreach($getStaff as $staff){
+	                            	$selected = ($staff->user_id == $staff_id) ? 'selected' : '';
+		                            if($staff->profile_image){
+		                              $path = asset('/public'.$staff->profile_image);
+		                            }else{
+		                              $path = asset('/public/partner/assets/media/avatars/blank.png');
+		                            }
+	                            	$staff_pricing_html.= '<option value="'.$staff->user_id.'" data-kt-select2-user="'.$path.' $selected">'.$staff->name.'</option>';
+	                            }
+                            }
+                          $staff_pricing_html.= '</select>
+                        </div>
+                      </div>  
+
+                      <div class="col-sm-4">
+                        <div class="d-flex flex-column gap-1">
+                          <label class="fw-semibold fs-6 mb-2">Online Price</label>
+                          <div class="input-group mb-0">
+                            <span class="input-group-text">$</span>
+                            <input type="text" class="form-control" aria-label="Amount (to the nearest dollar)" name="staff_pricing[online_price][]" value="'.$value->online_price.'"/>
+                            <span class="input-group-text">.00</span>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div class="col-sm-4">
+                        <div class="d-flex flex-column gap-1">
+                          <label class="fw-semibold fs-6 mb-2">Off Peak Price</label>
+                          <div class="input-group mb-0">
+                            <span class="input-group-text">$</span>
+                            <input type="text" class="form-control" aria-label="Amount (to the nearest dollar)" name="staff_pricing[off_peak_price][]" value="'.$value->off_peak_price.'"/>
+                            <span class="input-group-text">.00</span>
+                          </div>
+                        </div>
+                      </div>';
+					}
+				}
+			}
+			// echo "staff_pricing <pre>"; print_r($staff_pricing); die;
+			$response = array(
+				"status" 		=> 1,
+				"data" 			=> $partnerServicesLists,
+				"staff_pricing" => $staff_pricing_html,
+			);
+		}else{
+			$response = array(
+				"status" 	=> 0,
+				"message" 	=> "Data not found",
+			);
+		}
+		
+		echo json_encode($response);
+	}
 }

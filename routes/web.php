@@ -176,6 +176,8 @@ Route::middleware(['auth'])->group(function () {
     Route::post('partner/service/update', [ServicesController::class, 'serviceUpdate']);
     Route::get('partner/service/get-online-price/{id}', [ServicesController::class, 'getOnlinePrice']);
     Route::get('partner/service/get-offpeak-price/{id}', [ServicesController::class, 'getOffPeakPrice']);
+    Route::get('partner/service/edit-service-status/{id}/{status}', [ServicesController::class, 'changeServiceStatus']);
+    Route::get('partner/service/get-service-detail-by-id/{id}', [ServicesController::class, 'getServiceDetailById']);
 
     Route::get('partner/promote', [PromoteController::class, 'index'])->name('promote.index');
     Route::get('partner/reports', [ReportsController::class, 'index'])->name('reports.index');

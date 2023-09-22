@@ -16,7 +16,7 @@ data-kt-drawer-width="{default:'300px', 'md': '700px', 'xl': '950px'}"
     <!--begin::Title-->
     <div class="card-title">
       <div class="d-flex flex-column gap-3 mb-4">
-        <h2><span class="service-name">Full face threading</span></h2>
+        <h2><span class="service-name"></span></h2>
         <span class="text-gray-400 fs-6">This involves removing unwanted hair from the entire face, including the forehead, cheeks, chin and neck</span>
       </div>
     </div>
@@ -44,7 +44,7 @@ data-kt-drawer-width="{default:'300px', 'md': '700px', 'xl': '950px'}"
     <!--begin::Form-->
     <form class="form d-flex flex-column flex-lg-row" id="serviceeditform" method="post" action="{{ url('partner/service/update') }}">
       @csrf
-      <input type="hidden" name="ps_id" id="service_id">
+      <input type="hidden" name="ps_id" id="partner_service_id">
       <div class="d-flex flex-column gap-7 gap-lg-10">
 
         <div class="card card-flush p-4">
@@ -77,9 +77,13 @@ data-kt-drawer-width="{default:'300px', 'md': '700px', 'xl': '950px'}"
               <!--end::Card title-->
 
               <!--begin::Select2-->
-              <select class="form-select mb-2" id="edit-service-sub-category" data-control="select2" data-hide-search="true" data-placeholder="Select an option" name="sub_category" required="required">
-                <option></option>
-                
+              <select class="form-select mb-2 edit-service-sub-category" id="edit-service-sub-category" data-control="select2" data-hide-search="true" data-placeholder="Select an option" name="sub_category" required="required">
+                <option></option>                
+                @if( !empty($subcategories) )
+                @foreach($subcategories as $subcategory)
+                <option value="{{ $subcategory->servicesubcategoryid }}">{{ $subcategory->servicesubcategory }}</option>
+                @endforeach
+                @endif
               </select>
               <!--end::Select2-->
 
@@ -170,7 +174,12 @@ data-kt-drawer-width="{default:'300px', 'md': '700px', 'xl': '950px'}"
               <!--end::Card title-->
 
 
-              <input type="text" class="form-control mb-3 mb-lg-0" placeholder="Duration" name="duration" required="required"/>
+              <select name="duration" required="required" class="form-select mb-2 service-duration" data-placeholder="Select an option" data-control="select2" data-hide-search="true">
+                <option></option>
+                @foreach(durationScheduling() as $dKey => $duration)
+                <option value="{{ $dKey }}">{{ $duration }}</option>
+                @endforeach
+              </select>
 
             </div>
 
@@ -193,7 +202,7 @@ data-kt-drawer-width="{default:'300px', 'md': '700px', 'xl': '950px'}"
                 <label class="required fw-semibold fs-6">Walk-in price</label>
                 <div class="input-group mb-2">
                   <span class="input-group-text">$</span>
-                  <input type="text" class="form-control" aria-label="Amount (to the nearest dollar)" name="walk_in_price" required="required"/>
+                  <input type="text" class="form-control service-walk-in-price" aria-label="Amount (to the nearest dollar)" name="walk_in_price" required="required"/>
                   <span class="input-group-text">.00</span>
                 </div>
                 <div class="text-muted fs-7">Price for anyone who walks into the salon without an appointment</div>
@@ -206,7 +215,7 @@ data-kt-drawer-width="{default:'300px', 'md': '700px', 'xl': '950px'}"
                 <label class="required fw-semibold fs-6">Online Price</label>
                 <div class="input-group mb-2">
                   <span class="input-group-text">$</span>
-                  <input type="text" class="form-control" aria-label="Amount (to the nearest dollar)" name="online_price" required="required"/>
+                  <input type="text" class="form-control service-online-price" aria-label="Amount (to the nearest dollar)" name="online_price" required="required"/>
                   <span class="input-group-text">.00</span>
                 </div>
                 <div class="text-muted fs-7">Price available to clients who book their services online in advance</div>
@@ -219,7 +228,7 @@ data-kt-drawer-width="{default:'300px', 'md': '700px', 'xl': '950px'}"
                 <label class="required fw-semibold fs-6">Off Peak Price</label>
                 <div class="input-group mb-2">
                   <span class="input-group-text">$</span>
-                  <input type="text" class="form-control" aria-label="Amount (to the nearest dollar)" name="off_peak_price" required="required"/>
+                  <input type="text" class="form-control service-off-peak-price" aria-label="Amount (to the nearest dollar)" name="off_peak_price" required="required"/>
                   <span class="input-group-text">.00</span>
                 </div>
                 <div class="text-muted fs-7">A discounted price, available to people who walk-in during the salon's off peak hours.</div>
@@ -251,53 +260,7 @@ data-kt-drawer-width="{default:'300px', 'md': '700px', 'xl': '950px'}"
                   <div data-repeater-item="" class="form-group d-flex align-items-end gap-5">
 
 
-                    <div class="row mt-7">
-
-                      <div class="col-sm-4">
-                        <!--begin::Label-->
-                        <label class="required fw-semibold fs-6 mb-2">Staff</label>
-                        <div class="form-floating border rounded">
-                          <select class="form-select form-select-transparent kt_docs_select2_users" data-placeholder="Select an option" name="staff_pricing['staff_id'][]">
-                            <option></option>
-                            @if( !empty($getStaff) )
-                            @foreach($getStaff as $staff)
-                            @php 
-                            if($staff->profile_image){
-                              $path = asset('/public'.$staff->profile_image);
-                            }else{
-                              $path = asset('/public/partner/assets/media/avatars/blank.png');
-                            }
-                            @endphp
-                            <option value="{{ $staff->user_id }}" data-kt-select2-user="{{ $path }}">{{ $staff->name }}</option>
-                            @endforeach
-                            @endif
-                          </select>
-                        </div>
-                      </div>  
-
-                      <div class="col-sm-4">
-                        <div class="d-flex flex-column gap-1">
-                          <label class="fw-semibold fs-6 mb-2">Online Price</label>
-                          <div class="input-group mb-0">
-                            <span class="input-group-text">$</span>
-                            <input type="text" class="form-control" aria-label="Amount (to the nearest dollar)" name="staff_pricing['online_price'][]"/>
-                            <span class="input-group-text">.00</span>
-                          </div>
-                          <!--end::Input group-->
-                        </div>
-                      </div>
-
-                      <div class="col-sm-4">
-                        <div class="d-flex flex-column gap-1">
-                          <label class="fw-semibold fs-6 mb-2">Off Peak Price</label>
-                          <div class="input-group mb-0">
-                            <span class="input-group-text">$</span>
-                            <input type="text" class="form-control" aria-label="Amount (to the nearest dollar)" name="staff_pricing['off_peak_price'][]"/>
-                            <span class="input-group-text">.00</span>
-                          </div>
-                          <!--end::Input group-->
-                        </div>
-                      </div>
+                    <div class="row mt-7 staff-pricing-list">
 
                     </div>
 
@@ -346,7 +309,7 @@ data-kt-drawer-width="{default:'300px', 'md': '700px', 'xl': '950px'}"
 
                   <!--begin::Radio-->
                   <span class="form-check form-check-custom form-check-solid form-check-sm align-items-start mt-1">
-                    <input class="form-check-input" type="checkbox" name="venues[]" value="{{ $venue_data['id'] }}" />
+                    <input class="form-check-input service-venues" type="checkbox" name="venues[]" value="{{ $venue_data['id'] }}" />
                   </span>
                   <!--end::Radio-->
                   @if( !empty($venue_data['venue_meta']['featured']) )
