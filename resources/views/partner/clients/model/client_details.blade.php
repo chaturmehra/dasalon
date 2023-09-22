@@ -74,7 +74,8 @@
                            <div class="d-flex flex-column gap-5 mt-5">
                               <div class="d-flex gap-5">
                                  <div class="fw-bold" >Date Of Birth</div>
-                                 <div class="text-gray-600" id="dob">{{\Carbon\Carbon::parse($client->dob)->format('d-M-Y')}}</div>
+                                 <div class="text-gray-600" id="dob">
+                                    {{$client->dob}}</div>
                               </div>
                               <div class="d-flex gap-5">
                                  <div class="fw-bold mt-5" >Address</div>

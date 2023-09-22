@@ -80,13 +80,8 @@
                      </div>
                      @endif
                      <div class="d-flex gap-3 align-items-center">
-                        <a class="prevBtn cursor-pointer">
-                        <i class="bi bi-chevron-left fs-6"></i>
-                        </a>
-                        <span class="text-gray-800 fs-4 fw-semibold dateRangeDisplay">Loading...</span>
-                        <a class="nextBtn cursor-pointer">
-                        <i class="bi bi-chevron-right fs-6"></i>
-                        </a>
+                        @php $date = date("Y-m-d"); @endphp
+                        <span class="text-gray-800 fs-4 fw-semibold">{{ date("j F, Y", strtotime($date)) }}</span>
                      </div>
                   </div>
                   <!--end::Card header-->
@@ -109,20 +104,26 @@
                         <!--end::Table head-->
                         <tbody class="fw-bold text-gray-600">
 
-                           @if($getStaff)
-                           @foreach($getStaff as $skey => $staff)
+                           @if( !empty($getStaff) )
+                           @foreach($getStaff->unique() as $skey => $staff)
+                           @php
+                              $check_in  = isset($staff->check_in) ? $staff->check_in : "";
+                              $check_out = isset($staff->check_out) ? $staff->check_out : "";  
+                              $date = isset($staff->date) ? $staff->date : "";  
+                              $todayDate = date('Y-m-d');  
+                           @endphp
                            <tr>
                               <td>{{ $skey+1 }}</td>
                               <td>{{ $staff->name }}</td>
                               <td>{{ $staff->phone }}</td>
                               <td>
                                  <button type="button" class="btn btn-primary modal_attendance_check" data-bs-toggle="modal" data-bs-target="#modal_attendance_admin_check" staff-id="{{ $staff->user_id }}">
-                                    Check in
+                                    @if( !empty($check_in) && $date == $todayDate ) {{ $check_in }} @else  Check in @endif
                                  </button>
                               </td>
                               <td>
                                  <button type="button" class="btn btn-primary modal_attendance_check" data-bs-toggle="modal" data-bs-target="#modal_attendance_admin_check_out" staff-id="{{ $staff->user_id }}">
-                                    Check out
+                                    @if( !empty($check_out) && $date == $todayDate ) {{ $check_out }} @else  Check out @endif
                                  </button>
                               </td>
                            </tr>
@@ -144,7 +145,7 @@
                      <!--begin::Toolbar-->
                      <div class="card-toolbar">
                         <!--begin::Daterangepicker(defined in src/js/layout/app.js)-->
-                        <div data-kt-daterangepicker="true" data-kt-daterangepicker-opens="left" class="btn btn-sm btn-light d-flex align-items-center px-4">
+                        <div data-kt-daterangepicker="true" data-kt-daterangepicker-opens="left" class="btn btn-sm btn-light d-flex align-items-center px-4 attendance-analytics-filter">
                            <!--begin::Display range-->
                            <div class="text-gray-600 fw-bold">Loading date range...</div>
                            <!--end::Display range-->
@@ -218,8 +219,8 @@
                            <!--end::Link-->
                         </li>
                         <!--end::Item-->
-                        @if($getStaff)
-                        @foreach($getStaff as $namekey => $staff_name)
+                        @if( !empty($getStaff) )
+                        @foreach($getStaff->unique() as $namekey => $staff_name)
                         @php
                         $full_name = $staff_name->name;
                         $name_parts = explode(' ', $full_name);
@@ -274,25 +275,33 @@
                                  <!--begin::Table row-->
                                  <tr class="text-start text-gray-400 fw-bold fs-7 text-uppercase gs-0">
                                     <th class="min-w-50px">Name</th>
+                                    <th class="min-w-50px">Status</th>
                                     <th class="min-w-50px">Date</th>
                                     <th class="min-w-50px">Check In</th>
                                     <th class="min-w-50px">Check Out</th>
                                     <th class="min-w-50px">No. of hours</th>
+                                    <th class="min-w-50px">Action</th>
                                  </tr>
                                  <!--end::Table row-->
                               </thead>
                               <!--end::Table head-->
                               <tbody class="fw-bold text-gray-600 attendance-register">
-                                 @if($staffAttendance)
+                                 @if( !empty($staffAttendance) )
                                  @foreach($staffAttendance as $sakey => $staff_att)
                                  @php 
                                     $date = $staff_att->date; 
-                                    $formatted_date = date("d M, D", strtotime($date));
+                                    if($date){
+                                       $formatted_date = date("d M, D", strtotime($date));
+                                       $date = $date;
+                                    }else{
+                                       $formatted_date = "";
+                                       $date = date('Y-m-d');
+                                    }
                                     $ts1 = strtotime($staff_att->check_in);
                                     $ts2 = strtotime($staff_att->check_out);    
                                     if($ts1 && $ts2){
                                        $seconds_diff = $ts2 - $ts1;                            
-                                       $time = ($seconds_diff/3600)." hr";
+                                       $time = round($seconds_diff / 3600, 2)." hr";
                                     }else{
                                        $time = "NA";
                                     }
@@ -300,10 +309,19 @@
                                  @endphp
                                  <tr class="staff_{{$staff_att->user_id}}">
                                     <td>{{ $staff_att->name }}</td>
+                                    <td></td>
                                     <td>{{ $formatted_date }}</td>
                                     <td>{{ $staff_att->check_in }}</td>
                                     <td>{{ $staff_att->check_out }}</td>
                                     <td>{{ $time }} </td>
+                                    <td>
+                                       <button type="button" class="btn btn-primary modal_attendance_check_update" data-bs-toggle="modal" data-bs-target="#modal_attendance_admin_check_update" staff-id="{{ $staff_att->user_id }}" staff-attendance-date="{{ $date }}">
+                                          Check in
+                                       </button>
+                                       <button type="button" class="btn btn-primary modal_attendance_check_update" data-bs-toggle="modal" data-bs-target="#modal_attendance_admin_check_out_update" staff-id="{{ $staff_att->user_id }}" staff-attendance-date="{{ $date }}">
+                                          Check Out
+                                       </button>
+                                    </td>
                                  </tr>
                                  @endforeach
                                  @endif
@@ -328,6 +346,8 @@
 <!--begin::Modal - Add commission-->
 @include('partner.staff.attendance.modal.attendance-check-in')
 @include('partner.staff.attendance.modal.attendance-check-out')
+@include('partner.staff.attendance.modal.attendance-check-in-update')
+@include('partner.staff.attendance.modal.attendance-check-out-update')
 <!--end::Modal - Add commission-->
 
 @endsection
@@ -335,6 +355,13 @@
 @push('scripts')
 
 <script type="text/javascript">
+   var seriesData = "@php echo implode(',', array_values($apexChartArray)); @endphp";
+   seriesData = seriesData.split(",");
+   var seriesAvgData = "@php echo implode(',', array_values($apexChartAvgArray)); @endphp";
+   seriesAvgData = seriesAvgData.split(",");
+   var categoriesData = "@php echo implode(',', array_keys($apexChartArray)); @endphp";
+   categoriesData = categoriesData.split(",");
+
    var KTChartsWidgetAttendance = (function () {
     var e = { self: null, rendered: !1 },
         t = function (e) {
@@ -344,7 +371,7 @@
                     l = KTUtil.getCssVariableValue("--bs-gray-900"),
                     r = KTUtil.getCssVariableValue("--bs-border-dashed-color"),
                     o = {
-                        series: [{ name: "Spent time", data: [54, 42, 75, 110, 23, 87, 50] }],
+                        series: [{ name: "Spent time", data: seriesData }],
                         chart: { fontFamily: "inherit", type: "bar", height: a, toolbar: { show: !1 } },
                         plotOptions: { bar: { horizontal: !1, columnWidth: ["28%"], borderRadius: 5, dataLabels: { position: "top" }, startingShape: "flat" } },
                         legend: { show: !1 },
@@ -358,7 +385,7 @@
                         },
                         stroke: { show: !0, width: 2, colors: ["transparent"] },
                         xaxis: {
-                            categories: ["Harry", "Lisa", "Tom", "Sam", "Dazy", "Simon", "Ron"],
+                            categories: categoriesData,
                             axisBorder: { show: !1 },
                             axisTicks: { show: !1 },
                             labels: { style: { colors: KTUtil.getCssVariableValue("--bs-gray-500"), fontSize: "13px" } },
@@ -391,6 +418,7 @@
                     }, 200);
             }
         };
+
     return {
         init: function () {
             t(e),
@@ -398,6 +426,9 @@
                     e.rendered && e.self.destroy(), t(e);
                 });
         },
+        getInstance: function(){
+            return e;
+        }
     };
 })();
 "undefined" != typeof module && (module.exports = KTChartsWidgetAttendance),
@@ -413,14 +444,14 @@
             if (t) {
                 var a = KTUtil.getCssVariableValue("--bs-border-dashed-color"),
                     l = {
-                        series: [{ data: [15, 12, 10, 8, 7, 4, 3], show: !1 }],
+                        series: [{ name: "Average Working Hour", data: seriesAvgData, show: !1 }],
                         chart: { type: "bar", height: 350, toolbar: { show: !1 } },
                         plotOptions: { bar: { borderRadius: 4, horizontal: !0, distributed: !0, barHeight: 50 } },
                         dataLabels: { enabled: !1 },
                         legend: { show: !1 },
                         colors: ["#3E97FF", "#F1416C", "#50CD89", "#FFC700", "#7239EA", "#50CDCD", "#3F4254"],
                         xaxis: {
-                            categories: ["Harry", "Lisa", "Tom", "Sam", "Dazy", "Simon", "Ron"],
+                            categories: categoriesData,
                             labels: {
                                 formatter: function (e) {
                                     return e + "K";
@@ -445,6 +476,9 @@
                     e.rendered && e.self.destroy(), t(e);
                 });
         },
+        getInstance: function(){
+            return e;
+        }
     };
 })();
 "undefined" != typeof module && (module.exports = KTChartsWidgetAvgWrkHr),

@@ -12,7 +12,7 @@
         
         <div style="width:100%; height:100%; background-color: #2e2e2f; background:#ffd966; padding:0px 40px 40px 40px; box-sizing: border-box;">
             
-            <div style="padding:10px 0; text-align:center;"><img style="width:210px;" src="https://webpristine.co.in/assets/media/logos/logo3.png" alt="Dasalon" title="Dasalon"/></div>
+            <div style="padding:10px 0; text-align:center;"><img style="width:210px;" src="{{ asset('public/assets/media/logos/logo3.png') }}" alt="Dasalon" title="Dasalon"/></div>
             
            
             <p style="font-size:16px; font-weight:500; color:#FFF; text-align:center; margin-bottom:15px; line-height:24px;">Hello <strong>{{$user->name}}</strong></p>

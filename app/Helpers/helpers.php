@@ -7,6 +7,8 @@ use App\Models\Admin\Country;
 use App\Models\Admin\CountryConfig;
 use App\Models\Admin\Amenity;
 use App\Models\Admin\AmenityCategory;
+use App\Models\Admin\Service;
+use App\Models\Admin\ServiceCategory;
 
 function getPartnerType(){
 	$partnertype = PartnerType::get();
@@ -19,7 +21,7 @@ function getCountryList(){
 }
 
 function getCountryConfigList(){
-	$countryList = CountryConfig::leftJoin('countries', 'country_config.country_id', '=', 'countries.id')->where('status',1)->get(['name','countries.id']);
+	$countryList = CountryConfig::leftJoin('countries', 'country_config.country_id', '=', 'countries.id')->where('status',1)->get(['name','iso2','countries.id']);
 	return $countryList;
 }
 
@@ -37,14 +39,17 @@ if (!function_exists('loadScript')) {
         }
     } 
 }
+
 function getAmenityCategory(){
 	$amenitycategories = AmenityCategory::get()->toArray();
-
-	$amenitycategory = array_column($amenitycategories, 'amenity_category');
-	// $amenitycategory0 = array_values($amenitycategory);
-
-	// echo "<pre>"; print_r($amenitycategory); 
+	$amenitycategory   = array_column($amenitycategories, 'amenity_category');
 	return $amenitycategory;
+}
+
+function getServices(){
+    $services  = Service::where('is_active', 1)->get()->toArray();
+    $services_name  = array_column($services, 'servicename');
+    return $services_name;
 }
 
 function scheduleType(){
@@ -76,6 +81,38 @@ function adminpagewithsubpage(){
             'Recommendations (package)', 
             'Offers Management'
         ]
-        ];
-        return $pagewithsubpageList;
-    }
+    ];
+    return $pagewithsubpageList;
+}
+
+function userAuthorization(){
+    $userAuthorization =
+    [
+        'Home' => [
+            'Sales(button)',
+            'Appointment(button)',
+        ],
+        'Calendar' => [
+            'Add appointment',
+            'Change appointment',
+            'View Calendar',
+            'View all staff calendar',
+        ],
+        'Clients' => [
+            'Create client',
+            'import clients, upload client register, export clients',
+            'Reviews - view',
+            'Review - reply/report',
+        ],
+        'Sales' => [
+            'Export',
+            'Options Button',
+        ]
+    ];
+    return $userAuthorization;
+}
+
+
+function getSelectedCountry(){
+    return $country = session ()->get('country'); 
+}

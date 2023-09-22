@@ -32,6 +32,7 @@ use App\Http\Controllers\Partner\StaffController;
 use App\Http\Controllers\Partner\StaffAttendanceController;
 use App\Http\Controllers\Partner\StaffLeaveController;
 use App\Http\Controllers\Partner\StaffUserAuthorizationController;
+use App\Http\Controllers\Partner\ExportController;
 
 
 /*
@@ -161,11 +162,20 @@ Route::middleware(['auth'])->group(function () {
     Route::post('partner/store-venue-setting', [VenueController::class, 'storeVenues']);
     Route::post('partner/update-venue-setting', [VenueController::class, 'updateVenues']);
     Route::get('partner/get-venue-detail-by-id/{id}', [VenueController::class, 'getVenueDetailById']);
+    Route::get('partner/get-business-detail/{id}', [VenueController::class, 'getBusinessDetail']);
+    Route::post('partner/update-business-detail', [VenueController::class, 'updateBusinessDetail']);
+    Route::post('partner/sendEmail', [VenueController::class, 'sendPartnerEmail']);
 
     Route::get('partner/calender', [CalenderController::class, 'index'])->name('calender.index');
     Route::get('partner/appointments', [AppointmentsController::class, 'index'])->name('appointments.index');
     Route::get('partner/clients', [ClientsController::class, 'index'])->name('clients.index');
+
     Route::get('partner/services', [ServicesController::class, 'index'])->name('services.index');
+    Route::get('partner/get-subcategory/{id}', [ServicesController::class, 'getServiceSubcategoryByAjax']);
+    Route::post('partner/service/store', [ServicesController::class, 'serviceStore']);
+    Route::post('partner/service/update', [ServicesController::class, 'serviceUpdate']);
+    Route::get('partner/service/get-online-price/{id}', [ServicesController::class, 'getOnlinePrice']);
+
     Route::get('partner/promote', [PromoteController::class, 'index'])->name('promote.index');
     Route::get('partner/reports', [ReportsController::class, 'index'])->name('reports.index');
 
@@ -177,9 +187,6 @@ Route::middleware(['auth'])->group(function () {
 
     Route::post('admin/services/addservice', [ServicesConfigController::class, 'addservice']);
     //Route::post('admin/services/servicesubcategory',[ServicesConfigController::class,'store']);
-    Route::post('admin/services/recommendedpackage', [ServicesConfigController::class, 'addrecommendedpackage']);
-    Route::get('admin/rp/enable-status/{rp_id}', [ServicesConfigController::class, 'enabledrp']);
-    Route::get('admin/rp/disable-status/{rp_id}', [ServicesConfigController::class, 'disabledrp']);
 
     Route::get('admin/edit-servicecategory/{id}', [ServicesConfigController::class, 'edit']);
 
@@ -199,20 +206,46 @@ Route::middleware(['auth'])->group(function () {
     Route::get('partner/staff/get-staff-detail-by-id/{id}', [StaffController::class, 'getStaffDetailById']);
     Route::get('partner/staff/get-commission-by-staff-id/{id}', [StaffController::class, 'getCommissionByStaffId']);
     Route::post('partner/staff/update-staff', [StaffController::class, 'updateStaff']);
+    Route::get('partner/staff/filter-by-role/{id}', [StaffController::class, 'filterByRole']);
+    Route::get('partner/staff/filter-reset', [StaffController::class, 'filterReset']);
 
     Route::get('partner/staff/attendance', [StaffAttendanceController::class, 'index'])->name('attendance.index');
     Route::get('partner/staff/get-staff-detail-fill-attendance/{id}', [StaffAttendanceController::class, 'getStaffDetailFillAttendance']);
     Route::post('partner/staff/checkin-attendance', [StaffAttendanceController::class, 'checkinAttendance']);
     Route::post('partner/staff/checkout-attendance', [StaffAttendanceController::class, 'checkoutAttendance']);
+    Route::post('partner/staff/checkin-attendance-update', [StaffAttendanceController::class, 'checkinAttendanceUpdate']);
+    Route::post('partner/staff/checkout-attendance-update', [StaffAttendanceController::class, 'checkoutAttendanceUpdate']);
     Route::get('partner/staff/filter-attendance-by-date/{start_date}/{end_date}', [StaffAttendanceController::class, 'filterAttendanceByDate']);
+    Route::get('partner/staff/attendance-analytics/{start_date}/{end_date}', [StaffAttendanceController::class, 'attendanceAnalytics']);
+    Route::get('partner/staff/get-staff-attendance-by-date/{id}/{date}', [StaffAttendanceController::class, 'getStaffAttendanceByDate']);
 
     Route::get('partner/staff/leave', [StaffLeaveController::class, 'index'])->name('leave.index');
     Route::post('partner/staff/leave', [StaffLeaveController::class, 'storeLeave']);
 
     Route::get('partner/staff/user-authorization', [StaffUserAuthorizationController::class, 'index'])->name('user-authorization.index');
+    Route::post('partner/staff/store-user-authorization', [StaffUserAuthorizationController::class, 'storeAuthorization']);
 
     Route::get('admin/typeone/enable-status/{id}', [SubscriptionController::class, 'enabledsub']);
     Route::get('admin/typeone/disable-status/{id}', [SubscriptionController::class, 'disabledsub']);
+
+    Route::get('partner/staff/export-staff-by-role/{id}/{type}', [ExportController::class, 'exportStaffByRole']);
+
+    Route::post('admin/settings/onboarding', [SubscriptionController::class, 'createOnboarding']);
+    Route::get('admin/settings/subscription/get-typeone/{id}', [SubscriptionController::class, 'gettypeOneAjax']);
+    Route::get('admin/settings/subscription/get-typetwo/{id}', [SubscriptionController::class, 'gettypeTwoAjax']);
+    Route::get('admin/settings/subscription/get-fees/{id}', [SubscriptionController::class, 'getfeeAjax']);
+
+    Route::get('admin/subcategory/enable-status/{id}', [ServicesConfigController::class, 'enabledSubcat']);
+    Route::get('admin/subcategory/disable-status/{id}', [ServicesConfigController::class, 'disabledSubcat']);
+    Route::get('admin/edit-servicesubcategory/{id}', [ServicesConfigController::class, 'editSubcat']);
+    Route::post('admin/update-servicesubcategory', [ServicesConfigController::class, 'updateSubcat']);
+
+    Route::post('admin/services/recommendedpackage', [RecommendationsController::class, 'addrecommendedpackage']);
+    Route::get('admin/rp/enable-status/{rp_id}', [RecommendationsController::class, 'enabledrp']);
+    Route::get('admin/rp/disable-status/{rp_id}', [RecommendationsController::class, 'disabledrp']);
+
+    Route::get('admin/services/services-config/set-country/{id}', [CountryController::class, 'setSelectedCountry']);
+
 });
 
 /*Partner Route*/
@@ -243,5 +276,5 @@ Route::post('partner/client/update', [ClientsController::class, 'updateClient'])
 
 Route::post('partner/client/import', [ClientsController::class, 'importClient'])->name('client_import');
 
-Route::get('partner/client/export', [ClientsController::class, 'exportClient']);
+Route::get('partner/client/export', [ClientsController::class, 'exportClient'])->name('export');
 Route::get('partner/client/sorting', [ClientsController::class, 'sortClient'])->name('sorting');

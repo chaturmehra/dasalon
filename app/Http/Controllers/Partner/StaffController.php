@@ -166,12 +166,12 @@ class StaffController extends Controller
 
 			StaffCommission::create([
 				'staff_id'      => $staff_id->staff_id,
-				'service'      	=> $commission_data->add_service,
-				'book_look'     => $commission_data->add_book_look,
-				'package'     	=> $commission_data->add_package,
-				'voucher'     	=> $commission_data->add_voucher,
-				'membership' 	=> $commission_data->add_membership,
-				'product' 		=> $commission_data->add_product,
+				'service'      	=> !empty($commission_data->add_service) ? $commission_data->add_service : NULL,
+				'book_look'     => !empty($commission_data->add_book_look) ? $commission_data->add_book_look : NULL,
+				'package'     	=> !empty($commission_data->add_package) ? $commission_data->add_package : NULL,
+				'voucher'     	=> !empty($commission_data->add_voucher) ? $commission_data->add_voucher : NULL,
+				'membership' 	=> !empty($commission_data->add_membership) ? $commission_data->add_membership : NULL,
+				'product' 		=> !empty($commission_data->add_product) ? $commission_data->add_product : NULL,
 			]);
 			
 		}
@@ -352,22 +352,22 @@ class StaffController extends Controller
 			$staffCommission = StaffCommission::where('staff_id', $staff_id)->get()->toArray();
 			if ( !empty($staffCommission) ) {
 				StaffCommission::where('staff_id', $staff_id)->update([
-					'service'      	=> $commission_data->edit_service,
-					'book_look'     => $commission_data->edit_book_look,
-					'package'     	=> $commission_data->edit_package,
-					'voucher'     	=> $commission_data->edit_voucher,
-					'membership' 	=> $commission_data->edit_membership,
-					'product' 		=> $commission_data->edit_product,
+					'service'      	=> !empty($commission_data->edit_service) ? $commission_data->edit_service : NULL,
+					'book_look'     => !empty($commission_data->edit_book_look) ? $commission_data->edit_book_look : NULL,
+					'package'     	=> !empty($commission_data->edit_package) ? $commission_data->edit_package : NULL,
+					'voucher'     	=> !empty($commission_data->edit_voucher) ? $commission_data->edit_voucher : NULL,
+					'membership' 	=> !empty($commission_data->edit_membership) ? $commission_data->edit_membership : NULL,
+					'product' 		=> !empty($commission_data->edit_product) ? $commission_data->edit_product : NULL,
 				]);
 			}else{
 				StaffCommission::create([
 					'staff_id'      => $staff_id,
-					'service'      	=> $commission_data->edit_service,
-					'book_look'     => $commission_data->edit_book_look,
-					'package'     	=> $commission_data->edit_package,
-					'voucher'     	=> $commission_data->edit_voucher,
-					'membership' 	=> $commission_data->edit_membership,
-					'product' 		=> $commission_data->edit_product,
+					'service'      	=> !empty($commission_data->edit_service) ? $commission_data->edit_service : NULL,
+					'book_look'     => !empty($commission_data->edit_book_look) ? $commission_data->edit_book_look : NULL,
+					'package'     	=> !empty($commission_data->edit_package) ? $commission_data->edit_package : NULL,
+					'voucher'     	=> !empty($commission_data->edit_voucher) ? $commission_data->edit_voucher : NULL,
+					'membership' 	=> !empty($commission_data->edit_membership) ? $commission_data->edit_membership : NULL,
+					'product' 		=> !empty($commission_data->edit_product) ? $commission_data->edit_product : NULL,
 				]);
 			}
 			
@@ -396,6 +396,142 @@ class StaffController extends Controller
 		}
 		
 		echo json_encode($response);
+	}
+
+	public function filterByRole($id)
+	{
+		$partner_id = Auth::user()->id;
+
+		$staff 		= Staff::where('partner_id', $partner_id);
+		$getStaff 	= $staff->select(['staff.staff_id', 'staff.user_id', 'staff.partner_id', 'users.name', 'users.email', 'users.phone', 'users.is_active', 'staff.profile_image', 'role.role_name'])
+                ->leftJoin('users', 'users.id', '=', 'staff.user_id')
+                ->leftJoin('role', 'role.id', '=', 'staff.staff_role')
+                ->where('staff.staff_role', $id)
+                ->orderBy('staff.staff_id', 'DESC')
+                ->get();
+
+        $response = $this->commonFilterByRoleReset($getStaff);
+		
+		echo json_encode($response);
+	}
+
+	public function filterReset()
+	{
+		$partner_id = Auth::user()->id;
+
+		$staff 		= Staff::where('partner_id', $partner_id);
+		$getStaff 	= $staff->select(['staff.staff_id', 'staff.user_id', 'staff.partner_id', 'users.name', 'users.email', 'users.phone', 'users.is_active', 'staff.profile_image', 'role.role_name'])
+                ->leftJoin('users', 'users.id', '=', 'staff.user_id')
+                ->leftJoin('role', 'role.id', '=', 'staff.staff_role')
+                ->orderBy('staff.staff_id', 'DESC')
+                ->get();
+
+        $response = $this->commonFilterByRoleReset($getStaff);
+
+        echo json_encode($response);
+	}
+
+	public function commonFilterByRoleReset($getStaff){
+		$html = "";
+		if ( !$getStaff->isEmpty() ) {
+			foreach($getStaff as $skey => $staff){
+				if($staff->is_active){
+					$statusVal = 0;
+					$statusText = "Disable";
+				}else{
+					$statusVal = 1;
+					$statusText = "Enable";
+				}
+
+				if ($staff->is_active){
+					$checked = "checked";
+				}else{
+					$checked = "";
+				}
+
+				$html.= '<tr>
+					<td>
+					<div class="form-check form-check-sm form-check-custom form-check-solid">
+					<input class="form-check-input" type="checkbox" value="'.$staff->user_id.'" />
+					</div>
+					</td>
+					<td class="d-flex align-items-center" id="kt_drawer_editprofile_toggle">
+					<div class="symbol symbol-circle symbol-50px overflow-hidden cursor-pointer me-3" id="kt_drawer_editprofile_toggle">
+					<a href="javascript:void(0)" staff-id="'.$staff->user_id.'" class="view-staff">
+					<div class="symbol-label">
+					<img src="'.asset('/public/'.$staff->profile_image).'" alt="'. $staff->name.'" class="w-100" />
+					</div>
+					</a>
+					</div>
+					<div class="d-flex flex-column">
+					<a href="javascript:void(0)" class="text-gray-800 text-hover-primary mb-1 view-staff" staff-id="'.$staff->user_id.'">'.$staff->name.'</a>
+					<span>'.$staff->email.'</span>
+					</div>
+					</td>
+					<td>'.$staff->phone.'</td>
+					<td>'.$staff->role_name.'</td>
+					<td>
+					<label class="form-check form-switch form-check-custom form-check-solid">
+					<input class="form-check-input" type="checkbox"'.$checked.' disabled />
+					</label>
+					</td>
+					<td>
+					<div class="rating">
+					<div class="rating-label checked">
+					<i class="ki-duotone ki-star fs-6"></i>
+					</div>
+					<div class="rating-label checked">
+					<i class="ki-duotone ki-star fs-6"></i>
+					</div>
+					<div class="rating-label checked">
+					<i class="ki-duotone ki-star fs-6"></i>
+					</div>
+					<div class="rating-label checked">
+					<i class="ki-duotone ki-star fs-6"></i>
+					</div>
+					<div class="rating-label checked">
+					<i class="ki-duotone ki-star fs-6"></i>
+					</div>
+					</div>
+					<span class="text-muted fw-semibold text-muted d-block fs-7 mt-1">Best Rated</span>
+					</td>
+					<td class="text-end">
+					<a href="#" class="btn btn-light btn-active-light-primary btn-flex btn-center btn-sm" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end">Actions
+					<i class="ki-duotone ki-down fs-5 ms-1"></i></a>
+
+					<div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-600 menu-state-bg-light-primary fw-semibold fs-7 w-125px py-4" data-kt-menu="true">
+
+					<div class="menu-item px-3">
+					<a href="#" class="menu-link px-3 view-staff" id="kt_drawer_editprofile_toggle" staff-id="'.$staff->user_id.'">View</a>
+					</div>
+					<div class="menu-item px-3">
+					<a href="javascript:void(0)" class="menu-link px-3 delete-staff" staff-id="'.$staff->user_id.'">Delete</a>
+					</div>
+					<div class="menu-item px-3">
+					<a href="javascript:void(0)" class="menu-link px-3 status-change"  status-value="'.$statusVal.'" staff-id="'.$staff->user_id.'">'.$statusText.'
+					</a>
+					</div>
+					</div>
+					</td>
+					</tr>';
+			}
+			$response = array(
+				"status" 	=> 1,
+				"data" 		=> $html,
+			);
+		}else{
+			$html = '<tr>
+			<td colspan="6">No Data Found.</td>
+			</tr>';
+
+			$response = array(
+				"status" 	=> 0,
+				"message" 	=> "Data not found",
+				"data" 		=> $html,
+			);
+		}
+		
+		return $response;
 	}
 
 	public function array_by_ids($array, $column, $multi_arr=false)

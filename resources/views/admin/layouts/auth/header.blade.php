@@ -27,6 +27,7 @@
 		<link href="{{ asset('/public/assets/css/style.css') }}" rel="stylesheet" type="text/css" />
 		<link href="{{ asset('/public/assets/css/custom.css') }}" rel="stylesheet" type="text/css" />
 		<!--end::Global Stylesheets Bundle-->
+		
 	</head>
 	<!--end::Head-->
 	<!--begin::Body-->
@@ -66,6 +67,30 @@
 							<div class="app-navbar flex-shrink-0 flex-grow-1">
 								
 								<div class="header-right d-flex">
+
+
+
+<div class="d-flex align-items-center">
+										<!--begin::Label-->
+										<div class="form-floating border rounded w-300px">
+											@php 
+											$activecountry = getCountryConfigList(); 
+											$selectCountry = getSelectedCountry();
+											@endphp
+										    <select class="form-select" name="country" placeholder="..." id="kt_docs_select2_country"  tabindex="-1" aria-hidden="true">
+										        <option></option>
+										        @foreach($activecountry as $ac)
+				                                @php  
+				         						$selected = ($selectCountry == $ac->iso2) ? "selected" : ""; 
+				         						@endphp
+
+				                                <option value="{{$ac->iso2}}" data-kt-select2-country="{{asset('public/assets/media/flags/'.strtolower(str_replace(' ','-',$ac->name.'.svg')))}}" {{$selected}}>{{$ac->name}}</option>
+				                                @endforeach
+											</select>
+										</div>
+										<!--end::Input-->
+									</div>
+
 
 									<!--begin::My apps links-->
 									<div class="app-navbar-item ms-3 ms-md-6">

@@ -303,3 +303,5 @@ KTUtil.onDOMContentLoaded(function () {
     KTDatatablesExample4.init();
     KTDatatablesExample5.init();
 });
+
+ 

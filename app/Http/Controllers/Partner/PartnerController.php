@@ -96,53 +96,69 @@ class PartnerController extends Controller
 
     public function redirectToProvider($provider)
     {
-        return Socialite::driver($provider)->redirect();
+        try {
+
+            return Socialite::driver($provider)->redirect();
+
+        } catch (\Exception $e) {
+            // Log the error (optional)
+            \Log::error('Socialite redirect error: ' . $e->getMessage());
+
+            // Redirect to the login page with an error message
+            return redirect('/partner/login')->with('error', 'Unable to authenticate with ' . $provider);
+        }
     }
 
     public function handleProviderCallback($provider)
     {
-        $response = Socialite::driver($provider)->user();
-        
-        $name   = $response->name;
-        $email  = $response->email;
-        $check_record = User::whereEmail($email)->first();
+        try {
+            $response = Socialite::driver($provider)->user();
 
-        if (empty($check_record)) {
+            $name   = $response->name;
+            $email  = $response->email;
+            $check_record = User::whereEmail($email)->first();
 
-            $service_provided = Session::get('service_provided_id');
+            if (empty($check_record)) {
 
-            $user = User::create([
-                'name'      => $name,
-                'email'     => $email,
-                'phone'     => "",
-                'country'   => "",
-                'role'      => 1,
-            ]);
+                $service_provided = Session::get('service_provided_id');
 
-            $user_detail_data = [
-                'user_id'           => $user->id,
-                'provider'          => isset($provider) ? $provider : "",
-                'service_provided'  => isset($service_provided) ? $service_provided : "",
-            ];
+                $user = User::create([
+                    'name'      => $name,
+                    'email'     => $email,
+                    'phone'     => "",
+                    'country'   => "",
+                    'role'      => 1,
+                ]);
 
-            Session::put('user_detail_data', $user_detail_data);
+                $user_detail_data = [
+                    'user_id'           => $user->id,
+                    'provider'          => isset($provider) ? $provider : "",
+                    'service_provided'  => isset($service_provided) ? $service_provided : "",
+                ];
 
-            return view('partner/user/signup-mobile-verification');
+                Session::put('user_detail_data', $user_detail_data);
 
-        }else{
-            $check_status = isset($check_record->is_active) ? $check_record->is_active : "";
-            if ($check_record) {
-                $check_role = isset($check_record->role) ? $check_record->role : "";
+                return view('partner/user/signup-mobile-verification');
 
-                Auth::login($check_record);
-                if ($check_role) {
-                    return redirect()->intended('/partner/dashboard');   
-                }else{
-                    return redirect()->intended('/admin/dashboard');
-                }
             }else{
-                return redirect('/user/signup')->with('error', 'Email already exists.');
+                $check_status = isset($check_record->is_active) ? $check_record->is_active : "";
+                if ($check_record) {
+                    $check_role = isset($check_record->role) ? $check_record->role : "";
+
+                    Auth::login($check_record);
+                    if ($check_role) {
+                        return redirect()->intended('/partner/dashboard');   
+                    }else{
+                        return redirect()->intended('/admin/dashboard');
+                    }
+                }else{
+                    return redirect('/user/signup')->with('error', 'Email already exists.');
+                }
             }
+        } catch (\Exception $e) {
+            \Log::error('Socialite callback error: ' . $e->getMessage());
+
+            return redirect('/partner/login')->with('error', 'Unable to authenticate with ' . $provider);
         }
     }
 

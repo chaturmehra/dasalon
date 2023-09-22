@@ -6,9 +6,11 @@ use App\Models\Admin\Amenity;
 use App\Models\Admin\AmenityCategory;
 use Illuminate\Http\Request;
 use DB;
+use Illuminate\Support\Facades\Validator;
+
 class AmenityController extends Controller
 {
-   
+
     public function index()
     {
         return view('admin/setting/amenity/index');
@@ -16,6 +18,21 @@ class AmenityController extends Controller
 
     public function storeAmenity(Request $request)
     {
+     $validator = Validator::make($request->all(), [
+
+        'amenity_name'     => 'required|unique:amenities',
+       
+
+    ]);
+
+    if ($validator->fails()) {
+        if($request->ajax()){ 
+            $response = array(
+                'status' => 0,
+                'message' => $validator->errors()
+            );
+        } 
+    } else{
 
         if ($request->hasFile('amenity_icon')) {
             $image = $request->file('amenity_icon');
@@ -24,7 +41,7 @@ class AmenityController extends Controller
             $image->move($destinationPath, $amenity_icon);
             $amenity_icon =  '/uploads/amenity/'.$amenity_icon;
         }
-       
+
         if($request->amenity_type == 1){
             // DB::enableQueryLog();
             $acat_name= AmenityCategory::where('amenity_category', $request->amenity_category);
@@ -33,14 +50,14 @@ class AmenityController extends Controller
             // echo "<pre>";print_r($acat_name->count());die();
             
             
-        
+
 
             if( !$acat_name->count() ) {
                 $acat_id = AmenityCategory::create([
                     'amenity_category' => $request->amenity_category,
                 ]);
                 
-            $acat_id = $acat_id->id;
+                $acat_id = $acat_id->id;
             } else {
                 $acat_id = $acat_name->first()->id;
             }
@@ -49,7 +66,7 @@ class AmenityController extends Controller
         }
 
         // echo "<pre>";print_r($acat_id);die();
-       
+
         //    echo "<pre>";print_r();die();
         Amenity::create([
             'amenity_name' => $request->amenity_name,
@@ -59,21 +76,30 @@ class AmenityController extends Controller
             'amenity_icon' => $amenity_icon,
         ]);
         
-        
+        $response = array(
+            'status' => 1,
+            'message' => 'Amenity has been created successfully!'
+        );
+    }
+    
+    if($request->ajax()){ 
+        echo json_encode( $response );
+    } else {
         return true;
     }
+}
 
-    public function getAjaxAmenityList(Request $request)
-    {
-        $draw = $request->get('draw');
-        $start = $request->get("start");
+public function getAjaxAmenityList(Request $request)
+{
+    $draw = $request->get('draw');
+    $start = $request->get("start");
         $rowperpage = $request->get("length"); // Rows display per page
-   
+
         $columnIndex_arr = $request->get('order');
         $columnName_arr = $request->get('columns');
         $order_arr = $request->get('order');
         $search_arr = $request->get('search');
-   
+
         $columnIndex = $columnIndex_arr[0]['column']; // Column index
         $columnName = $columnName_arr[$columnIndex]['data']; // Column name
         $columnSortOrder = $order_arr[0]['dir']; // asc or desc
@@ -86,12 +112,12 @@ class AmenityController extends Controller
 
         $records = Amenity::leftJoin('partner_type', 'amenities.partner_type', '=', 'partner_type.id')
         ->leftJoin('amenity_categories', 'amenities.amenity_category', '=', 'amenity_categories.id')
-          ->where('amenities.amenity_name', 'like', '%' .$searchValue . '%')
-          ->where('amenities.amenity_type', '=', '1')
-          ->skip($start)
-          ->take($rowperpage)
-          ->orderBy('id','desc')
-          ->get(['amenities.*','partner_type.partner_name','amenity_categories.amenity_category']);
+        ->where('amenities.amenity_name', 'like', '%' .$searchValue . '%')
+        ->where('amenities.amenity_type', '=', '1')
+        ->skip($start)
+        ->take($rowperpage)
+        ->orderBy('id','desc')
+        ->get(['amenities.*','partner_type.partner_name','amenity_categories.amenity_category']);
 
         $data_arr = array();
         $i=0;
@@ -113,33 +139,33 @@ class AmenityController extends Controller
 
             ++$i;
             $data_arr[] = array(
-             "id" => $i,
-             "amenity_name" => $record->amenity_name,
-             "amenity_category" => $record->amenity_category,
-             "partner_type" => $record->partner_name,
-             "amenity_icon" => $amenity_icon,
-             "status" => $status,
+               "id" => $i,
+               "amenity_name" => $record->amenity_name,
+               "amenity_category" => $record->amenity_category,
+               "partner_type" => $record->partner_name,
+               "amenity_icon" => $amenity_icon,
+               "status" => $status,
            );
         }
 
         $response = array(
-           "draw" => intval($draw),
-           "iTotalRecords" => $totalRecords,
-           "iTotalDisplayRecords" => $totalRecordswithFilter,
-           "aaData" => $data_arr
-        );
-   
+         "draw" => intval($draw),
+         "iTotalRecords" => $totalRecords,
+         "iTotalDisplayRecords" => $totalRecordswithFilter,
+         "aaData" => $data_arr
+     );
+
         echo json_encode($response);
 
     }
 
     public function changeAmenityStatus($id,$status){
         $statusupdate = Amenity::where('id', $id)->update([
-         'status' => $status,
-         ]);
-         
-         return true;
-     }
+           'status' => $status,
+       ]);
+
+        return true;
+    }
 
 
     public function getAjaxSpecialAmenityList(Request $request)
@@ -147,12 +173,12 @@ class AmenityController extends Controller
         $draw = $request->get('draw');
         $start = $request->get("start");
         $rowperpage = $request->get("length"); // Rows display per page
-   
+
         $columnIndex_arr = $request->get('order');
         $columnName_arr = $request->get('columns');
         $order_arr = $request->get('order');
         $search_arr = $request->get('search');
-   
+
         $columnIndex = $columnIndex_arr[0]['column']; // Column index
         $columnName = $columnName_arr[$columnIndex]['data']; // Column name
         $columnSortOrder = $order_arr[0]['dir']; // asc or desc
@@ -164,12 +190,12 @@ class AmenityController extends Controller
         $totalRecordswithFilter = Amenity::select('count(*) as allcount')->where('amenity_name', 'like', '%' .$searchValue . '%')->count();
 
         $records = Amenity::leftJoin('partner_type', 'amenities.partner_type', '=', 'partner_type.id')
-          ->where('amenities.amenity_name', 'like', '%' .$searchValue . '%')
-          ->where('amenities.amenity_type', '=', '2')
-          ->skip($start)
-          ->take($rowperpage)
-          ->orderBy('id','desc')
-          ->get(['amenities.*','partner_type.partner_name']);
+        ->where('amenities.amenity_name', 'like', '%' .$searchValue . '%')
+        ->where('amenities.amenity_type', '=', '2')
+        ->skip($start)
+        ->take($rowperpage)
+        ->orderBy('id','desc')
+        ->get(['amenities.*','partner_type.partner_name']);
 
         $data_arr = array();
         $i=0;
@@ -191,21 +217,21 @@ class AmenityController extends Controller
 
             ++$i;
             $data_arr[] = array(
-             "id" => $i,
-             "amenity_name" => $record->amenity_name,
-             "partner_type" => $record->partner_name,
-             "amenity_icon" => $amenity_icon,
-             "status" => $status,
+               "id" => $i,
+               "amenity_name" => $record->amenity_name,
+               "partner_type" => $record->partner_name,
+               "amenity_icon" => $amenity_icon,
+               "status" => $status,
            );
         }
 
         $response = array(
-           "draw" => intval($draw),
-           "iTotalRecords" => $totalRecords,
-           "iTotalDisplayRecords" => $totalRecordswithFilter,
-           "aaData" => $data_arr
-        );
-   
+         "draw" => intval($draw),
+         "iTotalRecords" => $totalRecords,
+         "iTotalDisplayRecords" => $totalRecordswithFilter,
+         "aaData" => $data_arr
+     );
+
         echo json_encode($response);
 
     }

@@ -12,7 +12,7 @@
 				<!--begin::Navbar item-->
 				<li class="nav-item py-1">
 					<!--begin::Navbar link-->
-					<a href="{{ url('/partner/dashoard') }}" class="nav-link py-4 px-1 btn asidenav {{ Request::is('partner/dashoard') ? 'active' : '' }}">
+					<a href="{{ url('/partner/dashboard') }}" class="nav-link py-4 px-1 btn asidenav {{ Request::is('partner/dashoard') ? 'active' : '' }}">
 						<i class="ki-outline ki-questionnaire-tablet fs-1"></i>
 						<span class="pt-2 fs-9 fs-lg-7 fw-bold">Home</span>
 					</a>

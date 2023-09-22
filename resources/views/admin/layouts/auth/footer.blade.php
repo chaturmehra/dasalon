@@ -214,7 +214,7 @@
 											<!--begin::Item-->
 											<div class="d-flex flex-aligns-center pe-10 pe-lg-20">
 												<!--begin::Icon-->
-												<img alt="" class="w-30px me-3" src="{{ asset('/public/assets/media/svg/files/pdf.jpg') }}" />
+												<img alt="" class="w-30px me-3" src="{{ asset('/public/assets/media/svg/files/pdf.svg') }}" />
 												<!--end::Icon-->
 												<!--begin::Info-->
 												<div class="ms-1 fw-semibold">
@@ -231,7 +231,7 @@
 											<!--begin::Item-->
 											<div class="d-flex flex-aligns-center pe-10 pe-lg-20">
 												<!--begin::Icon-->
-												<img alt="../../demo31/dist/apps/projects/project.html" class="w-30px me-3" src="{{ asset('/public/assets/media/svg/files/doc.jpg') }}" />
+												<img alt="../../demo31/dist/apps/projects/project.html" class="w-30px me-3" src="{{ asset('/public/assets/media/svg/files/doc.svg') }}" />
 												<!--end::Icon-->
 												<!--begin::Info-->
 												<div class="ms-1 fw-semibold">
@@ -248,7 +248,7 @@
 											<!--begin::Item-->
 											<div class="d-flex flex-aligns-center">
 												<!--begin::Icon-->
-												<img alt="../../demo31/dist/apps/projects/project.html" class="w-30px me-3" src="{{ asset('/public/assets/media/svg/files/css.jpg') }}" />
+												<img alt="../../demo31/dist/apps/projects/project.html" class="w-30px me-3" src="{{ asset('/public/assets/media/svg/files/css.svg') }}" />
 												<!--end::Icon-->
 												<!--begin::Info-->
 												<div class="ms-1 fw-semibold">
@@ -1643,7 +1643,7 @@
 						<!--end::Heading-->
 						<!--begin::Google Contacts Invite-->
 						<div class="btn btn-light-primary fw-bold w-100 mb-8">
-						<img alt="Logo" src="{{ asset('/public/assets/media/svg/brand-logos/google-icon.jpg') }}" class="h-20px me-3" />Invite Gmail Contacts</div>
+						<img alt="Logo" src="{{ asset('/public/assets/media/svg/brand-logos/google-icon.svg') }}" class="h-20px me-3" />Invite Gmail Contacts</div>
 						<!--end::Google Contacts Invite-->
 						<!--begin::Separator-->
 						<div class="separator d-flex flex-center mb-8">
@@ -4134,8 +4134,8 @@
 		</script>
 		<script src="{{asset('/public/assets/js/services.js')}}" type="text/javascript"></script>
 		<script src="{{asset('/public/assets/js/recommendedpackage.js')}}" type="text/javascript"></script>
-		<script src="{{asset('/public/assets/js/sysmanagerperm.js')}}" type="text/javascript"></script>
-	
+		<script src="{{asset('/public/assets/js/onboarding.js')}}" type="text/javascript"></script>
+		<script src="{{asset('/public/assets/js/country.js')}}" type="text/javascript"></script>
 	</body>
 	<!--end::Body-->
 </html>

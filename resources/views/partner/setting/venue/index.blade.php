@@ -1,5 +1,6 @@
 @extends('partner.layouts.auth.app')
 @section('content') 
+<meta name="csrf-token" content="{{ csrf_token() }}" />
 <div class="app-main flex-column flex-row-fluid" id="kt_app_main">
    <!--begin::Content wrapper-->
    <div class="d-flex flex-column flex-column-fluid">
@@ -16,7 +17,7 @@
                <ul class="breadcrumb breadcrumb-separatorless fw-semibold fs-7 my-0 pt-1">
                   <!--begin::Item-->
                   <li class="breadcrumb-item text-muted">
-                     <a href="{{ url('admin/dashboard') }}" class="text-muted text-hover-primary">Home</a>
+                     <a href="{{ url('/partner/dashboard') }}" class="text-muted text-hover-primary">Home</a>
                   </li>
                   <!--end::Item-->
                   <!--begin::Item-->
@@ -68,9 +69,9 @@
                   <div class="d-flex flex-wrap flex-sm-nowrap gap-8">
                      <div class="symbol symbol-100px symbol-lg-160px symbol-fixed position-relative">
                         @if($loggedUserDetail[0]->business_logo)
-                           <img src="{{ asset('/public/partner/assets/media/avatars/300-1.jpg') }}" alt="image">
+                           <img src="{{ asset('/public/'.$loggedUserDetail[0]->business_logo) }}" alt="{{@Auth::user()->name}}">
                         @else
-                           <img src="{{ asset('/public/partner/assets/media/avatars/300-1.jpg') }}" alt="image">
+                           <img src="{{ asset('/public/partner/assets/media/avatars/blank.png') }}" alt="{{@Auth::user()->name}}">
                         @endif
                         <div class="position-absolute translate-middle bottom-0 start-100 mb-6 bg-success rounded-circle border border-4 border-body h-20px w-20px"></div>
                      </div>
@@ -234,12 +235,13 @@
                         <label class="required fw-semibold fs-6 mb-2">Select Venue</label>
                         <!--end::Label-->
                         <!--begin::Input-->
-                        <select class="form-select form-select-solid" data-control="select2" data-placeholder="Select an option" data-allow-clear="true">
+                        <select class="form-select form-select-solid filter-option-venue" data-control="select2" data-placeholder="Select an option" data-allow-clear="true">
                            <option></option>
-                           <option value="1">Venue1</option>
-                           <option value="2" selected>Venue2</option>
-                           <option value="3">Venue3</option>
-                           <option value="4">Venue4</option>
+                           @if($venue_data_arr)
+                           @foreach($venue_data_arr as $vkey => $venue_value)
+                           <option value="{{ $venue_value['id']}}" @if($vkey == 0) {{ "selected" }} @endif>{{ $venue_value['name'] }}</option>
+                           @endforeach
+                           @endif
                         </select>
                         <!--end::Input-->
                      </div>
@@ -249,308 +251,310 @@
             <!--begin::Layout-->
             @if($venue_data_arr)
             @foreach($venue_data_arr as $key => $venue_data)
-            <div class="d-flex flex-column flex-lg-row mt-8">
-               <!--begin::Sidebar-->
-               <div class="flex-column flex-lg-row-auto w-lg-250px w-xl-350px mb-10">
-                  <div class="possticky">
-                     <!--begin::Card-->
-                     <div class="card mb-5 mb-xl-8">
-                        <!--begin::Card body-->
-                        <div class="card-body">
-                           <!--begin::Details toggle-->
-                           <div class="d-flex flex-stack fs-4 py-3">
-                              <div class="fw-bold rotate collapsible" data-bs-toggle="collapse" href="#kt_user_view_details" role="button" aria-expanded="false" aria-controls="kt_user_view_details">Venue Details
-                                 <span class="ms-2 rotate-180">
-                                 <i class="ki-duotone ki-down fs-3"></i>
+            <div class="venue-lists venue_{{ $venue_data['id'] }} @if($key != '0') {{ 'd-none' }} @endif">
+               <div class="d-flex flex-column flex-lg-row mt-8">
+                  <!--begin::Sidebar-->
+                  <div class="flex-column flex-lg-row-auto w-lg-250px w-xl-350px mb-10">
+                     <div class="possticky">
+                        <!--begin::Card-->
+                        <div class="card mb-5 mb-xl-8">
+                           <!--begin::Card body-->
+                           <div class="card-body">
+                              <!--begin::Details toggle-->
+                              <div class="d-flex flex-stack fs-4 py-3">
+                                 <div class="fw-bold rotate collapsible" data-bs-toggle="collapse" href="#kt_user_view_details" role="button" aria-expanded="false" aria-controls="kt_user_view_details">Venue Details
+                                    <span class="ms-2 rotate-180">
+                                    <i class="ki-duotone ki-down fs-3"></i>
+                                    </span>
+                                 </div>
+                                 <span data-bs-toggle="tooltip" data-bs-trigger="hover" title="Edit customer details">
+                                 <a href="#" class="btn btn-sm btn-light-primary update-venue-detail" data-bs-toggle="modal" data-bs-target="#kt_modal_update_details" venue-id="{{ $venue_data['id'] }}">Edit</a>
                                  </span>
                               </div>
-                              <span data-bs-toggle="tooltip" data-bs-trigger="hover" title="Edit customer details">
-                              <a href="#" class="btn btn-sm btn-light-primary update-venue-detail" data-bs-toggle="modal" data-bs-target="#kt_modal_update_details" venue-id="{{ $venue_data['id']}}">Edit</a>
-                              </span>
-                           </div>
-                           <!--end::Details toggle-->
-                           <div class="separator"></div>
-                           <!--begin::Details content-->
-                           <div id="kt_user_view_details" class="collapse show">
-                              <div class="pb-5 fs-6">
-                                 <!--begin::Details item-->
-                                 <div class="fw-bold mt-5">Venue name</div>
-                                 <div class="text-gray-600">
-                                    {{ $venue_data['name'] }}
-                                 </div>
-                                 <!--begin::Details item-->
-                                 <!--begin::Details item-->
-                                 <div class="fw-bold mt-5">Address</div>
-                                 <div class="text-gray-600">
-                                    {{ $venue_data['address'] }}
-                                 </div>
-                                 <!--begin::Details item-->
-                                 <!--begin::Details item-->
-                                 <div class="fw-bold mt-5">Phone</div>
-                                 <div class="text-gray-600">
-                                    <a href="#" class="text-gray-600 text-hover-primary">{{ $venue_data['phone'] }}</a>
-                                 </div>
-                                 <!--begin::Details item-->
-                                 <!--begin::Details item-->
-                                 <div class="fw-bold mt-5">Email</div>
-                                 <div class="text-gray-600">{{ $venue_data['email'] }}</div>
-                                 <!--begin::Details item-->
-                                 <!--begin::Details item-->
-                                 <div class="fw-bold mt-5">Billing Details</div>
-                                 <div class="text-gray-600">{{ $venue_data['billing_details'] }}</div>
-                                 <!--begin::Details item-->
-                                 <!--begin::Details item-->
-                                 <div class="fw-bold mt-5">Last Login</div>
-                                 <div class="text-gray-600">10 March, 2023, 11:30 am</div>
-                                 <!--begin::Details item-->
-                              </div>
-                           </div>
-                           <!--end::Details content-->
-                        </div>
-                        <!--end::Card body-->
-                     </div>
-                     <div class="card card-flush py-4 flex-row-fluid">
-                        <!--begin::Card header-->
-                        <div class="card-header">
-                           <div class="card-title">
-                              <h2>Gender</h2>
-                           </div>
-                        </div>
-                        <!--end::Card header-->
-                        <!--begin::Card body-->
-                        <div class="card-body pt-0">
-                           <span class="d-flex align-items-center justify-content-between">
-                              <!--begin::Icon-->
-                              <i class="ki-duotone ki-profile-circle fs-3hx">
-                              <span class="path1"></span>
-                              <span class="path2"></span>
-                              <span class="path3"></span>
-                              </i>
-                              <!--end::Icon-->
-                              <!--begin::Info-->
-                              <span class="ms-4">
-                              <span class="fs-3 fw-bold text-gray-900 d-block">{{ $venue_data['venue_meta']['gender_restriction'] }}</span>
-                              </span>
-                              <!--end::Info-->
-                           </span>
-                           <!--end::Label-->
-                        </div>
-                        <!--end::Card body-->
-                     </div>
-                  </div>
-               </div>
-               <div class="flex-lg-row-fluid ms-lg-10 mb-10">
-                  <!--begin::Engage widget 7-->
-                  <div class="card card-flush">
-                     <!--begin::Header-->
-                     <div class="card-header pt-7">
-                        <!--begin::Title-->
-                        <h3 class="card-title align-items-start flex-column">
-                           <span class="card-label fw-bold text-dark">Venue Photos</span>
-                        </h3>
-                        <!--end::Title-->
-                     </div>
-                     <!--end::Header-->
-                     <!--begin::Card body-->
-                     <div class="card-body pt-7">
-                        <!--begin::Row-->
-                        <div class="row">
-                           <!--begin::Col-->
-                           @if( !empty($venue_data['venue_meta']['featured']) )
-                           <div class="col-md-7 mb-11 mb-md-0">
-                              <!--begin::Overlay-->
-                              <a class="d-block overlay" data-fslightbox="lightbox-hot-sales" href="{{ asset('/public/'.$venue_data['venue_meta']['featured']) }}" target="_blank">
-                                 <!--begin::Image-->
-                                 <div class="overlay-wrapper bgi-position-center bgi-no-repeat bgi-size-cover h-200px card-rounded mb-3" style="height: 266px;background-image:url({{ asset('/public/'.$venue_data['venue_meta']['featured']) }}"></div>
-                                 <!--end::Image-->
-                                 <!--begin::Action-->
-                                 <div class="overlay-layer card-rounded bg-dark bg-opacity-25">
-                                    <i class="ki-duotone ki-eye fs-3x text-white">
-                                    <span class="path1"></span>
-                                    <span class="path2"></span>
-                                    <span class="path3"></span>
-                                    </i>
-                                 </div>
-                                 <!--end::Action-->
-                              </a>
-                              <!--end::Overlay-->
-                              <!--begin::Info-->
-                              <div class="m-0">
-                                 <!--begin::Title-->
-                                 <span class="text-gray-800 text-hover-primary fs-3 d-block mb-2">Featured</span>
-                                 <!--end::Title-->
-                              </div>
-                              <!--end::Info-->
-                           </div>
-                           @endif
-                           <!--end::Col-->
-                           <div class="col-md-5 mb-11 mb-md-0">
-                              <div class="row">
-                              	@if( !empty($venue_data['venue_meta']['imgother1']) )
-                                 <div class="col-md-6 mb-11 mb-md-0">
-                                    <!--begin::Overlay-->
-                                    <a class="d-block overlay" data-fslightbox="lightbox-hot-sales" href="{{ asset('/public/'.$venue_data['venue_meta']['imgother1']) }}" target="_blank">
-                                       <!--begin::Image-->
-                                       <div class="overlay-wrapper bgi-position-center bgi-no-repeat bgi-size-cover h-100px card-rounded mb-3" style="height: 266px;background-image:url({{ asset('/public/'.$venue_data['venue_meta']['imgother1']) }}"></div>
-                                       <!--end::Image-->
-                                       <!--begin::Action-->
-                                       <div class="overlay-layer card-rounded bg-dark bg-opacity-25">
-                                          <i class="ki-duotone ki-eye fs-3x text-white">
-                                          <span class="path1"></span>
-                                          <span class="path2"></span>
-                                          <span class="path3"></span>
-                                          </i>
-                                       </div>
-                                       <!--end::Action-->
-                                    </a>
-                                    <!--end::Overlay-->
-                                 </div>
-                                 @endif
-                                 @if( !empty($venue_data['venue_meta']['imgother2']) )
-                                 <div class="col-md-6 mb-11 mb-md-0">
-                                    <!--begin::Overlay-->
-                                    <a class="d-block overlay" data-fslightbox="lightbox-hot-sales" href="{{ asset('/public/'.$venue_data['venue_meta']['imgother2']) }}" target="_blank">
-                                       <!--begin::Image-->
-                                       <div class="overlay-wrapper bgi-position-center bgi-no-repeat bgi-size-cover h-100px card-rounded mb-3" style="height: 266px;background-image:url({{ asset('/public/'.$venue_data['venue_meta']['imgother2']) }}"></div>
-                                       <!--end::Image-->
-                                       <!--begin::Action-->
-                                       <div class="overlay-layer card-rounded bg-dark bg-opacity-25">
-                                          <i class="ki-duotone ki-eye fs-3x text-white">
-                                          <span class="path1"></span>
-                                          <span class="path2"></span>
-                                          <span class="path3"></span>
-                                          </i>
-                                       </div>
-                                       <!--end::Action-->
-                                    </a>
-                                    <!--end::Overlay-->
-                                 </div>
-                                 @endif
-                                 @if( !empty($venue_data['venue_meta']['imgother3']) )
-                                 <div class="col-md-6 mb-11 mb-md-0">
-                                    <!--begin::Overlay-->
-                                    <a class="d-block overlay" data-fslightbox="lightbox-hot-sales" href="{{ asset('/public/'.$venue_data['venue_meta']['imgother3']) }}" target="_blank">
-                                       <!--begin::Image-->
-                                       <div class="overlay-wrapper bgi-position-center bgi-no-repeat bgi-size-cover h-100px card-rounded mb-3" style="height: 266px;background-image:url({{ asset('/public/'.$venue_data['venue_meta']['imgother3']) }}"></div>
-                                       <!--end::Image-->
-                                       <!--begin::Action-->
-                                       <div class="overlay-layer card-rounded bg-dark bg-opacity-25">
-                                          <i class="ki-duotone ki-eye fs-3x text-white">
-                                          <span class="path1"></span>
-                                          <span class="path2"></span>
-                                          <span class="path3"></span>
-                                          </i>
-                                       </div>
-                                       <!--end::Action-->
-                                    </a>
-                                    <!--end::Overlay-->
-                                 </div>
-                                 @endif
-                                 @if( !empty($venue_data['venue_meta']['imgother4']) )
-                                 <div class="col-md-6 mb-11 mb-md-0">
-                                    <!--begin::Overlay-->
-                                    <a class="d-block overlay" data-fslightbox="lightbox-hot-sales" href="{{ asset('/public/'.$venue_data['venue_meta']['imgother4']) }}" target="_blank">
-                                       <!--begin::Image-->
-                                       <div class="overlay-wrapper bgi-position-center bgi-no-repeat bgi-size-cover h-100px card-rounded mb-3" style="height: 266px;background-image:url({{ asset('/public/'.$venue_data['venue_meta']['imgother4']) }}"></div>
-                                       <!--end::Image-->
-                                       <!--begin::Action-->
-                                       <div class="overlay-layer card-rounded bg-dark bg-opacity-25">
-                                          <i class="ki-duotone ki-eye fs-3x text-white">
-                                          <span class="path1"></span>
-                                          <span class="path2"></span>
-                                          <span class="path3"></span>
-                                          </i>
-                                       </div>
-                                       <!--end::Action-->
-                                    </a>
-                                    <!--end::Overlay-->
-                                 </div>
-                                 @endif
-                                 <div class="col">
-                                    <!--begin::Title-->
-                                    <span class="text-gray-800 text-hover-primary fs-3 d-block mb-2">Others</span>
-                                    <!--end::Title-->
+                              <!--end::Details toggle-->
+                              <div class="separator"></div>
+                              <!--begin::Details content-->
+                              <div id="kt_user_view_details" class="collapse show">
+                                 <div class="pb-5 fs-6">
+                                    <!--begin::Details item-->
+                                    <div class="fw-bold mt-5">Venue name</div>
+                                    <div class="text-gray-600">
+                                       {{ isset($venue_data['name']) ? $venue_data['name'] : "" }}
+                                    </div>
+                                    <!--begin::Details item-->
+                                    <!--begin::Details item-->
+                                    <div class="fw-bold mt-5">Address</div>
+                                    <div class="text-gray-600">
+                                       {{ isset($venue_data['address']) ? $venue_data['address'] : "" }}
+                                    </div>
+                                    <!--begin::Details item-->
+                                    <!--begin::Details item-->
+                                    <div class="fw-bold mt-5">Phone</div>
+                                    <div class="text-gray-600">
+                                       <a href="#" class="text-gray-600 text-hover-primary">{{ isset($venue_data['phone']) ? $venue_data['phone'] : "" }}</a>
+                                    </div>
+                                    <!--begin::Details item-->
+                                    <!--begin::Details item-->
+                                    <div class="fw-bold mt-5">Email</div>
+                                    <div class="text-gray-600">{{ isset($venue_data['email']) ? $venue_data['email'] : "" }}</div>
+                                    <!--begin::Details item-->
+                                    <!--begin::Details item-->
+                                    <div class="fw-bold mt-5">Billing Details</div>
+                                    <div class="text-gray-600">{{ isset($venue_data['billing_details']) ? $venue_data['billing_details'] : "" }}</div>
+                                    <!--begin::Details item-->
+                                    <!--begin::Details item-->
+                                    <div class="fw-bold mt-5">Last Login</div>
+                                    <div class="text-gray-600">10 March, 2023, 11:30 am</div>
+                                    <!--begin::Details item-->
                                  </div>
                               </div>
+                              <!--end::Details content-->
                            </div>
+                           <!--end::Card body-->
                         </div>
-                        <!--end::Row-->
-                     </div>
-                     <!--end::Card body-->
-                  </div>
-                  <!--end::Engage widget 7-->
-                  <div class="card card-flush mt-8">
-                     <!--begin::Header-->
-                     <div class="card-header pt-7">
-                        <!--begin::Title-->
-                        <h3 class="card-title align-items-start flex-column">
-                           <span class="card-label fw-bold text-dark">Business Type</span>
-                        </h3>
-                        <!--end::Title-->
-                     </div>
-                     <!--end::Header-->
-                     <div class="card-body">
-                        <div class="row">
-                           
-                        	@if( !empty($venue_data['business_type_data']) )
-                        	@foreach($venue_data['business_type_data'] as $business_type)
-                           <div class="col-md-6 mb-5">
-                              <!--begin::Option-->
-                              <label class="btn btn-outline btn-outline-dashed btn-active-light-primary d-flex text-start p-6 align-items-center">
-                                 <!-- <div class="icn ms-3">
-                                    <img src="{{ asset('/public/partner/assets/media/icons/duotune/layouts/lay001.svg') }}"/>
-                                 </div> -->
+                        <div class="card card-flush py-4 flex-row-fluid">
+                           <!--begin::Card header-->
+                           <div class="card-header">
+                              <div class="card-title">
+                                 <h2>Gender</h2>
+                              </div>
+                           </div>
+                           <!--end::Card header-->
+                           <!--begin::Card body-->
+                           <div class="card-body pt-0">
+                              <span class="d-flex align-items-center justify-content-between">
+                                 <!--begin::Icon-->
+                                 <i class="ki-duotone ki-profile-circle fs-3hx">
+                                 <span class="path1"></span>
+                                 <span class="path2"></span>
+                                 <span class="path3"></span>
+                                 </i>
+                                 <!--end::Icon-->
                                  <!--begin::Info-->
-                                 <span class="ms-3">
-                                    <h3 class="card-title align-items-start flex-column">
-                                       <span class="card-label fw-bold text-gray-800 fs-4 mb-4">{{ $business_type['business_type'] }}</span>
-                                       <!-- <span class="text-gray-400 fw-semibold d-block fs-6">lorem ipsum dolar sit amet
-                                       </span> -->
-                                    </h3>
+                                 <span class="ms-4">
+                                 <span class="fs-3 fw-bold text-gray-900 d-block">{{ isset($venue_data['venue_meta']['gender_restriction']) ? $venue_data['venue_meta']['gender_restriction'] : "" }}</span>
                                  </span>
                                  <!--end::Info-->
-                              </label>
-                              <!--end::Option-->
+                              </span>
+                              <!--end::Label-->
                            </div>
-                           @endforeach
-                           @endif
+                           <!--end::Card body-->
+                        </div>
+                     </div>
+                  </div>
+                  <div class="flex-lg-row-fluid ms-lg-10 mb-10">
+                     <!--begin::Engage widget 7-->
+                     <div class="card card-flush">
+                        <!--begin::Header-->
+                        <div class="card-header pt-7">
+                           <!--begin::Title-->
+                           <h3 class="card-title align-items-start flex-column">
+                              <span class="card-label fw-bold text-dark">Venue Photos</span>
+                           </h3>
+                           <!--end::Title-->
+                        </div>
+                        <!--end::Header-->
+                        <!--begin::Card body-->
+                        <div class="card-body pt-7">
+                           <!--begin::Row-->
+                           <div class="row">
+                              <!--begin::Col-->
+                              @if( !empty($venue_data['venue_meta']['featured']) )
+                              <div class="col-md-7 mb-11 mb-md-0">
+                                 <!--begin::Overlay-->
+                                 <a class="d-block overlay" data-fslightbox="lightbox-hot-sales" href="{{ asset('/public/'.$venue_data['venue_meta']['featured']) }}" target="_blank">
+                                    <!--begin::Image-->
+                                    <div class="overlay-wrapper bgi-position-center bgi-no-repeat bgi-size-cover h-200px card-rounded mb-3" style="height: 266px;background-image:url({{ asset('/public/'.$venue_data['venue_meta']['featured']) }}"></div>
+                                    <!--end::Image-->
+                                    <!--begin::Action-->
+                                    <div class="overlay-layer card-rounded bg-dark bg-opacity-25">
+                                       <i class="ki-duotone ki-eye fs-3x text-white">
+                                       <span class="path1"></span>
+                                       <span class="path2"></span>
+                                       <span class="path3"></span>
+                                       </i>
+                                    </div>
+                                    <!--end::Action-->
+                                 </a>
+                                 <!--end::Overlay-->
+                                 <!--begin::Info-->
+                                 <div class="m-0">
+                                    <!--begin::Title-->
+                                    <span class="text-gray-800 text-hover-primary fs-3 d-block mb-2">Featured</span>
+                                    <!--end::Title-->
+                                 </div>
+                                 <!--end::Info-->
+                              </div>
+                              @endif
+                              <!--end::Col-->
+                              <div class="col-md-5 mb-11 mb-md-0">
+                                 <div class="row">
+                                 	@if( !empty($venue_data['venue_meta']['imgother1']) )
+                                    <div class="col-md-6 mb-11 mb-md-0">
+                                       <!--begin::Overlay-->
+                                       <a class="d-block overlay" data-fslightbox="lightbox-hot-sales" href="{{ asset('/public/'.$venue_data['venue_meta']['imgother1']) }}" target="_blank">
+                                          <!--begin::Image-->
+                                          <div class="overlay-wrapper bgi-position-center bgi-no-repeat bgi-size-cover h-100px card-rounded mb-3" style="height: 266px;background-image:url({{ asset('/public/'.$venue_data['venue_meta']['imgother1']) }}"></div>
+                                          <!--end::Image-->
+                                          <!--begin::Action-->
+                                          <div class="overlay-layer card-rounded bg-dark bg-opacity-25">
+                                             <i class="ki-duotone ki-eye fs-3x text-white">
+                                             <span class="path1"></span>
+                                             <span class="path2"></span>
+                                             <span class="path3"></span>
+                                             </i>
+                                          </div>
+                                          <!--end::Action-->
+                                       </a>
+                                       <!--end::Overlay-->
+                                    </div>
+                                    @endif
+                                    @if( !empty($venue_data['venue_meta']['imgother2']) )
+                                    <div class="col-md-6 mb-11 mb-md-0">
+                                       <!--begin::Overlay-->
+                                       <a class="d-block overlay" data-fslightbox="lightbox-hot-sales" href="{{ asset('/public/'.$venue_data['venue_meta']['imgother2']) }}" target="_blank">
+                                          <!--begin::Image-->
+                                          <div class="overlay-wrapper bgi-position-center bgi-no-repeat bgi-size-cover h-100px card-rounded mb-3" style="height: 266px;background-image:url({{ asset('/public/'.$venue_data['venue_meta']['imgother2']) }}"></div>
+                                          <!--end::Image-->
+                                          <!--begin::Action-->
+                                          <div class="overlay-layer card-rounded bg-dark bg-opacity-25">
+                                             <i class="ki-duotone ki-eye fs-3x text-white">
+                                             <span class="path1"></span>
+                                             <span class="path2"></span>
+                                             <span class="path3"></span>
+                                             </i>
+                                          </div>
+                                          <!--end::Action-->
+                                       </a>
+                                       <!--end::Overlay-->
+                                    </div>
+                                    @endif
+                                    @if( !empty($venue_data['venue_meta']['imgother3']) )
+                                    <div class="col-md-6 mb-11 mb-md-0">
+                                       <!--begin::Overlay-->
+                                       <a class="d-block overlay" data-fslightbox="lightbox-hot-sales" href="{{ asset('/public/'.$venue_data['venue_meta']['imgother3']) }}" target="_blank">
+                                          <!--begin::Image-->
+                                          <div class="overlay-wrapper bgi-position-center bgi-no-repeat bgi-size-cover h-100px card-rounded mb-3" style="height: 266px;background-image:url({{ asset('/public/'.$venue_data['venue_meta']['imgother3']) }}"></div>
+                                          <!--end::Image-->
+                                          <!--begin::Action-->
+                                          <div class="overlay-layer card-rounded bg-dark bg-opacity-25">
+                                             <i class="ki-duotone ki-eye fs-3x text-white">
+                                             <span class="path1"></span>
+                                             <span class="path2"></span>
+                                             <span class="path3"></span>
+                                             </i>
+                                          </div>
+                                          <!--end::Action-->
+                                       </a>
+                                       <!--end::Overlay-->
+                                    </div>
+                                    @endif
+                                    @if( !empty($venue_data['venue_meta']['imgother4']) )
+                                    <div class="col-md-6 mb-11 mb-md-0">
+                                       <!--begin::Overlay-->
+                                       <a class="d-block overlay" data-fslightbox="lightbox-hot-sales" href="{{ asset('/public/'.$venue_data['venue_meta']['imgother4']) }}" target="_blank">
+                                          <!--begin::Image-->
+                                          <div class="overlay-wrapper bgi-position-center bgi-no-repeat bgi-size-cover h-100px card-rounded mb-3" style="height: 266px;background-image:url({{ asset('/public/'.$venue_data['venue_meta']['imgother4']) }}"></div>
+                                          <!--end::Image-->
+                                          <!--begin::Action-->
+                                          <div class="overlay-layer card-rounded bg-dark bg-opacity-25">
+                                             <i class="ki-duotone ki-eye fs-3x text-white">
+                                             <span class="path1"></span>
+                                             <span class="path2"></span>
+                                             <span class="path3"></span>
+                                             </i>
+                                          </div>
+                                          <!--end::Action-->
+                                       </a>
+                                       <!--end::Overlay-->
+                                    </div>
+                                    @endif
+                                    <div class="col">
+                                       <!--begin::Title-->
+                                       <span class="text-gray-800 text-hover-primary fs-3 d-block mb-2">Others</span>
+                                       <!--end::Title-->
+                                    </div>
+                                 </div>
+                              </div>
+                           </div>
+                           <!--end::Row-->
+                        </div>
+                        <!--end::Card body-->
+                     </div>
+                     <!--end::Engage widget 7-->
+                     <div class="card card-flush mt-8">
+                        <!--begin::Header-->
+                        <div class="card-header pt-7">
+                           <!--begin::Title-->
+                           <h3 class="card-title align-items-start flex-column">
+                              <span class="card-label fw-bold text-dark">Business Type</span>
+                           </h3>
+                           <!--end::Title-->
+                        </div>
+                        <!--end::Header-->
+                        <div class="card-body">
+                           <div class="row">
+                              
+                           	@if( !empty($venue_data['business_type_data']) )
+                           	@foreach($venue_data['business_type_data'] as $business_type)
+                              <div class="col-md-6 mb-5">
+                                 <!--begin::Option-->
+                                 <label class="btn btn-outline btn-outline-dashed btn-active-light-primary d-flex text-start p-6 align-items-center">
+                                    <!-- <div class="icn ms-3">
+                                       <img src="{{ asset('/public/partner/assets/media/icons/duotune/layouts/lay001.svg') }}"/>
+                                    </div> -->
+                                    <!--begin::Info-->
+                                    <span class="ms-3">
+                                       <h3 class="card-title align-items-start flex-column">
+                                          <span class="card-label fw-bold text-gray-800 fs-4 mb-4">{{ $business_type['business_type'] }}</span>
+                                          <!-- <span class="text-gray-400 fw-semibold d-block fs-6">lorem ipsum dolar sit amet
+                                          </span> -->
+                                       </h3>
+                                    </span>
+                                    <!--end::Info-->
+                                 </label>
+                                 <!--end::Option-->
+                              </div>
+                              @endforeach
+                              @endif
 
+                           </div>
                         </div>
                      </div>
                   </div>
                </div>
-            </div>
-            <div class="card card-flush">
-               <!--begin::Header-->
-               <div class="card-header pt-7">
-                  <!--begin::Title-->
-                  <h3 class="card-title align-items-start flex-column">
-                     <span class="card-label fw-bold text-dark">Amenities</span>
-                  </h3>
-                  <!--end::Title-->
-               </div>
-               <!--end::Header-->
-               <div class="card-body">
-                  <div class="row">
-                  	@if( !empty($venue_data['amenity_data']) )
-                  	@foreach($venue_data['amenity_data'] as $amenity)
-                  	<div class="col-md-3 col-sm-6 mb-5">
-                  		<!--begin::Option-->
-                  		<label class="btn btn-outline btn-outline-dashed btn-active-light-primary d-flex text-start p-6 align-items-center">
-                  			<div class="icn ms-3">
-                  				<img src="{{ asset('/public/'.$amenity['amenity_icon']) }}">
-                  			</div>
-                  			<!--begin::Info-->
-                  			<span class="ms-3">
-                  				<h3 class="card-title align-items-start flex-column">
-                  					<span class="card-label fw-bold text-gray-800 fs-4 mb-4">{{ $amenity['amenity_name']}}</span>
-                  				</h3>
-                  			</span>
-                  			<!--end::Info-->
-                  		</label>
-                  	</div>
-                  	@endforeach
-                  	@endif
+               <div class="card card-flush">
+                  <!--begin::Header-->
+                  <div class="card-header pt-7">
+                     <!--begin::Title-->
+                     <h3 class="card-title align-items-start flex-column">
+                        <span class="card-label fw-bold text-dark">Amenities</span>
+                     </h3>
+                     <!--end::Title-->
+                  </div>
+                  <!--end::Header-->
+                  <div class="card-body">
+                     <div class="row">
+                     	@if( !empty($venue_data['amenity_data']) )
+                     	@foreach($venue_data['amenity_data'] as $amenity)
+                     	<div class="col-md-3 col-sm-6 mb-5">
+                     		<!--begin::Option-->
+                     		<label class="btn btn-outline btn-outline-dashed btn-active-light-primary d-flex text-start p-6 align-items-center">
+                     			<div class="icn ms-3">
+                     				<img src="{{ asset('/public/'.$amenity['amenity_icon']) }}">
+                     			</div>
+                     			<!--begin::Info-->
+                     			<span class="ms-3">
+                     				<h3 class="card-title align-items-start flex-column">
+                     					<span class="card-label fw-bold text-gray-800 fs-4 mb-4">{{ $amenity['amenity_name']}}</span>
+                     				</h3>
+                     			</span>
+                     			<!--end::Info-->
+                     		</label>
+                     	</div>
+                     	@endforeach
+                     	@endif
+                     </div>
                   </div>
                </div>
             </div>
@@ -569,9 +573,9 @@
 @include('partner.setting.venue.modal.add-venue-modal')
 
 @include('partner.setting.venue.modal.update-venue-modal')
-@include('partner.setting.venue.modal.update-business-detail')
 @include('partner.setting.venue.modal.change-email')
 @include('partner.setting.venue.modal.change-phone')
+@include('partner.setting.venue.modal.update-business-detail')
 
 @endsection
 @push('scripts')

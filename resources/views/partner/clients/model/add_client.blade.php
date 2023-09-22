@@ -100,7 +100,7 @@
                                     </label>
                                     <!--end::Label-->
                                     <!--begin::Input-->
-                                    <input type="text" class="form-control client_name form-control-solid" name="name" value="" />
+                                    <input type="text" class="form-control client_name form-control-solid" name="name" value="" required/>
                                     <!--end::Input-->
                                  </div>
                                  <!--end::Input group-->
@@ -133,7 +133,7 @@
                               </label>
                               <!--end::Label-->
                               <!--begin::Input-->
-                              <input type="text" class="form-control form-control-solid client_phone" name="phone" value="" />
+                              <input type="text" class="form-control form-control-solid client_phone" name="phone" value="" required/>
                               <!--end::Input-->
                            </div>
                            <!--end::Input group-->
@@ -145,7 +145,7 @@
                               </label>
                               <!--end::Label-->
                               <!--begin::Input-->
-                              <input type="email" class="form-control form-control-solid client_email" name="email" value="" />
+                              <input type="email" class="form-control form-control-solid client_email" name="email" value=""  required />
                               <!--end::Input-->
                            </div>
                            <!--end::Input group-->
@@ -157,9 +157,33 @@
                               </label>
                               <!--end::Label-->
                               <!--begin::Input-->
-                              <input class="form-control kt_datepicker w-100 client_dob" name="dob"placeholder="DOB"  />
+                              <!-- <input class="form-control kt_datepicker w-100 client_dob" name="dob"placeholder="DOB"  /> -->
+                              <br>
+                              <div class="row">
+                              <div class="col-md-4">
+
+                              <label for="day" class="required fw-semibold form-label mt-3 ">Day:</label>
+                              <input type="text" id="birth_day" name="birth_day" min="1" max="31" placeholder="Enter The Day" class=" form-control form-control-solid mb-2"required>
+                              </div>
+                              <div class="col-md-4">
+                              <label for="month" class="required fw-semibold form-label mt-3">Month:</label>
+                               <select id="birth_month" name="birth_month" required class=" form-control form-control-solid form-select mb-2" data-control="select2" data-hide-search="true" data-placeholder="Select an Month">
+                                 <option value="" disabled selected>Select a Month</option>
+                                     <?php
+                                     for ($month = 1; $month <= 12; $month++) {
+                                        $monthName = date('F', mktime(0, 0, 0, $month, 1));
+                                         echo '<option value="' . $month . '">' . $monthName .  '</option>';
+                                     }
+                                     ?>
+                              </select>
+                           </div>
+                           <div class="col-md-4">
+                              <label for="year" class="fw-semibold form-label mt-3">Year:</label>
+                              <input type="text" id="birth_year" name="birth_year" min="1" max="31" placeholder="Enter The Year" class=" form-control form-control-solid mb-2">
                               <!--end::Input-->
                            </div>
+                        </div>
+                        </div>
                            <!--end::Input group-->
                            <!--begin::Input group-->
                            <div class="fv-row mb-7">
@@ -200,7 +224,7 @@
                               <button type="reset" data-kt-contacts-type="cancel" class="btn btn-light me-3">Cancel</button>
                               <!--end::Button-->
                               <!--begin::Button-->
-                              <button type="submit" data-kt-contacts-type="submit" class="btn btn-primary" onclick="return validateForm()">
+                              <button type="submit" data-kt-contacts-type="submit" class="btn btn-primary" >
                               <span class="indicator-label">Save</span>
                               <span class="indicator-progress">Please wait...
                               <span class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
@@ -227,9 +251,9 @@ function validateForm(){
   
     var cname      = jQuery('.client_name').val();
     var cemail     = jQuery('.client_email').val();
-    var cdob       = jQuery('.client_dob').val();
+    //var cdob       = jQuery('.client_dob').val();
     var cphone       = jQuery('.client_phone').val();
-    if(!cname || !cemail || !cdob || !cphone){
+    if(!cname || !cemail  || !cphone){
         Swal.fire({
           text: "Please fill all the mandatory fields.",
           icon: "error",

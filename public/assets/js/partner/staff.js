@@ -376,7 +376,6 @@ $(document).on('click', '.add-commission', function(){
       $("#add_commission_data").val(JSON.stringify(commission_data));
     }
   }
-
 });
 
 $(document).on('click', '.update-commission', function(){
@@ -402,15 +401,12 @@ $(document).on('click', '.update-commission', function(){
       $("#edit_commission_data").val(JSON.stringify(commission_data));
     }
   }
-
 });
 
 $(document).on('click', '.get-commission-by-id', function(){
   event.preventDefault();
-
   var staff_id    = $('#main_staff_id').val();
   var ajaxurl     = baseurl+'partner/staff/get-commission-by-staff-id'+'/' + staff_id;
-  
   $.ajax({
     url:ajaxurl,
     type:'GET',
@@ -434,7 +430,99 @@ $(document).on('click', '.get-commission-by-id', function(){
       }
     }
   });
+});
 
+$(document).on('click', '.filter-by-role', function(){
+  event.preventDefault();
+  var selected_id   = $('.filter-option-roles option:selected').val();
+  
+  var ajaxurl     = baseurl+'partner/staff/filter-by-role'+'/' + selected_id;
+  $.ajax({
+    url:ajaxurl,
+    type:'GET',
+    beforeSend:function(){
+      $('.spinner-cls').show();
+    },
+    success:function(response)
+    {
+      $('.spinner-cls').hide();
+      response = JSON.parse(response);
+
+      $('#kt_table_users .staff-lists').html('');
+      if (response.status) {
+        var staff_data = response.data;
+        $('#kt_table_users .staff-lists').append(staff_data);
+      }else{
+        var staff_data = response.data;
+        $('#kt_table_users .staff-lists').append(staff_data);
+      }
+    }
+  });
+});
+
+$(document).on('click', '.filter-Reset', function(){
+  event.preventDefault();
+  
+  var ajaxurl     = baseurl+'partner/staff/filter-reset';
+  $.ajax({
+    url:ajaxurl,
+    type:'GET',
+    beforeSend:function(){
+      $('.spinner-cls').show();
+    },
+    success:function(response)
+    {
+      $('.spinner-cls').hide();
+      response = JSON.parse(response);
+
+      $('#kt_table_users .staff-lists').html('');
+      if (response.status) {
+        var staff_data = response.data;
+        $('#kt_table_users .staff-lists').append(staff_data);
+      }else{
+        var staff_data = response.data;
+        $('#kt_table_users .staff-lists').append(staff_data);
+      }
+    }
+  });
+});
+
+$(document).on('click', '.export-staff-by-role', function(){
+  event.preventDefault();
+  var selected_id   = $('.export-roles option:selected').val();
+  var format        = $('.export-format option:selected').val();
+  
+  var ajaxurl     = baseurl+'partner/staff/export-staff-by-role'+'/' + selected_id+'/' + format;
+  $.ajax({
+    url:ajaxurl,
+    type:'GET',
+    beforeSend:function(){
+      $('.spinner-cls').show();
+    },
+    success:function(response)
+    {
+      $('.spinner-cls').hide();
+      response = JSON.parse(response);
+
+      if (response.status) {
+        Swal.fire({
+          text: "Staff list has been successfully exported!",
+          icon: "success",
+          buttonsStyling: !1,
+          confirmButtonText: "Ok, got it!",
+          customClass: { confirmButton: "btn btn-primary" },
+        })
+      }else{
+        Swal.fire({
+          text: "Somthing went wrong. Please try again!",
+          icon: "error",
+          buttonsStyling: !1,
+          confirmButtonText: "Ok, got it!",
+          customClass: { confirmButton: "btn btn-primary" },
+        })
+      }
+    }
+  });
 });
 
 function addShift(index, value, day){
@@ -454,3 +542,4 @@ function numberHandler(input){
     defaultvalue = input.value;
   }
 }
+

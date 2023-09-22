@@ -8,9 +8,8 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\DB;
-use App\Models\Admin\PartnerType;
-use App\Models\Admin\RecommendedPackage;
-use App\Models\Admin\BusinessType;
+use Illuminate\Support\Facades\Validator;
+
 
 class ServicesConfigController extends Controller
 {
@@ -27,18 +26,24 @@ class ServicesConfigController extends Controller
        ->select('services.serviceid','services.is_active','services.servicename','service_categories.category',
        'service_sub_categories.servicesubcategoryid','service_sub_categories.servicesubcategory')
         ->get();
-        $pt=PartnerType::all(); 
-        $rp=RecommendedPackage::all();
-        $bt=BusinessType::all();
-        return view('admin/services/services-config/index', compact('title', 'meta_description', 'meta_keywords','sercat','catactive','shares','pt','rp','bt'));
+        
+
+        $serSubcat=ServiceSubCategory::leftJoin('service_categories', 'service_categories.id', '=', 'service_sub_categories.categoryid')->get(['service_sub_categories.servicesubcategoryid',
+            'service_sub_categories.servicesubcategory','service_sub_categories.status','service_categories.category','service_categories.country']);
+
+
+        return view('admin/services/services-config/index', compact('title', 'meta_description', 'meta_keywords','sercat','serSubcat','catactive','shares'));
     }
 
     public function create(Request $request)
     {
-    	
+    	// echo "<pre>";print_r($request->get('country'));die;
+      
+
     //    $request->validate(['icon'=>'required']);
+      
         $sc = new ServiceCategory;  
-        $sc->country =  $request->get('country');  
+        $sc->country =  getSelectedCountry();  
         $sc->category = $request->get('category');  
 
         if($request->file('icon')){
@@ -49,7 +54,7 @@ class ServicesConfigController extends Controller
         } 
         $sc->is_active 	= 1;
         $sc->save();
-        return redirect()->back()->with('message', 'Service Category created successfully.');
+        return redirect()->back()->with('message', 'Service category created successfully.');
     }
 
     public function enabled($id): RedirectResponse
@@ -64,9 +69,9 @@ class ServicesConfigController extends Controller
 
             $sc->save();
 
-            return redirect()->back()->with('message', 'Service Category status updated successfully.');
+            return redirect()->back()->with('message', 'Service category status updated successfully.');
         }else{
-            return redirect()->back()->with('error', 'Please select Service Category.');
+            return redirect()->back()->with('error', 'Please select service category.');
         }
     }
 
@@ -82,9 +87,9 @@ class ServicesConfigController extends Controller
 
 	        $sc->save();
 
-	        return redirect()->back()->with('message', 'Service Category status updated successfully.');
+	        return redirect()->back()->with('message', 'Service category status updated successfully.');
 	    }else{
-	    	return redirect()->back()->with('error', 'Please select Service Category.');
+	    	return redirect()->back()->with('error', 'Please select service category.');
 	    }
     }
 
@@ -92,6 +97,15 @@ class ServicesConfigController extends Controller
     {
         $sc =ServiceCategory::find($id);
         return $sc;
+    }
+
+       public function editSubcat($id)
+    {
+        $ssc =ServiceSubCategory::find($id);
+        $ssc = $ssc->leftjoin('service_categories', 'service_sub_categories.categoryid', '=', 'service_categories.id')
+->where('service_sub_categories.servicesubcategoryid', $id)
+->first();
+        return $ssc;
     }
 
     public function update(Request $request)
@@ -106,7 +120,16 @@ class ServicesConfigController extends Controller
             $sc->icon= $filename;
         }
         $sc->update();
-        return redirect()->back()->with('message','Service Category Updated Successfully');
+        return redirect()->back()->with('message','Service category updated successfully');
+    }
+
+    public function updateSubcat(Request $request)
+    {
+        $ssc = ServiceSubCategory::find($request->get('subcategory_id'));
+        $ssc->categoryid=$request->input('scategory');
+        $ssc->servicesubcategory=$request->input('subcategory');
+        $ssc->update();
+        return redirect()->back()->with('messagesubcat','Service sub-category updated successfully');
     }
 
     public function store(Request $request)
@@ -116,7 +139,43 @@ class ServicesConfigController extends Controller
         $ssc->categoryid =  $request->get('category');  
         $ssc->servicesubcategory = $request->get('subcategory');  
         $ssc->save();
-        return redirect()->back()->with('message', 'Service SubCategory created successfully.');
+        return redirect()->back()->with('messagesubcat', 'Service sub-category created successfully.');
+    }
+
+     public function enabledSubcat($id): RedirectResponse
+    {
+        if($id){
+            $ssc = new ServiceSubCategory;
+
+            $ssc->exists       = true;
+            $ssc->servicesubcategoryid= $id;
+            $ssc->status    = 1;
+            $ssc->updated_at   = date('Y-m-d H:i:s');
+
+            $ssc->save();
+
+            return redirect()->back()->with('messagessc', 'Service sub-category status updated successfully.');
+        }else{
+            return redirect()->back()->with('errorssc', 'Please select service sub-category.');
+        }
+    }
+
+    public function disabledSubcat($id): RedirectResponse
+    {
+        if($id){
+            $ssc = new ServiceSubCategory;
+
+            $ssc->exists         = true;
+            $ssc->servicesubcategoryid = $id;
+            $ssc->status  = 0;
+            $ssc->updated_at     = date('Y-m-d H:i:s');
+
+            $ssc->save();
+
+            return redirect()->back()->with('messagessc', 'Service sub-category status updated successfully.');
+        }else{
+            return redirect()->back()->with('errorssc', 'Please select service sub-category.');
+        }
     }
 
     public function getSubcategoryAjax($category_id){
@@ -130,7 +189,21 @@ class ServicesConfigController extends Controller
 
     public function addservice(Request $request)
     {
-    	
+    	$validator = Validator::make($request->all(), [
+            'category'      => 'required',
+            'dis_subcategory'     => 'required',
+            'servicename'     => 'required',
+            
+        ], [
+
+               'category.required' => 'The category field is required',
+                     'dis_subcategory.required' => 'The sub-category is required',
+                     'servicename.required' => 'The service name is required',
+                  ]);
+ 
+        if ($validator->fails()) {
+            return redirect()->back()->withErrors($validator)->withInput();
+        }
         $s = new Service;  
         $s->categoryid =  $request->get('category');  
         $s->subcategoryid = $request->get('dis_subcategory');
@@ -154,7 +227,7 @@ class ServicesConfigController extends Controller
 
             return redirect()->back()->with('messagestatus', 'Service status updated successfully.');
         }else{
-            return redirect()->back()->with('errorstatus', 'Please select Service.');
+            return redirect()->back()->with('errorstatus', 'Please select service.');
         }
     }
 
@@ -174,7 +247,7 @@ class ServicesConfigController extends Controller
 
 	        return redirect()->back()->with('messagestatus', 'Service status updated successfully.');
 	    }else{
-	    	return redirect()->back()->with('errorstatus', 'Please select Service.');
+	    	return redirect()->back()->with('errorstatus', 'Please select service.');
 	    }
     }
 
@@ -200,64 +273,10 @@ class ServicesConfigController extends Controller
         $s->subcategoryid=$request->input('dis_subcategory3');
         $s->servicename=$request->input('servicename');
         $s->update();
-        return redirect()->back()->with('messageus','Service Updated Successfully');
+        return redirect()->back()->with('messageus','Service updated Successfully');
     }
 
-    public function addrecommendedpackage(Request $request)
-    {
-    	$but=implode(", ", $request->get('businesstypeid'));
-        $service=implode(", ",$request->get('dis_service'));
-        $partnerid=implode(", ", $request->get('partnerid'));
-        $s = new RecommendedPackage;  
-        $s->packagename =  $request->get('packagename');  
-        $s->gender = $request->get('gender');
-        $s->categoryid = $request->get('categoryid');
-        $s->subcategoryid = $request->get('getdis_subcategory');
-        $s->serviceid = $service;
-        $s->partnerid = $partnerid;
-        $s->businesstypeid = $but;
-        $s->uniqueid = $request->get('uniqueid');
-        $s->discount = $request->get('discount');
-        $s->is_active 	= 1;   
-        $s->save();
-        return redirect()->back()->with('messagerp', 'Recommended Package created successfully.');
-    }
+    
 
-    public function enabledrp($rp_id): RedirectResponse
-    {
-        if($rp_id){
-            $rp = new RecommendedPackage;
-
-            $rp->exists       = true;
-            $rp->rp_id           = $rp_id;
-            $rp->is_active    = 1;
-            $rp->updated_at   = date('Y-m-d H:i:s');
-
-            $rp->save();
-
-            return redirect()->back()->with('messagestatusrp', 'Recommended Package status updated successfully.');
-        }else{
-            return redirect()->back()->with('errorstatusrp', 'Please select Recommended Package.');
-        }
-    }
-
-    public function disabledrp($rp_id): RedirectResponse
-    {
-    	if($rp_id){
-	        $rp = new RecommendedPackage;
-
-	        $rp->exists 		= true;
-	        $rp->rp_id 			= $rp_id;
-	        $rp->is_active 	= 0;
-	        $rp->updated_at 	= date('Y-m-d H:i:s');
-            
-            // echo "<pre>"; print_r($s->is_active);die;
-            
-	        $rp->save();
-
-	        return redirect()->back()->with('messagestatusrp', 'Recommended Package status updated successfully.');
-	    }else{
-	    	return redirect()->back()->with('errorstatusrp', 'Please select Recommended Package.');
-	    }
-    }
+  
 }

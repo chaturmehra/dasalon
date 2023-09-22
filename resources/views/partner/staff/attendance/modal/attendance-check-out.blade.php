@@ -2,7 +2,10 @@
    <div class="modal-dialog modal-dialog-scrollable">
       <div class="modal-content">
          <div class="modal-header">
-            @php $date = date("Y-m-d"); @endphp
+            @php 
+               $date = date("Y-m-d"); 
+               $currTime = date("h:i a")
+            @endphp
             <h5 class="modal-title">{{ date("j F, Y", strtotime($date)) }}</h5>
             <!--begin::Close-->
             <div class="btn btn-icon btn-sm btn-active-light-primary ms-2" data-bs-dismiss="modal" aria-label="Close">
@@ -22,7 +25,7 @@
                      </div>
                      <div class="fv-row">
                         <div class="input-group kt_td_picker_time_only" data-td-target-input="nearest" data-td-target-toggle="nearest">
-                           <input type="text" name="check_out" class="form-control" data-td-target=".kt_td_picker_time_only" placeholder="Check-in" value="10:00" required="required" />
+                           <input type="text" name="check_out" class="form-control check-out-time" data-td-target=".kt_td_picker_time_only" placeholder="Check out" value="{{ $currTime }}" required="required" />
                            <span class="input-group-text" data-td-target=".kt_td_picker_time_only" data-td-toggle="datetimepicker">
                            <i class="ki-outline ki-time fs-3"></i>
                            </span>

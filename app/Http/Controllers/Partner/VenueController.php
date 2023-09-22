@@ -12,6 +12,9 @@ use Illuminate\Support\Facades\Auth;
 use DB;
 use App\Models\User;
 use App\Models\UserDetails;
+use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Mail;
+use Validator;
 
 class VenueController extends Controller
 {
@@ -51,28 +54,26 @@ class VenueController extends Controller
 		$amenity_ids 		= array_column($venue_meta, 'amenity');
 		$business_types_ids = array_column($venue_meta, 'venuebusiness');
 
-		/*
-		if (!empty($amenity_ids)) {
-			$amenity_data 	= $this->get_amenity_by_ids($amenity_ids, $venue_ids);
-			echo "<pre>"; print_r($amenity_data); die;
-		}*/
-
 		$venue_data_arr = [];
 		if ( !empty($venue_data_array) ) {
 			$i=0;
 			foreach ($venue_data_array as $vkey => $venue_data) {
 				$venue_id 			= $venue_data["id"];
 				$venue_meta_data 	= $venue_meta[$venue_id];
+
 				// Get amenity name, icon from ids
-				if ($amenity_ids) {
+				if ( $amenity_ids && !empty($amenity_ids[$i]) ) {
 					$amenities_ids 		= explode(',', $amenity_ids[$i]);
 					$amenity_data 		= $this->get_amenity_by_ids($amenities_ids);
 				}else{
 					$amenity_data = "";
 				}
-
-				$business_type_ids 	= explode(',', $business_types_ids[$i]);
-				$business_type_data = $this->get_business_type_by_ids($business_type_ids);
+				if ( $business_types_ids && !empty($business_types_ids[$i]) ) {
+					$business_type_ids 	= explode(',', $business_types_ids[$i]);
+					$business_type_data = $this->get_business_type_by_ids($business_type_ids);
+				}else{
+					$business_type_data = "";
+				}
 
 				$venue_data["venue_meta"] = $venue_meta_data;
 				$venue_data["amenity_data"] = $amenity_data;
@@ -85,14 +86,23 @@ class VenueController extends Controller
 
 		$loggedUserDetail = User::leftjoin('user_details', 'users.id', '=', 'user_details.user_id')->where('users.is_active', 1)->get();
 
-		// echo "<pre>"; print_r($getLoggedUser); die;
-
 		return view('partner/setting/venue/index', compact('title', 'meta_description', 'meta_keywords', 'amenities', 'venue_data_arr', 'businesstypes', 'loggedUserDetail'));
 	}
 
 	public function storeVenues(Request $request)
 	{
 		$partner_id = Auth::user()->id;
+
+		$validator = Validator::make($request->all(), [
+            'name'  	=> 'required',
+            'phone'  	=> 'required',
+            'email'     => 'required',
+        ]);
+ 
+        if ($validator->fails()) {
+            return redirect()->back()->withErrors($validator)->withInput();
+        }
+
 		$venue = Venue::create([
 			'partner_id' 		=> $partner_id,
 			'name' 				=> $request->venue_name,
@@ -351,6 +361,16 @@ class VenueController extends Controller
 	{
 		$partner_id = Auth::user()->id;
 		$venue_id 	= $request->venue_id;
+
+		$validator = Validator::make($request->all(), [
+            'name'  	=> 'required',
+            'phone'  	=> 'required',
+            'email'     => 'required',
+        ]);
+ 
+        if ($validator->fails()) {
+            return redirect()->back()->withErrors($validator)->withInput();
+        }
 
 		Venue::where('id', $venue_id)->update([
 			'partner_id' 		=> $partner_id,
@@ -679,7 +699,7 @@ class VenueController extends Controller
 
 		return redirect()->back()->with('success', 'Venue updated successfully.');
 	}
-
+	
 	public function add_venue_meta($cid, $key, $value){
 		//\DB::enableQueryLog();
 		$tbl_name 	= 'venues';
@@ -777,6 +797,103 @@ class VenueController extends Controller
 		echo json_encode($response);
 	}
 
+	public function getBusinessDetail($partner_id)
+	{
+		$partnerDetail = User::leftjoin('user_details', 'users.id', '=', 'user_details.user_id')->where('users.id', $partner_id)->get();
+
+		if ( !empty($partner_id) && !$partnerDetail->isEmpty() ) {
+			
+			$response = array(
+				"status" 	=> 1,
+				"data" 		=> $partnerDetail,
+			);
+		}else{
+			$response = array(
+				"status" 	=> 0,
+				"message" 	=> "Data not found",
+			);
+		}
+		
+		echo json_encode($response);
+	}
+
+	public function updateBusinessDetail(Request $request)
+	{
+		$partner_id = Auth::user()->id;
+
+		User::where('id', $partner_id)->update([
+			'phone' 	=> $request->business_phone,
+			'email' 	=> $request->business_email,
+		]);
+
+		if ($request->hasFile('business_logo')) {
+			$image = $request->file('business_logo');
+			$business_logo = time().'_business_logo.'.$image->getClientOriginalExtension();
+			$destinationPath = public_path('/uploads/business-logo');
+			$image->move($destinationPath, $business_logo);
+			$business_logo =  '/uploads/business-logo/'.$business_logo;
+		}else{
+			if ($request->old_business_logo) {
+				$business_logo = $request->old_business_logo;
+			}else{
+				$business_logo = "";
+			}
+		}
+
+		UserDetails::where('user_id', $partner_id)->update([
+			'business_name' => $request->business_name,
+			'website' 		=> $request->website,
+			'facebook' 		=> $request->facebook,
+			'instagram' 	=> $request->instagram,
+			'business_logo' => $business_logo,
+		]);
+
+		return redirect()->back()->with('success', 'Partner detail successfully updated.');
+	}
+
+	public function venueSelectById($venue_id)
+	{
+		echo $venue_id; die("venue_id");
+		
+		$venues 	= Venue::get()->toArray();
+
+		$venue_data_array 	= $this->array_by_ids($venues, "id");
+		$venue_ids 			= array_column($venues, 'id');
+
+		$venue_meta 		= $this->get_venue_meta_by_venue_ids($venue_ids);
+		$amenity_ids 		= array_column($venue_meta, 'amenity');
+		$business_types_ids = array_column($venue_meta, 'venuebusiness');
+
+		$venue_data_arr = [];
+		if ( !empty($venue_data_array) ) {
+			$i=0;
+			foreach ($venue_data_array as $vkey => $venue_data) {
+				$venue_id 			= $venue_data["id"];
+				$venue_meta_data 	= $venue_meta[$venue_id];
+				// Get amenity name, icon from ids
+				if ( $amenity_ids && !empty($amenity_ids[$i]) ) {
+					$amenities_ids 		= explode(',', $amenity_ids[$i]);
+					$amenity_data 		= $this->get_amenity_by_ids($amenities_ids);
+				}else{
+					$amenity_data = "";
+				}
+				if ( $business_types_ids && !empty($business_types_ids[$i]) ) {
+					$business_type_ids 	= explode(',', $business_types_ids[$i]);
+					$business_type_data = $this->get_business_type_by_ids($business_type_ids);
+				}else{
+					$business_type_data = "";
+				}
+
+				$venue_data["venue_meta"] = $venue_meta_data;
+				$venue_data["amenity_data"] = $amenity_data;
+				$venue_data["business_type_data"] = $business_type_data;
+				$venue_data_arr[] = $venue_data;
+
+				$i++;
+			}
+		}
+	}
+
 	public function get_metadata($venue_id) {
 
 		$venue_metadata = DB::table('venue_meta')->select('meta_key', 'meta_value')->where('venue_id', $venue_id)->get();
@@ -802,4 +919,27 @@ class VenueController extends Controller
 		$result 	= $query->toArray();
 		return $result;
 	}
+
+	public function sendPartnerEmail(Request $request)
+    {
+    	$otp = random_int(100000, 999999);
+
+    	$email = $request->email;
+    	$name = $request->name;
+
+    	try {
+
+    		Session::put('signin_otp', $otp);
+
+    		Mail::send('mail-template/emailOtp', ['name' => $name, 'otp' => $otp], function($message) use($request){
+    			$message->to($request->email);
+    			$message->subject('Email OTP Verification');
+    		});
+
+    		return response()->json(['status' => true]);
+
+    	} catch (Exception $e) {
+    		dd("Error: ". $e->getMessage());
+    	}
+    }
 }
