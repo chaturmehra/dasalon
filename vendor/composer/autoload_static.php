@@ -4,7 +4,7 @@
 
 namespace Composer\Autoload;
 
-class ComposerStaticInit6c83d627e1b7081ec00da8ed82c8725f
+class ComposerStaticInitab904e6e18d3714bf3d86ef140fcd907
 {
     public static $files = array (
         '0e6d7bf4a5811bfa5cf40c5ccd6fae6a' => __DIR__ . '/..' . '/symfony/polyfill-mbstring/bootstrap.php',
@@ -383,8 +383,8 @@ class ComposerStaticInit6c83d627e1b7081ec00da8ed82c8725f
         ),
         'Psr\\Http\\Message\\' => 
         array (
-            0 => __DIR__ . '/..' . '/psr/http-message/src',
-            1 => __DIR__ . '/..' . '/psr/http-factory/src',
+            0 => __DIR__ . '/..' . '/psr/http-factory/src',
+            1 => __DIR__ . '/..' . '/psr/http-message/src',
         ),
         'Psr\\Http\\Client\\' => 
         array (
@@ -3032,6 +3032,7 @@ class ComposerStaticInit6c83d627e1b7081ec00da8ed82c8725f
         'Laravel\\Prompts\\SelectPrompt' => __DIR__ . '/..' . '/laravel/prompts/src/SelectPrompt.php',
         'Laravel\\Prompts\\Spinner' => __DIR__ . '/..' . '/laravel/prompts/src/Spinner.php',
         'Laravel\\Prompts\\SuggestPrompt' => __DIR__ . '/..' . '/laravel/prompts/src/SuggestPrompt.php',
+        'Laravel\\Prompts\\Table' => __DIR__ . '/..' . '/laravel/prompts/src/Table.php',
         'Laravel\\Prompts\\Terminal' => __DIR__ . '/..' . '/laravel/prompts/src/Terminal.php',
         'Laravel\\Prompts\\TextPrompt' => __DIR__ . '/..' . '/laravel/prompts/src/TextPrompt.php',
         'Laravel\\Prompts\\Themes\\Contracts\\Scrolling' => __DIR__ . '/..' . '/laravel/prompts/src/Themes/Contracts/Scrolling.php',
@@ -3046,6 +3047,7 @@ class ComposerStaticInit6c83d627e1b7081ec00da8ed82c8725f
         'Laravel\\Prompts\\Themes\\Default\\SelectPromptRenderer' => __DIR__ . '/..' . '/laravel/prompts/src/Themes/Default/SelectPromptRenderer.php',
         'Laravel\\Prompts\\Themes\\Default\\SpinnerRenderer' => __DIR__ . '/..' . '/laravel/prompts/src/Themes/Default/SpinnerRenderer.php',
         'Laravel\\Prompts\\Themes\\Default\\SuggestPromptRenderer' => __DIR__ . '/..' . '/laravel/prompts/src/Themes/Default/SuggestPromptRenderer.php',
+        'Laravel\\Prompts\\Themes\\Default\\TableRenderer' => __DIR__ . '/..' . '/laravel/prompts/src/Themes/Default/TableRenderer.php',
         'Laravel\\Prompts\\Themes\\Default\\TextPromptRenderer' => __DIR__ . '/..' . '/laravel/prompts/src/Themes/Default/TextPromptRenderer.php',
         'Laravel\\Sail\\Console\\AddCommand' => __DIR__ . '/..' . '/laravel/sail/src/Console/AddCommand.php',
         'Laravel\\Sail\\Console\\Concerns\\InteractsWithDockerComposeServices' => __DIR__ . '/..' . '/laravel/sail/src/Console/Concerns/InteractsWithDockerComposeServices.php',
@@ -5294,6 +5296,7 @@ class ComposerStaticInit6c83d627e1b7081ec00da8ed82c8725f
         'Psy\\CodeCleaner\\ValidFunctionNamePass' => __DIR__ . '/..' . '/psy/psysh/src/CodeCleaner/ValidFunctionNamePass.php',
         'Psy\\Command\\BufferCommand' => __DIR__ . '/..' . '/psy/psysh/src/Command/BufferCommand.php',
         'Psy\\Command\\ClearCommand' => __DIR__ . '/..' . '/psy/psysh/src/Command/ClearCommand.php',
+        'Psy\\Command\\CodeArgumentParser' => __DIR__ . '/..' . '/psy/psysh/src/Command/CodeArgumentParser.php',
         'Psy\\Command\\Command' => __DIR__ . '/..' . '/psy/psysh/src/Command/Command.php',
         'Psy\\Command\\DocCommand' => __DIR__ . '/..' . '/psy/psysh/src/Command/DocCommand.php',
         'Psy\\Command\\DumpCommand' => __DIR__ . '/..' . '/psy/psysh/src/Command/DumpCommand.php',
@@ -9526,10 +9529,10 @@ class ComposerStaticInit6c83d627e1b7081ec00da8ed82c8725f
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
-            $loader->prefixLengthsPsr4 = ComposerStaticInit6c83d627e1b7081ec00da8ed82c8725f::$prefixLengthsPsr4;
-            $loader->prefixDirsPsr4 = ComposerStaticInit6c83d627e1b7081ec00da8ed82c8725f::$prefixDirsPsr4;
-            $loader->prefixesPsr0 = ComposerStaticInit6c83d627e1b7081ec00da8ed82c8725f::$prefixesPsr0;
-            $loader->classMap = ComposerStaticInit6c83d627e1b7081ec00da8ed82c8725f::$classMap;
+            $loader->prefixLengthsPsr4 = ComposerStaticInitab904e6e18d3714bf3d86ef140fcd907::$prefixLengthsPsr4;
+            $loader->prefixDirsPsr4 = ComposerStaticInitab904e6e18d3714bf3d86ef140fcd907::$prefixDirsPsr4;
+            $loader->prefixesPsr0 = ComposerStaticInitab904e6e18d3714bf3d86ef140fcd907::$prefixesPsr0;
+            $loader->classMap = ComposerStaticInitab904e6e18d3714bf3d86ef140fcd907::$classMap;
 
         }, null, ClassLoader::class);
     }
