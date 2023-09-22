@@ -265,7 +265,7 @@ data-kt-drawer-width="{default:'300px', 'md': '700px', 'xl': '950px'}"
                     </div>
 
                     <!--begin::Button-->
-                    <button type="submit" data-repeater-delete="" class="btn btn-sm btn-icon btn-light-danger">
+                    <button type="button" data-repeater-delete="" class="btn btn-sm btn-icon btn-light-danger">
                       <i class="ki-duotone ki-cross fs-2">
                         <span class="path1"></span>
                         <span class="path2"></span>

@@ -416,7 +416,7 @@ class ServicesController extends Controller
 		                            }else{
 		                              $path = asset('/public/partner/assets/media/avatars/blank.png');
 		                            }
-	                            	$staff_pricing_html.= '<option value="'.$staff->user_id.'" data-kt-select2-user="'.$path.' $selected">'.$staff->name.'</option>';
+	                            	$staff_pricing_html.= '<option value="'.$staff->user_id.'" data-kt-select2-user="'.$path.'" '.$selected.'>'.$staff->name.'</option>';
 	                            }
                             }
                           $staff_pricing_html.= '</select>

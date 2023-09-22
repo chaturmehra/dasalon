@@ -247,58 +247,12 @@ data-kt-drawer-width="{default:'300px', 'md': '700px', 'xl': '950px'}"
                   <div data-repeater-item="" class="form-group d-flex align-items-end gap-5">
 
 
-                    <div class="row mt-7">
-
-                      <div class="col-sm-4">
-                        <!--begin::Label-->
-                        <label class="required fw-semibold fs-6 mb-2">Staff</label>
-                        <div class="form-floating border rounded">
-                          <select class="form-select form-select-transparent kt_docs_select2_users" data-placeholder="Select an option" name="staff_pricing['staff_id'][]">
-                            <option></option>
-                            @if( !empty($getStaff) )
-                            @foreach($getStaff as $staff)
-                            @php 
-                            if($staff->profile_image){
-                              $path = asset('/public'.$staff->profile_image);
-                            }else{
-                              $path = asset('/public/partner/assets/media/avatars/blank.png');
-                            }
-                            @endphp
-                            <option value="{{ $staff->user_id }}" data-kt-select2-user="{{ $path }}">{{ $staff->name }}</option>
-                            @endforeach
-                            @endif
-                          </select>
-                        </div>
-                      </div>  
-
-                      <div class="col-sm-4">
-                        <div class="d-flex flex-column gap-1">
-                          <label class="fw-semibold fs-6 mb-2">Online Price</label>
-                          <div class="input-group mb-0">
-                            <span class="input-group-text">$</span>
-                            <input type="text" class="form-control" aria-label="Amount (to the nearest dollar)" name="staff_pricing['online_price'][]"/>
-                            <span class="input-group-text">.00</span>
-                          </div>
-                          <!--end::Input group-->
-                        </div>
-                      </div>
-
-                      <div class="col-sm-4">
-                        <div class="d-flex flex-column gap-1">
-                          <label class="fw-semibold fs-6 mb-2">Off Peak Price</label>
-                          <div class="input-group mb-0">
-                            <span class="input-group-text">$</span>
-                            <input type="text" class="form-control" aria-label="Amount (to the nearest dollar)" name="staff_pricing['off_peak_price'][]"/>
-                            <span class="input-group-text">.00</span>
-                          </div>
-                          <!--end::Input group-->
-                        </div>
-                      </div>
+                    <div class="row mt-7 staff-pricing-list">
 
                     </div>
 
                     <!--begin::Button-->
-                    <button type="submit" data-repeater-delete="" class="btn btn-sm btn-icon btn-light-danger">
+                    <button type="button" data-repeater-delete="" class="btn btn-sm btn-icon btn-light-danger">
                       <i class="ki-duotone ki-cross fs-2">
                         <span class="path1"></span>
                         <span class="path2"></span>

@@ -217,20 +217,10 @@ $(document).ready(function(){
 							});
 						}
 
-						var staff_pricing      = response.staff_pricing_html;
+						var staff_pricing      = response.staff_pricing;
 
 						if (staff_pricing) {
-							console.log("staff_pricing", staff_pricing)
 							$('.staff-pricing-list').append(staff_pricing);
-
-							/*var html_content = [];
-							var final_content = [];
-							$.each(json_staff_pricing, function(index, value) {
-								html_content = addStaffPricing(index, value);
-								final_content.push(html_content);
-							});
-							$('.editadvancesettingdiv .mon .monday').html(final_content);
-*/
 						}
 
 					}
