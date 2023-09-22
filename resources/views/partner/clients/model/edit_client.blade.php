@@ -167,8 +167,33 @@
                               </label>
                               <!--end::Label-->
                               <!--begin::Input-->
-                              <input class="form-control kt_datepicker w-100 client_dob"id="edit_dob" name="edit_dob"placeholder="DOB"  />
+                              <!-- <input class="form-control kt_datepicker w-100 client_dob" name="dob"placeholder="DOB"  /> -->
+                              <br>
+                              <div class="row">
+                              <div class="col-md-4">
+                              <label for="day" class="required fw-semibold form-label mt-3 ">Day:</label>
+                              <input type="text" id="edit_birth_day" name="edit_birth_day" min="1" max="31" placeholder="Enter The Day" class=" form-control form-control-solid mb-2"required>
+                              
+                             </div>
+                              <div class="col-md-4">
+                              <label for="month" class="required fw-semibold form-label mt-3">Month:</label>
+                               <select id="edit_birth_month" name="edit_birth_month" required class=" form-control form-control-solid form-select mb-2" data-control="select2" data-hide-search="true" data-placeholder="Select an option">
+                                 <option disabled selected>Select a Month</option>
+                                     <?php
+                                     for ($month = 1; $month <= 12; $month++) {
+                                        $monthName = date('F', mktime(0, 0, 0, $month, 1));
+                                         echo '<option value="' . $month . '">' . $monthName . '</option>';
+                                     }
+                                     ?>
+                              </select>
+                              </div>
+                              <div class="col-md-4">
+                              <label for="year" class="fw-semibold form-label mt-3">Year:</label>
+                              <input type="text" id="edit_birth_year" name="edit_birth_year" min="1" max="31" placeholder="Enter The Year" class=" form-control form-control-solid mb-2">
+                              
+                           </div>
                               <!--end::Input-->
+                           </div>
                            </div>
                            <!--end::Input group-->
                            <!--begin::Input group-->
@@ -208,7 +233,7 @@
                               <button type="reset" data-kt-contacts-type="cancel" class="btn btn-light me-3">Cancel</button>
                               <!--end::Button-->
                               <!--begin::Button-->
-                              <button type="submit" data-kt-contacts-type="submit" class="btn btn-primary" onclick="return validateForm()">
+                              <button type="submit" data-kt-contacts-type="submit" class="btn btn-primary" >
                               <span class="indicator-label">Save</span>
                               <span class="indicator-progress">Please wait...
                               <span class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
@@ -243,7 +268,9 @@ jQuery(document).on('click', '.client-edit_on-click', function (e) {
                     $("#edit_name").val(data[0].name);
                     $("#edit_phone").val(data[0].phone);
                     $("#edit_email").val(data[0].email);
-                    $("#edit_dob").val(data[0].dob);
+                    $("#edit_birth_day").val(data[0].birth_day);
+                    $("#edit_birth_month").val(data[0].birth_month);
+                    $("#edit_birth_year").val(data[0].birth_year);
                     $("#edit_notes").val(data[0].notes);
                     if (data[0].image) {
                      var profile_image = publicurl+data[0].image;

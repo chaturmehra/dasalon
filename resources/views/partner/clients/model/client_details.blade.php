@@ -38,7 +38,7 @@
                      <!--begin::Details-->
                      <div class="d-flex flex-wrap flex-sm-nowrap gap-8">
                         <div class="symbol symbol-100px symbol-lg-160px symbol-fixed position-relative">
-                          <img id="image" src="{{$client->image}}" alt="image" >
+                          <img id="image" src="" alt="image" >
                            <div class="position-absolute translate-middle bottom-0 start-100 mb-6 bg-success rounded-circle border border-4 border-body h-20px w-20px"></div>
                         </div>
                         <!--begin::Info-->
@@ -49,7 +49,7 @@
                               <div class="d-flex flex-column">
                                  <!--begin::Name-->
                                  <div class="d-flex flex-column mb-2">
-                                    <a href="" class="text-gray-900 text-hover-primary fs-2 fw-bold me-1" id="name">{{$client->name}}</a>
+                                    <a href="" class="text-gray-900 text-hover-primary fs-2 fw-bold me-1" id="name"></a>
                                     <div class="fs-5 fw-semibold text-muted mb-6">Software Enginer</div>
                                  </div>
                                  <!--end::Name-->
@@ -61,24 +61,25 @@
                               <div>
                                  <a href="https://wa.me/9587456915">
                                  <i class="fa-brands fa-whatsapp"></i>
-                                 <span class="text-gray-400 fw-semibold fs-6" id="phone">{{$client->phone}}</span>
+                                 <span class="text-gray-400 fw-semibold fs-6" id="phone"></span>
                                  </a>
                               </div>
                               <div>
                                  <a href="mailto:client1@gmail.com">
                                  <i class="fas fa-envelope"></i>
-                                 <span class="text-gray-400 fw-semibold fs-6" id="email">{{$client->email}}</span>
+                                 <span class="text-gray-400 fw-semibold fs-6" id="email"></span>
                                  </a>
                               </div>
                            </div>
                            <div class="d-flex flex-column gap-5 mt-5">
                               <div class="d-flex gap-5">
                                  <div class="fw-bold" >Date Of Birth</div>
-                                 <div class="text-gray-600" id="dob">{{\Carbon\Carbon::parse($client->dob)->format('d-M-Y')}}</div>
+                                 <div class="text-gray-600" id="dob">
+                                    </div>
                               </div>
                               <div class="d-flex gap-5">
                                  <div class="fw-bold mt-5" >Address</div>
-                                 <div class="text-gray-600" id="address">{{$client->address}}
+                                 <div class="text-gray-600" id="address">
                                  </div>
                               </div>
                            </div>

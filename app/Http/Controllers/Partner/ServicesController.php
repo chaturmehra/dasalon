@@ -270,7 +270,6 @@ class ServicesController extends Controller
         	if ( !empty($staff_pricing) ) {
         		$json_data = json_decode($staff_pricing);
         	}
-
         	$html = '<tr>
         	<td>Normal</td>
         	<td>'.$online_price.'</td>
