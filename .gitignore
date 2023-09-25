@@ -2,7 +2,7 @@ node_modules
 a1682qud_dasalon (2)
 
 ### Laravel ###
-/vendor/
+vendor/
 node_modules/
 npm-debug.log
 yarn-error.log
