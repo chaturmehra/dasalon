@@ -63,6 +63,7 @@ class RecommendationsController extends Controller
         }
     }
 
+
     public function disabledrp($rp_id): RedirectResponse
     {
         if($rp_id){

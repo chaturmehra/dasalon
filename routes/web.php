@@ -300,3 +300,9 @@ Route::post('partner/client/import', [ClientsController::class, 'importClient'])
 
 Route::get('partner/client/export', [ClientsController::class, 'exportClient'])->name('export');
 Route::get('partner/client/sorting', [ClientsController::class, 'sortClient'])->name('sorting');
+
+
+
+/*----------partner service mapping------------*/
+Route::post('admin/services/mapping', [PartnerMappingController::class, 'addServiceMapping']);
+Route::post('admin/services/status', [PartnerMappingController::class, 'statuServiceMapping']);

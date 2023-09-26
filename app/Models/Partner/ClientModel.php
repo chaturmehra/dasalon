@@ -23,4 +23,16 @@ class ClientModel extends Model
         'notes',
 
     ];
+
+    public static function getCurrentMonthCount()
+    {   $currentMonth = date('m');
+        $currentYear  = date('Y');
+        return self::whereRaw('MONTH(created_at) = ? AND YEAR(created_at) = ?', [$currentMonth, $currentYear])->count();
+    }
+    public static function getCurrentPreviousMonthCount()
+    {   $currentMonth = date('m');
+        $currentYear  = date('Y');
+        $previousmonth= $currentMonth-1;
+        return self::whereRaw('MONTH(created_at) = ? AND YEAR(created_at) = ?', [$previousmonth, $currentYear])->count();
+    }
 }

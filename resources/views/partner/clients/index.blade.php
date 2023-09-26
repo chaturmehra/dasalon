@@ -1,5 +1,9 @@
 @extends('partner.layouts.auth.app')
 @section('content') 
+
+@php 
+extract( $stats );
+@endphp
 <!--Begin:::error popup-->
 
 <!--Begin:::error popup-->
@@ -54,17 +58,7 @@
                      <span class="text-gray-400 pt-1 fw-semibold fs-6">Clients visited this month</span>
                      <div class="d-flex align-items-center justify-content-between mt-10 w-100">
                         <div class="d-flex flex-column">
-                           @php
-                           if($client_data){
-                              $total_this_month=0;
-                              foreach($client_data as $client){
-                                   $client->id;
-                                   if($client->created_at)
-                                   $total_client++;
-                              }
-                           } 
-                           @endphp
-                           <span class="fs-2 fw-bold text-dark me-2 lh-1 ls-n2">87</span>
+                           <span class="fs-2 fw-bold text-dark me-2 lh-1 ls-n2">{{$totalMonth}}</span>
                            <span class="text-gray-400 pt-1 fw-semibold fs-8">Total no.</span>
                         </div>
                         <div class="d-flex flex-column">
@@ -86,7 +80,7 @@
                      <span class="text-gray-400 pt-1 fw-semibold fs-6">Clients visited last month</span> 
                      <div class="d-flex align-items-center justify-content-between mt-10 w-100">
                         <div class="d-flex flex-column">
-                           <span class="fs-2 fw-bold text-dark me-2 lh-1 ls-n2">87</span>
+                           <span class="fs-2 fw-bold text-dark me-2 lh-1 ls-n2">{{$totalPreviousMonth}}</span>
                            <span class="text-gray-400 pt-1 fw-semibold fs-8">Total no.</span>
                         </div>
                         <div class="d-flex flex-column">
@@ -241,27 +235,27 @@
                              <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-600 menu-state-bg-light-primary fw-semibold fs-7 w-125px py-4" data-kt-menu="true">
                                  <!--begin::Menu item-->
                                  <div class="menu-item px-3">
-                                     <a href="{{url('partner/client/sorting?sort=name_asc')}}" title="" class="menu-link px-3" data-bs-toggle="modal">Name (A-Z) </a>
+                                     <a href="{{url('partner/client/sorting?sort=name_asc')}}" title="" class="menu-link px-3" >Name (A-Z) </a>
                                  </div>
                                  <!--end::Menu item-->
                                  <!--begin::Menu item-->
                                  <div class="menu-item px-3">
-                                     <a href="{{url('partner/client/sorting?sort=name_desc')}}" title=""class="menu-link px-3" data-bs-toggle="modal">Name (Z-A) </a>
+                                     <a href="{{url('partner/client/sorting?sort=name_desc')}}" title=""class="menu-link px-3" >Name (Z-A) </a>
                                  </div>
                                  <!--end::Menu item-->
                                  <!--begin::Menu item-->
                                  <div class="menu-item px-3">
-                                    <a href="{{url('partner/client/sorting?sort=gender_asc')}}" title=""class="menu-link px-3" data-bs-toggle="modal">Gender(A-Z)</a>
+                                    <a href="{{url('partner/client/sorting?sort=gender_asc')}}" title=""class="menu-link px-3" >Gender(A-Z)</a>
                                  </div>
                                  <!--begin::Menu item-->
                                  <div class="menu-item px-3">
-                                    <a href="{{url('partner/client/sorting?sort=gender_desc')}}" title="" class="menu-link px-3" data-bs-toggle="modal">Gender(Z-A)</a>
+                                    <a href="{{url('partner/client/sorting?sort=gender_desc')}}" title="" class="menu-link px-3" >Gender(Z-A)</a>
                                  </div>
                                  <div class="menu-item px-3">
-                                     <a href="{{url('partner/client/sorting?sort=created_at_asc')}}" title="" class="menu-link px-3" data-bs-toggle="modal">Created at (oldest first)</a>
+                                     <a href="{{url('partner/client/sorting?sort=created_at_asc')}}" title="" class="menu-link px-3" >Created at (oldest first)</a>
                                  </div>
                                  <div class="menu-item px-3">
-                                    <a href="{{url('partner/client/sorting?sort=created_at_desc')}}" title="" class="menu-link px-3" data-bs-toggle="modal">Created at (newest first)</a>
+                                    <a href="{{url('partner/client/sorting?sort=created_at_desc')}}" title="" class="menu-link px-3" >Created at (newest first)</a>
                                  </div>
                              </div>
                          </form>
@@ -291,14 +285,10 @@
                            <!--end::Menu item-->
                            <!--begin::Menu item-->
                            <div class="menu-item px-3">
-                              <!-- <a id="exportLink" class="menu-link px-3" href="{{url('partner/client/export?export=export_client')}}">
-                              Export clients (csv)
-                              </a> -->
-                               <form action="{{url('partner/client/export')}}" method="GET">
-                                  @csrf
-                                 <button class="menu-link px-3" >
+
+                              <a class="menu-link px-3" href='{{url("partner/client/export")}}' target="_blank" download>
                                     Export clients(csv)
-                              </button>
+                              </a>
                               </form>
                               
                            </div>
@@ -2957,7 +2947,13 @@
                     'May', 'Jun', 'Jul', 'Aug',
                     'Sep', 'Oct', 'Nov', 'Dec'
                   ];
-                  var formattedDob = birth_day + '-' + monthNames[birth_month] + '-' + birth_year;
+                  var formattedDob;
+                  if(birth_year){
+                      formattedDob = birth_day + '-' + monthNames[birth_month] + '-' + birth_year;
+                  }else{
+                      formattedDob = birth_day + '-' + monthNames[birth_month];
+                  }
+                  
                  $('#dob').text(formattedDob)
                  if(data[0].image){
                        $('#image').attr('src',baseurl + 'public' + data[0].image);
@@ -2996,7 +2992,12 @@
                     'May', 'Jun', 'Jul', 'Aug',
                     'Sep', 'Oct', 'Nov', 'Dec'
                   ];
-                  var formattedDob = birth_day + '-' + monthNames[birth_month] + '-' + birth_year;
+                  var formattedDob;
+                  if(birth_year){
+                      formattedDob = birth_day + '-' + monthNames[birth_month] + '-' + birth_year;
+                  }else{
+                      formattedDob = birth_day + '-' + monthNames[birth_month];
+                  }
                  $('#dob').text(formattedDob)
                  if(data[0].image){
                        $('#image').attr('src',baseurl + 'public' + data[0].image);
@@ -3004,8 +3005,6 @@
                  else{
                      $('#image').attr('src' ,baseurl +'public/assets/media/avatars/blank.png');
                  }
-                 
-
    
             },
             error: function(xhr, status, error) {

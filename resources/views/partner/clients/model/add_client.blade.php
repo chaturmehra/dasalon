@@ -157,7 +157,6 @@
                               </label>
                               <!--end::Label-->
                               <!--begin::Input-->
-                              <!-- <input class="form-control kt_datepicker w-100 client_dob" name="dob"placeholder="DOB"  /> -->
                               <br>
                               <div class="row">
                               <div class="col-md-4">
@@ -179,8 +178,14 @@
                            </div>
                            <div class="col-md-4">
                               <label for="year" class="fw-semibold form-label mt-3">Year:</label>
-                              <input type="text" id="birth_year" name="birth_year" min="1" max="31" placeholder="Enter The Year" class=" form-control form-control-solid mb-2">
-                              <!--end::Input-->
+                              <select id="birth_year" name="birth_year"class=" form-control form-control-solid form-select "data-control="select2" data-hide-search="true" data-placeholder="Select an Year">
+                              <option value="0" selected>Select a Year</option>
+                                     <?php
+                                     for ($year = 2023; $year >= 1900; $year--) {
+                                         echo '<option value="' . $year . '">' . $year . '</option>';
+                                     }
+                                     ?>
+                           </select>
                            </div>
                         </div>
                         </div>
@@ -242,30 +247,3 @@
             </div>
          </div>
       </div>
-
-
-
-@push('scripts')
-<script >
-function validateForm(){
-  
-    var cname      = jQuery('.client_name').val();
-    var cemail     = jQuery('.client_email').val();
-    //var cdob       = jQuery('.client_dob').val();
-    var cphone       = jQuery('.client_phone').val();
-    if(!cname || !cemail  || !cphone){
-        Swal.fire({
-          text: "Please fill all the mandatory fields.",
-          icon: "error",
-          buttonsStyling: !1,
-          confirmButtonText: "Ok, got it!",
-          customClass: {
-            confirmButton: "btn btn-primary"
-          }
-        })
-        return false;    // in failure case
-    }        
-    return true;    // in success case
-}
-</script>
-@endpush

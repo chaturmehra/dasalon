@@ -15,32 +15,16 @@ class ParterConfigController extends Controller
    
     public function index()
     {
-      // DB::enableQueryLog();
         $showallp = PartnerTypeProperty::leftJoin('partner_type_property_permissions', 'partner_type_properties.id', '=', 'partner_type_property_permissions.partner_type_property_id')->get();
-        // $querylog =  DB::getQueryLog();
-        // dd($querylog);
-        // DB::enableQueryLog();
-        
-                //  echo "<pre>";print_r($showallp);die;
  
         $showpfp = ProfileFeature::leftJoin('profile_feature_permissions', 'profile_features.id', '=', 'profile_feature_permissions.profilefeature_id')->get()->toArray();
-        // $showpfp = $showpfp->toArray();
-        //  echo "<pre>";print_r($showpfp);die;
-        // $querylog =  DB::getQueryLog();
-        //  dd($querylog);
 
         $profile_feature_perm = [];
         if( !empty($showpfp) ) {
           foreach($showpfp as $key => $arr ) {
             $profile_feature_perm[$arr["profilefeature_id"]][$arr["role_id"]] = $arr;
-            // $profile_feature_perm [  1 ][2] = $rowdata;
-            // $profile_feature_perm [  1 ][3] = $rowdata;
           }
         }
-
-        // echo "profile_feature_perm <pre>";
-        //  print_r($profile_feature_perm);
-        //  die;
 
         $showall=PartnerType::all();
         $roleall=Role::all();
@@ -62,19 +46,18 @@ class ParterConfigController extends Controller
     { 
         $draw = $request->get('draw');
         $start = $request->get("start");
-        $rowperpage = $request->get("length"); // Rows display per page
+        $rowperpage = $request->get("length"); 
    
         $columnIndex_arr = $request->get('order');
         $columnName_arr = $request->get('columns');
         $order_arr = $request->get('order');
         $search_arr = $request->get('search');
    
-        $columnIndex = $columnIndex_arr[0]['column']; // Column index
-        $columnName = $columnName_arr[$columnIndex]['data']; // Column name
-        $columnSortOrder = $order_arr[0]['dir']; // asc or desc
-        $searchValue = $search_arr['value']; // Search value
+        $columnIndex = $columnIndex_arr[0]['column']; 
+        $columnName = $columnName_arr[$columnIndex]['data'];  
+        $columnSortOrder = $order_arr[0]['dir']; 
+        $searchValue = $search_arr['value']; 
 
-                // Total records
         $totalRecords = Role::select('count(*) as allcount')->where('role.role_name', '=', '1')->count();
 
         $totalRecordswithFilter = Role::select('count(*) as allcount')->where('role.role_name', 'like', '%' .$searchValue . '%')->count();
@@ -172,6 +155,7 @@ class ParterConfigController extends Controller
          
          return redirect()->back();
      }
+
 
      public function changeProfilefeaturepermission(Request $request){
 
