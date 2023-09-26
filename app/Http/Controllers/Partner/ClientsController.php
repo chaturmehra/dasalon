@@ -21,7 +21,7 @@ class ClientsController extends Controller
             ->get();
             
         $stats = $this->getStats();
-        return view('partner\clients\index')->with('client_data',$client_data)->with('stats',$stats);   
+        return view('partner/clients/index')->with('client_data',$client_data)->with('stats',$stats);   
     }
 
     public function getStats() {
