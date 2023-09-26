@@ -19,11 +19,20 @@ class ClientsController extends Controller
         $client_data = ClientModel::leftJoin('users', 'users.id', '=', 'clients.client_id')
             ->select('clients.*', 'users.id', 'users.name', 'users.phone')
             ->get();
+            
+        $stats = $this->getStats();
+        return view('partner\clients\index')->with('client_data',$client_data)->with('stats',$stats);   
+    }
 
+    public function getStats() {
         $totalMonth = ClientModel::getCurrentMonthCount();
         $totalPreviousMonth = ClientModel::getCurrentPreviousMonthCount();
 
-        return view('partner\clients\index')->with('client_data',$client_data)->with('totalMonth',$totalMonth)->with('totalPreviousMonth',$totalPreviousMonth);   
+
+        return array(
+            'totalMonth' => $totalMonth,
+            'totalPreviousMonth' => $totalPreviousMonth,
+        );
     }
 
     public function addClient(Request $request){
@@ -32,7 +41,7 @@ class ClientsController extends Controller
         $validator = Validator::make($request->all(), [
             'name'          => 'required|max:30',
             'email'         => 'required|email|unique:users|max:100',
-            'birth_day'     => 'required|numeric',
+            'birth_day'     => 'required|numeric|digits_between:1,2|min:1|max:31',
             'birth_month'   => 'required',
             'phone'         => 'numeric',
         ]);
@@ -59,14 +68,14 @@ class ClientsController extends Controller
         }
 
         $client_data = ClientModel::create([
-             'client_id'        =>$client_id->id,
-             'image'            =>$profile_image,
-             'gender'           =>isset($request->gender)?$request->gender:NULL,
-             'birth_day'        =>isset($request->birth_day)?$request->birth_day:0,
-             'birth_month'      =>$request->birth_month,
-             'birth_year'       =>$request->birth_year,
-             'address'          =>$request->address,
-             'notes'            =>$request->notes,
+             'client_id'    =>$client_id->id,
+             'image'        =>$profile_image,
+             'gender'       =>isset($request->gender)?$request->gender:"",
+             'birth_day'    =>isset($request->birth_day)?$request->birth_day:0,
+             'birth_month'  =>$request->birth_month,
+             'birth_year'   =>isset($request->birth_year)?$request->birth_year:"",
+             'address'      =>isset($request->address)?$request->address:"",
+             'notes'        =>isset($request->notes)?$request->notes:"",
         ]);
 
         return redirect()->back()->with('success', 'Client added successfully.');
@@ -80,10 +89,11 @@ class ClientsController extends Controller
 
     public function updateClient(Request $request){
         $client_id = $request->edit_client;
+        
         $validator = Validator::make($request->all(), [
             'edit_name'          => 'required|max:30',
             'edit_email'         => 'required|email|max:100',
-            'edit_birth_day'     => 'required|numeric',
+            'edit_birth_day'     => 'required|numeric|digits_between:1,2|min:1|max:31',
             'edit_birth_month'   => 'required',
             'edit_phone'         => 'numeric',
         ]);
@@ -118,12 +128,12 @@ class ClientsController extends Controller
 
         ClientModel::where('client_id', $client_id)->update([
              'image'        =>$profile_image,
-             'gender'       =>$request->edit_gender,
+             'gender'       =>isset($request->edit_gender)?$request->edit_gender:"",
              'birth_day'    =>$request->edit_birth_day,
              'birth_month'  =>$request->edit_birth_month,
-             'birth_year'   =>$request->edit_birth_year,
-             'address'      =>$request->edit_address,
-             'notes'        =>$request->edit_notes,
+             'birth_year'   =>isset($request->edit_birth_year)?$request->edit_birth_year:"",
+             'address'      =>isset($request->edit_address)?$request->edit_address:"",
+             'notes'        =>isset($request->edit_notes)?$request->edit_notes:"",
         ]);
 
         return redirect()->back()->with('success', 'Client updated successfully.');
@@ -149,11 +159,11 @@ class ClientsController extends Controller
                 $client_data = ClientModel::create([
                      'client_id'    =>$client_id->id,
                      'image'        =>isset($record['image'])?$record['image']:"",
-                     'gender'       =>$record['gender'],
+                     'gender'       =>isset($record['gender'])?$record['gender']:"",
                      'birth_day'    =>$record['birth_day'],
                      'birth_month'  =>$record['birth_month'],
-                     'birth_year'   =>$record['birth_year'],
-                     'address'      =>$record['address'],
+                     'birth_year'   =>isset($record['birth_year'])?$record['birth_year']:"",
+                     'address'      =>isset($record['address'])?$record['address']:"",
                      'notes'        =>isset($record['notes'])?$record['notes']:"",
                 ]);  
             }
@@ -196,6 +206,7 @@ class ClientsController extends Controller
 
     public function sortClient(Request $request)
     {
+        $stats = $this->getStats();
         $sortBy = $request->input('sort');
         switch ($sortBy) {
             case 'name_asc':
@@ -219,8 +230,7 @@ class ClientsController extends Controller
             default:
                 $client_data = ClientModel::all();
         }
-
-        return view("partner/clients/index", ['client_data' => $client_data]);
+        return view('partner/clients/index', ['client_data' => $client_data, 'stats' => $stats]);
     }
 
 

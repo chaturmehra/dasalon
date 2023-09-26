@@ -110,7 +110,7 @@
                                     </label>
                                     <!--end::Label-->
                                     <!--begin::Input-->
-                                    <input type="text" class="form-control form-control-solid client_name" name="edit_name" id="edit_name" value="" />
+                                    <input type="text" class="form-control form-control-solid client_name" name="edit_name" id="edit_name" value="" required />
                                     <!--end::Input-->
                                  </div>
                                  <!--end::Input group-->
@@ -143,7 +143,7 @@
                               </label>
                               <!--end::Label-->
                               <!--begin::Input-->
-                              <input type="text" class="form-control form-control-solid client_phone" name="edit_phone" id="edit_phone" value="" />
+                              <input type="text" class="form-control form-control-solid client_phone" name="edit_phone" id="edit_phone" value="" required />
                               <!--end::Input-->
                            </div>
                            <!--end::Input group-->
@@ -155,7 +155,7 @@
                               </label>
                               <!--end::Label-->
                               <!--begin::Input-->
-                              <input type="email" class="form-control form-control-solid client_email" name="edit_email" id="edit_email" value="" />
+                              <input type="email" class="form-control form-control-solid client_email" name="edit_email" id="edit_email" value="" required />
                               <!--end::Input-->
                            </div>
                            <!--end::Input group-->
@@ -178,7 +178,7 @@
                               <div class="col-md-4">
                               <label for="month" class="required fw-semibold form-label mt-3">Month:</label>
                                <select id="edit_birth_month" name="edit_birth_month" required class=" form-control form-control-solid form-select mb-2" data-control="select2" data-hide-search="true" data-placeholder="Select an option">
-                                 <option disabled selected>Select a Month</option>
+                                 <option  selected>Select a Month</option>
                                      <?php
                                      for ($month = 1; $month <= 12; $month++) {
                                         $monthName = date('F', mktime(0, 0, 0, $month, 1));
@@ -198,8 +198,6 @@
                                      }
                                      ?>
                               </select>
-                              <!-- <input type="text" id="edit_birth_year" name="edit_birth_year" min="1" max="31" placeholder="Enter The Year" class=" form-control form-control-solid mb-2"> -->
-                              
                            </div>
                               <!--end::Input-->
                            </div>

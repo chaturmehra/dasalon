@@ -179,7 +179,7 @@
                            <div class="col-md-4">
                               <label for="year" class="fw-semibold form-label mt-3">Year:</label>
                               <select id="birth_year" name="birth_year"class=" form-control form-control-solid form-select "data-control="select2" data-hide-search="true" data-placeholder="Select an Year">
-                              <option  selected>Select a Year</option>
+                              <option value="0" selected>Select a Year</option>
                                      <?php
                                      for ($year = 2023; $year >= 1900; $year--) {
                                          echo '<option value="' . $year . '">' . $year . '</option>';

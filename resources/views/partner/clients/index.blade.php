@@ -1,5 +1,9 @@
 @extends('partner.layouts.auth.app')
 @section('content') 
+
+@php 
+extract( $stats );
+@endphp
 <!--Begin:::error popup-->
 
 <!--Begin:::error popup-->
@@ -231,27 +235,27 @@
                              <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-600 menu-state-bg-light-primary fw-semibold fs-7 w-125px py-4" data-kt-menu="true">
                                  <!--begin::Menu item-->
                                  <div class="menu-item px-3">
-                                     <a href="{{url('partner/client/sorting?sort=name_asc')}}" title="" class="menu-link px-3" data-bs-toggle="modal">Name (A-Z) </a>
+                                     <a href="{{url('partner/client/sorting?sort=name_asc')}}" title="" class="menu-link px-3" >Name (A-Z) </a>
                                  </div>
                                  <!--end::Menu item-->
                                  <!--begin::Menu item-->
                                  <div class="menu-item px-3">
-                                     <a href="{{url('partner/client/sorting?sort=name_desc')}}" title=""class="menu-link px-3" data-bs-toggle="modal">Name (Z-A) </a>
+                                     <a href="{{url('partner/client/sorting?sort=name_desc')}}" title=""class="menu-link px-3" >Name (Z-A) </a>
                                  </div>
                                  <!--end::Menu item-->
                                  <!--begin::Menu item-->
                                  <div class="menu-item px-3">
-                                    <a href="{{url('partner/client/sorting?sort=gender_asc')}}" title=""class="menu-link px-3" data-bs-toggle="modal">Gender(A-Z)</a>
+                                    <a href="{{url('partner/client/sorting?sort=gender_asc')}}" title=""class="menu-link px-3" >Gender(A-Z)</a>
                                  </div>
                                  <!--begin::Menu item-->
                                  <div class="menu-item px-3">
-                                    <a href="{{url('partner/client/sorting?sort=gender_desc')}}" title="" class="menu-link px-3" data-bs-toggle="modal">Gender(Z-A)</a>
+                                    <a href="{{url('partner/client/sorting?sort=gender_desc')}}" title="" class="menu-link px-3" >Gender(Z-A)</a>
                                  </div>
                                  <div class="menu-item px-3">
-                                     <a href="{{url('partner/client/sorting?sort=created_at_asc')}}" title="" class="menu-link px-3" data-bs-toggle="modal">Created at (oldest first)</a>
+                                     <a href="{{url('partner/client/sorting?sort=created_at_asc')}}" title="" class="menu-link px-3" >Created at (oldest first)</a>
                                  </div>
                                  <div class="menu-item px-3">
-                                    <a href="{{url('partner/client/sorting?sort=created_at_desc')}}" title="" class="menu-link px-3" data-bs-toggle="modal">Created at (newest first)</a>
+                                    <a href="{{url('partner/client/sorting?sort=created_at_desc')}}" title="" class="menu-link px-3" >Created at (newest first)</a>
                                  </div>
                              </div>
                          </form>

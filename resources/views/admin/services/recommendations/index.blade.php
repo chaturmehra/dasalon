@@ -51,18 +51,18 @@
 
 
 
-   <div class="card card-flush">
-                        <form class="form" action = "{{ url('admin/services/recommendedpackage')}}" method = "post">
+              <div class="card card-flush">
+              <form class="form" action = "{{ url('admin/services/recommendedpackage')}}" method = "post">
                         @csrf  
                         <div class="card-body align-items-center py-10">
                               <h1 class="fw-bold text-dark mb-9">Add package</h1>
                               @if(session()->has('messagerp'))
-               <div class="card-header display-message">
-                  <div class="alert alert-success">
-                     {{ session()->get('messagerp') }}
-                  </div>
-               </div>
-               @endif
+                           <div class="card-header display-message">
+                                 <div class="alert alert-success">
+                              {{ session()->get('messagerp') }}
+                              </div>
+                           </div>
+                           @endif
                               <div class="row">
                                  <div class="col-md-3 fv-row mb-7">
                                     <h3 class="card-title align-items-start flex-column">
@@ -136,9 +136,7 @@
                                              <!--end::Label-->
                                              <!--begin::Input-->
                                              <select aria-label="Sub Category" name="getdis_subcategory" id="getdis_subcategory" data-control="select2" data-placeholder="Sub Category..." class="form-select mb-2 select_subcategory">
-                                                <!-- <option></option>
-                                                <option>Hair Cut</option>
-                                                <option>Hair Color</option> -->
+                                                
                                              </select>
                                              <!--end::Input-->
                                           </div>
@@ -391,6 +389,7 @@
 
 
 
+
             
 			</div>
 			<!--end::Content container-->
@@ -402,3 +401,4 @@
 </div>
 
 @endsection
+
