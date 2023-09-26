@@ -437,10 +437,10 @@
                   <!--begin::Input group-->
                   <div  data-kt-ecommerce-catalog-add-category="auto-options">
                     <!--begin::Repeater-->
-                    <div id="kt_ecommerce_add_category_conditions">
+                    <div id="kt_ecommerce_add_venue_service_conditions">
                       <!--begin::Form group-->
                       <div class="form-group">
-                        <div data-repeater-list="kt_ecommerce_add_category_conditions" class="d-flex flex-column gap-0">
+                        <div data-repeater-list="kt_ecommerce_add_venue_service_conditions" class="d-flex flex-column gap-0">
                           <div data-repeater-item="" class="form-group d-flex align-items-end gap-5">
 
 

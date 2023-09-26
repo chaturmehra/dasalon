@@ -77,8 +77,8 @@
                            <div class="d-flex flex-column">
                               <!--begin::Name-->
                               <div class="d-flex align-items-center mb-2">
-                                 <a href="services.html" class="text-gray-900 text-hover-primary fs-2 fw-bold me-1">Services</a>
-                                 <a href="#"><i class="ki-outline ki-verify fs-1 text-primary"></i></a>
+                                 <a href="{{ route('services.index') }}" class="text-gray-900 text-hover-primary fs-2 fw-bold me-1">Services</a>
+                                 <a href="{{ route('services.index') }}"><i class="ki-outline ki-verify fs-1 text-primary"></i></a>
                               </div>
                               <!--end::Name-->
                            </div>
@@ -140,49 +140,7 @@
                      <!--end::Info-->
                   </div>
                   <!--end::Details-->
-                  <ul class="nav nav-stretch nav-line-tabs nav-line-tabs-2x border-transparent fs-5 fw-bold">
-                     <li class="nav-item mt-2">
-                        <a class="nav-link text-active-primary ms-0 me-10 py-5 active" href="services.html">
-                        Services                    
-                        </a>
-                     </li>
-                     <!--end::Nav item-->
-                     <!--begin::Nav item-->
-                     <li class="nav-item mt-2">
-                        <a class="nav-link text-active-primary ms-0 me-10 py-5 " href="add-book-a-look-service.html">
-                        Book a look                    
-                        </a>
-                     </li>
-                     <!--end::Nav item-->
-                     <!--begin::Nav item-->
-                     <li class="nav-item mt-2">
-                        <a class="nav-link text-active-primary ms-0 me-10 py-5 " href="packages.html">
-                        Packages             
-                        </a>
-                     </li>
-                     <!--end::Nav item-->
-                     <!--begin::Nav item-->
-                     <li class="nav-item mt-2">
-                        <a class="nav-link text-active-primary ms-0 me-10 py-5 " href="vouchers.html">
-                        Vouchers                  
-                        </a>
-                     </li>
-                     <!--end::Nav item-->
-                     <!--begin::Nav item-->
-                     <li class="nav-item mt-2">
-                        <a class="nav-link text-active-primary ms-0 me-10 py-5 " href="memberships.html">
-                        Memberships                    
-                        </a>
-                     </li>
-                     <!--end::Nav item-->
-                     <!--begin::Nav item-->
-                     <li class="nav-item mt-2">
-                        <a class="nav-link text-active-primary ms-0 me-10 py-5 " href="products.html">
-                        Products                    
-                        </a>
-                     </li>
-                     <!--end::Nav item-->
-                  </ul>
+                  @include('partner.services.tab')
                </div>
             </div>
             <!--end::Navbar-->
@@ -684,4 +642,8 @@
 </script>
 
 <script src="{{asset('/public/assets/js/partner/services.js')}}" type="text/javascript"></script>
+<script src="{{asset('/public/partner/assets/js/add_staff_pricing.js')}}" type="text/javascript"></script>
+<script src="{{asset('/public/partner/assets/js/add_home_staff_pricing.js')}}" type="text/javascript"></script>
+<script src="{{asset('/public/partner/assets/js/edit_staff_pricing.js')}}" type="text/javascript"></script>
+<script src="{{asset('/public/partner/assets/js/edit_home_staff_pricing.js')}}" type="text/javascript"></script>
 @endpush

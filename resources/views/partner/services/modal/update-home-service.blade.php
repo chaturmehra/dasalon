@@ -240,26 +240,11 @@ data-kt-drawer-width="{default:'300px', 'md': '700px', 'xl': '950px'}"
           <!--begin::Input group-->
           <div  data-kt-ecommerce-catalog-add-category="auto-options">
             <!--begin::Repeater-->
-            <div id="kt_ecommerce_add_category_conditions">
+            <div id="kt_ecommerce_edit_home_service_conditions">
               <!--begin::Form group-->
               <div class="form-group">
-                <div data-repeater-list="kt_ecommerce_add_category_conditions" class="d-flex flex-column gap-0">
-                  <div data-repeater-item="" class="form-group d-flex align-items-end gap-5">
-
-
-                    <div class="row mt-7 staff-pricing-list">
-
-                    </div>
-
-                    <!--begin::Button-->
-                    <button type="button" data-repeater-delete="" class="btn btn-sm btn-icon btn-light-danger">
-                      <i class="ki-duotone ki-cross fs-2">
-                        <span class="path1"></span>
-                        <span class="path2"></span>
-                      </i>
-                    </button>
-                    <!--end::Button-->
-                  </div>
+                <div data-repeater-list="kt_ecommerce_edit_home_service_conditions" class="d-flex flex-column gap-0 staff-pricing-list">
+                  
                 </div>
               </div>
               <!--end::Form group-->

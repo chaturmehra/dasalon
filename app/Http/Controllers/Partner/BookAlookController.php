@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\Partner\Staff;
 use App\Models\Partner\Venue;
 use App\Models\Partner\VenueMeta;
-use App\Models\Partner\PartnerService;
+use App\Models\Partner\BookAlook;
 use App\Models\Admin\ServiceCategory;
 use App\Models\Admin\ServiceSubCategory;
 use App\Models\Admin\Service;
@@ -15,11 +15,11 @@ use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Validator;
 
-class ServicesController extends Controller
+class BookAlookController extends Controller
 {
     public function index()
     {
-    	$title             = "Dasalon :: Services";
+    	$title             = "Dasalon :: Book A Look";
 		$meta_description  = "";
 		$meta_keywords     = "";
 
@@ -54,15 +54,14 @@ class ServicesController extends Controller
 		$categories = ServiceCategory::where('is_active', '=', 1)->get();
 		$subcategories = ServiceSubCategory::where('status', '=', 1)->get();
 
-		$partnerVenueServicesLists 	= $this->partnerServicesLists($partner_id, 'at_venue');
-		$partnerHomeServicesLists 	= $this->partnerServicesLists($partner_id, 'at_home');
+		$bookaLookLists 	= $this->partnerBookAlookLists($partner_id);
 
-        // echo "<pre>"; print_r($partnerServicesDet); die;
+        // echo "<pre>"; print_r($BookAlooksDet); die;
 
-        return view('partner/services/index', compact('title', 'meta_description', 'meta_keywords', 'getStaff', 'venue_data_arr', 'categories', 'subcategories', 'partnerVenueServicesLists', 'partnerHomeServicesLists'));
+        return view('partner/services/book-a-look/index', compact('title', 'meta_description', 'meta_keywords', 'getStaff', 'venue_data_arr', 'categories', 'subcategories', 'bookaLookLists'));
     }
 
-    public function serviceStore(Request $request)
+    public function bookalookStore(Request $request)
 	{
 		$partner_id = Auth::user()->id;
 		$validator = Validator::make($request->all(), [
@@ -82,13 +81,9 @@ class ServicesController extends Controller
         }
 
         $staff_pricing = "";
-		if( !empty($request['kt_ecommerce_add_venue_service_conditions']) ){
-			if ( !empty($request['kt_ecommerce_add_venue_service_conditions'][0]['staff_id']) || !empty($request['kt_ecommerce_add_venue_service_conditions'][0]['online_price']) || !empty($request['kt_ecommerce_add_venue_service_conditions'][0]['off_peak_price']) ) {
-				$staff_pricing 		= json_encode($request['kt_ecommerce_add_venue_service_conditions']);
-			}
-		}else if( !empty($request['kt_ecommerce_add_home_service_conditions']) ){
-			if ( !empty($request['kt_ecommerce_add_home_service_conditions'][0]['staff_id']) || !empty($request['kt_ecommerce_add_home_service_conditions'][0]['online_price']) || !empty($request['kt_ecommerce_add_home_service_conditions'][0]['off_peak_price']) ) {
-				$staff_pricing 		= json_encode($request['kt_ecommerce_add_home_service_conditions']);
+		if( !empty($request['kt_ecommerce_add_category_conditions']) ){
+			if ( !empty($request['kt_ecommerce_add_category_conditions'][0]['staff_id']) || !empty($request['kt_ecommerce_add_category_conditions'][0]['online_price']) || !empty($request['kt_ecommerce_add_category_conditions'][0]['off_peak_price']) ) {
+				$staff_pricing 		= json_encode($request['kt_ecommerce_add_category_conditions']);
 			}
 		}
 
@@ -123,16 +118,25 @@ class ServicesController extends Controller
 			$service_id   = '';
 		}
 
-		$partnerService = PartnerService::create([
+		if ($request->hasFile('look_image')) {
+			$image = $request->file('look_image');
+			$look_image = time().'_look_image.'.$image->getClientOriginalExtension();
+			$destinationPath = public_path('/uploads/bookalook');
+			$image->move($destinationPath, $look_image);
+			$look_image =  '/uploads/bookalook/'.$look_image;
+		}else{
+			$look_image = "";
+		}
+
+		$BookAlook = BookAlook::create([
 			'partner_id'      	=> $partner_id,
-			'service_type'     	=> $request->service_type,
 			'category_id'     	=> $request->category,
 			'sub_category_id'   => $request->sub_category,
 			'service_id'     	=> $service_id,
 			'venues'     		=> $venues,
 			'gender'      		=> $request->gender_option,
 			'duration'     		=> $request->duration,
-			'distance'     		=> $request->distance,
+			'look_image'     	=> $request->look_image,
 			'walk_in_price'     => $request->walk_in_price,
 			'online_price'     	=> $request->online_price,
 			'off_peak_price'    => $request->off_peak_price,
@@ -141,10 +145,10 @@ class ServicesController extends Controller
 			'status'      		=> isset($request->service_status) ? 1 : 0,
 		]);
 
-		return redirect()->back()->with('success', 'Service created successfully.');
+		return redirect()->back()->with('success', 'Book a look created successfully.');
 	}
 
-    public function serviceUpdate(Request $request)
+    public function bookalookUpdate(Request $request)
 	{
 		$partner_id = Auth::user()->id;
 		$validator = Validator::make($request->all(), [
@@ -162,17 +166,9 @@ class ServicesController extends Controller
             return redirect()->back()->withErrors($validator)->withInput();
         }
         // echo "<pre>"; print_r($request->all()); die;
-        if( !empty($request['kt_ecommerce_edit_venue_service_conditions']) ){
-			if ( !empty($request['kt_ecommerce_edit_venue_service_conditions'][0]['staff_id']) || !empty($request['kt_ecommerce_edit_venue_service_conditions'][0]['online_price']) || !empty($request['kt_ecommerce_edit_venue_service_conditions'][0]['off_peak_price']) ) {
-				$staff_pricing 		= json_encode($request['kt_ecommerce_edit_venue_service_conditions']);
-			}
-		}else if( !empty($request['kt_ecommerce_edit_home_service_conditions']) ){
-			if ( !empty($request['kt_ecommerce_edit_home_service_conditions'][0]['staff_id']) || !empty($request['kt_ecommerce_edit_home_service_conditions'][0]['online_price']) || !empty($request['kt_ecommerce_edit_home_service_conditions'][0]['off_peak_price']) ) {
-				$staff_pricing 		= json_encode($request['kt_ecommerce_edit_home_service_conditions']);
-			}
-		}else if( !empty($request['staff_pricing']) ){
-			if ( !empty($request['staff_pricing'][0]['staff_id']) || !empty($request['staff_pricing'][0]['online_price']) || !empty($request['staff_pricing'][0]['off_peak_price']) ) {
-				$staff_pricing 		= json_encode($request['staff_pricing']);
+        if( !empty($request['kt_ecommerce_edit_booklook_conditions']) ){
+			if ( !empty($request['kt_ecommerce_edit_booklook_conditions'][0]['staff_id']) || !empty($request['kt_ecommerce_edit_booklook_conditions'][0]['online_price']) || !empty($request['kt_ecommerce_edit_booklook_conditions'][0]['off_peak_price']) ) {
+				$staff_pricing 		= json_encode($request['kt_ecommerce_edit_booklook_conditions']);
 			}
 		}
 
@@ -181,48 +177,36 @@ class ServicesController extends Controller
 			$venues = implode(',', $request['venues']);
 		}
 
-		/*$service_json_val = $request->service_name;
-		
-		if(!empty($service_json_val)){
-			$json_data = json_decode($service_json_val, true);
-			
-			$checkService 	= Service::where('servicename', $json_data[0]["value"])->get();
-			if( $checkService->isEmpty() ) {
-				$insertedID = Service::create([
-					'categoryid' 	=> $request->category,
-					'subcategoryid' => $request->sub_category,
-					'servicename' 	=> $json_data[0]["value"],
-					'is_active' 	=> 1,
-					'created_by' 	=> $partner_id,
-				]);
-
-				$service_id = $insertedID->serviceid;
-
-			}else{
-				$check_service_id = isset($checkService[0]->serviceid) ? $checkService[0]->serviceid : "";
-				$service_id    = $check_service_id;
-			}
+		if ($request->hasFile('look_image')) {
+			$image = $request->file('look_image');
+			$look_image = time().'_look_image.'.$image->getClientOriginalExtension();
+			$destinationPath = public_path('/uploads/bookalook');
+			$image->move($destinationPath, $look_image);
+			$look_image =  '/uploads/bookalook/'.$look_image;
 		}else{
-			$service_id   = '';
-		}*/
+			$old_look_image = $request['old_look_image'];
+			if ($old_look_image) {
+				$look_image = $old_look_image;
+			}else{
+				$look_image = "";
+			}
+		}
 
-		$partnerService = PartnerService::where('ps_id', $request->ps_id)->update([
+		$BookAlook = BookAlook::where('pbal_id', $request->pbal_id)->update([
 			'partner_id'      	=> $partner_id,
 			'category_id'     	=> $request->category,
 			'sub_category_id'   => $request->sub_category,
-			//'service_id'     	=> $service_id,
 			'venues'     		=> $venues,
 			'gender'      		=> $request->gender_option,
 			'duration'     		=> $request->duration,
-			'distance'     		=> $request->distance,
+			'look_image'     	=> $look_image,
 			'walk_in_price'     => $request->walk_in_price,
 			'online_price'     	=> $request->online_price,
 			'off_peak_price'    => $request->off_peak_price,
-			//'description' 		=> $request->description,
 			'staff_pricing'   	=> $staff_pricing,
 		]);
 
-		return redirect()->back()->with('success', 'Service updated successfully.');
+		return redirect()->back()->with('success', 'Book a look updated successfully.');
 	}
 
 	public function array_by_ids($array, $column, $multi_arr=false)
@@ -250,7 +234,7 @@ class ServicesController extends Controller
 		return $vanue_meta_data;
 	}
 
-	public function getServiceSubcategoryByAjax($category_id){
+	public function getBookalookSubcategoryByAjax($category_id){
 
         $getSubcategory = ServiceSubCategory::where('categoryid','=',$category_id)->where('status', '=', 1)->orderBy('servicesubcategoryid','asc')->get();
         $html = "<option></option>";
@@ -260,131 +244,34 @@ class ServicesController extends Controller
         echo $html;
     }
 
-	public function getOnlinePrice($id){
-
-        $getSubcategory = PartnerService::where('ps_id','=',$id)->get();
-        
-        if ( !empty($id) && !$getSubcategory->isEmpty() ) {
-        	$online_price 	= $getSubcategory[0]['online_price'];
-        	$staff_pricing 	= $getSubcategory[0]['staff_pricing'];
-
-        	$json_data = "";
-        	if ( !empty($staff_pricing) ) {
-        		$json_data = json_decode($staff_pricing);
-        	}
-        	$html = '<tr>
-        	<td>Normal</td>
-        	<td>'.$online_price.'</td>
-        	</tr>';
-        	if ( !empty($json_data) ) {
-	        	foreach($json_data as $key => $value){
-
-	        		$staffName = User::where('id', $value->staff_id)->first(['name'])->name;
-
-	        		$html.= '<tr>
-	        		<td>'.$staffName.'</td>
-	        		<td>
-	        		<div class="input-group mb-5">
-	        		<span class="input-group-text">$</span>
-	        		<input type="text" class="form-control" aria-label="Amount (to the nearest dollar)" value="'.$value->online_price.'" disabled />
-	        		<span class="input-group-text">.00</span>
-	        		</div>
-	        		</td>
-	        		</tr>';
-	        	}
-        	}
-
-        	$response = array(
-        		"status" 	=> 1,
-        		"data" 		=> $html,
-        	);
-        }else{
-        	$response = array(
-        		"status" 	=> 0,
-        		"message" 	=> "Data not found",
-        	);
-        }
-
-        echo json_encode($response);
-    }
-
-	public function getOffPeakPrice($id){
-
-        $getSubcategory = PartnerService::where('ps_id','=',$id)->get();
-        
-        if ( !empty($id) && !$getSubcategory->isEmpty() ) {
-        	$off_peak_price = $getSubcategory[0]['off_peak_price'];
-        	$staff_pricing 	= $getSubcategory[0]['staff_pricing'];
-
-        	$json_data = "";
-        	if ( !empty($staff_pricing) ) {
-        		$json_data = json_decode($staff_pricing);
-        	}
-
-        	$html = '<tr>
-        	<td>Normal</td>
-        	<td>'.$off_peak_price.'</td>
-        	</tr>';
-        	if ( !empty($json_data) ) {
-	        	foreach($json_data as $key => $value){
-	        		$staffName = User::where('id', $value->staff_id)->first(['name'])->name;
-	        		
-	        		$html.= '<tr>
-	        		<td>'.$staffName.'</td>
-	        		<td>
-	        		<div class="input-group mb-5">
-	        		<span class="input-group-text">$</span>
-	        		<input type="text" class="form-control" aria-label="Amount (to the nearest dollar)" value="'.$value->off_peak_price.'" disabled />
-	        		<span class="input-group-text">.00</span>
-	        		</div>
-	        		</td>
-	        		</tr>';
-	        	}
-        	}
-
-        	$response = array(
-        		"status" 	=> 1,
-        		"data" 		=> $html,
-        	);
-        }else{
-        	$response = array(
-        		"status" 	=> 0,
-        		"message" 	=> "Data not found",
-        	);
-        }
-
-        echo json_encode($response);
-    }
-
-    public function partnerServicesLists($partner_id, $service_type)
+    public function partnerBookAlookLists($partner_id)
     {
-    	$partnerServices = PartnerService::where('partner_id', $partner_id);
-    	$partnerServicesLists	= $partnerServices->select(['partner_services.ps_id', 'partner_services.gender', 'partner_services.walk_in_price', 'partner_services.online_price', 'partner_services.off_peak_price', 'partner_services.status', 'partner_services.description', 'partner_services.duration', 'service_categories.category', 'service_categories.icon', 'service_sub_categories.servicesubcategory', 'services.servicename', 'partner_services.distance'])
-	    	->leftJoin('services', 'services.serviceid', '=', 'partner_services.service_id')
-	    	->leftJoin('service_categories', 'service_categories.id', '=', 'partner_services.category_id')
-	    	->leftJoin('service_sub_categories', 'service_sub_categories.servicesubcategoryid', '=', 'partner_services.sub_category_id')
-	    	->orderBy('partner_services.ps_id', 'DESC')
-	    	->where('service_type', $service_type)
+    	$BookAlooks = BookAlook::where('partner_id', $partner_id);
+    	$BookAlooksLists	= $BookAlooks->select(['partner_book_a_look.pbal_id', 'partner_book_a_look.gender', 'partner_book_a_look.walk_in_price', 'partner_book_a_look.online_price', 'partner_book_a_look.off_peak_price', 'partner_book_a_look.status', 'partner_book_a_look.description', 'partner_book_a_look.duration', 'service_categories.category', 'service_categories.icon', 'service_sub_categories.servicesubcategory', 'services.servicename', 'partner_book_a_look.look_image'])
+	    	->leftJoin('services', 'services.serviceid', '=', 'partner_book_a_look.service_id')
+	    	->leftJoin('service_categories', 'service_categories.id', '=', 'partner_book_a_look.category_id')
+	    	->leftJoin('service_sub_categories', 'service_sub_categories.servicesubcategoryid', '=', 'partner_book_a_look.sub_category_id')
+	    	->orderBy('partner_book_a_look.pbal_id', 'DESC')
 	    	->get();
 
-    	return $partnerServicesLists;
+    	return $BookAlooksLists;
     }
 
-    public function changeServiceStatus($id,$status){
-		$statusupdate = PartnerService::where('ps_id', $id)->update([
+    public function changeBookalookStatus($id,$status){
+		$statusupdate = BookAlook::where('pbal_id', $id)->update([
 			'status' => $status,
 		]);
 
 		return true;
 	}
 
-	public function getServiceDetailById($ps_id)
+	public function getBookalookDetailById($pbal_id)
 	{
-    	//$partnerServicesLists	= PartnerService::where('ps_id', $id)->get();
+    	//$BookAlooksLists	= BookAlook::where('pbal_id', $id)->get();
 
-    	$partnerServices = PartnerService::where('ps_id', $ps_id);
-    	$partnerServicesLists	= $partnerServices->select(['partner_services.*', 'services.servicename'])
-	    	->leftJoin('services', 'services.serviceid', '=', 'partner_services.service_id')
+    	$BookAlook = BookAlook::where('pbal_id', $pbal_id);
+    	$partnerBookAlookLists	= $BookAlook->select(['partner_book_a_look.*', 'services.servicename'])
+	    	->leftJoin('services', 'services.serviceid', '=', 'partner_book_a_look.service_id')
 	    	->get();
 
     	$partner_id 		= Auth::user()->id;
@@ -395,19 +282,19 @@ class ServicesController extends Controller
     	->orderBy('staff.staff_id', 'DESC')
     	->get();
 
-		if ( !empty($ps_id) && !$partnerServicesLists->isEmpty() ) {
-			$staff_pricing = $partnerServicesLists[0]->staff_pricing;
+		if ( !empty($pbal_id) && !$partnerBookAlookLists->isEmpty() ) {
+			$staff_pricing = $partnerBookAlookLists[0]->staff_pricing;
 			$staff_pricing_html = "";
 			if ($staff_pricing) {
 				$json_data = json_decode($staff_pricing);
 				if ( !empty($json_data) ) {
 					foreach($json_data as $key => $value){
-						// echo "<pre>"; print_r($value); die;
+
 						$staff_id = $value->staff_id;
 						$staff_pricing_html.= '<div data-repeater-item="" class="form-group d-flex align-items-end gap-5"><div class="row mt-7"><div class="col-sm-4">
                         <label class="required fw-semibold fs-6 mb-2">Staff</label>
                         <div class="form-floating border rounded">
-                          <select class="form-select form-select-transparent kt_docs_select2_users" data-placeholder="Select an option" name="staff_pricing[staff_id][]">
+                          <select class="form-select form-select-transparent kt_docs_select2_users" data-placeholder="Select an option" name="kt_ecommerce_edit_booklook_conditions['.$key.'][staff_id]">
                             <option></option>';
                             if( !empty($getStaff) ){
 	                            foreach($getStaff as $staff){
@@ -429,7 +316,7 @@ class ServicesController extends Controller
                           <label class="fw-semibold fs-6 mb-2">Online Price</label>
                           <div class="input-group mb-0">
                             <span class="input-group-text">$</span>
-                            <input type="text" class="form-control" aria-label="Amount (to the nearest dollar)" name="staff_pricing['.$key.'][online_price]" value="'.$value->online_price.'"/>
+                            <input type="text" class="form-control" aria-label="Amount (to the nearest dollar)" name="kt_ecommerce_edit_booklook_conditions['.$key.'][online_price]" value="'.$value->online_price.'"/>
                             <span class="input-group-text">.00</span>
                           </div>
                         </div>
@@ -440,7 +327,7 @@ class ServicesController extends Controller
                           <label class="fw-semibold fs-6 mb-2">Off Peak Price</label>
                           <div class="input-group mb-0">
                             <span class="input-group-text">$</span>
-                            <input type="text" class="form-control" aria-label="Amount (to the nearest dollar)" name="staff_pricing['.$key.'][off_peak_price]" value="'.$value->off_peak_price.'"/>
+                            <input type="text" class="form-control" aria-label="Amount (to the nearest dollar)" name="kt_ecommerce_edit_booklook_conditions['.$key.'][off_peak_price]" value="'.$value->off_peak_price.'"/>
                             <span class="input-group-text">.00</span>
                           </div>
                         </div>
@@ -457,7 +344,7 @@ class ServicesController extends Controller
 			// echo "staff_pricing <pre>"; print_r($staff_pricing); die;
 			$response = array(
 				"status" 		=> 1,
-				"data" 			=> $partnerServicesLists,
+				"data" 			=> $partnerBookAlookLists,
 				"staff_pricing" => $staff_pricing_html,
 			);
 		}else{

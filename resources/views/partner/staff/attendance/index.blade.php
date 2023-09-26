@@ -106,11 +106,11 @@
 
                            @if( !empty($getStaff) )
                            @foreach($getStaff->unique() as $skey => $staff)
-                           @php
+                           @php 
                               $check_in  = isset($staff->check_in) ? $staff->check_in : "";
                               $check_out = isset($staff->check_out) ? $staff->check_out : "";  
                               $date = isset($staff->date) ? $staff->date : "";  
-                              $todayDate = date('Y-m-d');  
+                              $todayDate = date('Y-m-d'); 
                            @endphp
                            <tr>
                               <td>{{ $skey+1 }}</td>
@@ -118,12 +118,12 @@
                               <td>{{ $staff->phone }}</td>
                               <td>
                                  <button type="button" class="btn btn-primary modal_attendance_check" data-bs-toggle="modal" data-bs-target="#modal_attendance_admin_check" staff-id="{{ $staff->user_id }}">
-                                    @if( !empty($check_in) && $date == $todayDate ) {{ $check_in }} @else  Check in @endif
+                                    @if( !empty($check_in) && ($date == $todayDate) ) {{ $check_in }} @else  Check in @endif
                                  </button>
                               </td>
                               <td>
                                  <button type="button" class="btn btn-primary modal_attendance_check" data-bs-toggle="modal" data-bs-target="#modal_attendance_admin_check_out" staff-id="{{ $staff->user_id }}">
-                                    @if( !empty($check_out) && $date == $todayDate ) {{ $check_out }} @else  Check out @endif
+                                    @if( !empty($check_out) && ($date == $todayDate) ) {{ $check_out }} @else  Check out @endif
                                  </button>
                               </td>
                            </tr>
