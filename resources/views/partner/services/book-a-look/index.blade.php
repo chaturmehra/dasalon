@@ -292,7 +292,7 @@
                                   @endif
                                  </div>
                                  <div class="d-flex justify-content-start flex-column">
-                                    <a href="#" class="text-dark fw-bold text-hover-primary mb-1 fs-6">{{ $bookaLookList['servicename'] }}</a>
+                                    <a href="javascript:void(0)" class="text-dark fw-bold text-hover-primary mb-1 fs-6 get-bookalook-detail-by-id" bookalook-id="{{ $bookaLookList['pbal_id'] }}">{{ $bookaLookList['servicename'] }}</a>
                                     <span class="text-muted fw-semibold text-muted d-block fs-7">
                                        {{ $bookaLookList['servicesubcategory'] }}
                                     </span>

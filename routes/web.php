@@ -34,6 +34,7 @@ use App\Http\Controllers\Partner\StaffLeaveController;
 use App\Http\Controllers\Partner\StaffUserAuthorizationController;
 use App\Http\Controllers\Partner\ExportController;
 use App\Http\Controllers\Partner\BookAlookController;
+use App\Http\Controllers\Partner\PartnerPackagesController;
 
 
 /*
@@ -184,9 +185,10 @@ Route::middleware(['auth'])->group(function () {
     Route::get('partner/bookalook/get-subcategory/{id}', [BookAlookController::class, 'getBookalookSubcategoryByAjax']);
     Route::post('partner/bookalook/store', [BookAlookController::class, 'bookalookStore']);
     Route::post('partner/bookalook/update', [BookAlookController::class, 'bookalookUpdate']);
-
     Route::get('partner/bookalook/edit-bookalook-status/{id}/{status}', [BookAlookController::class, 'changeBookalookStatus']);
     Route::get('partner/bookalook/get-bookalook-detail-by-id/{id}', [BookAlookController::class, 'getBookalookDetailById']);
+
+    Route::get('partner/packages', [PartnerPackagesController::class, 'index'])->name('packages.index');
 
     Route::get('partner/promote', [PromoteController::class, 'index'])->name('promote.index');
     Route::get('partner/reports', [ReportsController::class, 'index'])->name('reports.index');
