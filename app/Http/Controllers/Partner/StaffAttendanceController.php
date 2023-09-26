@@ -53,6 +53,7 @@ class StaffAttendanceController extends Controller
                 ->whereBetween('staff_attendance.date', [$last_30_date, $today_date])
                 ->get();
         $apexChartArray = "";
+        $apexChartAvgArray = "";
         if (!$apexStaffAttendance->isEmpty()) {
         	$apexCart = "";
         	foreach ($apexStaffAttendance as $key => $value) {
