@@ -52,8 +52,10 @@ class StaffAttendanceController extends Controller
                 ->where('users.is_active', 1)
                 ->whereBetween('staff_attendance.date', [$last_30_date, $today_date])
                 ->get();
-        $apexChartArray = "";
-        $apexChartAvgArray = "";
+
+        $apexChartArray = array();
+        $apexChartAvgArray = array();
+
         if (!$apexStaffAttendance->isEmpty()) {
         	$apexCart = "";
         	foreach ($apexStaffAttendance as $key => $value) {
@@ -69,8 +71,6 @@ class StaffAttendanceController extends Controller
 
         		$apexCart = $staffdata;
         	}
-        	$apexChartArray = array();
-        	$apexChartAvgArray = array();
 
         	foreach ($apexCart as $sumkey => $apexChartArr) {
         		$sum = array_sum($apexChartArr);
