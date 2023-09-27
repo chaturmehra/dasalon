@@ -143,7 +143,9 @@
                               </label>
                               <!--end::Label-->
                               <!--begin::Input-->
-                              <input type="text" class="form-control form-control-solid client_phone" name="edit_phone" id="edit_phone" value="" required />
+                              <input type="text" class="form-control form-control-solid client_phone phone-number-intl" name="edit_phone" id="edit_phone" value="" required />
+
+                              <input type="hidden" class="country-code-intl" name="country_code">
                               <!--end::Input-->
                            </div>
                            <!--end::Input group-->

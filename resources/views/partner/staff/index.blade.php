@@ -603,4 +603,5 @@
 	$("#kt_daterangepicker_1").daterangepicker();
 </script>
 <script src="{{asset('/public/assets/js/partner/staff.js')}}" type="text/javascript"></script>
+
 @endpush()

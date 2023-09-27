@@ -13,7 +13,8 @@
             <!--begin::Scroll-->
             <div class="d-flex flex-column scroll-y me-n7 pe-7">
                <!--begin::Form-->
-               <form class="form d-flex flex-column flex-lg-row">
+               <form class="form d-flex flex-column flex-lg-row" method="post" action="{{ url('partner/packages/store') }}">
+                  @csrf
                   <!--begin::Aside column-->
                   <div class="d-flex flex-column gap-7 gap-lg-10 w-100 w-lg-400px mb-7 me-lg-10">
                      <!--begin::Status-->
@@ -27,7 +28,7 @@
                            <!--end::Card title-->
                            <div class="card-toolbar">
                               <label class="form-check form-switch form-check-custom form-check-solid">
-                              <input class="form-check-input" type="checkbox" value="" checked="checked" />
+                              <input class="form-check-input" type="checkbox" checked="checked" name="service_status" />
                               </label>
                            </div>
                         </div>
@@ -58,56 +59,41 @@
                         <!--begin::Card body-->
                         <div class="card-body pt-0">
                            <div class="row">
-                              <!--begin::Col-->
-                              <div class="col-md-12 mb-5">
-                                 <!--begin::Option-->
-                                 <label class="btn btn-outline btn-outline-dashed btn-active-light-primary d-flex text-start p-6 align-items-center flex-wrap">
+                              @if($venue_data_arr)
+                                @foreach($venue_data_arr as $key => $venue_data)
+                                <!--begin::Col-->
+                                <div class="col-md-12 mb-5">
+                                  <!--begin::Option-->
+                                  <label class="btn btn-outline btn-outline-dashed btn-active-light-primary d-flex text-start p-6 align-items-center flex-wrap">
+
                                     <!--begin::Radio-->
                                     <span class="form-check form-check-custom form-check-solid form-check-sm align-items-start mt-1">
-                                    <input class="form-check-input" type="checkbox" value="" checked/>
+                                      <input class="form-check-input" type="checkbox" name="venues[]" value="{{ $venue_data['id'] }}" />
                                     </span>
                                     <!--end::Radio-->
+
+                                    @if( !empty($venue_data['venue_meta']['featured']) )
                                     <div class="quantity-icn ms-3">
-                                       <img src="assets/media/svg/salon.svg">
+                                      <img src="{{ asset('/public/'. $venue_data['venue_meta']['featured']) }}">
                                     </div>
+                                    @endif
+
                                     <!--begin::Info-->
                                     <span class="mt-3 w-100">
-                                       <h3 class="card-title align-items-start flex-column">
-                                          <span class="card-label fw-bold text-gray-800 fs-4 mb-4">Alexandra road</span>
-                                          <span class="text-muted d-block fw-light fs-7 mt-1">Alexandra Central Mall, 321 Alexandra Road, Singapore (Bukit Merah)
-                                          </span>
-                                       </h3>
+                                      <h3 class="card-title align-items-start flex-column">
+                                        <span class="card-label fw-bold text-gray-800 fs-4 mb-4">{{ isset($venue_data['name']) ? $venue_data['name'] : "" }}</span>
+                                        <span class="text-muted d-block fw-light fs-7 mt-1">{{ isset($venue_data['venue_meta']['business_address']) ? $venue_data['venue_meta']['business_address'] : "" }}
+                                        </span>
+                                      </h3>
                                     </span>
                                     <!--end::Info-->
-                                 </label>
-                                 <!--end::Option-->
-                              </div>
-                              <!--end::Col-->
-                              <!--begin::Col-->
-                              <div class="col-md-12">
-                                 <!--begin::Option-->
-                                 <label class="btn btn-outline btn-outline-dashed btn-active-light-primary d-flex text-start p-6 align-items-center flex-wrap">
-                                    <!--begin::Radio-->
-                                    <span class="form-check form-check-custom form-check-solid form-check-sm align-items-start mt-1">
-                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckVenue2" checked/>
-                                    </span>
-                                    <!--end::Radio-->
-                                    <div class="quantity-icn ms-3">
-                                       <img src="assets/media/svg/salon.svg">
-                                    </div>
-                                    <!--begin::Info-->
-                                    <span class="mt-3 w-100">
-                                       <h3 class="card-title align-items-start flex-column">
-                                          <span class="card-label fw-bold text-gray-800 fs-4 mb-4">YJ Salons - Punggol</span>
-                                          <span class="text-muted d-block fw-light fs-7 mt-1">Punggol Park, Hougang Avenue 10, Singapore (Hougang)
-                                          </span>
-                                       </h3>
-                                    </span>
-                                    <!--end::Info-->
-                                 </label>
-                                 <!--end::Option-->
-                              </div>
-                              <!--end::Col-->
+
+                                  </label>
+                                  <!--end::Option-->
+                                </div>
+                                <!--end::Col-->
+                                @endforeach
+                                @endif
                            </div>
                         </div>
                         <!--end::Card body-->
@@ -132,7 +118,7 @@
                               <!--begin::Input group-->
                               <div class="fv-row">
                                  <!--begin::Input-->
-                                 <input type="text" name="product_name" class="form-control mb-2" placeholder="Package name" value="" />
+                                 <input type="text" name="package_name" class="form-control mb-2" placeholder="Package name" />
                                  <!--end::Input-->
                                  <!--begin::Description-->
                                  <div class="text-muted fs-7">A package name is required and recommended to be unique</div>
@@ -153,7 +139,7 @@
                               <!--begin::Input group-->
                               <div class="fv-row">
                                  <!--begin::Input-->
-                                 <textarea class="form-control mb-2" data-kt-autosize="true" placeholder="Description"></textarea>
+                                 <textarea class="form-control mb-2" data-kt-autosize="true" placeholder="Description" name="description"></textarea>
                                  <!--end::Input-->
                                  <!--begin::Description-->
                                  <div class="text-muted fs-7">Provide a description to the package for better understanding. This will be visible to online clients.</div>
@@ -177,7 +163,7 @@
                            <div class="card-body pt-0">
                               <!--begin::Input group-->
                               <div class="fv-row">
-                                 <input class="form-control d-flex align-items-center" value="" placeholder="Add service" id="kt_tagify_service" onchange="serviceSelected(this)" />
+                                 <input class="form-control d-flex align-items-center" name="selected_services" placeholder="Add service" id="kt_tagify_service" onchange="serviceSelected(this)" />
                               </div>
                               <!--end::Input group-->
                            </div>
@@ -215,8 +201,8 @@
                                        <h2 class="required fs-3">Total price</h2>
                                     </div>
                                     <div class="input-group mb-3">
-                                       <span class="input-group-text">$</span>
-                                       <input type="text" class="form-control ser_totalprice" aria-label="Amount" value="" />
+                                       <span class="input-group-text">{{ $partner_country_config->currency_sign }}</span>
+                                       <input type="text" class="form-control ser_totalprice" aria-label="Amount" name="total_price" onchange="numberHandler(this)"/>
                                        <span class="input-group-text">.00</span>
                                     </div>
                                  </div>
@@ -225,7 +211,7 @@
                                        <h2 class="required fs-3">Total duration</h2>
                                     </div>
                                     <!--begin::Input-->
-                                    <input type="text" name="" class="ser_totalduration form-control mb-3" placeholder="Duration" value="" />
+                                    <input type="text" class="ser_totalduration form-control mb-3" placeholder="Duration" name="total_duration" />
                                     <!--end::Input-->
                                  </div>
                               </div>
@@ -254,7 +240,7 @@
                                        <label class="btn btn-outline btn-outline-dashed btn-active-light-primary d-flex text-start p-6">
                                           <!--begin::Radio-->
                                           <span class="form-check form-check-custom form-check-solid form-check-sm align-items-start mt-1">
-                                          <input class="form-check-input" type="radio" name="gender_option" value="1" checked="checked" />
+                                          <input class="form-check-input" type="radio" name="gender_option" value="Female" checked="checked" />
                                           </span>
                                           <!--end::Radio-->
                                           <!--begin::Info-->
@@ -273,7 +259,7 @@
                                        <label class="btn btn-outline btn-outline-dashed btn-active-light-primary d-flex text-start p-6">
                                           <!--begin::Radio-->
                                           <span class="form-check form-check-custom form-check-solid form-check-sm align-items-start mt-1">
-                                          <input class="form-check-input" type="radio" name="gender_option" value="2" />
+                                          <input class="form-check-input" type="radio" name="gender_option" value="Male" />
                                           </span>
                                           <!--end::Radio-->
                                           <!--begin::Info-->
@@ -292,7 +278,7 @@
                                        <label class="btn btn-outline btn-outline-dashed btn-active-light-primary d-flex text-start p-6">
                                           <!--begin::Radio-->
                                           <span class="form-check form-check-custom form-check-solid form-check-sm align-items-start mt-1">
-                                          <input class="form-check-input" type="radio" name="gender_option" value="3" />
+                                          <input class="form-check-input" type="radio" name="gender_option" value="Unisex" />
                                           </span>
                                           <!--end::Radio-->
                                           <!--begin::Info-->
@@ -327,7 +313,13 @@
                                     <!--begin::Input group-->
                                     <div class="fv-row w-100 flex-md-root">
                                        <!--begin::Input-->
-                                       <input type="text" class="ser_duration form-control mb-2" placeholder="Duration" value="" />
+                                       <!-- <select name="duration" required="required" class="form-select mb-2 service-duration" data-placeholder="Select an option" data-control="select2" data-hide-search="true">
+                                         <option></option>
+                                         @foreach(durationScheduling() as $dKey => $duration)
+                                         <option value="{{ $dKey }}">{{ $duration }}</option>
+                                         @endforeach
+                                      </select> -->
+                                      <input type="text" class="ser_duration form-control mb-2" placeholder="Duration" name="duration">
                                        <!--end::Input-->
                                     </div>
                                     <!--end::Input group-->
@@ -359,8 +351,8 @@
                                        <div class="d-flex flex-column gap-1">
                                           <label class="required fw-semibold fs-6">Walk-in price</label>
                                           <div class="input-group mb-2">
-                                             <span class="input-group-text">$</span>
-                                             <input type="text" class="ser_walkin form-control" aria-label="Amount (to the nearest dollar)"/>
+                                             <span class="input-group-text">{{ $partner_country_config->currency_sign }}</span>
+                                             <input type="text" class="ser_walkin form-control" aria-label="Amount (to the nearest dollar)" name="walk_in_price" required="required" onchange="numberHandler(this)"/>
                                              <span class="input-group-text">.00</span>
                                           </div>
                                           <div class="text-muted fs-7">Price for anyone who walks into the salon without an appointment</div>
@@ -371,8 +363,8 @@
                                        <div class="d-flex flex-column gap-1">
                                           <label class="required fw-semibold fs-6">Online Price</label>
                                           <div class="input-group mb-2">
-                                             <span class="input-group-text">$</span>
-                                             <input type="text" class="ser_online form-control" aria-label="Amount (to the nearest dollar)"/>
+                                             <span class="input-group-text">{{ $partner_country_config->currency_sign }}</span>
+                                             <input type="text" class="ser_online form-control" aria-label="Amount (to the nearest dollar)" name="online_price" required="required" onchange="numberHandler(this)"/>
                                              <span class="input-group-text">.00</span>
                                           </div>
                                           <div class="text-muted fs-7">Price available to clients who book their services online in advance</div>
@@ -383,8 +375,8 @@
                                        <div class="d-flex flex-column gap-1">
                                           <label class="required fw-semibold fs-6">Off Peak Price</label>
                                           <div class="input-group mb-2">
-                                             <span class="input-group-text">$</span>
-                                             <input type="text" class="ser_Offpeak form-control" aria-label="Amount (to the nearest dollar)"/>
+                                             <span class="input-group-text">{{ $partner_country_config->currency_sign }}</span>
+                                             <input type="text" class="ser_Offpeak form-control" aria-label="Amount (to the nearest dollar)" name="off_peak_price" required="required" onchange="numberHandler(this)"/>
                                              <span class="input-group-text">.00</span>
                                           </div>
                                           <div class="text-muted fs-7">A discounted price, available to people who walk-in during the salon's off peak hours.</div>
@@ -426,25 +418,29 @@
                                                       <!--begin::Label-->
                                                       <label class="required fw-semibold fs-6 mb-2">Staff</label>
                                                       <div class="form-floating border rounded">
-                                                         <select class="form-select form-select-transparent kt_docs_select2_users" data-placeholder="Select an option" data-dropdown-parent="#kt_modal_scrollable22">
+                                                         <select class="form-select form-select-transparent kt_docs_select2_users" data-placeholder="Select an option" data-dropdown-parent="#kt_modal_scrollable22" name="staff_pricing[staff_id][]">
                                                             <option></option>
-                                                            <option value="0" data-kt-select2-user="assets/media/avatars/300-25.jpg">Brian Cox</option>
-                                                            <option value="1" data-kt-select2-user="assets/media/avatars/300-9.jpg">Francis Mitcham</option>
-                                                            <option value="0" data-kt-select2-user="assets/media/avatars/300-23.jpg">Dan Wilson</option>
-                                                            <option value="1" data-kt-select2-user="assets/media/avatars/300-12.jpg">Ana Crown</option>
-                                                            <option value="0" data-kt-select2-user="assets/media/avatars/300-13.jpg">John Miller</option>
-                                                            <option value="1" data-kt-select2-user="assets/media/avatars/300-21.jpg">Ethan Wilder</option>
-                                                            <option value="0" data-kt-select2-user="assets/media/avatars/300-6.jpg">Emma Smith</option>
-                                                            <option value="1" data-kt-select2-user="assets/media/avatars/300-1.jpg">Max Smith</option>
-                                                         </select>
+                                                            @if( !empty($getStaff) )
+                                                            @foreach($getStaff as $staff)
+                                                            @php 
+                                                            if($staff->profile_image){
+                                                            $path = asset('/public'.$staff->profile_image);
+                                                         }else{
+                                                         $path = asset('/public/partner/assets/media/avatars/blank.png');
+                                                      }
+                                                      @endphp
+                                                      <option value="{{ $staff->user_id }}" data-kt-select2-user="{{ $path }}">{{ $staff->name }}</option>
+                                                      @endforeach
+                                                      @endif
+                                                   </select>
                                                       </div>
                                                    </div>
                                                    <div class="col-sm-4">
                                                       <div class="d-flex flex-column gap-1">
                                                          <label class="fw-semibold fs-6 mb-2">Online Price</label>
                                                          <div class="input-group mb-0">
-                                                            <span class="input-group-text">$</span>
-                                                            <input type="text" class="form-control" aria-label="Amount (to the nearest dollar)"/>
+                                                            <span class="input-group-text">{{ $partner_country_config->currency_sign }}</span>
+                                                            <input type="text" class="form-control" aria-label="Amount (to the nearest dollar)" name="staff_pricing[online_price][]" onchange="numberHandler(this)"/>
                                                             <span class="input-group-text">.00</span>
                                                          </div>
                                                          <!--end::Input group-->
@@ -454,8 +450,8 @@
                                                       <div class="d-flex flex-column gap-1">
                                                          <label class="fw-semibold fs-6 mb-2">Off Peak Price</label>
                                                          <div class="input-group mb-0">
-                                                            <span class="input-group-text">$</span>
-                                                            <input type="text" class="form-control" aria-label="Amount (to the nearest dollar)"/>
+                                                            <span class="input-group-text">{{ $partner_country_config->currency_sign }}</span>
+                                                            <input type="text" class="form-control" aria-label="Amount (to the nearest dollar)" name="staff_pricing[off_peak_price][]" onchange="numberHandler(this)"/>
                                                             <span class="input-group-text">.00</span>
                                                          </div>
                                                          <!--end::Input group-->

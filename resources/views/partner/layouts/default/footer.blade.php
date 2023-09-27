@@ -16,11 +16,26 @@
 <script src="{{asset('/public/partner/assets/js/custom/authentication/reset-password/reset-password.js')}}"></script>
 <script src="{{asset('/public/partner/assets/js/custom/authentication/reset-password/new-password.js')}}"></script> -->
 <script src="https://cdn.jsdelivr.net/npm/intl-tel-input@18.2.1/build/js/intlTelInput.min.js"></script>
-<script>
-	const input = document.querySelector("#signup_mobile");
-	window.intlTelInput(input, {
-		utilsScript: "https://cdn.jsdelivr.net/npm/intl-tel-input@18.2.1/build/js/utils.js",
-	});
+<script>	
+
+    jQuery(document).ready(function() { 
+      var browserUser = "{{ getUserCountry() }}";
+
+      const input = document.querySelector("#signup_mobile");
+      var countryCodeInput = jQuery('.country-code-intl');
+      countryCodeInput.val(browserUser);
+
+      window.intlTelInput(input, {
+      	initialCountry: browserUser,
+      	utilsScript: "https://cdn.jsdelivr.net/npm/intl-tel-input@18.2.1/build/js/utils.js",
+      });
+
+      jQuery('.iti__country-list li').click(function(){
+        var country_code = jQuery(this).data('country-code');
+        jQuery(".country-code-intl").val(country_code.toUpperCase());
+      })
+    });
+
 </script>
 <script type="text/javascript">
 	jQuery(document).on('click', '.signup_send_otp', function(){

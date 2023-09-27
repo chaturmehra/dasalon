@@ -56,9 +56,9 @@ class BookAlookController extends Controller
 
 		$bookaLookLists 	= $this->partnerBookAlookLists($partner_id);
 
-        // echo "<pre>"; print_r($BookAlooksDet); die;
+        $partner_country_config = getPartnerCountryConfig($partner_id);
 
-        return view('partner/services/book-a-look/index', compact('title', 'meta_description', 'meta_keywords', 'getStaff', 'venue_data_arr', 'categories', 'subcategories', 'bookaLookLists'));
+        return view('partner/services/book-a-look/index', compact('title', 'meta_description', 'meta_keywords', 'getStaff', 'venue_data_arr', 'categories', 'subcategories', 'bookaLookLists', 'partner_country_config'));
     }
 
     public function bookalookStore(Request $request)
@@ -141,7 +141,7 @@ class BookAlookController extends Controller
 			'online_price'     	=> $request->online_price,
 			'off_peak_price'    => $request->off_peak_price,
 			'description' 		=> $request->description,
-			'staff_pricing'   	=> $staff_pricing,
+			'staff_pricing'   	=> isset($staff_pricing) ? $staff_pricing : "",
 			'status'      		=> isset($request->service_status) ? 1 : 0,
 		]);
 
@@ -203,7 +203,7 @@ class BookAlookController extends Controller
 			'walk_in_price'     => $request->walk_in_price,
 			'online_price'     	=> $request->online_price,
 			'off_peak_price'    => $request->off_peak_price,
-			'staff_pricing'   	=> $staff_pricing,
+			'staff_pricing'   	=> isset($staff_pricing) ? $staff_pricing : "",
 		]);
 
 		return redirect()->back()->with('success', 'Book a look updated successfully.');
@@ -282,6 +282,8 @@ class BookAlookController extends Controller
     	->orderBy('staff.staff_id', 'DESC')
     	->get();
 
+    	$partner_country_config = getPartnerCountryConfig($partner_id);
+
 		if ( !empty($pbal_id) && !$partnerBookAlookLists->isEmpty() ) {
 			$staff_pricing = $partnerBookAlookLists[0]->staff_pricing;
 			$staff_pricing_html = "";
@@ -315,7 +317,7 @@ class BookAlookController extends Controller
                         <div class="d-flex flex-column gap-1">
                           <label class="fw-semibold fs-6 mb-2">Online Price</label>
                           <div class="input-group mb-0">
-                            <span class="input-group-text">$</span>
+                            <span class="input-group-text">'.$partner_country_config->currency_sign.'</span>
                             <input type="text" class="form-control" aria-label="Amount (to the nearest dollar)" name="kt_ecommerce_edit_booklook_conditions['.$key.'][online_price]" value="'.$value->online_price.'"/>
                             <span class="input-group-text">.00</span>
                           </div>
@@ -326,7 +328,7 @@ class BookAlookController extends Controller
                         <div class="d-flex flex-column gap-1">
                           <label class="fw-semibold fs-6 mb-2">Off Peak Price</label>
                           <div class="input-group mb-0">
-                            <span class="input-group-text">$</span>
+                            <span class="input-group-text">'.$partner_country_config->currency_sign.'</span>
                             <input type="text" class="form-control" aria-label="Amount (to the nearest dollar)" name="kt_ecommerce_edit_booklook_conditions['.$key.'][off_peak_price]" value="'.$value->off_peak_price.'"/>
                             <span class="input-group-text">.00</span>
                           </div>

@@ -57,9 +57,9 @@ class ServicesController extends Controller
 		$partnerVenueServicesLists 	= $this->partnerServicesLists($partner_id, 'at_venue');
 		$partnerHomeServicesLists 	= $this->partnerServicesLists($partner_id, 'at_home');
 
-        // echo "<pre>"; print_r($partnerServicesDet); die;
+		$partner_country_config = getPartnerCountryConfig($partner_id);
 
-        return view('partner/services/index', compact('title', 'meta_description', 'meta_keywords', 'getStaff', 'venue_data_arr', 'categories', 'subcategories', 'partnerVenueServicesLists', 'partnerHomeServicesLists'));
+        return view('partner/services/index', compact('title', 'meta_description', 'meta_keywords', 'getStaff', 'venue_data_arr', 'categories', 'subcategories', 'partnerVenueServicesLists', 'partnerHomeServicesLists', 'partner_country_config'));
     }
 
     public function serviceStore(Request $request)
@@ -137,7 +137,7 @@ class ServicesController extends Controller
 			'online_price'     	=> $request->online_price,
 			'off_peak_price'    => $request->off_peak_price,
 			'description' 		=> $request->description,
-			'staff_pricing'   	=> $staff_pricing,
+			'staff_pricing'   	=> isset($staff_pricing) ? $staff_pricing : "",
 			'status'      		=> isset($request->service_status) ? 1 : 0,
 		]);
 
@@ -181,31 +181,6 @@ class ServicesController extends Controller
 			$venues = implode(',', $request['venues']);
 		}
 
-		/*$service_json_val = $request->service_name;
-		
-		if(!empty($service_json_val)){
-			$json_data = json_decode($service_json_val, true);
-			
-			$checkService 	= Service::where('servicename', $json_data[0]["value"])->get();
-			if( $checkService->isEmpty() ) {
-				$insertedID = Service::create([
-					'categoryid' 	=> $request->category,
-					'subcategoryid' => $request->sub_category,
-					'servicename' 	=> $json_data[0]["value"],
-					'is_active' 	=> 1,
-					'created_by' 	=> $partner_id,
-				]);
-
-				$service_id = $insertedID->serviceid;
-
-			}else{
-				$check_service_id = isset($checkService[0]->serviceid) ? $checkService[0]->serviceid : "";
-				$service_id    = $check_service_id;
-			}
-		}else{
-			$service_id   = '';
-		}*/
-
 		$partnerService = PartnerService::where('ps_id', $request->ps_id)->update([
 			'partner_id'      	=> $partner_id,
 			'category_id'     	=> $request->category,
@@ -219,7 +194,7 @@ class ServicesController extends Controller
 			'online_price'     	=> $request->online_price,
 			'off_peak_price'    => $request->off_peak_price,
 			//'description' 		=> $request->description,
-			'staff_pricing'   	=> $staff_pricing,
+			'staff_pricing'   	=> isset($staff_pricing) ? $staff_pricing : "",
 		]);
 
 		return redirect()->back()->with('success', 'Service updated successfully.');
@@ -262,7 +237,11 @@ class ServicesController extends Controller
 
 	public function getOnlinePrice($id){
 
+		$partner_id 		= Auth::user()->id;
+
         $getSubcategory = PartnerService::where('ps_id','=',$id)->get();
+
+        $partner_country_config = getPartnerCountryConfig($partner_id);
         
         if ( !empty($id) && !$getSubcategory->isEmpty() ) {
         	$online_price 	= $getSubcategory[0]['online_price'];
@@ -274,7 +253,7 @@ class ServicesController extends Controller
         	}
         	$html = '<tr>
         	<td>Normal</td>
-        	<td>'.$online_price.'</td>
+        	<td>'.$partner_country_config->currency_sign.''.$online_price.'</td>
         	</tr>';
         	if ( !empty($json_data) ) {
 	        	foreach($json_data as $key => $value){
@@ -285,7 +264,7 @@ class ServicesController extends Controller
 	        		<td>'.$staffName.'</td>
 	        		<td>
 	        		<div class="input-group mb-5">
-	        		<span class="input-group-text">$</span>
+	        		<span class="input-group-text">'.$partner_country_config->currency_sign.'</span>
 	        		<input type="text" class="form-control" aria-label="Amount (to the nearest dollar)" value="'.$value->online_price.'" disabled />
 	        		<span class="input-group-text">.00</span>
 	        		</div>
@@ -310,7 +289,11 @@ class ServicesController extends Controller
 
 	public function getOffPeakPrice($id){
 
+		$partner_id 		= Auth::user()->id;
+		
         $getSubcategory = PartnerService::where('ps_id','=',$id)->get();
+
+        $partner_country_config = getPartnerCountryConfig($partner_id);
         
         if ( !empty($id) && !$getSubcategory->isEmpty() ) {
         	$off_peak_price = $getSubcategory[0]['off_peak_price'];
@@ -323,7 +306,7 @@ class ServicesController extends Controller
 
         	$html = '<tr>
         	<td>Normal</td>
-        	<td>'.$off_peak_price.'</td>
+        	<td>'.$partner_country_config->currency_sign.''.$off_peak_price.'</td>
         	</tr>';
         	if ( !empty($json_data) ) {
 	        	foreach($json_data as $key => $value){
@@ -333,7 +316,7 @@ class ServicesController extends Controller
 	        		<td>'.$staffName.'</td>
 	        		<td>
 	        		<div class="input-group mb-5">
-	        		<span class="input-group-text">$</span>
+	        		<span class="input-group-text">'.$partner_country_config->currency_sign.'</span>
 	        		<input type="text" class="form-control" aria-label="Amount (to the nearest dollar)" value="'.$value->off_peak_price.'" disabled />
 	        		<span class="input-group-text">.00</span>
 	        		</div>
@@ -395,6 +378,8 @@ class ServicesController extends Controller
     	->orderBy('staff.staff_id', 'DESC')
     	->get();
 
+    	$partner_country_config = getPartnerCountryConfig($partner_id);
+
 		if ( !empty($ps_id) && !$partnerServicesLists->isEmpty() ) {
 			$staff_pricing = $partnerServicesLists[0]->staff_pricing;
 			$staff_pricing_html = "";
@@ -428,7 +413,7 @@ class ServicesController extends Controller
                         <div class="d-flex flex-column gap-1">
                           <label class="fw-semibold fs-6 mb-2">Online Price</label>
                           <div class="input-group mb-0">
-                            <span class="input-group-text">$</span>
+                            <span class="input-group-text">'.$partner_country_config->currency_sign.'</span>
                             <input type="text" class="form-control" aria-label="Amount (to the nearest dollar)" name="staff_pricing['.$key.'][online_price]" value="'.$value->online_price.'"/>
                             <span class="input-group-text">.00</span>
                           </div>
@@ -439,7 +424,7 @@ class ServicesController extends Controller
                         <div class="d-flex flex-column gap-1">
                           <label class="fw-semibold fs-6 mb-2">Off Peak Price</label>
                           <div class="input-group mb-0">
-                            <span class="input-group-text">$</span>
+                            <span class="input-group-text">'.$partner_country_config->currency_sign.'</span>
                             <input type="text" class="form-control" aria-label="Amount (to the nearest dollar)" name="staff_pricing['.$key.'][off_peak_price]" value="'.$value->off_peak_price.'"/>
                             <span class="input-group-text">.00</span>
                           </div>

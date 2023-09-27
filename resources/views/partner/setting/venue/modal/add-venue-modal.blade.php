@@ -193,7 +193,9 @@
                                     </span>
                                  </h3>
                                  <!--begin::Input-->
-                                 <input type="text" name="phone_number" class="form-control form-control-solid mb-3 mb-lg-0 venue-phone-number" placeholder="Phone Number" required>
+                                 <input type="text" name="phone_number" class="form-control form-control-solid mb-3 mb-lg-0 venue-phone-number phone-number-intl" placeholder="Phone Number" required>
+
+                                 <input type="hidden" class="country-code-intl" name="country_code">
                                  <!--end::Input-->
                               </div>
                            </div>

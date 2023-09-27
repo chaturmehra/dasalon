@@ -26,6 +26,8 @@
 		<link href="{{ asset('/public/partner/assets/css/style.bundle.css') }}" rel="stylesheet" type="text/css" />
 		<link href="{{ asset('/public/partner/assets/css/style.css') }}" rel="stylesheet" type="text/css" />
 		<link href="{{ asset('/public/assets/css/custom.css') }}" rel="stylesheet" type="text/css" />
+		<link rel="stylesheet" href="{{ asset('/public/assets/plugins/custom/intlTelInput/css/intlTelInput.css') }}">
+		<!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/intl-tel-input@18.2.1/build/css/intlTelInput.css"> -->
 		<!--end::Global Stylesheets Bundle-->
 		<script type="text/javascript">var baseurl="{{ asset('/') }}";</script>
 		<script type="text/javascript">var publicurl="{{ asset('/public') }}";</script>

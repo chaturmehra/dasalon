@@ -332,17 +332,17 @@
                                           <td>{{ $venue_service['servicesubcategory'] }}</td>
                                           <td>{{ $venue_service['gender'] }}</td>
                                           <td>
-                                             <span class="text-dark fw-bold text-hover-primary d-block mb-1 fs-6">{{ $venue_service['walk_in_price'] }}</span>
+                                             <span class="text-dark fw-bold text-hover-primary d-block mb-1 fs-6">{{ $partner_country_config->currency_sign }}{{ $venue_service['walk_in_price'] }}</span>
                                           </td>
                                           <td>
                                              <a href="javascript:void(0)" data-bs-toggle="modal" data-bs-target="#kt_modal_scrollable4" class="venue-online-price-view" service-id="{{ $venue_service['ps_id'] }}">
-                                             <span class="text-dark fw-bold text-hover-primary d-block mb-1 fs-6 mt-5">{{ $venue_service['online_price'] }}</span>
+                                             <span class="text-dark fw-bold text-hover-primary d-block mb-1 fs-6 mt-5">{{ $partner_country_config->currency_sign }}{{ $venue_service['online_price'] }}</span>
                                              <span class="text-muted fw-semibold text-muted d-block fs-7">Contain Staff Pricing</span>
                                              </a>
                                           </td>
                                           <td>
                                              <a href="javascript:void(0)" data-bs-toggle="modal" data-bs-target="#kt_modal_scrollable5" class="venue-offpeak-price-view" service-id="{{ $venue_service['ps_id'] }}">
-                                             <span class="text-dark fw-bold text-hover-primary d-block mb-1 fs-6 mt-5">{{ $venue_service['off_peak_price'] }}</span>
+                                             <span class="text-dark fw-bold text-hover-primary d-block mb-1 fs-6 mt-5">{{ $partner_country_config->currency_sign }}{{ $venue_service['off_peak_price'] }}</span>
                                              <span class="text-muted fw-semibold text-muted d-block fs-7">Contain Staff Pricing</span>
                                              </a>
                                           </td>
@@ -548,13 +548,13 @@
                                           <td>{{ $home_service['distance'] }}</td>
                                           <td>
                                              <a href="javascript:void(0)" data-bs-toggle="modal" data-bs-target="#kt_modal_scrollable6" class="venue-online-price-view" service-id="{{ $home_service['ps_id'] }}">
-                                             <span class="text-dark fw-bold text-hover-primary d-block mb-1 fs-6 mt-5">{{ $home_service['online_price'] }}</span>
+                                             <span class="text-dark fw-bold text-hover-primary d-block mb-1 fs-6 mt-5">{{ $partner_country_config->currency_sign }}{{ $home_service['online_price'] }}</span>
                                              <span class="text-muted fw-semibold text-muted d-block fs-7">Contain Staff Pricing</span>
                                              </a>
                                           </td>
                                           <td>
                                              <a href="javascript:void(0)" data-bs-toggle="modal" data-bs-target="#kt_modal_scrollable7" class="venue-offpeak-price-view" service-id="{{ $home_service['ps_id'] }}">
-                                             <span class="text-dark fw-bold text-hover-primary d-block mb-1 fs-6 mt-5">{{ $home_service['off_peak_price'] }}</span>
+                                             <span class="text-dark fw-bold text-hover-primary d-block mb-1 fs-6 mt-5">{{ $partner_country_config->currency_sign }}{{ $home_service['off_peak_price'] }}</span>
                                              <span class="text-muted fw-semibold text-muted d-block fs-7">Contain Staff Pricing</span>
                                              </a>
                                           </td>
