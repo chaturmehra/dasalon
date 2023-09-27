@@ -193,7 +193,7 @@
                                     </span>
                                  </h3>
                                  <!--begin::Input-->
-                                 <input type="text" name="phone_number" class="form-control form-control-solid mb-3 mb-lg-0" placeholder="Phone Number" id="edit_venue_phone" required>
+                                 <input type="text" name="phone_number" class="form-control form-control-solid mb-3 mb-lg-0 phone-number-intl" placeholder="Phone Number" id="edit_venue_phone" required>
                                  <!--end::Input-->
                               </div>
                            </div>

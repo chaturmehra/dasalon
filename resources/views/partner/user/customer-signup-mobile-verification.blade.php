@@ -90,30 +90,13 @@
 							<div class="fv-row mb-8">
 								<div class="d-flex gap-3">
 									<!--begin::Email-->
-									<input type="text" placeholder="Mobile Number" id="signup_mobile" name="phone" autocomplete="off" class="form-control bg-transparent" required="required" value="{{ old('phone') }}" />
+									<input type="text" placeholder="Mobile Number" id="signup_mobile" name="phone" autocomplete="off" class="form-control bg-transparent phone-number-intl" required="required" value="{{ old('phone') }}" />
+
+									<input type="hidden" class="country-code-intl" name="country_code">
 									<!--end::Email-->
 									<a href="javascript:void(0)" class="btn btn-sm btn-light btn-active-light-primary px-2 w-100px d-flex align-items-center justify-content-center signup_send_otp">Send OTP</a>
 								</div>
 							</div>
-
-							<!--begin::Input group=-->
-							{{-- <div class="fv-row mb-8">
-								<input type="text" placeholder="Mobile Number" name="phone" autocomplete="off" class="form-control bg-transparent" id="signup_mobile" required="required" value="{{ old('phone') }}"/>								
-							</div>
-
-							<div class="d-flex flex-stack flex-wrap gap-3 fs-base fw-semibold mb-8">
-								<div></div>
-								<a href="javascript:void(0)" class="link-primary signup_send_otp">Send OTP</a>
-							</div>
-
-							<div class="fv-row mb-8">
-								<input type="text" placeholder="Enter OTP" name="otp" id="signup_otp" autocomplete="off" required="required" class="form-control bg-transparent" value="{{ old('otp') }}"/>
-							</div>
-
-							<div class="d-flex flex-stack flex-wrap gap-3 fs-base fw-semibold mb-8">
-								<div></div>
-								<a href="javascript:void(0)" class="link-primary signup_verify_otp">Verify OTP</a>
-							</div> --}}
 
 							<div class="fv-row mb-8">
 								<div class="d-flex gap-3">

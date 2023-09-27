@@ -189,6 +189,10 @@ Route::middleware(['auth'])->group(function () {
     Route::get('partner/bookalook/get-bookalook-detail-by-id/{id}', [BookAlookController::class, 'getBookalookDetailById']);
 
     Route::get('partner/packages', [PartnerPackagesController::class, 'index'])->name('packages.index');
+    Route::post('partner/packages/store', [PartnerPackagesController::class, 'packagesStore']);
+    Route::post('partner/packages/update', [PartnerPackagesController::class, 'packagesUpdate']);
+    Route::get('partner/packages/edit-packages-status/{id}/{status}', [PartnerPackagesController::class, 'changePackagesStatus']);
+    Route::get('partner/packages/get-package-detail-by-id/{id}', [PartnerPackagesController::class, 'getPackagesDetailById']);
 
     Route::get('partner/promote', [PromoteController::class, 'index'])->name('promote.index');
     Route::get('partner/reports', [ReportsController::class, 'index'])->name('reports.index');

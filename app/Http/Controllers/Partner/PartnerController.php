@@ -223,7 +223,7 @@ class PartnerController extends Controller
                 'name'      => $request->businessname,
                 'email'     => $email,
                 'phone'     => $request->phone,
-                'country'   => "",
+                'country'   => isset($request->country_code) ? $request->country_code : "",
                 'role'      => 1,
                 'is_active' => 1,
             ]);
@@ -301,7 +301,7 @@ class PartnerController extends Controller
             'name'      => $request->name,
             'email'     => $email,
             'phone'     => $request->phone,
-            'country'   => "",
+            'country'   => isset($request->country_code) ? $request->country_code : "",
             'role'      => 2,
             'is_active' => 1,
         ]);

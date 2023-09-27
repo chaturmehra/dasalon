@@ -18,7 +18,7 @@
           <div class="col-12">
             <div class="fv-row mb-7">
               <!--begin::Input-->
-              <input type="text" name="verify_phone" class="form-control form-control-solid mb-3 mb-lg-0 verify-phone" placeholder="phone" onchange="numberHandler(this)">
+              <input type="text" name="verify_phone" class="form-control form-control-solid mb-3 mb-lg-0 verify-phone phone-number-intl" placeholder="phone" onchange="numberHandler(this)">
               <!--end::Input-->
               <a href="javascript:void(0)" class="mt-5 d-inline-block phone-send-otp">Send OTP</a>
             </div>

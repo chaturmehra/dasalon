@@ -52,9 +52,9 @@ class ClientsController extends Controller
         $client_id = User::create([
             'name'      => $request->name,
             'email'     => $request->email,
-            'country'   => "",
-            'phone'     =>$request->phone,
-            'password'  =>"",
+            'country'   => isset($request->country_code) ? $request->country_code : "",
+            'phone'     => $request->phone,
+            'password'  => "",
         ]);
 
         if ($request->hasFile('image')) {
@@ -105,9 +105,9 @@ class ClientsController extends Controller
         User::where('id', $client_id)->update([
             'name'      => $request->edit_name,
             'email'     => $request->edit_email,
-            'country'   => "",
-            'phone'     =>$request->edit_phone,
-            'password'  =>"",
+            'country'   => isset($request->country_code) ? $request->country_code : "",
+            'phone'     => $request->edit_phone,
+            'password'  => "",
         ]);
 
         if ($request->hasFile('image')) {

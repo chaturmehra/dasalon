@@ -100,7 +100,7 @@
             <label class="required fw-semibold fs-6 mb-2">Phone</label>
             <!--end::Label-->
             <!--begin::Input-->
-            <input type="text" name="business_phone" id="business_phone" class="form-control form-control-solid mb-3 mb-lg-0" placeholder="phone" readonly>
+            <input type="text" name="business_phone" id="business_phone" class="form-control form-control-solid mb-3 mb-lg-0 phone-number-intl" placeholder="phone" readonly>
             <!--end::Input-->
             <a href="#" data-bs-toggle="modal" data-bs-target="#changephone" data-bs-dismiss="modal">change</a>
           </div>
