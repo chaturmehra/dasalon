@@ -22,7 +22,7 @@ class AdminServiceController extends Controller
        	$service_by_admin = Service::leftjoin('service_categories','service_categories.id','=','services.categoryid')->leftjoin('service_sub_categories','service_sub_categories.servicesubcategoryid','=','services.subcategoryid')->select('services.*','service_categories.category','service_sub_categories.servicesubcategory')->where('services.created_by', '=', 0)->get();
 
         
-       	$service_by_partner = Service::leftjoin('service_categories','service_categories.id','=','services.categoryid')->leftjoin('service_sub_categories','service_sub_categories.servicesubcategoryid','=','services.subcategoryid')->select('services.*','service_categories.category','service_sub_categories.servicesubcategory',)->where('services.created_by', '=', 1)->get();
+       	$service_by_partner = Service::leftjoin('service_categories','service_categories.id','=','services.categoryid')->leftjoin('service_sub_categories','service_sub_categories.servicesubcategoryid','=','services.subcategoryid')->select('services.*','service_categories.category','service_sub_categories.servicesubcategory',)->where('services.created_by', '!=', 0)->get();
         
         return view('admin/services/service/index', compact('title', 'meta_description', 'meta_keywords','service_by_admin','service_by_partner'));
     }
@@ -81,7 +81,7 @@ class AdminServiceController extends Controller
         $s->update();
         return redirect()->back()->with('messagestatusrp','Service by admin updated Successfully');
     }
-    
+
     public function exportAdmin(){
         $service_by_admin = Service::leftjoin('service_categories','service_categories.id','=','services.categoryid')->leftjoin('service_sub_categories','service_sub_categories.servicesubcategoryid','=','services.subcategoryid')->select('services.*','service_categories.category','service_sub_categories.servicesubcategory')->where('services.created_by', '=', 0)->get();
 
@@ -146,7 +146,7 @@ class AdminServiceController extends Controller
     	$partner = Service::leftjoin('service_categories', 'service_categories.id', '=', 'services.categoryid')
 			    ->leftJoin('service_sub_categories', 'service_sub_categories.servicesubcategoryid', '=', 'services.subcategoryid')
 			    ->select('services.*', 'service_categories.category', 'service_sub_categories.servicesubcategory')
-			    ->where('services.created_by', '=', 1)
+			    ->where('services.created_by', '!=', 0)
 			    ->where('serviceid', '=', $partner_id)
 			    ->get();
         echo json_encode($partner);
