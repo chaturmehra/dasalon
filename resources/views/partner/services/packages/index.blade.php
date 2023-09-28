@@ -27,7 +27,9 @@
                   </li>
                   <!--end::Item-->
                   <!--begin::Item-->
-                  <li class="breadcrumb-item text-muted">Services</li>
+                  <li class="breadcrumb-item text-muted">
+                     <a href="{{ route('services.index') }}" class="text-muted text-hover-primary">Services</a>
+                  </li>
                   <!--end::Item-->
                   <!--begin::Item-->
                   <li class="breadcrumb-item">

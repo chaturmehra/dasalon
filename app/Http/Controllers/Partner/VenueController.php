@@ -824,6 +824,7 @@ class VenueController extends Controller
 		User::where('id', $partner_id)->update([
 			'phone' 	=> $request->business_phone,
 			'email' 	=> $request->business_email,
+			'country' 	=> isset($request->country_code) ? $request->country_code : "",
 		]);
 
 		if ($request->hasFile('business_logo')) {

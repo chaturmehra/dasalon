@@ -28,12 +28,18 @@ class RedirectIfAuthenticated
                     case 'admin':
                         return redirect('/admin/dashboard');
                         break;
+                    case 'system manager':
+                        return redirect('/admin/dashboard');
+                        break;
                     case 'partner':
                         return redirect('/partner/dashboard');
                         break; 
+                    case 'manager':
+                        return redirect('/manager/dashboard');
+                        break; 
 
                     default:
-                        return redirect('/home'); 
+                        return redirect('/'); 
                         break;
                 }
             }

@@ -65,10 +65,13 @@ Route::get("user/book-a-service", [UserController::class, 'bookService'])->name(
 Route::get("user/signup/{id}", [UserController::class, 'signinFormProvided'])->name('service-provided');
 Route::get("user/signup-service-provided", [UserController::class, 'signupServiceProvided'])->name('signup-service-provided');
 Route::middleware(['auth', 'user-role:admin'])->group(function () {
-    Route::get("/admin/dashboard", [HomeController::class, 'userHome'])->name('home');
+    Route::get("/admin/dashboard", [HomeController::class, 'userHome'])->name('admin.dashboard');
 });
 Route::middleware(['auth', 'user-role:partner'])->group(function () {
-    Route::get("/partner/dashboard", [HomeController::class, 'userHome'])->name('home');
+    Route::get("/partner/dashboard", [HomeController::class, 'userHome'])->name('partner.dashboard');
+});
+Route::middleware(['auth', 'user-role:manager'])->group(function () {
+    Route::get("/manager/dashboard", [HomeController::class, 'userHome'])->name('manager.dashboard');
 });
 
 Route::middleware(['auth'])->group(function () {

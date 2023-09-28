@@ -144,10 +144,12 @@ class PartnerController extends Controller
                 $check_status = isset($check_record->is_active) ? $check_record->is_active : "";
                 if ($check_record) {
                     $check_role = isset($check_record->role) ? $check_record->role : "";
-
+                    
                     Auth::login($check_record);
-                    if ($check_role) {
+                    if ($check_role == "partner") {
                         return redirect()->intended('/partner/dashboard');   
+                    }else if ($check_role == "manager") {
+                        return redirect()->intended('/manager/dashboard');   
                     }else{
                         return redirect()->intended('/admin/dashboard');
                     }

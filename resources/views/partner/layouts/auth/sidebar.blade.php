@@ -52,7 +52,7 @@
 				<!--begin::Navbar item-->
 				<li class="nav-item py-1">
 					<!--begin::Navbar link-->
-					<a href="{{ route('services.index') }}" class="nav-link py-4 px-1 btn asidenav {{ Request::is('partner/services') ? 'active' : '' }}">
+					<a href="{{ route('services.index') }}" class="nav-link py-4 px-1 btn asidenav {{ Request::is('partner/services') || Request::is('partner/bookalook') || Request::is('partner/packages') ? 'active' : '' }}">
 						<i class="ki-outline ki-rocket fs-1"></i>
 						<span class="pt-2 fs-9 fs-lg-7 fw-bold">Catalog</span>
 					</a>
@@ -83,7 +83,7 @@
 				<!--begin::Navbar item-->
 				<li class="nav-item py-1">
 					<!--begin::Navbar link-->
-					<a href="{{ url('partner/settings') }}" class="nav-link py-4 px-1 btn asidenav {{ Request::is('partner/settings') ? 'active' : '' }}">
+					<a href="{{ url('partner/settings') }}" class="nav-link py-4 px-1 btn asidenav {{ Request::is('partner/settings') || Request::is('partner/venue-setting') || Request::is('partner/staff') || Request::is('partner/staff/attendance') || Request::is('partner/staff/leave') || Request::is('partner/staff/user-authorization') ? 'active' : '' }}">
 						<i class="ki-outline ki-chart-line fs-1"></i>
 						<span class="pt-2 fs-9 fs-lg-7 fw-bold">Settings</span>
 					</a>
