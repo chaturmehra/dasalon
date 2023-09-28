@@ -210,18 +210,6 @@
 											<!--begin::Menu-->
 											<div id="kt_datatable_example_export_menu" class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-600 menu-state-bg-light-primary fw-semibold fs-7 w-200px py-4" data-kt-menu="true">
 												<!--begin::Menu item-->
-												<div class="menu-item px-3">
-													<a href="#" class="menu-link px-3" data-kt-export="pdf">
-													Export as PDF
-													</a>
-												</div>
-												<!--end::Menu item-->
-												<!--begin::Menu item-->
-												<div class="menu-item px-3">
-													<a href="#" class="menu-link px-3" data-kt-export="excel">
-													Export as Excel
-													</a>
-												</div>
 												<!--end::Menu item-->
 												<!--begin::Menu item-->
 												<div class="menu-item px-3">
@@ -285,7 +273,7 @@
 													<div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-600 menu-state-bg-light-primary fw-semibold fs-7 w-125px py-4" data-kt-menu="true">
 														<!--begin::Menu item-->
 														<div class="menu-item px-3">
-															<a href="{{url('admin/servicebyadmin/enable-status/'.$data->serviceid)}}" class="menu-link px-3">Enable</a>
+															<a href="{{url('admin/servicebyadmin/enable-status/'.$data->serviceid)}}" class="menu-link px-3 ">Enable</a>
 														</div>
 														<!--end::Menu item-->
 														<!--begin::Menu item-->
@@ -350,7 +338,7 @@
 
 		            <div class="modal-body">
 		                <!--begin::Form-->
-						<form class="form" action="{{url('admin/servicebyadmin/update-service')}}" method="POST">
+						<form class="form" action="#" method="POST">
 							<!--begin::Scroll-->
 							@csrf
 							<input type="hidden" name="service_id" id="service_id">
@@ -406,8 +394,8 @@
 							<!--begin::Actions-->
 							<div class="modal-footer">
 				                <button type="button" class="btn btn-light" data-bs-dismiss="modal">Discard</button>
-				                <button type="submit" class="btn btn-primary">
-									<span class="indicator-label">Submit</span>
+				                <button type="button" class="btn btn-primary servicebyadmin-button">
+									<span class="indicator-label " service_button="{{$service_by_admin[0]->serviceid}}">Submit</span>
 									<span class="indicator-progress">Please wait...
 										<span class="spinner-border spinner-border-sm align-middle ms-2"></span>
 									</span>
@@ -428,6 +416,7 @@
 
 
 @push('scripts')
+
 <script>
 	jQuery(document).on('click', '.service_by_admin', function(){
         event.preventDefault();
@@ -450,5 +439,37 @@
             });
         });
 </script>
-
+<script>
+jQuery(document).on('click', '.servicebyadmin-button', function() {
+    var serviceId   = $('#service_id').val(); 
+    var category    = $('#category').val(); 
+    var subcategory = $('#subcategory').val(); 
+    var servicename = $('#servicename').val();
+    $.ajax({
+        method: 'POST',
+        url: '{{url("admin/servicebyadmin/update-service")}}', 
+        data: {
+            _token: '{{ csrf_token() }}' ,
+            service_id: serviceId,
+            category: category,
+            subcategory: subcategory,
+            servicename: servicename
+        },
+        success: function(response) {
+        Swal.fire({
+            text: response.message,
+            icon: response.status === 'success' ? "success" : "error",
+            buttonsStyling: !1,
+            confirmButtonText: "Ok, got it!",
+            customClass: {
+                confirmButton: "btn btn-primary"
+            }
+        });
+        },
+        error: function(error) {
+            console.error(error);
+        }
+    });
+});
+</script>
 @endpush

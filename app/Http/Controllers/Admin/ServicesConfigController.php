@@ -37,11 +37,7 @@ class ServicesConfigController extends Controller
 
     public function create(Request $request)
     {
-    	// echo "<pre>";print_r($request->get('country'));die;
-      
-
-    //    $request->validate(['icon'=>'required']);
-      
+    	
         $sc = new ServiceCategory;  
         $sc->country =  getSelectedCountry();  
         $sc->category = $request->get('category');  
@@ -103,8 +99,8 @@ class ServicesConfigController extends Controller
     {
         $ssc =ServiceSubCategory::find($id);
         $ssc = $ssc->leftjoin('service_categories', 'service_sub_categories.categoryid', '=', 'service_categories.id')
-->where('service_sub_categories.servicesubcategoryid', $id)
-->first();
+        ->where('service_sub_categories.servicesubcategoryid', $id)
+        ->first();
         return $ssc;
     }
 

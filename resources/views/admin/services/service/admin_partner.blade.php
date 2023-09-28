@@ -29,18 +29,6 @@
 					<!--begin::Menu-->
 					<div id="kt_datatable_example_export_menu" class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-600 menu-state-bg-light-primary fw-semibold fs-7 w-200px py-4" data-kt-menu="true">
 						<!--begin::Menu item-->
-						<div class="menu-item px-3">
-							<a href="#" class="menu-link px-3" data-kt-export="pdf">
-							Export as PDF
-							</a>
-						</div>
-						<!--end::Menu item-->
-						<!--begin::Menu item-->
-						<div class="menu-item px-3">
-							<a href="#" class="menu-link px-3" data-kt-export="excel">
-							Export as Excel
-							</a>
-						</div>
 						<!--end::Menu item-->
 						<!--begin::Menu item-->
 						<div class="menu-item px-3">
@@ -146,7 +134,7 @@
 
 		            <div class="modal-body">
 		                <!--begin::Form-->
-						<form class="form" action="{{url('admin/servicebypartner/update-service')}}" method="POST">
+						<form class="form" action="#" method="POST">
 							<!--begin::Scroll-->
 							@csrf
 							<input type="hidden" name="partner_id" id="partner_id">
@@ -201,7 +189,7 @@
 							<!--begin::Actions-->
 							<div class="modal-footer">
 				                <button type="button" class="btn btn-light" data-bs-dismiss="modal">Discard</button>
-				                <button type="submit" class="btn btn-primary">
+				                <button type="button" class="btn btn-primary servicebypartner-button">
 									<span class="indicator-label">Submit</span>
 									<span class="indicator-progress">Please wait...
 										<span class="spinner-border spinner-border-sm align-middle ms-2"></span>
@@ -239,6 +227,40 @@
                 }
             });
         });
+</script>
+<script>
+jQuery(document).on('click', '.servicebypartner-button', function() {
+    var serviceId   = $('#partner_id').val(); 
+    var category    = $('#partner_category').val(); 
+    //alert(serviceId);
+    var subcategory = $('#partner_subcategory').val(); 
+    var servicename = $('#partner_servicename').val();
+    $.ajax({
+        method: 'POST',
+        url: '{{url("admin/servicebypartner/update-service")}}', 
+        data: {
+            _token: '{{ csrf_token() }}' ,
+            partner_id			: serviceId,
+            partner_category	: category,
+            partner_subcategory	: subcategory,
+            partner_servicename	: servicename
+        },
+        success: function(response) {
+        Swal.fire({
+            text: response.message,
+            icon: response.status === 'success' ? "success" : "error",
+            buttonsStyling: !1,
+            confirmButtonText: "Ok, got it!",
+            customClass: {
+                confirmButton: "btn btn-primary"
+            }
+        });
+        },
+        error: function(error) {
+            console.error(error);
+        }
+    });
+});
 </script>
 
 @endpush

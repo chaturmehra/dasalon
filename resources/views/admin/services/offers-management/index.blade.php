@@ -130,12 +130,12 @@
               <ul class="nav nav-custom nav-tabs nav-line-tabs nav-line-tabs-2x border-0 fs-4 fw-semibold mb-n2">
                 <!--begin:::Tab item-->
                 <li class="nav-item">
-                  <a class="nav-link text-active-primary pb-4 active" href="services-offers-management-package.html">Recommended package</a>
+                  <a class="nav-link text-active-primary pb-4 active" href="{{url('admin/services/offers-management')}}">Recommended package</a>
                 </li>
                 <!--end:::Tab item-->
                 <!--begin:::Tab item-->
                 <li class="nav-item">
-                  <a class="nav-link text-active-primary pb-4 " href="services-offers-management-voucher.html">Voucher</a>
+                  <a class="nav-link text-active-primary pb-4 " href="{{url('admin/services/offers-management/voucher')}}">Voucher</a>
                 </li>
                 <!--end:::Tab item-->
                 <!--begin:::Tab item-->
@@ -341,7 +341,6 @@
             </div>
             <!--end::Card body-->
           </div>
-          @include('admin.services.offers-management.voucher');
           <!--end::Products-->
         </div>
       </div>

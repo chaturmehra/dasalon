@@ -70,7 +70,7 @@
 
 
 
-<div class="d-flex align-items-center">
+                                        <div class="d-flex align-items-center">
 										<!--begin::Label-->
 										<div class="form-floating border rounded w-300px">
 											@php 
