@@ -8,6 +8,7 @@ use App\Models\Admin\ServiceSubCategory;
 use Illuminate\Http\Request;
 use Illuminate\Http\RedirectResponse;
 use App\Models\Admin\PartnerMapping;
+use App\Models\Admin\Country;
 use Illuminate\Support\Facades\Validator;
 use App\Models\Admin\BusinessType;
 use Illuminate\Support\Facades\DB;
@@ -22,10 +23,12 @@ class PartnerMappingController extends Controller
 
         $businesstpes          = BusinessType::all();
         $ServiceCategory       = ServiceCategory::where('is_active', '=', 1)->get();
+        $selectCountry         = getSelectedCountry();
+        $getcounty             = Country::where('iso2','=',$selectCountry)->get();
         
-         $service_data =  PartnerMapping::leftjoin('service_categories','service_categories.id','=','partner_service_mapping.service_id')->leftjoin('service_sub_categories','service_sub_categories.servicesubcategoryid','=','partner_service_mapping.subcategory_id')->leftjoin('business_types','business_types.bt_id', '=','partner_service_mapping.business_id')->select('service_categories.category','service_sub_categories.servicesubcategory','business_types.businesstype','partner_service_mapping.id','partner_service_mapping.status')->get();
+        $service_data =  PartnerMapping::leftjoin('service_categories','service_categories.id','=','partner_service_mapping.service_id')->leftjoin('service_sub_categories','service_sub_categories.servicesubcategoryid','=','partner_service_mapping.subcategory_id')->leftjoin('business_types','business_types.bt_id', '=','partner_service_mapping.business_id')->select('service_categories.category','service_sub_categories.servicesubcategory','business_types.businesstype','partner_service_mapping.id','partner_service_mapping.status')->get();
         
-        return view('admin/services/partner-mapping/index', compact('title', 'meta_description', 'meta_keywords','ServiceCategory','businesstpes','service_data'));
+        return view('admin/services/partner-mapping/index', compact('title', 'meta_description', 'meta_keywords','ServiceCategory','businesstpes','service_data','getcounty'));
     }
 
     public function addServiceMapping(Request $request){

@@ -35,6 +35,7 @@ use App\Http\Controllers\Partner\StaffLeaveController;
 use App\Http\Controllers\Partner\StaffUserAuthorizationController;
 use App\Http\Controllers\Partner\ExportController;
 use App\Http\Controllers\Partner\BookAlookController;
+use App\Http\Controllers\Admin\OfferManagementVoucherController;
 use App\Http\Controllers\Partner\PartnerPackagesController;
 
 
@@ -146,7 +147,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('admin/services/services-config', [ServicesConfigController::class, 'index'])->name('services.services-config');
     Route::get('admin/services/partner-mapping', [PartnerMappingController::class, 'index'])->name('services.partner-mapping');
     Route::get('admin/services/recommendations', [RecommendationsController::class, 'index'])->name('services.recommendations');
-    Route::get('admin/services/offers-management', [OffersManagementController::class, 'index'])->name('services.offers-management');
+    
     Route::post('admin/settings/edit-profilefeature-status', [ParterConfigController::class, 'changeProfilefeaturepermission']);
     Route::get('admin/setting/edit-property-status', [ParterConfigController::class, 'changePropertypermission']);
 
@@ -330,3 +331,9 @@ Route::get('admin/servicebypartner/disable-status/{id}', [AdminServiceController
 Route::get('admin/servicebypartner/edit-service/{service_id}', [AdminServiceController::class, 'editPartner']);
 Route::post('admin/servicebypartner/update-service', [AdminServiceController::class, 'updatePartner']);
 Route::get('admin/servicebypartner/export', [AdminServiceController::class, 'exportPartner'])->name('export');
+
+/*-------------------------Admin Offers Management-----------------------------------*/
+Route::get('admin/services/offers-management', [OffersManagementController::class, 'index'])->name('services.offers-management');
+Route::get('admin/services/offers-management/voucher', [OfferManagementVoucherController::class, 'index'])->name('offers-management.voucher');
+
+

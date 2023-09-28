@@ -10,9 +10,10 @@ use App\Models\Admin\ServiceSubCategory;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\DB;
 use SplFileObject;
+use Illuminate\Support\Facades\Validator;
 class AdminServiceController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
     	$title             = "Dasalon :: Service";
     	$meta_description  = "";
@@ -20,8 +21,12 @@ class AdminServiceController extends Controller
         
 
        	$service_by_admin = Service::leftjoin('service_categories','service_categories.id','=','services.categoryid')->leftjoin('service_sub_categories','service_sub_categories.servicesubcategoryid','=','services.subcategoryid')->select('services.*','service_categories.category','service_sub_categories.servicesubcategory')->where('services.created_by', '=', 0)->get();
+             // $servicename =  $service_by_admin[0]->servicename;
+             // $number_of_service= Service::where('servicename','=',$servicename)->count();
+        //,'number_of_service'
+             //echo"<pre>";print_r($number_of_service);die;
 
-        
+
        	$service_by_partner = Service::leftjoin('service_categories','service_categories.id','=','services.categoryid')->leftjoin('service_sub_categories','service_sub_categories.servicesubcategoryid','=','services.subcategoryid')->select('services.*','service_categories.category','service_sub_categories.servicesubcategory',)->where('services.created_by', '!=', 0)->get();
         
         return view('admin/services/service/index', compact('title', 'meta_description', 'meta_keywords','service_by_admin','service_by_partner'));
@@ -74,12 +79,22 @@ class AdminServiceController extends Controller
     public function updateAdmin(Request $request)
     {
         $s = Service::find($request->get('service_id'));
-        $s->categoryid=$request->get('category');
-        $s->subcategoryid=$request->get('subcategory');
-        $s->servicename=$request->get('servicename');
-       
-        $s->update();
-        return redirect()->back()->with('messagestatusrp','Service by admin updated Successfully');
+        $validator = Validator::make($request->all(), [
+            'category'           => 'required',
+            'subcategory'        => 'required',
+            'servicename'        => 'required',
+        ]);
+        if ($validator->fails()) {
+            return response()->json(['status' => 'error', 'message' => 'Something Wronge']);
+        }
+        else{
+            $s->categoryid = $request->get('category');
+            $s->subcategoryid = $request->get('subcategory');
+            $s->servicename = $request->get('servicename');
+            $s->save();
+            return response()->json(['status' => 'success', 'message' => 'Service updated successfully']);
+        }
+              
     }
 
     public function exportAdmin(){
@@ -156,12 +171,21 @@ class AdminServiceController extends Controller
     public function updatePartner(Request $request)
     {
         $s = Service::find($request->get('partner_id'));
-        $s->categoryid=$request->get('partner_category');
-        $s->subcategoryid=$request->get('partner_subcategory');
-        $s->servicename=$request->get('partner_servicename');
-       
-        $s->update();
-        return redirect()->back()->with('messagestatusrp','Service by partner updated Successfully');
+        $validator = Validator::make($request->all(), [
+            'partner_category'           => 'required',
+            'partner_subcategory'        => 'required',
+            'partner_servicename'        => 'required',
+        ]);
+        if ($validator->fails()) {
+            return response()->json(['status' => 'error', 'message' => 'Something Wronge']);
+        }
+        else{
+           $s->categoryid=$request->get('partner_category');
+           $s->subcategoryid=$request->get('partner_subcategory');
+           $s->servicename=$request->get('partner_servicename');
+           $s->save();
+            return response()->json(['status' => 'success', 'message' => 'Service updated successfully']);
+        }
     }
 
     public function exportPartner(){
