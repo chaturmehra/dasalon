@@ -135,7 +135,7 @@
                 <!--end:::Tab item-->
                 <!--begin:::Tab item-->
                 <li class="nav-item">
-                  <a class="nav-link text-active-primary pb-4 " href="{{'services-offers-management-voucher.html'}}">Voucher</a>
+                  <a class="nav-link text-active-primary pb-4 " href="page-heading">Voucher</a>
                 </li>
                 <!--end:::Tab item-->
                 <!--begin:::Tab item-->
