@@ -60,10 +60,13 @@
 			<!--end::Nav item-->
 			<!--begin::Nav item-->
 			<li class="nav-item mt-2">
-				<a class="nav-link text-active-primary ms-0 me-10 py-5 {{ Request::is('admin/services/services-config') ? 'active' : '' }}" href="{{route('services.services-config')}}">
-					Service Config                   
+				<a class="nav-link text-active-primary ms-0 me-10 py-5 {{ Request::is('admin/service') ? 'active' : '' }}" href="{{route('service.index')}}">
+					Service                   
 				</a>
 			</li>
+			<!--end::Nav item-->
+			<!--begin::Nav item-->
+			
 			<!--end::Nav item-->
 			<!--begin::Nav item-->
 			<li class="nav-item mt-2">
@@ -80,6 +83,7 @@
 				</a>
 			</li>
 			<!--end::Nav item-->
+			
 			<!--begin::Nav item-->
 			<li class="nav-item mt-2">
 				<a class="nav-link text-active-primary ms-0 me-10 py-5 {{ Request::is('admin/services/offers-management') ? 'active' : '' }}" href="{{route('services.offers-management')}}">

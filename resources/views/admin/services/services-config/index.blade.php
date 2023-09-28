@@ -996,6 +996,7 @@
           </div>
       </div>
       <!--end::Modal -->
+      
 @endsection
 @push('scripts')
 <script type="text/javascript">
