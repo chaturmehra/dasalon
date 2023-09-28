@@ -21,11 +21,6 @@ class AdminServiceController extends Controller
         
 
        	$service_by_admin = Service::leftjoin('service_categories','service_categories.id','=','services.categoryid')->leftjoin('service_sub_categories','service_sub_categories.servicesubcategoryid','=','services.subcategoryid')->select('services.*','service_categories.category','service_sub_categories.servicesubcategory')->where('services.created_by', '=', 0)->get();
-             // $servicename =  $service_by_admin[0]->servicename;
-             // $number_of_service= Service::where('servicename','=',$servicename)->count();
-        //,'number_of_service'
-             //echo"<pre>";print_r($number_of_service);die;
-
 
        	$service_by_partner = Service::leftjoin('service_categories','service_categories.id','=','services.categoryid')->leftjoin('service_sub_categories','service_sub_categories.servicesubcategoryid','=','services.subcategoryid')->select('services.*','service_categories.category','service_sub_categories.servicesubcategory',)->where('services.created_by', '!=', 0)->get();
         

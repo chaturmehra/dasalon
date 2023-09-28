@@ -28,6 +28,10 @@
 								echo '<a href="'.route('settings.payment-gateway').'" class="text-gray-900 text-hover-primary fs-2 fw-bold me-1">Payment Gateway</a>
 								<a href="'.route('settings.payment-gateway').'"><i class="ki-outline ki-verify fs-1 text-primary"></i></a>';
 							}
+							elseif(Request::is('admin/settings/services-config')){
+								echo '<a href="'.route('services.services-config').'" class="text-gray-900 text-hover-primary fs-2 fw-bold me-1">Service Config</a>
+								<a href="'.route('services.services-config').'"><i class="ki-outline ki-verify fs-1 text-primary"></i></a>';
+							}
 							elseif(Request::is('settings')){
 								echo '<a href="'.route('settings.index').'" class="text-gray-900 text-hover-primary fs-2 fw-bold me-1">Setting Config</a>
 								<a href="'.route('settings.index').'"><i class="ki-outline ki-verify fs-1 text-primary"></i></a>';
@@ -70,7 +74,7 @@
 			</li>
 			<!--end::Nav item-->
 			<li class="nav-item mt-2">
-				<a class="nav-link text-active-primary ms-0 me-10 py-5 {{ Request::is('admin/services/services-config') ? 'active' : '' }}" href="{{route('services.services-config')}}">
+				<a class="nav-link text-active-primary ms-0 me-10 py-5 {{ Request::is('admin/settings/services-config') ? 'active' : '' }}" href="{{route('services.services-config')}}">
 					Service Config                   
 				</a>
 			</li>

@@ -144,7 +144,7 @@ Route::middleware(['auth'])->group(function () {
 
     Route::get('admin/services', [ServiceController::class, 'index'])->name('services.index');
     Route::get('admin/services/order-management', [OrderManagementController::class, 'index'])->name('services.order-management');
-    Route::get('admin/services/services-config', [ServicesConfigController::class, 'index'])->name('services.services-config');
+    
     Route::get('admin/services/partner-mapping', [PartnerMappingController::class, 'index'])->name('services.partner-mapping');
     Route::get('admin/services/recommendations', [RecommendationsController::class, 'index'])->name('services.recommendations');
     
@@ -336,4 +336,7 @@ Route::get('admin/servicebypartner/export', [AdminServiceController::class, 'exp
 Route::get('admin/services/offers-management', [OffersManagementController::class, 'index'])->name('services.offers-management');
 Route::get('admin/services/offers-management/voucher', [OfferManagementVoucherController::class, 'index'])->name('offers-management.voucher');
 
+
+
+Route::get('admin/settings/services-config', [ServicesConfigController::class, 'index'])->name('services.services-config');
 

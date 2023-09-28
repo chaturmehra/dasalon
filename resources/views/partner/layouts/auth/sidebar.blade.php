@@ -16,6 +16,7 @@
 						<i class="ki-outline ki-questionnaire-tablet fs-1"></i>
 						<span class="pt-2 fs-9 fs-lg-7 fw-bold">Home</span>
 					</a>
+
 					<!--end::Navbar link-->
 				</li>
 				<!--end::Navbar item-->

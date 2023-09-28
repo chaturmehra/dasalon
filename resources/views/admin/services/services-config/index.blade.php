@@ -7,6 +7,8 @@
       <!--begin::Toolbar-->
       <div id="kt_app_toolbar" class="app-toolbar pt-3 pt-lg-6">
          <!--begin::Toolbar container-->
+         <div id="kt_app_toolbar" class="app-toolbar pt-3 pt-lg-6">
+         <!--begin::Toolbar container-->
          <div id="kt_app_toolbar_container" class="app-container container-xxl d-flex flex-stack">
             <!--begin::Page title-->
             <div class="page-title d-flex flex-column justify-content-center flex-wrap me-3">
@@ -17,7 +19,7 @@
                <ul class="breadcrumb breadcrumb-separatorless fw-semibold fs-7 my-0 pt-1">
                   <!--begin::Item-->
                   <li class="breadcrumb-item text-muted">
-                     <a href="{{ url('/admin/setting') }}" class="text-muted text-hover-primary">Home</a>
+                     <a href="{{ url('/admin/settings') }}" class="text-muted text-hover-primary">Home</a>
                   </li>
                   <!--end::Item-->
                   <!--begin::Item-->
@@ -25,6 +27,7 @@
                      <span class="bullet bg-gray-400 w-5px h-2px"></span>
                   </li>
                   <!--end::Item-->
+
                   <!--begin::Item-->
                   <li class="breadcrumb-item text-muted">Service Config</li>
                   <!--end::Item-->
@@ -35,13 +38,15 @@
          </div>
          <!--end::Toolbar container-->
       </div>
+         <!--end::Toolbar container-->
+      </div>
       <!--end::Toolbar-->
       <!--begin::Content-->
       <div id="kt_app_content" class="app-content flex-column-fluid">
          <!--begin::Content container-->
          <div id="kt_app_content_container" class="app-container container-fluid">
             <!--begin::Navbar-->
-            @include('admin.services.tab')
+            @include('admin.setting.tab')
             <!--end::Navbar-->
             <!--begin::Main column-->
             <div class="d-flex flex-column flex-row-fluid gap-7">
@@ -77,13 +82,13 @@
                                        <div class="card-header">
                                           <h2 class="page-heading d-flex text-dark fw-bold fs-3 flex-column justify-content-center my-0">Category</h2>
                                        </div>
-     @if(session()->has('message'))
-               <div class="card-header display-message">
-                  <div class="alert alert-success">
-                     {{ session()->get('message') }}
-                  </div>
-               </div>
-               @endif
+                                @if(session()->has('message'))
+                                          <div class="card-header display-message">
+                                             <div class="alert alert-success">
+                                                {{ session()->get('message') }}
+                                             </div>
+                                          </div>
+                                          @endif
                                        <!--begin::Card header-->
                                        <div class="card-header align-items-center pb-5 gap-2 gap-md-5 pt-5">
 
