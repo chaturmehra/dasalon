@@ -143,7 +143,7 @@
 				@foreach($service_data as $data)
 				<tr>
 					<td>{{$i++}}</td>
-					<td>{{$getcounty[0]->name}}</td>
+					<td>{{isset($getcounty[0]->name)?isset($getcounty[0]->name):""}}</td>
 					<td>{{$data->businesstype}}</td>
 					<td>{{$data->category}}</td>
 					<td>{{$data->servicesubcategory}}</td>

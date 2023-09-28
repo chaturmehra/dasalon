@@ -9,7 +9,7 @@
 				<!--begin::Navbar item-->
 				<li class="nav-item py-1">
 					<!--begin::Navbar link-->
-					<a href="{{ url('/admin/dashboard') }}" class="nav-link py-4 px-1 btn asidenav active">
+					<a href="{{ url('/admin/dashboard') }}" class="nav-link py-4 px-1 btn asidenav {{ Request::is('admin/dashoard') ? 'active' : '' }}">
 						<i class="ki-outline ki-questionnaire-tablet fs-1"></i>
 						<span class="pt-2 fs-9 fs-lg-7 fw-bold">Home</span>
 					</a>
@@ -19,7 +19,9 @@
 				<!--begin::Navbar item-->
 				<li class="nav-item py-1">
 					<!--begin::Navbar link-->
-					<a href="{{ url('/admin/services') }}" class="nav-link py-4 px-1 btn asidenav">
+					
+					<a href="{{ url('admin/service') }}" class="nav-link py-4 px-1 btn asidenav {{ Request::is('admin/service') || Request::is('admin/services/partner-mapping') || Request::is('admin/services/recommendations') ||Request::is('admin/services/order-management')||Request::is('admin/services/offers-management')? 'active' : '' }}
+">
 						<i class="ki-outline ki-abstract-26 fs-1"></i>
 						<span class="pt-2 fs-9 fs-lg-7 fw-bold">Services</span>
 					</a>
@@ -30,7 +32,7 @@
 				<!--begin::Navbar item-->
 				<li class="nav-item py-1">
 					<!--begin::Navbar link-->
-					<a href="#" class="nav-link py-4 px-1 btn asidenav">
+					<a  class="nav-link py-4 px-1 btn asidenav {{ Request::is('admin/partners') ? 'active' : '' }}">
 						<i class="ki-outline ki-abstract-26 fs-1"></i>
 						<span class="pt-2 fs-9 fs-lg-7 fw-bold">Partners</span>
 					</a>
@@ -102,7 +104,7 @@
 				<!--begin::Navbar item-->
 				<li class="nav-item py-1">
 					<!--begin::Navbar link-->
-					<a href="{{ url('/admin/settings') }}" class="nav-link py-4 px-1 btn asidenav">
+					<a href="{{ url('/admin/settings') }}" class="nav-link py-4 px-1 btn asidenav {{ Request::is('admin/settings') || Request::is('admin/settings/payment-gateway') || Request::is('admin/settings/amenity') || Request::is('admin/settings/appointment') || Request::is('admin/settings/appointment') || Request::is('admin/settings/subscription') || Request::is('admin/settings/partner-config') || Request::is('admin/settings/country-config') || Request::is('admin/services/services-config') ? 'active' : '' }}">
 						<i class="ki-outline ki-chart-line fs-1"></i>
 						<span class="pt-2 fs-9 fs-lg-7 fw-bold">Settings</span>
 					</a>
