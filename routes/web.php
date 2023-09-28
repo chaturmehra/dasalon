@@ -27,6 +27,7 @@ use App\Http\Controllers\Admin\ServicesConfigController;
 use App\Http\Controllers\Admin\PartnerMappingController;
 use App\Http\Controllers\Admin\RecommendationsController;
 use App\Http\Controllers\Admin\OffersManagementController;
+use App\Http\Controllers\Admin\AdminServiceController;
 use App\Http\Controllers\TwilioSMSController;
 use App\Http\Controllers\Partner\StaffController;
 use App\Http\Controllers\Partner\StaffAttendanceController;
@@ -294,6 +295,7 @@ Route::post('sendOTP', [TwilioSMSController::class, 'verify_otp']);
 
 
 
+
 /*--------------------client route-------------------------------------------------------------------*/
 Route::post('partner/client/add', [ClientsController::class, 'addClient'])->name('client_add');
 Route::get('partner/client/client_detail/{id}', [ClientsController::class, 'getClientDetail']);
@@ -310,3 +312,18 @@ Route::get('partner/client/sorting', [ClientsController::class, 'sortClient'])->
 /*----------partner service mapping------------*/
 Route::post('admin/services/mapping', [PartnerMappingController::class, 'addServiceMapping']);
 Route::post('admin/services/status', [PartnerMappingController::class, 'statuServiceMapping']);
+
+/*----------service By Admin------------*/
+Route::get('admin/service', [AdminServiceController::class, 'index'])->name('service.index');
+Route::get('admin/service/servicebyadmin', [AdminServiceController::class, 'getDataService'])->name('servicebypartner');
+Route::get('admin/servicebyadmin/enable-status/{id}', [AdminServiceController::class, 'enableByAdmin']);
+Route::get('admin/servicebyadmin/disable-status/{id}', [AdminServiceController::class, 'disableByAdmin']);
+Route::get('admin/servicebyadmin/edit-service/{service_id}', [AdminServiceController::class, 'editAdmin']);
+Route::post('admin/servicebyadmin/update-service', [AdminServiceController::class, 'updateAdmin']);
+Route::get('admin/servicebyadmin/export', [AdminServiceController::class, 'exportAdmin'])->name('export');
+/*-------------------------service By partner-----------------------------------*/
+Route::get('admin/servicebypartner/enable-status/{id}', [AdminServiceController::class, 'enableByPartner']);
+Route::get('admin/servicebypartner/disable-status/{id}', [AdminServiceController::class, 'disableByPartner']);
+Route::get('admin/servicebypartner/edit-service/{service_id}', [AdminServiceController::class, 'editPartner']);
+Route::post('admin/servicebypartner/update-service', [AdminServiceController::class, 'updatePartner']);
+Route::get('admin/servicebypartner/export', [AdminServiceController::class, 'exportPartner'])->name('export');
