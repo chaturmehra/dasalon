@@ -29,8 +29,8 @@
 								<a href="'.route('settings.payment-gateway').'"><i class="ki-outline ki-verify fs-1 text-primary"></i></a>';
 							}
 							elseif(Request::is('admin/settings/services-config')){
-								echo '<a href="'.route('admin/settings/services-configadmin/settings/services-config').'" class="text-gray-900 text-hover-primary fs-2 fw-bold me-1">Service Config</a>
-								<a href="'.route('admin/settings/services-config').'"><i class="ki-outline ki-verify fs-1 text-primary"></i></a>';
+								echo '<a href="'.route('services.services-config').'" class="text-gray-900 text-hover-primary fs-2 fw-bold me-1">Service Config</a>
+								<a href="'.route('services.services-config').'"><i class="ki-outline ki-verify fs-1 text-primary"></i></a>';
 							}
 							elseif(Request::is('settings')){
 								echo '<a href="'.route('settings.index').'" class="text-gray-900 text-hover-primary fs-2 fw-bold me-1">Setting Config</a>
