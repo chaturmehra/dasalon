@@ -177,6 +177,42 @@ $(document).on('click', '.update-staff-detail', function(){
               $(".edit-venues[value="+value+"]").prop("checked", true);
             });
           }
+          if (staff_data.service) {
+            $(".service-commision-main").removeClass('d-none');
+            $(".service-commision-view").text(staff_data.service);
+          }else{
+            $(".service-commision-main").addClass('d-none');
+          }
+          if (staff_data.book_look) {
+            $(".bookalook-commision-main").removeClass('d-none');
+            $(".bookalook-commision-view").text(staff_data.book_look);
+          }else{
+            $(".bookalook-commision-main").addClass('d-none');
+          }
+          if (staff_data.package) {
+            $(".package-commision-main").removeClass('d-none');
+            $(".package-commision-view").text(staff_data.package);
+          }else{
+            $(".package-commision-main").addClass('d-none');
+          }
+          if (staff_data.voucher) {
+            $(".voucher-commision-main").removeClass('d-none');
+            $(".voucher-commision-view").text(staff_data.voucher);
+          }else{
+            $(".voucher-commision-main").addClass('d-none');
+          }
+          if (staff_data.membership) {
+            $(".membership-commision-main").removeClass('d-none');
+            $(".membership-commision-view").text(staff_data.membership);
+          }else{
+            $(".membership-commision-main").addClass('d-none');
+          }
+          if (staff_data.service) {
+            $(".product-commision-main").removeClass('d-none');
+            $(".product-commision-view").text(staff_data.product);
+          }else{
+            $(".product-commision-main").addClass('d-none');
+          }
 
           var staff_working_days = staff_data.staff_working_days;
           if (staff_working_days) {

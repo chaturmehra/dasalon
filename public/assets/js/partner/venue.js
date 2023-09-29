@@ -504,6 +504,127 @@ jQuery(document).on('click', '.on-business-detail', function(){
   });
 });
 
+jQuery(document).on('click', '.old-phone-send-otp', function(){
+  event.preventDefault();
+  var phone = jQuery('#business_phone').val();
+  
+  if ( phone !== "" ) {
+      var ajaxurl = baseurl+'sendSMS';
+      jQuery.ajax({
+          url: ajaxurl,
+          data: {phone: phone},
+          headers: {'X-CSRF-TOKEN': jQuery('meta[name="csrf-token"]').attr('content')},
+          type:'POST',
+          success:function(response)
+          {
+              //response = JSON.parse(response);
+              //jQuery('.spinner-cls').hide();
+              if (response.status) {
+                Swal.fire({
+                  text: "OTP sent successfully on your mobile number: "+phone,
+                  icon: "success",
+                  buttonsStyling: !1,
+                  confirmButtonText: "Ok, got it!",
+                  customClass: {
+                    confirmButton: "btn btn-primary"
+                  }
+                })
+
+                jQuery('#changephoneotp').modal('show');
+                jQuery('#kt_modal_businessdetail').modal('hide');
+            }
+          },
+          error:function(error)
+          {
+              Swal.fire({
+                text: "Something went wrong. Please try again.",
+                icon: "error",
+                buttonsStyling: !1,
+                confirmButtonText: "Ok, got it!",
+                customClass: {
+                  confirmButton: "btn btn-primary"
+                }
+              })
+          }
+      });
+  }else{
+      Swal.fire({
+        text: "Mobile number is required.",
+        icon: "error",
+        buttonsStyling: !1,
+        confirmButtonText: "Ok, got it!",
+        customClass: {
+          confirmButton: "btn btn-primary"
+        }
+      })
+  }
+});
+
+jQuery(document).on('click', '.verify-partner-old-phone', function(){
+  event.preventDefault();
+  var otp = jQuery('.verify-old-phone-otp').val();
+
+  if ( otp !== "" ) {
+      var ajaxurl = baseurl+'sendOTP';
+      jQuery.ajax({
+          url: ajaxurl,
+          data: {otp: otp},
+          headers: {'X-CSRF-TOKEN': jQuery('meta[name="csrf-token"]').attr('content')},
+          type:'POST',
+          success:function(response)
+          {
+
+              if (response.status) {
+                Swal.fire({
+                  text: "OTP matched successfully.",
+                  icon: "success",
+                  buttonsStyling: !1,
+                  confirmButtonText: "Ok, got it!",
+                  customClass: {
+                    confirmButton: "btn btn-primary"
+                  }
+                })
+
+                jQuery('#changephone').modal('show');
+                jQuery('#changephoneotp').modal('hide');
+              }else{
+                Swal.fire({
+                  text: "OTP not matched.",
+                  icon: "error",
+                  buttonsStyling: !1,
+                  confirmButtonText: "Ok, got it!",
+                  customClass: {
+                    confirmButton: "btn btn-primary"
+                  }
+                })
+              }
+          },
+          error:function(error)
+          {
+              Swal.fire({
+                text: "Something went wrong. Please try again.",
+                icon: "error",
+                buttonsStyling: !1,
+                confirmButtonText: "Ok, got it!",
+                customClass: {
+                  confirmButton: "btn btn-primary"
+                }
+              })
+          }
+      });
+  }else{
+      Swal.fire({
+        text: "Please fill required fields!",
+        icon: "error",
+        buttonsStyling: !1,
+        confirmButtonText: "Ok, got it!",
+        customClass: {
+          confirmButton: "btn btn-primary"
+        }
+      })
+  }
+});
+
 jQuery(document).on('click', '.phone-send-otp', function(){
   event.preventDefault();
   var phone = jQuery('.verify-phone').val();
@@ -595,6 +716,126 @@ jQuery(document).on('click', '.verify-partner-phone', function(){
                     confirmButton: "btn btn-primary"
                   }
                 })
+              }
+          },
+          error:function(error)
+          {
+              Swal.fire({
+                text: "Something went wrong. Please try again.",
+                icon: "error",
+                buttonsStyling: !1,
+                confirmButtonText: "Ok, got it!",
+                customClass: {
+                  confirmButton: "btn btn-primary"
+                }
+              })
+          }
+      });
+  }else{
+      Swal.fire({
+        text: "Please fill required fields!",
+        icon: "error",
+        buttonsStyling: !1,
+        confirmButtonText: "Ok, got it!",
+        customClass: {
+          confirmButton: "btn btn-primary"
+        }
+      })
+  }
+});
+
+jQuery(document).on('click', '.old-email-send-otp', function(){
+  event.preventDefault();
+  var email  = jQuery('#business_email').val();
+  var name   = jQuery('#business_name').val();
+
+  if ( email !== "" ) {
+      var ajaxurl = baseurl+'partner/sendEmail';
+      jQuery.ajax({
+          url: ajaxurl,
+          data: {email: email, name: name},
+          headers: {'X-CSRF-TOKEN': jQuery('meta[name="csrf-token"]').attr('content')},
+          type:'POST',
+          success:function(response)
+          {
+              if (response.status) {
+                Swal.fire({
+                  text: "OTP sent successfully on your email address: "+email,
+                  icon: "success",
+                  buttonsStyling: !1,
+                  confirmButtonText: "Ok, got it!",
+                  customClass: {
+                    confirmButton: "btn btn-primary"
+                  }
+                })
+
+                jQuery('#changeemailotp').modal('show');
+                jQuery('#kt_modal_businessdetail').modal('hide');
+            }
+          },
+          error:function(error)
+          {
+              Swal.fire({
+                text: "Something went wrong. Please try again.",
+                icon: "error",
+                buttonsStyling: !1,
+                confirmButtonText: "Ok, got it!",
+                customClass: {
+                  confirmButton: "btn btn-primary"
+                }
+              })
+          }
+      });
+  }else{
+      Swal.fire({
+        text: "Email is required.",
+        icon: "error",
+        buttonsStyling: !1,
+        confirmButtonText: "Ok, got it!",
+        customClass: {
+          confirmButton: "btn btn-primary"
+        }
+      })
+  }
+});
+
+jQuery(document).on('click', '.verify-partner-old-email', function(){
+  event.preventDefault();
+  var otp = jQuery('.verify-old-email-otp').val();
+  
+  if ( otp !== "" ) {
+      var ajaxurl = baseurl+'sendOTP';
+      jQuery.ajax({
+          url: ajaxurl,
+          data: {otp: otp},
+          headers: {'X-CSRF-TOKEN': jQuery('meta[name="csrf-token"]').attr('content')},
+          type:'POST',
+          success:function(response)
+          {
+              if (response.status) {
+                Swal.fire({
+                  text: "OTP matched successfully.",
+                  icon: "success",
+                  buttonsStyling: !1,
+                  confirmButtonText: "Ok, got it!",
+                  customClass: {
+                    confirmButton: "btn btn-primary"
+                  }
+                })
+
+                //jQuery(".changeemailclick").trigger("click");
+                jQuery('#changeemail').modal('show');
+                jQuery('#changeemailotp').modal('hide');
+              }else{
+                Swal.fire({
+                  text: "OTP not matched.",
+                  icon: "error",
+                  buttonsStyling: !1,
+                  confirmButtonText: "Ok, got it!",
+                  customClass: {
+                    confirmButton: "btn btn-primary"
+                  }
+                })                
               }
           },
           error:function(error)
@@ -1125,17 +1366,41 @@ function validateForm(){
     var vphone     = jQuery('.venue-phone-number').val();
     var vaddress   = jQuery('.venue-business-location').val();
     var vfeatured  = jQuery('.venue-featured').val();
-    if(!vname || !vemail || !vphone || !vaddress || !vfeatured ){
-        Swal.fire({
-          text: "Please fill all the mandatory fields.",
-          icon: "error",
-          buttonsStyling: !1,
-          confirmButtonText: "Ok, got it!",
-          customClass: {
-            confirmButton: "btn btn-primary"
-          }
-        })
-        return false;    // in failure case
-    }        
-    return true;    // in success case
+    if(vname != "" && vemail != "" && vphone != "" && vaddress != "" && vfeatured != "" ){
+        return true;    // in success case
+    } else{
+      if(!vname){
+        validationError("name");
+        return false;
+      }
+      if(!vemail){
+        validationError("email");
+        return false;
+      }
+      if(!vphone){
+        validationError("phone");
+        return false;
+      }
+      if(!vaddress){
+        validationError("address");
+        return false;
+      }
+      if(!vfeatured){
+        validationError("featured image");
+        return false;
+      }
+    }       
+    
+}
+
+function validationError(field){
+  Swal.fire({
+    text: "Venue "+ field +" is mandatory.",
+    icon: "error",
+    buttonsStyling: !1,
+    confirmButtonText: "Ok, got it!",
+    customClass: {
+      confirmButton: "btn btn-primary"
+    }
+  })
 }

@@ -382,9 +382,10 @@ class StaffController extends Controller
 		$staff 		= Staff::where('user_id', $id);
 		$getStaff 	= $staff->select('*')
                 ->leftJoin('users', 'users.id', '=', 'staff.user_id')
+                ->leftJoin('staff_commission', 'staff.user_id', '=', 'staff_commission.staff_id')
                 ->get();
-
-		if ( !empty($id) && !empty($getStaff) ) {
+                
+		if ( !empty($id) && !$getStaff->isEmpty() ) {
 			$response = array(
 				"status" 	=> 1,
 				"data" 		=> $getStaff,

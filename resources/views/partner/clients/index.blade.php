@@ -350,7 +350,7 @@ extract( $stats );
                          @endphp
                      <tr>
                         <td>
-                           <a href="#" class="client-on-click" id="kt_drawer_example_permanent_toggle" client-id="{{ $client->id }}">
+                           <a href="#" class="client-view-click" id="kt_drawer_example_permanent_toggle" view-id="{{ $client->id }}">
 
                               <div class="d-flex align-items-center">
                                  <div class="symbol symbol-50px me-3">
@@ -2926,51 +2926,7 @@ extract( $stats );
       }
       });
 </script>
-<script>
-   jQuery(document).on("click", ".client-on-click", function(e){
-      e.preventDefault();
-        var client_id = jQuery(this).attr("client-id");
-        $.ajax({
-            url: baseurl+'partner/client/client_detail/'+client_id,
-            type: 'GET',
-            dataType: 'json',
-            success:function(data) {
-                 $('#name').text(data[0].name);
-                 $('#phone').text(data[0].phone);
-                 $('#email').text(data[0].email);
-                 $('#address').text(data[0].address);
-                 var birth_day = data[0].birth_day; 
-                 var birth_month = data[0].birth_month; 
-                 var birth_year = data[0].birth_year; 
-                 var monthNames = [
-                     '','Jan', 'Feb', 'Mar', 'Apr',
-                    'May', 'Jun', 'Jul', 'Aug',
-                    'Sep', 'Oct', 'Nov', 'Dec'
-                  ];
-                  var formattedDob;
-                  if(birth_year){
-                      formattedDob = birth_day + '-' + monthNames[birth_month] + '-' + birth_year;
-                  }else{
-                      formattedDob = birth_day + '-' + monthNames[birth_month];
-                  }
-                  
-                 $('#dob').text(formattedDob)
-                 if(data[0].image){
-                       $('#image').attr('src',baseurl + 'public' + data[0].image);
-                 }
-                 else{
-                     $('#image').attr('src' ,baseurl +'public/assets/media/avatars/blank.png');
-                 }
-                 
 
-   
-            },
-            error: function(xhr, status, error) {
-                console.error(error);
-            }
-        });
-    });
-</script>
 <script>
    jQuery(document).on("click", ".client-view-click", function(e){
       e.preventDefault();
@@ -2983,7 +2939,20 @@ extract( $stats );
                  $('#name').text(data[0].name);
                  $('#phone').text(data[0].phone);
                  $('#email').text(data[0].email);
-                 $('#address').text(data[0].address);
+                 var address = data[0].address;
+                 if (address) {
+                  var json_address = JSON.parse(address);
+                  //$('#address').text(json_address);
+                  var final_content = [];
+                  var html_content = [];
+                  $.each(json_address, function(index, value) {
+                     html_content = addressHTMLView(index+1, value);
+                     final_content.push(html_content);
+                  });
+                  $('.address-view-detail').html(final_content);
+                 }else{
+                  $('.address-view-detail').html("");
+                 }
                  var birth_day = data[0].birth_day; 
                  var birth_month = data[0].birth_month; 
                  var birth_year = data[0].birth_year; 
@@ -3012,5 +2981,83 @@ extract( $stats );
             }
         });
     });
+
+   function addressHTMLView(index, address){
+      var html = '<div class="d-flex gap-5"><div class="fw-bold mt-5">Address '+index+'</div><div class="text-gray-600 mt-5">'+address+'</div></div>';
+      return html;
+   }
+</script>
+<script type="text/javascript">
+
+   let textareaCount = 0;
+
+   function addTextarea() {
+    textareaCount++;
+
+    const textareaContainer = document.getElementById('textareaContainer');
+
+    const containerDiv = document.createElement('div');
+    containerDiv.classList.add('textarea-container');
+
+     // Create a new textarea
+     const textarea = document.createElement('textarea');
+     textarea.placeholder = 'Add Address ' + textareaCount;
+     textarea.name = 'address[]';
+     textarea.classList.add('form-control');
+     
+     const iconSpan = document.createElement('span');
+     iconSpan.innerHTML = '<i class="bi bi-dash-circle fs-2"></i>';
+     iconSpan.addEventListener('click', () => {
+        textareaContainer.removeChild(containerDiv);
+        // textareaContainer.removeChild(iconSpan);
+        textareaCount--;
+     });
+
+     // Append textarea and remove button to the container
+     containerDiv.appendChild(textarea);
+     containerDiv.appendChild(iconSpan);
+
+     textareaContainer.appendChild(containerDiv);
+   }
+   function addEditTextarea() {
+    textareaCount++;
+
+    const textareaContainerEdit = document.getElementById('textareaContainerEdit');
+
+    const containerDiv = document.createElement('div');
+    containerDiv.classList.add('textarea-container');
+
+     // Create a new textarea
+     const textarea = document.createElement('textarea');
+     textarea.placeholder = 'Add Address ' + textareaCount;
+     textarea.name = 'address[]';
+     textarea.classList.add('form-control');
+     
+     const iconSpan = document.createElement('span');
+     iconSpan.innerHTML = '<i class="bi bi-dash-circle fs-2"></i>';
+     iconSpan.addEventListener('click', () => {
+        textareaContainerEdit.removeChild(containerDiv);
+        // textareaContainer.removeChild(iconSpan);
+        textareaCount--;
+     });
+
+     // Append textarea and remove button to the container
+     containerDiv.appendChild(textarea);
+     containerDiv.appendChild(iconSpan);
+
+     textareaContainerEdit.appendChild(containerDiv);
+   }
+
+   var defaultvalue = "";
+   function numberHandler(input){
+      const value = input.value.trim();
+      const regex = /\b(1?[1-9]|[12][0-9]|3[01])\b/g;
+      if (value != "" && !regex.test(value)) {
+         input.value = defaultvalue;
+      }else{
+         defaultvalue = input.value;
+      }
+   }
+
 </script>
 @endpush

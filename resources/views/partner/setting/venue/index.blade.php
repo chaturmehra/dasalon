@@ -575,6 +575,8 @@
 @include('partner.setting.venue.modal.update-venue-modal')
 @include('partner.setting.venue.modal.change-email')
 @include('partner.setting.venue.modal.change-phone')
+@include('partner.setting.venue.modal.verify-old-email')
+@include('partner.setting.venue.modal.verify-old-phone')
 @include('partner.setting.venue.modal.update-business-detail')
 
 @endsection

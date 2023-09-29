@@ -66,10 +66,12 @@ td {
     width: 60%;
 }
 
-#kt_modal_scrollable .stepper-item.current, #kt_modal_scrollable2 .stepper-item.current {
+#kt_modal_scrollable .stepper-item.current, #kt_modal_scrollable2 .stepper-item.current, 
+#kt_modal_scrollable_businesspromote .stepper-item.current {
     border-bottom: 4px solid var(--bs-primary);
 }
-#kt_modal_scrollable .stepper-item.current h3, #kt_modal_scrollable2 .stepper-item.current h3 {
+#kt_modal_scrollable .stepper-item.current h3, #kt_modal_scrollable2 .stepper-item.current h3, 
+#kt_modal_scrollable_businesspromote .stepper-item.current h3 {
     color: var(--bs-primary) !important;
 }
 
@@ -1015,20 +1017,20 @@ a.editbtn span {
     box-shadow: var(--bs-app-sidebar-primary-nav-btn-active-box-shadow)!important;
     border-radius: 0.65rem;
 }
-#kt_modal_scrollable22 .card, #serviceeditform .card {
+#kt_modal_scrollable22 .card, #kt_modal_update_scrollable22 .card, #serviceeditform .card {
     border: 1px solid var(--bs-card-border-color);
 }
 
-#kt_modal_scrollable22 .card .card-header {
+#kt_modal_scrollable22 .card .card-header, #kt_modal_update_scrollable22 .card .card-header {
     min-height: 45px;
 }
-#kt_modal_scrollable22 .card .card-header .card-title {
+#kt_modal_scrollable22 .card .card-header .card-title, #kt_modal_update_scrollable22 .card .card-header .card-title {
     height: fit-content;
 }
-#kt_modal_scrollable22 .modal-body {
+#kt_modal_scrollable22 .modal-body, #kt_modal_update_scrollable22 .modal-body {
     background: linear-gradient(0deg, rgba(244, 244, 244, 0.7), rgba(244, 244, 244, 0.7)),#FFFFFF;
 }
-#kt_modal_scrollable22 .modal-body, #kt_modal_scrollable33 .modal-body, div#kt_drawer_example_permanent2 .card-body.hover-scroll-overlay-y {
+#kt_modal_scrollable22 .modal-body, #kt_modal_update_scrollable22 .modal-body, #kt_modal_scrollable33 .modal-body, div#kt_drawer_example_permanent2 .card-body.hover-scroll-overlay-y {
     background: linear-gradient(0deg, rgba(244, 244, 244, 0.7), rgba(244, 244, 244, 0.7)),#FFFFFF;
 }
 #kt_drawer_example_permanent2 .card-header {
@@ -1082,4 +1084,13 @@ a.editbtn span {
 }
 .form-floating .form-select {
     padding-top: 0.775rem!important;
+}
+#textareaContainer .textarea-container, #textareaContainerEdit .textarea-container {
+    display: flex;
+    margin-bottom: 10px;
+}
+#textareaContainer .textarea-container span, #textareaContainerEdit .textarea-container span{
+    cursor: pointer;
+    position: absolute;
+    right: 30px;
 }

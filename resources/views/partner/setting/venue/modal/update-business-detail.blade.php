@@ -90,7 +90,7 @@
             <!--begin::Input-->
             <input type="email" name="business_email" id="business_email" class="form-control form-control-solid mb-3 mb-lg-0" placeholder="email" readonly>
             <!--end::Input-->
-            <a href="#" data-bs-toggle="modal" data-bs-target="#changeemail" data-bs-dismiss="modal">change</a>
+            <a href="#" class="old-email-send-otp">change</a>
           </div>
         </div>
 
@@ -103,7 +103,7 @@
             <input type="text" name="business_phone" id="business_phone" class="form-control form-control-solid mb-3 mb-lg-0 phone-number-intl" placeholder="phone" readonly>
             <input type="hidden" class="country-code-intl" name="country_code">
             <!--end::Input-->
-            <a href="#" data-bs-toggle="modal" data-bs-target="#changephone" data-bs-dismiss="modal">change</a>
+            <a href="#" class="old-phone-send-otp">change</a>
           </div>
         </div>
 

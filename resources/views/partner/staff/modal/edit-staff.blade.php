@@ -180,6 +180,41 @@
                               <a href="javascript:void(0)" class="btn btn-sm btn-secondary get-commission-by-id" data-bs-toggle="modal" data-bs-target="#edit-commission" data-bs-dismiss="modal">Edit</a>
                            </div>
                         </div>
+                        <div class="card-body pt-0">
+                           <div class="d-flex flex-column gap-3">
+
+                              <div class="d-flex justify-content-between service-commision-main">
+                                 <span class="card-label fw-bold text-gray-400 fs-5">Service</span>
+                                 <span class="text-gray-400 fs-6"><span class="service-commision-view"></span>%</span>
+                              </div>
+
+                              <div class="d-flex justify-content-between bookalook-commision-main">
+                                 <span class="card-label fw-bold text-gray-400 fs-5">Book a Look</span>
+                                 <span class="text-gray-400 fs-6"><span class="bookalook-commision-view"></span>%</span>
+                              </div>
+
+                              <div class="d-flex justify-content-between package-commision-main">
+                                 <span class="card-label fw-bold text-gray-400 fs-5">Package</span>
+                                 <span class="text-gray-400 fs-6"><span class="package-commision-view"></span>%</span>
+                              </div>
+
+                              <div class="d-flex justify-content-between voucher-commision-main">
+                                 <span class="card-label fw-bold text-gray-400 fs-5">Voucher</span>
+                                 <span class="text-gray-400 fs-6"><span class="voucher-commision-view"></span>%</span>
+                              </div>
+
+                              <div class="d-flex justify-content-between membership-commision-main">
+                                 <span class="card-label fw-bold text-gray-400 fs-5">Membership</span>
+                                 <span class="text-gray-400 fs-6"><span class="membership-commision-view"></span>%</span>
+                              </div>
+
+                              <div class="d-flex justify-content-between product-commision-main">
+                                 <span class="card-label fw-bold text-gray-400 fs-5">Product</span>
+                                 <span class="text-gray-400 fs-6"><span class="product-commision-view"></span>%</span>
+                              </div>
+
+                           </div>
+                        </div>
                         <!--end::Card header-->
                      </div>
                      <!--end::Location-->

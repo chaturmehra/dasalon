@@ -68,14 +68,14 @@ class ClientsController extends Controller
         }
 
         $client_data = ClientModel::create([
-             'client_id'    =>$client_id->id,
-             'image'        =>$profile_image,
-             'gender'       =>isset($request->gender)?$request->gender:"",
-             'birth_day'    =>isset($request->birth_day)?$request->birth_day:0,
-             'birth_month'  =>$request->birth_month,
-             'birth_year'   =>isset($request->birth_year)?$request->birth_year:"",
-             'address'      =>isset($request->address)?$request->address:"",
-             'notes'        =>isset($request->notes)?$request->notes:"",
+             'client_id'    => $client_id->id,
+             'image'        => $profile_image,
+             'gender'       => isset($request->gender) ? $request->gender : "",
+             'birth_day'    => isset($request->birth_day) ? $request->birth_day : 0,
+             'birth_month'  => $request->birth_month,
+             'birth_year'   => isset($request->birth_year) ? $request->birth_year : "",
+             'address'      => isset($request->address) ? json_encode($request->address) : "",
+             'notes'        => isset($request->notes) ? $request->notes : "",
         ]);
 
         return redirect()->back()->with('success', 'Client added successfully.');
@@ -127,13 +127,13 @@ class ClientsController extends Controller
         }
 
         ClientModel::where('client_id', $client_id)->update([
-             'image'        =>$profile_image,
-             'gender'       =>isset($request->edit_gender)?$request->edit_gender:"",
-             'birth_day'    =>$request->edit_birth_day,
-             'birth_month'  =>$request->edit_birth_month,
-             'birth_year'   =>isset($request->edit_birth_year)?$request->edit_birth_year:"",
-             'address'      =>isset($request->edit_address)?$request->edit_address:"",
-             'notes'        =>isset($request->edit_notes)?$request->edit_notes:"",
+             'image'        => $profile_image,
+             'gender'       => isset($request->edit_gender) ? $request->edit_gender : "",
+             'birth_day'    => $request->edit_birth_day,
+             'birth_month'  => $request->edit_birth_month,
+             'birth_year'   => isset($request->edit_birth_year) ? $request->edit_birth_year : "",
+             'address'      => isset($request->address) ? json_encode($request->address) : "",
+             'notes'        => isset($request->edit_notes) ? $request->edit_notes : "",
         ]);
 
         return redirect()->back()->with('success', 'Client updated successfully.');

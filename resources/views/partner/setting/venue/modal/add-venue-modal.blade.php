@@ -1821,17 +1821,18 @@ title="Remove avatar">
                      <div data-kt-stepper-element="content">
                         <!--begin::Scroll-->
                         <div class="d-flex flex-column me-n7 pe-7 gap-7 amenities-tab">
-                           @if($amenities)
+                           @if(!empty($amenities))
+                           @php $j=0; @endphp
                            @foreach($amenities as $key => $amenity)
                            @if($key == $amenity[0]['amenity_category_id'])
                            <span class="card-label fw-bold text-gray-800 mb-4">{{ $amenity[0]['amenity_category'] }}</span>
                            <div class="row">
                               @foreach($amenity as $am_val)
                               <div class="col-md-4 mb-5">
-                                 <label class="btn btn-outline btn-outline-dashed btn-active-light-primary d-flex text-start p-6 align-items-center" for="flexCheckammenity1">
+                                 <label class="btn btn-outline btn-outline-dashed btn-active-light-primary d-flex text-start p-6 align-items-center" for="flexCheckammenity{{$j}}">
                                     <!--begin::Radio-->
                                     <span class="form-check form-check-custom form-check-solid form-check-sm align-items-start mt-1">
-                                       <input class="form-check-input" type="checkbox" value="{{ $am_val['id'] }}" id="flexCheckammenity{{$key}}" name="amenity[]" />
+                                       <input class="form-check-input" type="checkbox" value="{{ $am_val['id'] }}" id="flexCheckammenity{{$j}}" name="amenity[]" />
                                     </span>
                                     <!--end::Radio-->
                                     <div class="icn ms-3">
@@ -1846,10 +1847,10 @@ title="Remove avatar">
                                     <!--end::Info-->
                                  </label>
                               </div>
+                              @php $j++; @endphp
                               @endforeach
                            </div>
                            @endif
-
                            @endforeach
                            @endif
 

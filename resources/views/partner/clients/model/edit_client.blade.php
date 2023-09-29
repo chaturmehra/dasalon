@@ -174,7 +174,7 @@
                               <div class="row">
                               <div class="col-md-4">
                               <label for="day" class="required fw-semibold form-label mt-3 ">Day:</label>
-                              <input type="text" id="edit_birth_day" name="edit_birth_day" min="1" max="31" placeholder="Enter The Day" class=" form-control form-control-solid mb-2"required>
+                              <input type="text" id="edit_birth_day" name="edit_birth_day" min="1" max="31" placeholder="Enter The Day" class=" form-control form-control-solid mb-2" required onchange="numberHandler(this)">
                               
                              </div>
                               <div class="col-md-4">
@@ -217,7 +217,10 @@
                                  <!-- <a href="#" class="d-flex align-items-center gap-2 icnclr p-4 pt-0 pb-5 mt-5">
                                  <i class="bi bi-plus-circle fs-2"></i>
                                  <span>Add new address</span> </a>-->
-                                 <textarea class="form-control form-control-solid" name="edit_address"></textarea>
+                                 <a href="#" class="d-flex align-items-center gap-2 icnclr p-4 pt-0 pb-5 mt-5" onclick="addEditTextarea()">
+                                 <i class="bi bi-plus-circle fs-2"></i>
+                                 <span>Add new address</span> </a>
+                                 <div id="textareaContainerEdit" class="edit-client-address"></div>
                               </div>
                            </div>
                            <!--end::Input group-->
@@ -287,12 +290,35 @@ jQuery(document).on('click', '.client-edit_on-click', function (e) {
                      $(".edit-image").css('background-image', 'url('+profile_image+')');
                    }
                     $("#edit_gender").val(data[0].gender).trigger('change');
+
+                    var address = data[0].address;
+                    if (address) {
+                     var json_data = JSON.parse(address);
+
+                     var html_content = [];
+                     var final_content = [];
+                     $.each(json_data, function(index1, value) {
+                       html_content = addressHTML(value);
+                       final_content.push(html_content);
+                     });
+                     $('.edit-client-address').html(final_content);
+                    }
             },
             error: function (xhr, status, error) {
                 console.error(error);
             }
         });
     }
+});
+
+function addressHTML(address){
+   var html = '<div class="textarea-container"><textarea placeholder="Add Address 1" name="address[]" class="form-control">'+address+'</textarea><span class="remove-clinet-address"><i class="bi bi-dash-circle fs-2"></i></span></div>';
+   return html;
+}
+
+jQuery('body').on('click', '.remove-clinet-address', function (e) {
+    e.preventDefault();
+    jQuery(this).parent('div').remove();
 });
 </script>
 

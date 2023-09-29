@@ -164,7 +164,7 @@
                               <div class="col-md-4">
 
                               <label for="day" class="required fw-semibold form-label mt-3 ">Day:</label>
-                              <input type="text" id="birth_day" name="birth_day" min="1" max="31" placeholder="Enter The Day" class=" form-control form-control-solid mb-2"required>
+                              <input type="text" id="birth_day" name="birth_day" min="1" max="31" placeholder="Enter The Day" class=" form-control form-control-solid mb-2" required onchange="numberHandler(this)">
                               </div>
                               <div class="col-md-4">
                               <label for="month" class="required fw-semibold form-label mt-3">Month:</label>
@@ -201,12 +201,10 @@
                                  </label>
                                  <!--end::Label-->
                                  <hr>
-                                 <!-- <a href="#" class="d-flex align-items-center gap-2 icnclr p-4 pt-0 pb-5 mt-5">
+                                  <a href="#" class="d-flex align-items-center gap-2 icnclr p-4 pt-0 pb-5 mt-5" onclick="addTextarea()">
                                  <i class="bi bi-plus-circle fs-2"></i>
-                                 <span>Add new address</span> </a>-->
-                                 <textarea class="form-control form-control-solid" name="address"></textarea>
-                                 
-
+                                 <span>Add new address</span> </a>
+                                 <div id="textareaContainer"></div>                                 
                               </div>
                            </div>
                            <!--end::Input group-->
