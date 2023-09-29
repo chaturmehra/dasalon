@@ -204,6 +204,7 @@
 										<div class="m-0">
 											<!--begin::Export dropdown-->
 											<button type="button" class="btn btn-light-primary" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end">
+												
 												<i class="ki-duotone ki-exit-down fs-2"><span class="path1"></span><span class="path2"></span></i>
 												Export Report
 											</button>
@@ -350,7 +351,7 @@
 									<label class="required fw-semibold fs-6 mb-2">Category</label>
 									<!--end::Label-->
 									<!--begin::Input-->
-									<select class="form-select mb-2" data-control="select2" data-placeholder="Select a Category..." name="category" id="category">
+									<select class="form-select mb-2 select_category" data-control="select2" data-placeholder="Select a Category..." name="category" id="category">
 									    <option></option>
 									    @foreach($service_by_admin as $data)
 										<option value="{{$data->categoryid}}">{{$data->category}}</option>
@@ -367,7 +368,7 @@
 									<!--end::Label-->
 									<!--begin::Input-->
 									<select class="form-select mb-2" data-control="select2" data-placeholder="Select a Sub Category..." name="subcategory" id="subcategory">
-									    <option></option>
+									   <option></option>
 									    @foreach($service_by_admin as $data)
 										<option value="{{$data->subcategoryid}}">{{$data->servicesubcategory}}</option>
 										@endforeach
@@ -376,7 +377,14 @@
 									<!--end::Input-->
 								</div>
 								<!--end::Input group-->
-
+                                <div class="fv-row mb-7">
+									<!--begin::Label-->
+									<label class="fw-semibold fs-6 mb-2">Description</label>
+									<!--end::Label-->
+									<!--begin::Input-->
+									<textarea type="text" name="description" id="description" class="form-control form-control-solid mb-3 mb-lg-0" placeholder="Description" value="Description" rows="4" cols="50"></textarea>
+									<!--end::Input-->
+								</div>
 								<!--begin::Input group-->
 								<div class="fv-row mb-7">
 									<!--begin::Label-->
@@ -434,6 +442,7 @@
                   $("#category").val(data[0].categoryid).trigger('change');
                   $("#subcategory").val(data[0].subcategoryid).trigger('change');
                   $("#servicename").val(data[0].servicename);
+                  $("#description").val(data[0].description);
                   $("#service_id").val(data[0].serviceid);              
                 }
             });
@@ -445,6 +454,7 @@ jQuery(document).on('click', '.servicebyadmin-button', function() {
     var category    = $('#category').val(); 
     var subcategory = $('#subcategory').val(); 
     var servicename = $('#servicename').val();
+    var description = $('#description').val();
     $.ajax({
         method: 'POST',
         url: '{{url("admin/servicebyadmin/update-service")}}', 
@@ -453,7 +463,8 @@ jQuery(document).on('click', '.servicebyadmin-button', function() {
             service_id: serviceId,
             category: category,
             subcategory: subcategory,
-            servicename: servicename
+            servicename: servicename,
+            description:description
         },
         success: function(response) {
         Swal.fire({
@@ -463,12 +474,36 @@ jQuery(document).on('click', '.servicebyadmin-button', function() {
             confirmButtonText: "Ok, got it!",
             customClass: {
                 confirmButton: "btn btn-primary"
-            }
+            }}).then((result) => {
+   			 if (result.isConfirmed) {
+        		location.reload();
+    		}
         });
         },
         error: function(error) {
             console.error(error);
         }
+    });
+});
+
+
+jQuery(document).ready(function(){
+    $(".select_category").change(function(){
+           var category_id = $(this).val();
+           var ajaxurl = '{{url("admin/servicebyadmin/services-config/get-subcategory")}}'+ '/' + category_id;
+           $.ajax({
+              url:ajaxurl,
+              type:'GET',
+                  beforeSend:function(){
+                    $('.spinner-cls').show();
+              },
+                  success:function(data)
+                  {
+                    // debugger;
+                    
+                      $('#dis_subcategory').html(data);
+                  }
+              });
     });
 });
 </script>

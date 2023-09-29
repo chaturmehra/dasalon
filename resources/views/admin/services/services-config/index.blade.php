@@ -42,315 +42,283 @@
       </div>
       <!--end::Toolbar-->
       <!--begin::Content-->
-      <div id="kt_app_content" class="app-content flex-column-fluid">
+<div id="kt_app_content" class="app-content flex-column-fluid">
          <!--begin::Content container-->
-         <div id="kt_app_content_container" class="app-container container-fluid">
-            <!--begin::Navbar-->
-            @include('admin.setting.tab')
-            <!--end::Navbar-->
-            <!--begin::Main column-->
-            <div class="d-flex flex-column flex-row-fluid gap-7">
-               <div class="card card-flush">
-                  <div class="card-header align-items-center py-5 gap-2 gap-md-5">
-                     <!--begin:::Tabs-->
-                     <ul class="nav nav-custom nav-tabs nav-line-tabs nav-line-tabs-2x border-0 fs-4 fw-semibold mb-n2">
-                        <!--begin:::Tab item-->
-                        <li class="nav-item">
-                           <a class="nav-link text-active-primary pb-4 active" data-bs-toggle="tab" href="#serviceconfig1">Service category and sub category</a>
-                        </li>
-                        <!--end:::Tab item-->
-                        <!--begin:::Tab item-->
-                        <li class="nav-item">
-                           <a class="nav-link text-active-primary pb-4" data-bs-toggle="tab" href="#serviceconfig2">Services</a> 
-                        </li>
-                        <!--end:::Tab item-->
-                      
-                     </ul>
-                     <!--end:::Tabs-->
-                  </div>
-               </div>
-               <!--begin::Tab content-->
-               <div class="tab-content">
-             
+<div id="kt_app_content_container" class="app-container container-fluid">
+<!--begin::Navbar-->
+@include('admin.setting.tab')
+<!--end::Navbar-->
+<!--begin::Main column-->
+<div class="d-flex flex-column flex-row-fluid gap-7">
+
+<!--begin::Tab content-->
+<div class="tab-content">
+            
 
 
 <div class="tab-pane fade active show" id="serviceconfig1" role="tab-panel">
 
-                                    <!--begin::Products-->
-                                    <div class="card card-flush">
+<!--begin::Products-->
+ <div class="card card-flush">
 
-                                       <div class="card-header">
-                                          <h2 class="page-heading d-flex text-dark fw-bold fs-3 flex-column justify-content-center my-0">Category</h2>
-                                       </div>
-                                @if(session()->has('message'))
-                                          <div class="card-header display-message">
-                                             <div class="alert alert-success">
-                                                {{ session()->get('message') }}
-                                             </div>
-                                          </div>
-                                          @endif
-                                       <!--begin::Card header-->
-                                       <div class="card-header align-items-center pb-5 gap-2 gap-md-5 pt-5">
+<div class="card-header">
+<h2 class="page-heading d-flex text-dark fw-bold fs-3 flex-column justify-content-center my-0">Category</h2>
+</div>
+@if(session()->has('message'))
+<div class="card-header display-message">
+   <div class="alert alert-success">
+      {{ session()->get('message') }}
+   </div>
+</div>
+@endif
+<!--begin::Card header-->
+<div class="card-header align-items-center pb-5 gap-2 gap-md-5 pt-5">
 
-                                          <!--begin::Card title-->
-                                          <div class="card-title">
-                                             <!--begin::Search-->
-                                             <div class="d-flex align-items-center position-relative my-1">
-                                                <i class="ki-outline ki-magnifier fs-3 position-absolute ms-4"></i>
-                                                <input type="text" data-kt-filter="search" class="form-control form-control-solid w-250px ps-12" placeholder="Search Report">
-                                             </div>
-                                             <!--end::Search-->
-                                          </div>
-                                          <!--end::Card title-->
+<!--begin::Card title-->
+<div class="card-title">
+   <!--begin::Search-->
+   <div class="d-flex align-items-center position-relative my-1">
+      <i class="ki-outline ki-magnifier fs-3 position-absolute ms-4"></i>
+      <input type="text" data-kt-filter="search" class="form-control form-control-solid w-250px ps-12" placeholder="Search Report">
+   </div>
+   <!--end::Search-->
+</div>
+<!--end::Card title-->
 
-                                          <!--begin::Card toolbar-->
-                                          <div class="card-toolbar">
-                                             <!--begin::Add Country-->
-                                             <button type="button" class="btn btn-primary me-4" data-bs-toggle="modal" data-bs-target="#kt_modal_scrollable">
-                                                 <i class="ki-duotone ki-plus fs-2"></i>Add Category
-                                             </button>
-                                             <!--end::Add Country-->
-                                          </div>
-                                          <!--end::Toolbar-->
-
-
-
-   <!--begin::Modal - Add task-->
-                                 <div class="modal fade" tabindex="-1" id="kt_modal_scrollable">
-                                    <div class="modal-dialog modal-dialog-scrollable">
-                                       <div class="modal-content">
-                                          <div class="modal-header">
-                                             <h5 class="modal-title">Add Category</h5>
-                                             <!--begin::Close-->
-                                             <div class="btn btn-icon btn-sm btn-active-light-primary ms-2" data-bs-dismiss="modal" aria-label="Close">
-                                                <i class="ki-duotone ki-cross fs-2x"><span class="path1"></span><span class="path2"></span></i>
-                                             </div>
-                                             <!--end::Close-->
-                                          </div>
-                                          <div class="modal-body">
-                                             <!--begin::Form-->
-                                             <form class="form" action = "{{ url('admin/services/servicecategory')}}"  enctype="multipart/form-data" method = "post" >
-                                             @csrf   
-                                             <!--begin::Scroll-->
-                                                <div class="d-flex flex-column scroll-y me-n7 pe-7">
-                                                  
-                                                   <!--begin::Input group-->
-                                                   <div class="fv-row mb-7">
-                                                      <!--begin::Label-->
-                                                      <label class="required fw-semibold fs-6 mb-2">Category</label>
-                                                      <!--end::Label-->
-                                                      <!--begin::Input-->
-                                                      <input type="text" name="category" class="form-control form-control-solid mb-3 mb-lg-0" placeholder="Category"   autocomplete="off" required/>
-                                                      <!--end::Input-->
-                                                   </div>
-                                                   <!--end::Input group-->
-                                                   <!--begin::Input group-->
-                                                   <div class="fv-row mb-7 d-flex flex-column">
-                                                      <label class="required fw-semibold fs-6 mb-2">Category icon</label>
-                                                      <div class="image-input image-input-empty" data-kt-image-input="true">
-                                                         <!--begin::Image preview wrapper-->
-                                                         <div class="image-input-wrapper w-125px h-125px"></div>
-                                                         <!--end::Image preview wrapper-->
-                                                         <!--begin::Edit button-->
-                                                         <label class="btn btn-icon btn-circle btn-color-muted btn-active-color-primary w-25px h-25px bg-body shadow"
-                                                            data-kt-image-input-action="change"
-                                                            data-bs-toggle="tooltip"
-                                                            data-bs-dismiss="click"
-                                                            title="Please select icon">
-                                                            <i class="ki-duotone ki-pencil fs-6"><span class="path1"></span><span class="path2"></span></i>
-                                                            <!--begin::Inputs-->
-                                                            <input type="file" name="icon" accept=".png, .jpg, .jpeg" required/>
-                                                            <input type="hidden" name="avatar_remove" />
-                                                            <!--end::Inputs-->
-                                                         </label>
-                                                         <!--end::Edit button-->
-                                                         <!--begin::Cancel button-->
-                                                         <span class="btn btn-icon btn-circle btn-color-muted btn-active-color-primary w-25px h-25px bg-body shadow"
-                                                            data-kt-image-input-action="cancel"
-                                                            data-bs-toggle="tooltip"
-                                                            data-bs-dismiss="click"
-                                                            title="Cancel avatar">
-                                                         <i class="ki-outline ki-cross fs-3"></i>
-                                                         </span>
-                                                         <!--end::Cancel button-->
-                                                         <!--begin::Remove button-->
-                                                         <span class="btn btn-icon btn-circle btn-color-muted btn-active-color-primary w-25px h-25px bg-body shadow"
-                                                            data-kt-image-input-action="remove"
-                                                            data-bs-toggle="tooltip"
-                                                            data-bs-dismiss="click"
-                                                            title="Remove avatar">
-                                                         <i class="ki-outline ki-cross fs-3"></i>
-                                                         </span>
-                                                         <!--end::Remove button-->
-                                                      </div>
-                                                      <!--end::Image input-->
-                                                   </div>
-                                                   <!--end::Input group-->
-                                                </div>
-                                                <!--end::Scroll-->
-                                                <!--begin::Actions-->
-                                                <div class="modal-footer">
-                                                   <button type="button" class="btn btn-light" data-bs-dismiss="modal">Discard</button>
-                                                   <button type="submit" class="btn btn-primary">
-                                                   <span class="indicator-label">Submit</span>
-                                                   <span class="indicator-progress">Please wait...
-                                                   <span class="spinner-border spinner-border-sm align-middle ms-2"></span>
-                                                   </span>
-                                                   </button>
-                                                </div>
-                                                <!--end::Actions-->
-                                             </form>
-                                             <!--end::Form-->
-                                          </div>
-                                       </div>
-                                    </div>
-                                 </div>
-                                 <!--end::Modal - Add task-->
+<!--begin::Card toolbar-->
+<div class="card-toolbar">
+   <!--begin::Add Country-->
+   <button type="button" class="btn btn-primary me-4" data-bs-toggle="modal" data-bs-target="#kt_modal_scrollable">
+       <i class="ki-duotone ki-plus fs-2"></i>Add Category
+   </button>
+   <!--end::Add Country-->
+</div>
+<!--end::Toolbar-->
 
 
 
+<!--begin::Modal - Add task-->
+<div class="modal fade" tabindex="-1" id="kt_modal_scrollable">
+   <div class="modal-dialog modal-dialog-scrollable">
+      <div class="modal-content">
+         <div class="modal-header">
+            <h5 class="modal-title">Add Category</h5>
+            <!--begin::Close-->
+            <div class="btn btn-icon btn-sm btn-active-light-primary ms-2" data-bs-dismiss="modal" aria-label="Close">
+               <i class="ki-duotone ki-cross fs-2x"><span class="path1"></span><span class="path2"></span></i>
+            </div>
+            <!--end::Close-->
+         </div>
+         <div class="modal-body">
+            <!--begin::Form-->
+            <form class="form" action = "{{ url('admin/services/servicecategory')}}"  enctype="multipart/form-data" method = "post" >
+            @csrf  
+            <!--begin::Scroll-->
+               <div class="d-flex flex-column scroll-y me-n7 pe-7">
+                 
+                  <!--begin::Input group-->
+                  <div class="fv-row mb-7">
+                     <!--begin::Label-->
+                     <label class="required fw-semibold fs-6 mb-2">Category</label>
+                     <!--end::Label-->
+                     <!--begin::Input-->
+                     <input type="text" name="category" class="form-control form-control-solid mb-3 mb-lg-0" placeholder="Category"   autocomplete="off" required/>
+                     <!--end::Input-->
+                  </div>
+                  <!--end::Input group-->
+                  <!--begin::Input group-->
+                  <div class="fv-row mb-7 d-flex flex-column">
+                     <label class="required fw-semibold fs-6 mb-2">Category icon</label>
+                     <div class="image-input image-input-empty" data-kt-image-input="true">
+                        <!--begin::Image preview wrapper-->
+                        <div class="image-input-wrapper w-125px h-125px"></div>
+                        <!--end::Image preview wrapper-->
+                        <!--begin::Edit button-->
+                        <label class="btn btn-icon btn-circle btn-color-muted btn-active-color-primary w-25px h-25px bg-body shadow"
+                           data-kt-image-input-action="change"
+                           data-bs-toggle="tooltip"
+                           data-bs-dismiss="click"
+                           title="Please select icon">
+                           <i class="ki-duotone ki-pencil fs-6"><span class="path1"></span><span class="path2"></span></i>
+                           <!--begin::Inputs-->
+                           <input type="file" name="icon" accept=".png, .jpg, .jpeg" required/>
+                           <input type="hidden" name="avatar_remove" />
+                           <!--end::Inputs-->
+                        </label>
+                        <!--end::Edit button-->
+                        <!--begin::Cancel button-->
+                        <span class="btn btn-icon btn-circle btn-color-muted btn-active-color-primary w-25px h-25px bg-body shadow"
+                           data-kt-image-input-action="cancel"
+                           data-bs-toggle="tooltip"
+                           data-bs-dismiss="click"
+                           title="Cancel avatar">
+                        <i class="ki-outline ki-cross fs-3"></i>
+                        </span>
+                        <!--end::Cancel button-->
+                        <!--begin::Remove button-->
+                        <span class="btn btn-icon btn-circle btn-color-muted btn-active-color-primary w-25px h-25px bg-body shadow"
+                           data-kt-image-input-action="remove"
+                           data-bs-toggle="tooltip"
+                           data-bs-dismiss="click"
+                           title="Remove avatar">
+                        <i class="ki-outline ki-cross fs-3"></i>
+                        </span>
+                        <!--end::Remove button-->
+                     </div>
+                     <!--end::Image input-->
+                  </div>
+                  <!--end::Input group-->
+               </div>
+               <!--end::Scroll-->
+               <!--begin::Actions-->
+               <div class="modal-footer">
+                  <button type="button" class="btn btn-light" data-bs-dismiss="modal">Discard</button>
+                  <button type="submit" class="btn btn-primary">
+                  <span class="indicator-label">Submit</span>
+                  <span class="indicator-progress">Please wait...
+                  <span class="spinner-border spinner-border-sm align-middle ms-2"></span>
+                  </span>
+                  </button>
+               </div>
+               <!--end::Actions-->
+            </form>
+            <!--end::Form-->
+         </div>
+      </div>
+   </div>
+</div>
+<!--end::Modal - Add task-->
+
+ </div>
+<!--end::Card header-->
+
+<!--begin::Card body-->
+            <div class="card-body pt-0">
+
+               <div id="kt_datatable_example1_wrapper" class="dataTables_wrapper dt-bootstrap4 no-footer"><div class="table-responsive"><table class="table align-middle table-row-dashed fs-6 gy-4 dataTable no-footer" id="kt_datatable_example1">
+                  <!--begin::Table head-->
+                  <thead>
+                     <!--begin::Table row-->
+                     <tr class="text-start text-gray-400 fw-bold fs-7 text-uppercase gs-0"><th class="min-w-100px sorting" tabindex="0" aria-controls="kt_datatable_example1" rowspan="1" colspan="1" aria-label="S No.: activate to sort column ascending" style="width: 108.344px;">S No.</th><th class="min-w-150px sorting" tabindex="0" aria-controls="kt_datatable_example1" rowspan="1" colspan="1" aria-label="Country: activate to sort column ascending" style="width: 163.281px;">Country</th><th class="min-w-150px sorting" tabindex="0" aria-controls="kt_datatable_example1" rowspan="1" colspan="1" aria-label="Category: activate to sort column ascending" style="width: 163.281px;">Category</th><th class="min-w-150px sorting" tabindex="0" aria-controls="kt_datatable_example1" rowspan="1" colspan="1" aria-label="Icon: activate to sort column ascending" style="width: 163.281px;">Icon</th><th class="min-w-50px sorting" tabindex="0" aria-controls="kt_datatable_example1" rowspan="1" colspan="1" aria-label="Status: activate to sort column ascending" style="width: 66.6719px;">Status</th><th class="text-end min-w-100px sorting" tabindex="0" aria-controls="kt_datatable_example1" rowspan="1" colspan="1" aria-label="Actions: activate to sort column ascending" style="width: 109.141px;">Actions</th></tr>
+                     <!--end::Table row-->
+                  </thead>
+                  <!--end::Table head-->
 
 
-
-
-                                       </div>
-                                       <!--end::Card header-->
-
-                                       <!--begin::Card body-->
-                                       <div class="card-body pt-0">
-
-                                          <div id="kt_datatable_example1_wrapper" class="dataTables_wrapper dt-bootstrap4 no-footer"><div class="table-responsive"><table class="table align-middle table-row-dashed fs-6 gy-4 dataTable no-footer" id="kt_datatable_example1">
-                                             <!--begin::Table head-->
-                                             <thead>
-                                                <!--begin::Table row-->
-                                                <tr class="text-start text-gray-400 fw-bold fs-7 text-uppercase gs-0"><th class="min-w-100px sorting" tabindex="0" aria-controls="kt_datatable_example1" rowspan="1" colspan="1" aria-label="S No.: activate to sort column ascending" style="width: 108.344px;">S No.</th><th class="min-w-150px sorting" tabindex="0" aria-controls="kt_datatable_example1" rowspan="1" colspan="1" aria-label="Country: activate to sort column ascending" style="width: 163.281px;">Country</th><th class="min-w-150px sorting" tabindex="0" aria-controls="kt_datatable_example1" rowspan="1" colspan="1" aria-label="Category: activate to sort column ascending" style="width: 163.281px;">Category</th><th class="min-w-150px sorting" tabindex="0" aria-controls="kt_datatable_example1" rowspan="1" colspan="1" aria-label="Icon: activate to sort column ascending" style="width: 163.281px;">Icon</th><th class="min-w-50px sorting" tabindex="0" aria-controls="kt_datatable_example1" rowspan="1" colspan="1" aria-label="Status: activate to sort column ascending" style="width: 66.6719px;">Status</th><th class="text-end min-w-100px sorting" tabindex="0" aria-controls="kt_datatable_example1" rowspan="1" colspan="1" aria-label="Actions: activate to sort column ascending" style="width: 109.141px;">Actions</th></tr>
-                                                <!--end::Table row-->
-                                             </thead>
-                                             <!--end::Table head-->
-
-
-                                             <!--begin::Table body-->
-                                             <tbody class="fw-bold text-gray-600">
-                                                
-                       @if( !empty($sercat) )
-                        @foreach($sercat as $key => $ser)
-                           @php 
-                              $status = $ser->is_active;
-                              if($status == 1 ){
-                                 $status = "Enabled";
-                                 $class   = "success";
-                              }else{
-                                 $status = "Disabled";
-                                 $class   = "danger";
-                              }
-                           @endphp
-                         <!--begin::SubTable template-->
-                         <tr>
-                           <td>{{ $key+1 }}</td>
-                           <td>{{ $ser->country }}</td>
-                           <td>{{ $ser->category }}</td>
-                                
-                                    <!-- <td>
-                                       <div class="d-flex align-items-center gap-3">
-                                          <div class="d-flex flex-column text-muted">
-                                             <a href="#" class="text-dark text-hover-primary fw-bold" data-kt-docs-datatable-subtable="subcat_name">Hair Color</a>
-                                          </div>
-                                       </div>
-                                    </td> -->
-                                    <td>
-                                 @if( !empty( $ser->icon) )
-                                    <img id="avatar" name="avatar" accept=".png, .jpg, .jpeg" src="{{asset('/public/uploads/category')}}/{{ $ser->icon }}" style="width: 2em;"/>
-                                 @endif
-                                    </td>
-                                    <td>
-                                       <div class="badge badge-light-{{ $class }} fw-bold" data-kt-docs-datatable-subtable="subcat_status">{{ $status }}</div>
-                                    </td>
-                                 
-                                    <td class="text-end">
-                                       <a href="#" class="btn btn-light btn-active-light-primary btn-flex btn-center btn-sm" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end">Actions
-                                       <i class="ki-duotone ki-down fs-5 ms-1"></i></a>
-                                       <!--begin::Menu-->
-                                       <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-600 menu-state-bg-light-primary fw-semibold fs-7 w-125px py-4" data-kt-menu="true">
-                                          <!--begin::Menu item-->
-                                          <div class="menu-item px-3">
-                                             <a href="{{ url('/admin/add-servicecategory/enable-status/'.$ser->id) }}" class="menu-link px-3">Enable</a>
-                                          </div>
-                                          <!--end::Menu item-->
-                                          <!--begin::Menu item-->
-                                          <div class="menu-item px-3">
-                                             <a href="{{ url('/admin/add-servicecategory/disable-status/'.$ser->id) }}" class="menu-link px-3">Disable</a>
-                                          </div>
-                                          <!--end::Menu item-->
-                                          <div class="menu-item px-3">
-                                             <a href="javascript:void(0)" category-id="{{ $ser->id}}" data-bs-toggle="modal" data-bs-target="#kt_modal_cat" class="menu-link px-3 edit-category">Edit</a>
-                                          </div>
-                                       </div>
-                                       <!--end::Menu-->
-                                    </td>
-                               
-                                 </tr>
-                                 @endforeach
-                        @endif
+                  <!--begin::Table body-->
+                  <tbody class="fw-bold text-gray-600">
+                     
+@if( !empty($sercat) )
+@foreach($sercat as $key => $ser)
+@php 
+   $status = $ser->is_active;
+   if($status == 1 ){
+      $status = "Enabled";
+      $class   = "success";
+   }else{
+      $status = "Disabled";
+      $class   = "danger";
+   }
+@endphp
+ <!--begin::SubTable template-->
+ <tr>
+   <td>{{ $key+1 }}</td>
+   <td>{{ $ser->country }}</td>
+   <td>{{ $ser->category }}</td>
+            <td>
+         @if( !empty( $ser->icon) )
+            <img id="avatar" name="avatar" accept=".png, .jpg, .jpeg" src="{{asset('/public/uploads/category')}}/{{ $ser->icon }}" style="width: 2em;"/>
+         @endif
+            </td>
+            <td>
+               <div class="badge badge-light-{{ $class }} fw-bold" data-kt-docs-datatable-subtable="subcat_status">{{ $status }}</div>
+            </td>
+        
+            <td class="text-end">
+               <a href="#" class="btn btn-light btn-active-light-primary btn-flex btn-center btn-sm" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end">Actions
+               <i class="ki-duotone ki-down fs-5 ms-1"></i></a>
+               <!--begin::Menu-->
+               <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-600 menu-state-bg-light-primary fw-semibold fs-7 w-125px py-4" data-kt-menu="true">
+                  <!--begin::Menu item-->
+                  <div class="menu-item px-3">
+                     <a href="{{ url('/admin/add-servicecategory/enable-status/'.$ser->id) }}" class="menu-link px-3">Enable</a>
+                  </div>
+                  <!--end::Menu item-->
+                  <!--begin::Menu item-->
+                  <div class="menu-item px-3">
+                     <a href="{{ url('/admin/add-servicecategory/disable-status/'.$ser->id) }}" class="menu-link px-3">Disable</a>
+                  </div>
+                  <!--end::Menu item-->
+                  <div class="menu-item px-3">
+                     <a href="javascript:void(0)" category-id="{{ $ser->id}}" data-bs-toggle="modal" data-bs-target="#kt_modal_cat" class="menu-link px-3 edit-category">Edit</a>
+                  </div>
+               </div>
+               <!--end::Menu-->
+            </td>
+      
+         </tr>
+         @endforeach
+@endif
 </tbody>
-                                             <!--end::Table body-->
-                                          </table></div></div>
+<!--end::Table body-->
+</table></div></div>
 
-                                       </div>
-                                       <!--end::Card body-->
+</div>
+<!--end::Card body-->
 
-                                    </div>
-                                    <!--end::Products-->
+</div>
+<!--end::Products-->
 
-                                    <!--begin::Products-->
-                                    <div class="card card-flush mt-8">
+<!--begin::Products-->
+<div class="card card-flush mt-8">
 
-                                       <div class="card-header">
-                                          <h2 class="page-heading d-flex text-dark fw-bold fs-3 flex-column justify-content-center my-0">Sub Category</h2>
-                                       </div>
-    @if(session()->has('messagesubcat'))
-               <div class="card-header display-message">
-                  <div class="alert alert-success">
-                     {{ session()->get('messagesubcat') }}
-                  </div>
-               </div>
-               @endif
-                 @if(session()->has('messagessc'))
-               <div class="card-header display-message">
-                  <div class="alert alert-success">
-                     {{ session()->get('messagessc') }}
-                  </div>
-               </div>
-               @endif
-               @if(session()->has('errorssc'))
-               <div class="card-header display-message">
-                  <div class="alert alert-danger">
-                     {{ session()->get('errorssc') }}
-                  </div>
-               </div>
-               @endif
+<div class="card-header">
+<h2 class="page-heading d-flex text-dark fw-bold fs-3 flex-column justify-content-center my-0">Sub Category</h2>
+</div>
+@if(session()->has('messagesubcat'))
+<div class="card-header display-message">
+<div class="alert alert-success">
+   {{ session()->get('messagesubcat') }}
+</div>
+</div>
+@endif
+@if(session()->has('messagessc'))
+<div class="card-header display-message">
+<div class="alert alert-success">
+   {{ session()->get('messagessc') }}
+</div>
+</div>
+@endif
+@if(session()->has('errorssc'))
+<div class="card-header display-message">
+<div class="alert alert-danger">
+   {{ session()->get('errorssc') }}
+</div>
+</div>
+@endif
                                        <!--begin::Card header-->
-                                       <div class="card-header align-items-center pb-5 gap-2 gap-md-5 pt-5">
+<div class="card-header align-items-center pb-5 gap-2 gap-md-5 pt-5">
 
-                                          <!--begin::Card title-->
-                                          <div class="card-title">
-                                             <!--begin::Search-->
-                                             <div class="d-flex align-items-center position-relative my-1">
-                                                <i class="ki-outline ki-magnifier fs-3 position-absolute ms-4"></i>
-                                                <input type="text" data-kt-filter2="search" class="form-control form-control-solid w-250px ps-12" placeholder="Search Report">
-                                             </div>
-                                             <!--end::Search-->
-                                          </div>
-                                          <!--end::Card title-->
+<!--begin::Card title-->
+<div class="card-title">
+   <!--begin::Search-->
+   <div class="d-flex align-items-center position-relative my-1">
+      <i class="ki-outline ki-magnifier fs-3 position-absolute ms-4"></i>
+      <input type="text" data-kt-filter2="search" class="form-control form-control-solid w-250px ps-12" placeholder="Search Report">
+   </div>
+   <!--end::Search-->
+</div>
+<!--end::Card title-->
 
-                                          <!--begin::Card toolbar-->
-                                          <div class="card-toolbar">
-                                             <!--begin::Add Country-->
-                                             <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#kt_modal_scrollable_2">
-                                                 <i class="ki-duotone ki-plus fs-2"></i>Add Sub Category
-                                             </button>
-                                             <!--end::Add Country-->
-                                          </div>
-                                          <!--end::Toolbar-->
+<!--begin::Card toolbar-->
+<div class="card-toolbar">
+   <!--begin::Add Country-->
+   <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#kt_modal_scrollable_2">
+       <i class="ki-duotone ki-plus fs-2"></i>Add Sub Category
+   </button>
+   <!--end::Add Country-->
+</div>
+<!--end::Toolbar-->
 
 
 <div class="modal fade" tabindex="-1" id="kt_modal_scrollable_2">
@@ -380,8 +348,7 @@
                                                       @foreach($catactive as $serc)  
                                                       <option></option>
                                                          <option value="{{$serc->id}}">{{$serc->category}}</option>
-                                                         <!-- <option value="2">Face Care</option>
-                                                         <option value="3">Nail</option> -->
+                                       
                                                      @endforeach
                                                       </select>
                                                       <!--end::Input-->
@@ -488,255 +455,30 @@
                                                    </td>
                                                 
                                                 </tr>
-                                                 
+                                                
                                              @endforeach
                                              @endif
 
                                                 
                                                       </tbody>
                                              <!--end::Table body-->
-                                          </table></div></div>
-
+                                          </table>
                                        </div>
-                                       <!--end::Card body-->
-
                                     </div>
-                                    <!--end::Products-->
 
                                  </div>
+                                       <!--end::Card body-->
 
+                              </div>
+                                    <!--end::Products-->
 
+                        </div>
 
-
-<!--begin::Tab pane-->
-<div class="tab-pane fade" id="serviceconfig2" role="tab-panel">
-   <!--begin::Products-->
-   <div class="card card-flush">
-      <div class="card-header">
-         <h2 class="page-heading d-flex text-dark fw-bold fs-3 flex-column justify-content-center my-0">Service name</h2>
-      </div>
-                  @if(session()->has('messageservice'))
-         <div class="card-header display-message">
-            <div class="alert alert-success">
-               {{ session()->get('messageservice') }}
-            </div>
-         </div>
-         @endif
-         @if(session()->has('messageus'))
-         <div class="card-header display-message">
-            <div class="alert alert-success">
-               {{ session()->get('messageus') }}
-            </div>
-         </div>
-         @endif
-         @if(session()->has('messagestatus'))
-         <div class="card-header display-message">
-            <div class="alert alert-success">
-               {{ session()->get('messagestatus') }}
-            </div>
-         </div>
-         @endif
-         @if(session()->has('errorstatus'))
-         <div class="card-header display-message">
-            <div class="alert alert-danger">
-               {{ session()->get('errorstatus') }}
-            </div>
-         </div>
-         @endif
-         @if ($errors->any())
-               <div class="alert alert-danger">
-                  <ul>
-                     @foreach ($errors->all() as $error)
-                     <li>{{ $error }}</li>
-                     @endforeach
-                  </ul>
-               </div>
-               @endif
-<!--begin::Card header-->
-<div class="card-header align-items-center pb-5 gap-2 gap-md-5 pt-5">
-   <!--begin::Card title-->
-   <div class="card-title">
-      <!--begin::Search-->
-      <div class="d-flex align-items-center position-relative my-1">
-         <i class="ki-outline ki-magnifier fs-3 position-absolute ms-4"></i>
-         <input type="text" data-kt-filter3="search" class="form-control form-control-solid w-250px ps-12" placeholder="Search Report" />
-      </div>
-      <!--end::Search-->
-   </div>
-   <!--end::Card title-->
-   <!--begin::Card toolbar-->
-   <div class="card-toolbar flex-row-fluid justify-content-end gap-5">
-      <!--begin::Card toolbar-->
-      <div class="card-toolbar">
-         <!--begin::Toolbar-->
-         <div class="d-flex justify-content-end" data-kt-user-table-toolbar="base">
-            <!--begin::Add Country-->
-            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#kt_modal_scrollable_3">
-            <i class="ki-duotone ki-plus fs-2"></i>Add Service
-            </button>
-            <!--end::Add Country-->
-         </div>
-         <!--end::Toolbar-->
-         <!--begin::Modal - Add task-->
-         <div class="modal fade" tabindex="-1" id="kt_modal_scrollable_3">
-            <div class="modal-dialog modal-dialog-scrollable">
-               <div class="modal-content">
-                  <div class="modal-header">
-                     <h5 class="modal-title">Add Service</h5>
-                     <!--begin::Close-->
-                     <div class="btn btn-icon btn-sm btn-active-light-primary ms-2" data-bs-dismiss="modal" aria-label="Close">
-                        <i class="ki-duotone ki-cross fs-2x"><span class="path1"></span><span class="path2"></span></i>
-                     </div>
-                     <!--end::Close-->
                   </div>
-                  <div class="modal-body">
-                     <!--begin::Form-->
-                     <form class="form" action = "{{ url('admin/services/addservice')}}" method = "post">
-                     @csrf   
-                     <!--begin::Scroll-->
-                        <div class="d-flex flex-column scroll-y me-n7 pe-7">
-                           <!--begin::Input group-->
-                           <div class="fv-row mb-7">
-                              <!--begin::Label-->
-                              <label class="required fw-semibold fs-6 mb-2">Category</label>
-                              <!--end::Label-->
-                              <!--begin::Input-->
-                              <select class="form-select mb-2 select_category" name="category" data-control="select2" data-placeholder="Select a Category...">
-                              @foreach($catactive as $serc)     
-                              <option></option>
-                                 <option value="{{$serc->id}}">{{$serc->category}}</option>
-                                 <!-- <option value="2">Face Care</option>
-                                 <option value="3">Nail</option> -->
-                             @endforeach
-                              </select>
-                              <!--end::Input-->
-                           </div>
-                           <!--end::Input group-->
-                           <!--begin::Input group-->
-                           <div class="fv-row mb-7">
-                              <!--begin::Label-->
-                              <label class="required fw-semibold fs-6 mb-2">Sub category</label>
-                              <!--end::Label-->
-                              <!--begin::Input-->
-                              <select class="form-select mb-2" name="dis_subcategory" id="dis_subcategory" data-control="select2" data-placeholder="Select a Sub Category...">
-                                 <!-- <option></option>
-                                 <option value="1">Hair Cut style</option>
-                                 <option value="2">Hair Color</option> -->
-                              </select>
-                              <!--end::Input-->
-                           </div>
-                           <!--end::Input group-->
-                           <!--begin::Input group-->
-                           <div class="fv-row mb-7">
-                              <!--begin::Label-->
-                              <label class="required fw-semibold fs-6 mb-2">Service Name</label>
-                              <!--end::Label-->
-                              <!--begin::Input-->
-                              <input type="text" name="servicename" class="form-control form-control-solid mb-3 mb-lg-0" placeholder="Service name"/>
-                              <!--end::Input-->
-                           </div>
-                           <!--end::Input group-->
-                        </div>
-                        <!--end::Scroll-->
-                        <!--begin::Actions-->
-                        <div class="modal-footer">
-                           <button type="button" class="btn btn-light" data-bs-dismiss="modal">Discard</button>
-                           <button type="submit" class="btn btn-primary">
-                           <span class="indicator-label">Submit</span>
-                           <span class="indicator-progress">Please wait...
-                           <span class="spinner-border spinner-border-sm align-middle ms-2"></span>
-                           </span>
-                           </button>
-                        </div>
-                        <!--end::Actions-->
-                     </form>
-                     <!--end::Form-->
-                  </div>
-               </div>
+                        <!--end::Content-->
             </div>
-         </div>
-         <!--end::Modal - Add task-->
-      </div>
-      <!--end::Card toolbar-->
-   </div>
-   <!--end::Card toolbar-->
-</div>
-      <!--end::Card header-->
-      <!--begin::Card body-->
-<div class="card-body pt-0">
-<!--begin::Table-->
-<table class="table align-middle table-row-dashed fs-6 gy-5" id="kt_datatable_example3">
-   <thead>
-      <tr class="text-start text-muted fw-bold fs-7 text-uppercase gs-0">
-         <th class="min-w-125px">S No.</th>
-         <th class="min-w-125px">Service name</th>
-         <th class="min-w-125px">Category name</th>
-         <th class="min-w-125px">Sub category name</th>
-         <th class="min-w-125px">Status</th>
-         <th class="text-end min-w-100px">Actions</th>
-      </tr>
-   </thead>
-   <tbody class="text-gray-600 fw-semibold">
-                  @if( !empty($shares) )
-            @foreach($shares as $key => $share)
-               @php
-                  $statusservice = $share->is_active;
-                  if($statusservice==1){
-                     $statusservice = "Enabled";
-                     $class   = "success";
-                  }else{
-                     $statusservice = "Disabled";
-                     $class   = "danger";
-                  }
-               @endphp  
-            <tr>
-                  <td>{{ $key+1 }}</td>
-                  <td>{{ $share->servicename }}</td>
-                  <td>{{ $share->category }}</td>
-                  <td>{{ $share->servicesubcategory }}</td>
-                  <td>
-                    
-                     <div class="badge badge-light-{{ $class }} fw-bold">{{ $statusservice }}</div>
-                  </td>
-                  <td class="text-end">
-                     <a href="#" class="btn btn-light btn-active-light-primary btn-flex btn-center btn-sm" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end">Actions
-                     <i class="ki-duotone ki-down fs-5 ms-1"></i></a>
-                     <!--begin::Menu-->
-                     <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-600 menu-state-bg-light-primary fw-semibold fs-7 w-125px py-4" data-kt-menu="true">
-                        <!--begin::Menu item-->
-                        <div class="menu-item px-3">
-                           <a href="{{ url('/admin/add-service/enable-status/'.$share->serviceid) }}" class="menu-link px-3">Enable</a>
-                        </div>
-                        <!--end::Menu item-->
-                        <!--begin::Menu item-->
-                        <div class="menu-item px-3">
-                           <a href="{{ url('/admin/add-service/disable-status/'.$share->serviceid) }}" class="menu-link px-3">Disable</a>
-                        </div>
-                        <!--end::Menu item-->
-                        <div class="menu-item px-3">
-                           <a href="javascript:void(0)" service-id="{{ $share->serviceid}}" data-bs-toggle="modal" data-bs-target="#kt_modal_service" class="menu-link px-3 edit-service">Edit</a>
-                        </div>
-                     </div>
-                     <!--end::Menu-->
-                  </td>
-               </tr>
-               @endforeach
-              @endif
-            </tbody>
-         </table>
-         <!--end::Table-->
-      </div>
-      <!--end::Card body-->
-   </div>
-   <!--end::Products-->
-</div>
-<!--end::Tab pane-->
-
-</div>
-<!--end::Content-->
-</div>
 <!--end::Content wrapper-->
-
+@include('admin.services.services-config.service')
 <!--Edit Category modal -->
 <div class="modal fade" tabindex="-1" id="kt_modal_cat">
           <div class="modal-dialog modal-dialog-scrollable">
@@ -889,6 +631,8 @@
                            <!--end::Label-->
                            <!--begin::Input-->
                            <input type="text" name="subcategory" id="subcategory" class="form-control form-control-solid mb-3 mb-lg-0" placeholder="sub category" value="Hair Color" />
+
+                          
                            <!--end::Input-->
                         </div>
                         <!--end::Input group-->
@@ -932,7 +676,7 @@
 
                   <div class="modal-body">
                       <!--begin::Form-->
-                  <form class="form"method="post" action="{{ url('admin/update-service')}}" >
+                  <form class="form"method="post" action="#" >
                   @csrf
                   <input type="hidden" name="service_id" id="service_id">  
                   <!--begin::Scroll-->
@@ -944,7 +688,7 @@
                            <label class="required fw-semibold fs-6 mb-2">Category</label>
                            <!--end::Label-->
                            <!--begin::Input-->
-                           <select class="form-select mb-2 select_category3" name="categoryid" id="categoryid" data-control="select2" data-placeholder="Select a Category...">
+                           <select class="form-select mb-2" name="edit_category" id="edit_category" data-control="select2" data-placeholder="Select a Category...">
                                @foreach($catactive as $serv)
                               <option value="{{$serv->id}}">{{$serv->category}}</option>
                               @endforeach
@@ -959,22 +703,29 @@
                            <label class="required fw-semibold fs-6 mb-2">Sub category</label>
                            <!--end::Label-->
                            <!--begin::Input-->
-                           <select class="form-select mb-2  subcategoryid" name="dis_subcategory3" id="dis_subcategory3" data-control="select2" data-placeholder="Select a Sub Category...">
-                           @foreach($shares as $serv1)
-                              <option value="{{$serv1->servicesubcategoryid}}">{{$serv1->servicesubcategory}}</option>
+                           <select class="form-select mb-2  subcategoryid" name="edit_subcategory" id="edit_subcategory" data-control="select2" data-placeholder="Select a Sub Category...">
+                              @foreach ($serSubcat as $data) {
+                              <option value="{{$data->servicesubcategoryid}}">{{$data->servicesubcategory}}</option>
                               @endforeach
                            </select>
                            <!--end::Input-->
                         </div>
                         <!--end::Input group-->
-
+                        <div class="fv-row mb-7">
+                           <!--begin::Label-->
+                           <label class="fw-semibold fs-6 mb-2">Description</label>
+                           <!--end::Label-->
+                           <!--begin::Input-->
+                           <textarea type="text" name="edit_description" id="edit_description" class="form-control form-control-solid mb-3 mb-lg-0" placeholder="Description" value="Description" rows="4" cols="50"></textarea>
+                           <!--end::Input-->
+                        </div>
                         <!--begin::Input group-->
                         <div class="fv-row mb-7">
                            <!--begin::Label-->
                            <label class="required fw-semibold fs-6 mb-2">Service Name</label>
                            <!--end::Label-->
                            <!--begin::Input-->
-                           <input type="text" name="servicename" id="servicename" class="form-control form-control-solid mb-3 mb-lg-0" placeholder="Service name" />
+                           <input type="text" name="edit_servicename" id="edit_servicename" class="form-control form-control-solid mb-3 mb-lg-0" placeholder="Service name" />
                            <!--end::Input-->
                         </div>
                         <!--end::Input group-->
@@ -985,7 +736,7 @@
                      <!--begin::Actions-->
                      <div class="modal-footer">
                             <button type="button" class="btn btn-light" data-bs-dismiss="modal">Discard</button>
-                            <button type="submit" class="btn btn-primary">
+                            <button type="button" class="btn btn-primary edit_service-button">
                            <span class="indicator-label">Submit</span>
                            <span class="indicator-progress">Please wait...
                               <span class="spinner-border spinner-border-sm align-middle ms-2"></span>
@@ -1010,7 +761,7 @@
         var id = $(this).attr('category-id');
         
             $.ajax({
-            url:'{{ url('admin/edit-servicecategory')}}'+'/' + id,
+            url:"{{ url('admin/edit-servicecategory')}}"+'/' + id,
             type:'GET',
                 beforeSend:function(){
                      $('.spinner-cls').show();
@@ -1022,8 +773,8 @@
                   $("#category").val(data.category);
                   $("#category_id").val(data.id);
                   $(".edit-cat-icon").css('background-image', 'url('+img_path+'/'+data.icon+')');
-               
-               
+              
+              
                 $('#kt_docs_datatable_subtable1').DataTable().ajax.reload();
                 }
             });
@@ -1037,7 +788,7 @@
         var id = $(this).attr('subcategory-id');
         
             $.ajax({
-            url:'{{ url('admin/edit-servicesubcategory')}}'+'/' + id,
+            url:"{{ url('admin/edit-servicesubcategory')}}"+'/' + id,
             type:'GET',
                 beforeSend:function(){
                      $('.spinner-cls').show();
@@ -1059,24 +810,27 @@
         $(document).on('click', '.edit-service', function(){
         event.preventDefault();
         var serviceid = $(this).attr('service-id');
-        
             $.ajax({
-            url:'{{ url('admin/edit-service')}}'+'/' + serviceid,
+            url:"{{ url('admin/edit-service')}}" +'/' + serviceid,
             type:'GET',
                 beforeSend:function(){
                      $('.spinner-cls').show();
                },
                 success:function(data)
-                {
+                { 
+                 
                   $('.spinner-cls').hide();
-                  $("#categoryid").val(data.categoryid).trigger('change');
-                  $(".subcategoryid").val(data.subcategoryid).trigger('change');
-                  $("#servicename").val(data.servicename);
-                  $("#service_id").val(data.serviceid);              
-                $('#kt_datatable_example3').DataTable().ajax.reload();
+                  $("#edit_category").val(data[0].categoryid).trigger('change');
+                  $("#edit_subcategory").val(data[0].subcategoryid).trigger('change');
+                  $("#edit_servicename").val(data[0].servicename);
+                  $("#service_id").val(data[0].serviceid); 
+                  $("#edit_description").val(data[0].description);           
+                  //$('#kt_datatable_example3').DataTable().ajax.reload();
                 }
             });
         });
+
+
 
          function moreSubtable(table, dataIt, rowIt, nCol, tableNo, dateCh=false) {
             var datatable;
@@ -1119,7 +873,6 @@
             let handleActionButton = () => {
                let buttons = table.querySelectorAll('[data-kt-docs-datatable-subtable="expand_row"]');
 
-               // Sample row items counter --- for demo purpose only, remove this variable in your project
                let rowItems = rowIt;
                console.log('hello', rowItems)
                buttons.forEach((button, index) => {
@@ -1130,18 +883,16 @@
                      let row = button.closest('tr');
                      let rowClasses = ['isOpen', 'border-bottom-0'];
 
-                     // Get total number of items to generate --- for demo purpose only, remove this code snippet in your project
+                    
                      let demoData = [];
 
                      console.log('hello', rowItems)
                      for (var j = 0; j < rowItems[index]; j++) {
                         demoData.push(data[index][j]);
                      }
-                     // End of generating demo data
-
-                     // Handle subtable expanded state
+                     
                      if (row.classList.contains('isOpen')) {
-                        // Remove all subtables from current order row
+                       
                         while (row.nextSibling && row.nextSibling.getAttribute('data-kt-docs-datatable-subtable') === 'subtable_template') {
                            row.nextSibling.parentNode.removeChild(row.nextSibling);
                         }
@@ -1155,8 +906,8 @@
                   });
                });
             }
+            
 
-            // Populate template with content/data -- content/data can be replaced with relevant data from database or API
             let populateTemplate = (data, target) => {
                data.forEach((d, index) => {
                   // Clone template node
@@ -1354,5 +1105,44 @@
          let rowItems2 = [3, 2, 3, 2];
          moreSubtable(table2, data2, rowItems2, 8, 2, true);
 
-      </script>
+</script>
+<script type="text/javascript">
+    $(document).on('click', '.edit_service-button', function() {
+          var serviceId   = $('#service_id').val(); 
+          var category    = $('#edit_category').val();
+          alert(category) 
+          var subcategory = $('#edit_subcategory').val(); 
+          var servicename = $('#edit_servicename').val();
+          var description = $('#edit_description').val();
+          $.ajax({
+              method: 'POST',
+              url: '{{url("admin/update-service")}}', 
+              data: {
+                  _token: '{{ csrf_token() }}' ,
+                  service_id: serviceId,
+                 edit_category: category,
+                 edit_subcategory: subcategory,
+                 edit_servicename: servicename,
+                 edit_description :description
+              },
+              success: function(response) {
+              Swal.fire({
+                  text: response.message,
+                  icon: response.status === 'success' ? "success" : "error",
+                  buttonsStyling: !1,
+                  confirmButtonText: "Ok, got it!",
+                  customClass: {
+                      confirmButton: "btn btn-primary"
+                  }}).then((result) => {
+                   if (result.isConfirmed) {
+                  location.reload();
+               }
+              });
+              },
+              error: function(error) {
+                  console.error(error);
+              }
+          });
+});          
+</script>
 @endpush

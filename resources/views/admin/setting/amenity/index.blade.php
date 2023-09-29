@@ -541,7 +541,6 @@ $getPartnerType = getPartnerType();
 				}
 
 				console.log("amenity_category",amenity_category);
-//   debugger;
 				var partner_type = $('#partner_type').val();
 				var amenity_type = $('#amenity_type').val();
 				var amenity_icon = $('#amenity_icon').prop('files')[0];

@@ -77,7 +77,7 @@
 											$activecountry = getCountryConfigList(); 
 											$selectCountry = getSelectedCountry();
 											@endphp
-										    <select class="form-select" name="country" placeholder="..." id="kt_docs_select2_country"  tabindex="-1" aria-hidden="true">
+										    <select class="form-select" name="country" placeholder="..." data-kt-filter="search" id="kt_docs_select2_country"  tabindex="-1" aria-hidden="true">
 										         <option data-kt-select2-country="{{asset('public/assets/media/flags/country.svg')}}">Select a country</option>
 										        @foreach($activecountry as $ac)
 				                                @php  
