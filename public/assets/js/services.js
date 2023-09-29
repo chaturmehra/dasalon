@@ -19,6 +19,7 @@ $(document).ready(function(){
     });
 });
 
+
 $(document).ready(function(){
     $(".select_category3").change(function(){
         // debugger;

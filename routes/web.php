@@ -138,7 +138,7 @@ Route::middleware(['auth'])->group(function () {
 
     Route::get('admin/setting/edit-salon-status/{id}/{statussalon}', [ParterConfigController::class, 'changeSalonStatus']);
 
-    Route::get('admin/services/services-config/get-subcategory/{id}', [ServicesConfigController::class, 'getStateAjax']);
+    Route::get('admin/settings/services-config/get-subcategory/{id}', [ServicesConfigController::class, 'getStateAjax']);
 
     Route::get('admin/settings/payment-gateway', [PaymentGatewayController::class, 'index'])->name('settings.payment-gateway');
 
@@ -202,7 +202,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('partner/promote', [PromoteController::class, 'index'])->name('promote.index');
     Route::get('partner/reports', [ReportsController::class, 'index'])->name('reports.index');
 
-    Route::get('admin/services/services-config/get-subcategory/{id}', [ServicesConfigController::class, 'getSubcategoryAjax']);
+    
     Route::get('admin/services/services-config/get-service/{id}', [ServicesConfigController::class, 'getServiceAjax']);
 
     Route::get('admin/add-service/enable-status/{serviceid}', [ServicesConfigController::class, 'enabledservice']);
@@ -214,7 +214,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('admin/edit-servicecategory/{id}', [ServicesConfigController::class, 'edit']);
 
     Route::post('admin/update-servicecategory', [ServicesConfigController::class, 'update']);
-    Route::get('admin/edit-service/{serviceid}', [ServicesConfigController::class, 'edit_view']);
+    Route::get('admin/edit-service/{id}', [ServicesConfigController::class, 'edit_view']);
     Route::post('admin/update-service', [ServicesConfigController::class, 'updateservice']);
 
     Route::post('admin/add-businesstype', [CountryController::class, 'store']);
@@ -325,6 +325,7 @@ Route::get('admin/servicebyadmin/disable-status/{id}', [AdminServiceController::
 Route::get('admin/servicebyadmin/edit-service/{service_id}', [AdminServiceController::class, 'editAdmin']);
 Route::post('admin/servicebyadmin/update-service', [AdminServiceController::class, 'updateAdmin']);
 Route::get('admin/servicebyadmin/export', [AdminServiceController::class, 'exportAdmin'])->name('export');
+Route::get('admin/servicebyadmin/services-config/get-subcategory/{id}', [ServicesConfigController::class, 'getSubcategoryAjax']);
 /*-------------------------service By partner-----------------------------------*/
 Route::get('admin/servicebypartner/enable-status/{id}', [AdminServiceController::class, 'enableByPartner']);
 Route::get('admin/servicebypartner/disable-status/{id}', [AdminServiceController::class, 'disableByPartner']);
@@ -339,4 +340,6 @@ Route::get('admin/services/offers-management/voucher', [OfferManagementVoucherCo
 
 
 Route::get('admin/settings/services-config', [ServicesConfigController::class, 'index'])->name('services.services-config');
+
+Route::get('admin/settings/services-config/get-subcategory/{id}', [ServicesConfigController::class, 'getSubcategoryAjax']);
 

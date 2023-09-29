@@ -8,6 +8,7 @@
 <!--begin::Content wrapper-->
 <div class="d-flex flex-column flex-column-fluid">
 
+
 	<!--begin::Toolbar-->
 	<div id="kt_app_toolbar" class="app-toolbar pt-3 pt-lg-6">
 		<!--begin::Toolbar container-->
@@ -141,9 +142,9 @@
 																	<!--begin::Input group-->
 																	<div class="fv-row mb-7">
 																		<!--begin::Label-->
-																		<label for="kt_docs_select2_country4" class="form-label">Select a country</label>
+																		<label for="kt_docs_select2_country2" class="form-label">Select a country</label>
 																		<div class="form-floating border rounded">
-																			<select class="form-select" placeholder="..." id="kt_docs_select2_country4" name="country">
+																			<select class="form-select" name="country" placeholder="..." data-kt-filter="search" id="kt_docs_select2_country2"  tabindex="-1" aria-hidden="true">
 																				<option value="">Select Country</option>
 																				@foreach(getCountryList() as $con_val)
 																				<option value="{{$con_val->id}}" data-kt-select2-country="{{asset('/public/assets/media/flags/'.strtolower(str_replace(' ','-',$con_val->name.'.svg')))}}">{{$con_val->name}}</option>
@@ -944,7 +945,7 @@
 																	<div class="fv-row mb-7">
 																		<label for="kt_docs_select2_country4" class="form-label">Select a country</label>
 																		<div class="form-floating border rounded">
-																			<select class="form-select" placeholder="..." id="kt_docs_select2_country4" name="franchise_country">
+																			<select class="form-select" placeholder="..." id="kt_docs_select2_country4"  name="franchise_country">
 																				<option value="">Select Country</option>
 																				@foreach(getCountryConfigList() as $con_val)
 																				<option value="{{$con_val->id}}" data-kt-select2-country="{{asset('/public/assets/media/flags/'.strtolower(str_replace(' ','-',$con_val->name.'.svg')))}}">{{$con_val->name}}</option>
@@ -1069,8 +1070,8 @@ $('#country-table').DataTable({
 	{ data: 'action' },
 	]
 });
-// MenuComponent.reinitialization()
-oTable1 = $('#country-table').DataTable();   //pay attention to capital D, which is mandatory to retrieve "api" datatables' object, as @Lionel said
+
+oTable1 = $('#country-table').DataTable();   
 $('#search_country').keyup(function(){
 oTable1.search($(this).val()).draw() ;
 })
@@ -1107,7 +1108,7 @@ submitHandler: function(form) {
 	};
 	console.log(formData);
 	$.ajax({
-		url:'{{ url('admin/save_country')}}',
+		url:"{{ url('admin/save_country')}}",
 		data: formData,
 		type: "POST",
 		success:function(data)
@@ -1174,7 +1175,7 @@ $('#franchise-table').DataTable({
 	{ data: 'status' },
 	]
 });
-oTable2 = $('#franchise-table').DataTable();   //pay attention to capital D, which is mandatory to retrieve "api" datatables' object, as @Lionel said
+oTable2 = $('#franchise-table').DataTable();   
 $('#search_franchise').keyup(function(){
 oTable2.search($(this).val()).draw() ;
 })
@@ -1190,7 +1191,7 @@ submitHandler: function(form) {
 		franchise_name: $("#franchise_name").val(),
 	};
 	$.ajax({
-		url:'{{ url('admin/save_franchise')}}',
+		url:"{{ url('admin/save_franchise')}}",
 		data: formData,
 		type: "POST",
 		success:function(data)
@@ -1256,7 +1257,7 @@ $('#partnertype-table').DataTable({
 	{ data: 'status' },
 	]
 });
-oTable3 = $('#partnertype-table').DataTable();   //pay attention to capital D, which is mandatory to retrieve "api" datatables' object, as @Lionel said
+oTable3 = $('#partnertype-table').DataTable();
 $('#search_partnertype').keyup(function(){
 oTable3.search($(this).val()).draw() ;
 })
@@ -1270,7 +1271,7 @@ submitHandler: function(form) {
 		partner_type: $("#partner_type").val(),
 	};
 	$.ajax({
-		url:'{{ url('admin/save_partnertype')}}',
+		url:"{{ url('admin/save_partnertype')}}",
 		data: formData,
 		type: "POST",
 		success:function(data)
@@ -1357,7 +1358,7 @@ submitHandler: function(form) {
 		partner_name: $("#partner_name").val(),
 	};
 	$.ajax({
-		url:'{{ url('admin/save_partnerdetails')}}',
+		url:"{{ url('admin/save_partnerdetails')}}",
 		data: formData,
 		type: "POST",
 		success:function(data)
@@ -1444,7 +1445,7 @@ submitHandler: function(form) {
 	};
 	console.log($("#dis_city").val());
 	$.ajax({
-		url:'{{ url('admin/save_disablecity')}}',
+		url:'{{ url("admin/save_disablecity")}}',
 		data: formData,
 		type: "POST",
 		success:function(data)

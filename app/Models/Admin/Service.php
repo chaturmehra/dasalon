@@ -14,6 +14,7 @@ class Service extends Model
         'servicename',
         'is_active',
         'created_by',
+        'description',
     ];
     protected $primaryKey = 'serviceid';
 }

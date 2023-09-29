@@ -20,6 +20,7 @@ class AdminServiceController extends Controller
     	$meta_keywords     = "";
         
 
+        
        	$service_by_admin = Service::leftjoin('service_categories','service_categories.id','=','services.categoryid')->leftjoin('service_sub_categories','service_sub_categories.servicesubcategoryid','=','services.subcategoryid')->select('services.*','service_categories.category','service_sub_categories.servicesubcategory')->where('services.created_by', '=', 0)->get();
 
        	$service_by_partner = Service::leftjoin('service_categories','service_categories.id','=','services.categoryid')->leftjoin('service_sub_categories','service_sub_categories.servicesubcategoryid','=','services.subcategoryid')->select('services.*','service_categories.category','service_sub_categories.servicesubcategory',)->where('services.created_by', '!=', 0)->get();
@@ -67,10 +68,10 @@ class AdminServiceController extends Controller
     public function editAdmin($service_id){
     	
     	$admin= Service::leftjoin('service_categories','service_categories.id','=','services.categoryid')->leftjoin('service_sub_categories','service_sub_categories.servicesubcategoryid','=','services.subcategoryid')->select('services.*','service_categories.category','service_sub_categories.servicesubcategory')->where('services.created_by', '=', 0)->where('serviceid', '=', $service_id)->get();
+
         echo json_encode($admin);
     }
-
-    
+        
     public function updateAdmin(Request $request)
     {
         $s = Service::find($request->get('service_id'));
@@ -83,9 +84,11 @@ class AdminServiceController extends Controller
             return response()->json(['status' => 'error', 'message' => 'Something Wronge']);
         }
         else{
-            $s->categoryid = $request->get('category');
+            $description =$request->get('description');
+            $s->categoryid    = $request->get('category');
             $s->subcategoryid = $request->get('subcategory');
-            $s->servicename = $request->get('servicename');
+            $s->servicename   = $request->get('servicename');
+            $s->description   = isset($description)?$description:"";
             $s->save();
             return response()->json(['status' => 'success', 'message' => 'Service updated successfully']);
         }
@@ -112,6 +115,8 @@ class AdminServiceController extends Controller
                     
             ]);
         }
+        $csvFile = null;
+        return response()->download(storage_path('app/' . $csvFileName));
     }
     
 
@@ -175,9 +180,11 @@ class AdminServiceController extends Controller
             return response()->json(['status' => 'error', 'message' => 'Something Wronge']);
         }
         else{
+           $description =$request->get('partner_description');
            $s->categoryid=$request->get('partner_category');
            $s->subcategoryid=$request->get('partner_subcategory');
            $s->servicename=$request->get('partner_servicename');
+           $s->description=isset($description)?$description:"";
            $s->save();
             return response()->json(['status' => 'success', 'message' => 'Service updated successfully']);
         }

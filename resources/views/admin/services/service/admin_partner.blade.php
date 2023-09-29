@@ -171,7 +171,14 @@
 									<!--end::Input-->
 								</div>
 								<!--end::Input group-->
-
+                                <div class="fv-row mb-7">
+									<!--begin::Label-->
+									<label class="fw-semibold fs-6 mb-2">Description</label>
+									<!--end::Label-->
+									<!--begin::Input-->
+									<textarea type="text" name="partner_description" id="partner_description" class="form-control form-control-solid mb-3 mb-lg-0" placeholder="Description" value="Description" rows="4" cols="50"></textarea>
+									<!--end::Input-->
+								</div>
 								<!--begin::Input group-->
 								<div class="fv-row mb-7">
 									<!--begin::Label-->
@@ -223,6 +230,7 @@
                   $("#partner_category").val(data[0].categoryid).trigger('change');
                   $("#partner_subcategory").val(data[0].subcategoryid).trigger('change');
                   $("#partner_servicename").val(data[0].servicename);
+                  $("#partner_description").val(data[0].servicename);
                   $("#partner_id").val(data[0].serviceid);              
                 }
             });
@@ -235,6 +243,7 @@ jQuery(document).on('click', '.servicebypartner-button', function() {
     //alert(serviceId);
     var subcategory = $('#partner_subcategory').val(); 
     var servicename = $('#partner_servicename').val();
+    var description = $('#partner_description').val();
     $.ajax({
         method: 'POST',
         url: '{{url("admin/servicebypartner/update-service")}}', 
@@ -243,7 +252,8 @@ jQuery(document).on('click', '.servicebypartner-button', function() {
             partner_id			: serviceId,
             partner_category	: category,
             partner_subcategory	: subcategory,
-            partner_servicename	: servicename
+            partner_servicename	: servicename,
+            partner_description: description
         },
         success: function(response) {
         Swal.fire({
@@ -254,7 +264,11 @@ jQuery(document).on('click', '.servicebypartner-button', function() {
             customClass: {
                 confirmButton: "btn btn-primary"
             }
-        });
+        }).then((result) => {
+             if (result.isConfirmed) {
+            location.reload();
+         }
+         });
         },
         error: function(error) {
             console.error(error);

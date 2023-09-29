@@ -18,8 +18,8 @@ class ServicesConfigController extends Controller
     	$title             = "Dasalon :: Services Config";
     	$meta_description  = "";
     	$meta_keywords     = "";
-        $sercat=ServiceCategory::all();
-        $catactive=ServiceCategory::where('is_active', '=', 1)->get();
+        $sercat   =ServiceCategory::all();
+        $catactive =ServiceCategory::where('is_active', '=', 1)->get();
         $shares = DB::table('services')
        ->leftjoin('service_categories', 'services.categoryid', '=', 'service_categories.id')
         ->leftjoin('service_sub_categories', 'service_sub_categories.servicesubcategoryid', '=', 'services.subcategoryid')
@@ -27,11 +27,11 @@ class ServicesConfigController extends Controller
        'service_sub_categories.servicesubcategoryid','service_sub_categories.servicesubcategory')
         ->get();
         
-
+         //echo "12345<pre>";print_r($catactive);die;
         $serSubcat=ServiceSubCategory::leftJoin('service_categories', 'service_categories.id', '=', 'service_sub_categories.categoryid')->get(['service_sub_categories.servicesubcategoryid',
             'service_sub_categories.servicesubcategory','service_sub_categories.status','service_categories.category','service_categories.country']);
 
-
+       //echo "12345<pre>";print_r($serSubcat);die;
         return view('admin/services/services-config/index', compact('title', 'meta_description', 'meta_keywords','sercat','serSubcat','catactive','shares'));
     }
 
@@ -175,38 +175,42 @@ class ServicesConfigController extends Controller
     }
 
     public function getSubcategoryAjax($category_id){
-
+        
+      
         $getSubcategory = ServiceSubCategory::where('categoryid','=',$category_id)->orderBy('servicesubcategory','asc')->get(['servicesubcategoryid','servicesubcategory']);
-        // echo "<pre>"; print_r($getSubcategory);die;
+
         foreach ($getSubcategory as $getAll) {
             echo '<option value="'.$getAll->servicesubcategoryid.'">'.$getAll->servicesubcategory.'</option>';
         }
     }
 
     public function addservice(Request $request)
-    {
+    {   $description=$request->get('description');
     	$validator = Validator::make($request->all(), [
-            'category'      => 'required',
+            'category'            => 'required',
             'dis_subcategory'     => 'required',
-            'servicename'     => 'required',
+            'servicename'         => 'required',
             
         ], [
 
-               'category.required' => 'The category field is required',
-                     'dis_subcategory.required' => 'The sub-category is required',
-                     'servicename.required' => 'The service name is required',
-                  ]);
+             'category.required' => 'The category field is required',
+             'dis_subcategory.required' => 'The sub-category is required',
+             'servicename.required' => 'The service name is required',
+        ]);
  
         if ($validator->fails()) {
-            return redirect()->back()->withErrors($validator)->withInput();
+            return response()->json(['status' => 'error', 'message' => 'Something Wronge']);
+        }else{
+            $s = new Service;  
+            $s->categoryid      = $request->get('category');  
+            $s->subcategoryid   = $request->get('dis_subcategory');
+            $s->servicename     = $request->get('servicename');
+            $s->description     = isset($description)?$description:"";
+            $s->is_active       = 1;   
+            $s->save();
+            return response()->json(['status' => 'success', 'message' => 'Service added successfully']);
         }
-        $s = new Service;  
-        $s->categoryid =  $request->get('category');  
-        $s->subcategoryid = $request->get('dis_subcategory');
-        $s->servicename = $request->get('servicename');
-        $s->is_active 	= 1;   
-        $s->save();
-        return redirect()->back()->with('messageservice', 'Services created successfully.');
+        
     }
 
     public function enabledservice($serviceid): RedirectResponse
@@ -215,7 +219,7 @@ class ServicesConfigController extends Controller
             $s = new Service;
 
             $s->exists       = true;
-            $s->serviceid           = $serviceid;
+            $s->serviceid    = $serviceid;
             $s->is_active    = 1;
             $s->updated_at   = date('Y-m-d H:i:s');
 
@@ -233,12 +237,9 @@ class ServicesConfigController extends Controller
 	        $s = new Service;
 
 	        $s->exists 		= true;
-	        $s->serviceid 			= $serviceid;
+	        $s->serviceid 	= $serviceid;
 	        $s->is_active 	= 0;
 	        $s->updated_at 	= date('Y-m-d H:i:s');
-            
-            // echo "<pre>"; print_r($s->is_active);die;
-            
 	        $s->save();
 
 	        return redirect()->back()->with('messagestatus', 'Service status updated successfully.');
@@ -250,26 +251,43 @@ class ServicesConfigController extends Controller
     public function getServiceAjax($subcategory_id){
         
         $getService = Service::where('subcategoryid','=',$subcategory_id)->orderBy('servicename','asc')->get(['serviceid','servicename']);
-        // echo "<pre>"; print_r($getService);die;
+       
         foreach ($getService as $gets) {
             echo '<option value="'.$gets->serviceid.'">'.$gets->servicename.'</option>';
         }
     }
 
     public function edit_view($serviceid){
-        $s =Service::find($serviceid);
-        return $s;
+        
+        $s = Service::where('serviceid', $serviceid)->get();
+       if (!$s) {
+            return response()->json(['error' => 'Service not found'], 404);
+        }
+        return response()->json($s);
     }
 
     
     public function updateservice(Request $request)
-    {
+    {   
+
         $s = Service::find($request->get('service_id'));
-        $s->categoryid=$request->input('categoryid');
-        $s->subcategoryid=$request->input('dis_subcategory3');
-        $s->servicename=$request->input('servicename');
-        $s->update();
-        return redirect()->back()->with('messageus','Service updated Successfully');
+        $validator = Validator::make($request->all(), [
+            'edit_category'           => 'required',
+            'edit_subcategory'        => 'required',
+            'edit_servicename'        => 'required',
+        ]);
+        if ($validator->fails()) {
+            return response()->json(['status' => 'error', 'message' => 'Something Wronge']);
+        }
+        else{
+        $s->categoryid=$request->get('edit_category');
+        $s->subcategoryid=$request->get('edit_subcategory');
+        $s->servicename=$request->get('edit_servicename');
+        $s->description=$request->get('edit_description');
+        $s->save();
+        return response()->json(['status' => 'success', 'message' => 'Service updated successfully']);
+        }
+        
     }
 
     
