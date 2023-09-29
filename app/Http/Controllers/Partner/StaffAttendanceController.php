@@ -32,6 +32,19 @@ class StaffAttendanceController extends Controller
                 ->orWhere('staff_attendance.date', $today_date)
                 ->get();
 
+		/*$staffList 	= Staff::where('partner_id', $partner_id)->select(['staff.staff_id', 'staff.user_id', 'users.name', 'users.email', 'users.phone', 'staff.staff_working_days'])
+                ->leftJoin('users', 'users.id', '=', 'staff.user_id')
+                ->orderBy('staff.staff_id', 'DESC')
+                ->where('users.is_active', 1)
+                ->get()->toArray();
+
+		$attendanceList = StaffAttendance::select(['staff_attendance.*'])
+				->leftJoin('staff', 'staff_attendance.staff_id', '=', 'staff.user_id')
+                ->orderBy('staff.staff_id', 'DESC')
+                ->where('staff.partner_id', $partner_id)
+                ->get()->toArray();
+
+echo "<pre>"; print_r($attendanceList); die;*/
 
        	$staffs 		= Staff::where('partner_id', $partner_id);
 		$staffAttendance 	= $staffs->select(['staff.staff_id', 'staff.user_id', 'users.name', 'users.email', 'users.phone', 'staff_attendance.date', 'staff_attendance.check_in', 'staff_attendance.check_out'])

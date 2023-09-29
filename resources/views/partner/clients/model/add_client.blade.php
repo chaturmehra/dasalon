@@ -181,7 +181,7 @@
                            <div class="col-md-4">
                               <label for="year" class="fw-semibold form-label mt-3">Year:</label>
                               <select id="birth_year" name="birth_year"class=" form-control form-control-solid form-select "data-control="select2" data-hide-search="true" data-placeholder="Select an Year">
-                              <option value="0" selected>Select a Year</option>
+                              <option value="" selected disabled>Select a Year</option>
                                      <?php
                                      for ($year = 2023; $year >= 1900; $year--) {
                                          echo '<option value="' . $year . '">' . $year . '</option>';
@@ -247,3 +247,73 @@
             </div>
          </div>
       </div>
+@push('scripts')
+<script>
+jQuery(document).on('change', '#birth_month', function (e) {
+    e.preventDefault();
+    var selected_month= jQuery(this).val();
+    var birth_day     = jQuery("#birth_day").val();
+    if(selected_month == 2 && birth_day > 29 ){
+      Swal.fire({
+         title: "Invalid day for selected month",
+         icon: "error",
+         buttonsStyling: !1,
+         confirmButtonText: "Ok, got it!",
+         customClass: {
+            confirmButton: "btn fw-bold btn-primary"
+         }
+      })
+
+      jQuery("#birth_day").val("");
+      jQuery("#birth_month").val("");
+    }
+    if(selected_month == 4 || selected_month == 6 || selected_month == 9 || selected_month == 11){
+      Swal.fire({
+         title: "Invalid day for selected month.",
+         icon: "error",
+         buttonsStyling: !1,
+         confirmButtonText: "Ok, got it!",
+         customClass: {
+            confirmButton: "btn fw-bold btn-primary"
+         }
+      })
+      jQuery("#birth_day").val("");
+      jQuery("#birth_month").val("");
+    }
+});
+jQuery(document).on('change', '#birth_year', function (e) {
+   e.preventDefault();
+   var birth_year    = jQuery(this).val();
+   var birth_day     = jQuery("#birth_day").val();
+   var birth_month   = jQuery("#birth_month").val();
+   
+   if(isLeapYear(birth_year)){
+      leapYear = birth_day >= 1 && birth_day <= 29 ? "Yes" : "No";
+   }else{
+      leapYear = "No";
+   }
+   
+   if(birth_month == 2 && leapYear == "No" && birth_day > 28){
+      Swal.fire({
+         title: "Invalid day for selected month",
+         icon: "error",
+         buttonsStyling: !1,
+         confirmButtonText: "Ok, got it!",
+         customClass: {
+            confirmButton: "btn fw-bold btn-primary"
+         }
+      })
+
+      jQuery("#birth_day").val("");
+      jQuery("#birth_month").val("");
+      jQuery("#birth_year").val("");
+   }
+});
+
+function isLeapYear(year){
+   return ((year % 4 == 0) && (year % 100 != 0)) || (year % 400 == 0);
+}
+
+</script>
+
+@endpush

@@ -321,5 +321,71 @@ jQuery('body').on('click', '.remove-clinet-address', function (e) {
     jQuery(this).parent('div').remove();
 });
 </script>
+<script>
+jQuery(document).on('change', '#edit_birth_month', function (e) {
+    e.preventDefault();
+    var selected_month= jQuery(this).val();
+    var birth_day     = jQuery("#edit_birth_day").val();
+    if(selected_month == 2 && birth_day > 29 ){
+      Swal.fire({
+         title: "Invalid day for selected month",
+         icon: "error",
+         buttonsStyling: !1,
+         confirmButtonText: "Ok, got it!",
+         customClass: {
+            confirmButton: "btn fw-bold btn-primary"
+         }
+      })
 
+      jQuery("#edit_birth_day").val("");
+      jQuery("#edit_birth_month").val("");
+    }
+    if(selected_month == 4 || selected_month == 6 || selected_month == 9 || selected_month == 11){
+      Swal.fire({
+         title: "Invalid day for selected month.",
+         icon: "error",
+         buttonsStyling: !1,
+         confirmButtonText: "Ok, got it!",
+         customClass: {
+            confirmButton: "btn fw-bold btn-primary"
+         }
+      })
+      jQuery("#edit_birth_day").val("");
+      jQuery("#edit_birth_month").val("");
+    }
+});
+jQuery(document).on('change', '#edit_birth_year', function (e) {
+   e.preventDefault();
+   var birth_year    = jQuery(this).val();
+   var birth_day     = jQuery("#edit_birth_day").val();
+   var birth_month   = jQuery("#edit_birth_month").val();
+   
+   if(isLeapYear(birth_year)){
+      leapYear = birth_day >= 1 && birth_day <= 29 ? "Yes" : "No";
+   }else{
+      leapYear = "No";
+   }
+   
+   if(birth_month == 2 && leapYear == "No" && birth_day > 28){
+      Swal.fire({
+         title: "Invalid day for selected month",
+         icon: "error",
+         buttonsStyling: !1,
+         confirmButtonText: "Ok, got it!",
+         customClass: {
+            confirmButton: "btn fw-bold btn-primary"
+         }
+      })
+
+      jQuery("#edit_birth_day").val("");
+      jQuery("#edit_birth_month").val("");
+      jQuery("#edit_birth_year").val("");
+   }
+});
+
+function isLeapYear(year){
+   return ((year % 4 == 0) && (year % 100 != 0)) || (year % 400 == 0);
+}
+
+</script>
 @endpush
