@@ -35,7 +35,7 @@
 	<!--end::Nav item-->
 	<!--begin::Nav item-->
 	<li class="nav-item mt-2">
-		<a class="nav-link text-active-primary ms-0 me-10 py-5 " href="products.html">
+		<a class="nav-link text-active-primary ms-0 me-10 py-5 {{ Request::is('partner/products') ? 'active' : '' }}" href="{{ route('products.index') }}">
 			Products
 		</a>
 	</li>

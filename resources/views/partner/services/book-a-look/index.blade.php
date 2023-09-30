@@ -292,7 +292,7 @@
                               <div class="d-flex gap-3 cursor-pointer" id="kt_drawer_example_permanent_toggle2">
                                  <div class="prdimg symbol symbol-circle symbol-50px overflow-hidden cursor-pointer">
                                   @if( !empty($bookaLookList['look_image']) )
-                                    <img src="{{asset('/public/'.$bookaLookList['look_image'])}}" alt="{{ $bookaLookList['servicename'] }}" class="w-100" />
+                                    <img src="{{asset('/public/'.$bookaLookList['look_image'])}}" alt="{{ $bookaLookList['servicename'] }}" />
                                   @else
                                     <span class="symbol-label bg-danger text-inverse-danger fw-bold">{{ $shortName }}</span>
                                   @endif

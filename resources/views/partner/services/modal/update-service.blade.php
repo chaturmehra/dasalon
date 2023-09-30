@@ -251,7 +251,7 @@ data-kt-drawer-width="{default:'300px', 'md': '700px', 'xl': '950px'}"
           </div>
 
           <!--begin::Input group-->
-          <div  data-kt-ecommerce-catalog-add-category="auto-options">
+          <div  data-kt-ecommerce-catalog-edit-services="auto-options">
             <!--begin::Repeater-->
             <div id="kt_ecommerce_edit_venue_service_conditions">
               <!--begin::Form group-->

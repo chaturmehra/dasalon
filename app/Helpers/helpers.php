@@ -144,6 +144,23 @@ function voucherValidity(){
     ];
     return $voucherValidity;
 }
+function productMeasures(){
+    $productMeasures = [
+        '1'         => 'Milliliters (ml)',
+        '2'         => 'Liters (l)',
+        '3'         => 'Fluid ounces (Fl. oz.)',
+        '4'         => 'Grams (g)',
+        '5'         => 'Killograms (kg)',
+        '6'         => 'Gallons (gal)',
+        '7'         => 'Ounces (oz)',
+        '8'         => 'Pounds (lb)',
+        '9'         => 'Centimeters (cm)',
+        '10'        => 'Feet (ft)',
+        '11'        => 'Inches (in)',
+        '12'        => 'A whole product',
+    ];
+    return $productMeasures;
+}
 
 if (!function_exists('getPartnerCountryConfig')) {
     function getPartnerCountryConfig($partner_id)

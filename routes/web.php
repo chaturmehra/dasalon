@@ -39,6 +39,7 @@ use App\Http\Controllers\Admin\OfferManagementVoucherController;
 use App\Http\Controllers\Partner\PartnerPackagesController;
 use App\Http\Controllers\Partner\PartnerVouchersController;
 use App\Http\Controllers\Partner\PartnerMembershipsController;
+use App\Http\Controllers\Partner\PartnerProductsController;
 
 
 /*
@@ -212,6 +213,12 @@ Route::middleware(['auth'])->group(function () {
     Route::post('partner/memberships/update', [PartnerMembershipsController::class, 'membershipsUpdate']);
     Route::get('partner/memberships/edit-memberships-status/{id}/{status}', [PartnerMembershipsController::class, 'changeMembershipsStatus']);
     Route::get('partner/memberships/get-membership-detail-by-id/{id}', [PartnerMembershipsController::class, 'getMembershipsDetailById']);
+
+    Route::get('partner/products', [PartnerProductsController::class, 'index'])->name('products.index');
+    Route::post('partner/products/store', [PartnerProductsController::class, 'productsStore']);
+    Route::post('partner/products/update', [PartnerProductsController::class, 'productsUpdate']);
+    Route::get('partner/products/delete-product/{id}', [PartnerProductsController::class, 'deleteProduct']);
+    Route::get('partner/products/get-product-detail-by-id/{id}', [PartnerProductsController::class, 'getProductsDetailById']);
 
     Route::get('partner/promote', [PromoteController::class, 'index'])->name('promote.index');
     Route::get('partner/reports', [ReportsController::class, 'index'])->name('reports.index');
