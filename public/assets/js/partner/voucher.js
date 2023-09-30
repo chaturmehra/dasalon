@@ -2,10 +2,10 @@ $(document).ready(function(){
 	$(document).on('click', '.status-change', function(event){
 		event.preventDefault();
 		var status_val  = $(this).attr('status-value');
-		var package_id  = $(this).attr('package-id');
-		var ajaxurl     = baseurl+'partner/packages/edit-packages-status'+'/' + package_id+'/'+status_val;
+		var voucher_id  = $(this).attr('voucher-id');
+		var ajaxurl     = baseurl+'partner/vouchers/edit-vouchers-status'+'/' + voucher_id+'/'+status_val;
 		Swal.fire({
-			text: "Are you sure you want to change this package status?",
+			text: "Are you sure you want to change this voucher status?",
 			icon: "warning",
 			showCancelButton: !0,
 			buttonsStyling: !1,
@@ -28,7 +28,7 @@ $(document).ready(function(){
 					{
 						$('.spinner-cls').hide();
 						Swal.fire({
-							title: "Your have successfully changed package status!",
+							title: "Your have successfully changed voucher status!",
 							icon: "success",
 							buttonsStyling: !1,
 							confirmButtonText: "Ok, got it!",
@@ -43,11 +43,11 @@ $(document).ready(function(){
 		});
 	});
 
-	$(document).on('click', '.get-package-detail-by-id', function(event){
+	$(document).on('click', '.get-voucher-detail-by-id', function(event){
 		event.preventDefault();
-		var package_id    = $(this).attr('package-id');
-		if(package_id){
-			var ajaxurl = baseurl+'partner/packages/get-package-detail-by-id'+'/' + package_id;
+		var voucher_id    = $(this).attr('voucher-id');
+		if(voucher_id){
+			var ajaxurl = baseurl+'partner/vouchers/get-voucher-detail-by-id'+'/' + voucher_id;
 			$.ajax({
 				url: ajaxurl,
 				type:'GET',
@@ -61,55 +61,50 @@ $(document).ready(function(){
 
 					if (response.status) {
 
-						$('.staff-pricing-list').html('');
+						var voucher_data = response.data[0];
 
-						var service_data = response.data[0];
-
-						$("#partner_package_id").val(service_data.pp_id);
-						$(".package-name").text(service_data.package_name);
-						$(".package-description").text(service_data.description);
+						$("#partner_voucher_id").val(voucher_data.pv_id);
+						$(".voucher-name").text(voucher_data.voucher_name);
+						$(".voucher-description").text(voucher_data.description);
 						
 						if (response.serviceNameArr) {
 							$(".edit-service-option").val(response.serviceNameArr);
 						}
-						if(service_data.status){
-							$(".package-status").text("Active");
+						if(voucher_data.status){
+							$(".voucher-status").text("Active");
 						}else{
-							$(".package-status").text("Inactive");
+							$(".voucher-status").text("Inactive");
 						}
-						if(service_data.online_price){
-							$(".package-online-price").val(service_data.online_price);
+						if(voucher_data.number_session){
+							$(".number-session").val(voucher_data.number_session);
 						}
-						if(service_data.off_peak_price){
-							$(".package-off-peak-price").val(service_data.off_peak_price);
+						if(voucher_data.total_service_value){
+							$(".total-service-value").val(voucher_data.total_service_value);
 						}
-						if(service_data.walk_in_price){
-							$(".package-walk-in-price").val(service_data.walk_in_price);
+						if(voucher_data.voucher_price){
+							$(".voucher-price").val(voucher_data.voucher_price);
 						}
-						if(service_data.duration){
-							$(".package-duration").val(service_data.duration);
+						if(voucher_data.duration){
+							$(".voucher-duration").val(voucher_data.duration);
+						}
+						if(voucher_data.validity){
+							$(".validity").val(voucher_data.validity).trigger('change');
 						}
 
-						if (service_data.gender == "Female"){
+						if (voucher_data.gender == "Female"){
 							$('.gender-option[value="Female"]').prop("checked", true);
-						}else if(service_data.gender == "Male"){
+						}else if(voucher_data.gender == "Male"){
 							$('.gender-option[value="Male"]').prop("checked", true);
-						}else if(service_data.gender == "Unisex"){
+						}else if(voucher_data.gender == "Unisex"){
 							$('.gender-option[value="Unisex"]').prop("checked", true);
 						}
 
-						var venues     = service_data.venues;
+						var venues     = voucher_data.venues;
 						if (venues) {
 							var split_venues = venues.split(",");
 							$.each(split_venues, function(index, value) {
-								$(".package-venues[value="+value+"]").prop("checked", true);
+								$(".voucher-venues[value="+value+"]").prop("checked", true);
 							});
-						}
-
-						var staff_pricing      = response.staff_pricing;
-						$('.packages-staff-pricing-list').html('');
-						if (staff_pricing) {
-							$('.packages-staff-pricing-list').append(staff_pricing);
 						}
 
 					}

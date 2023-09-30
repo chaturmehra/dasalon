@@ -129,6 +129,21 @@ function durationScheduling(){
     ];
     return $durationScheduling;
 }
+function voucherValidity(){
+    $voucherValidity = [
+        '14 days'       => '14 days',
+        '1 month'       => '1 month',
+        '2 months'      => '2 months',
+        '3 months'      => '3 months',
+        '4 months'      => '4 months',
+        '6 months'      => '6 months',
+        '1 year'        => '1 year',
+        '3 years'       => '3 years',
+        '5 years'       => '5 years',
+        'Never'         => 'Never',
+    ];
+    return $voucherValidity;
+}
 
 if (!function_exists('getPartnerCountryConfig')) {
     function getPartnerCountryConfig($partner_id)

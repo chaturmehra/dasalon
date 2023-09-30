@@ -77,7 +77,7 @@
             <label class="required fw-semibold fs-6 mb-2">Business name</label>
             <!--end::Label-->
             <!--begin::Input-->
-            <input type="text" name="business_name" id="business_name" class="form-control form-control-solid mb-3 mb-lg-0" placeholder="Business name" >
+            <input type="text" name="business_name" id="business_name" class="form-control form-control-solid mb-3 mb-lg-0" placeholder="Business name" required="required">
             <!--end::Input-->
           </div>
         </div>

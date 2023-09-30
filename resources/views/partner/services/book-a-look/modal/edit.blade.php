@@ -17,7 +17,7 @@
          <div class="card-title">
             <div class="d-flex flex-column gap-3 mb-4">
                <h2><span class="service-name"></span></h2>
-               <span class="text-gray-400 fs-6">Global highlights cover your hair strands in one single hue from root to tip like golden highlights on black hair.</span>
+               <span class="text-gray-400 fs-6"><span class="service-description"></span></span>
             </div>
          </div>
          <!--end::Title-->

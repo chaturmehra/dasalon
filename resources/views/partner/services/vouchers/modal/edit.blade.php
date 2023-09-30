@@ -16,8 +16,8 @@
             <!--begin::Title-->
             <div class="card-title">
             <div class="d-flex flex-column gap-3 mb-4">
-               <h2><span class="package-name"></span></h2>
-               <span class="text-gray-400 fs-6"><span class="package-description"></span></span>
+               <h2><span class="voucher-name"></span></h2>
+               <span class="text-gray-400 fs-6"><span class="voucher-description"></span></span>
             </div>
          </div>
             <!--end::Title-->
@@ -26,7 +26,7 @@
             <div class="card-toolbar">
                <div class="d-flex gap-3 me-3">
                   <span class="text-gray-800 fs-6">Status:</span>
-                  <span class="text-gray-400 fs-6"><span class="package-status"></span></span>
+                  <span class="text-gray-400 fs-6"><span class="voucher-status"></span></span>
                </div>
                 <!--begin::Close-->
                 <div class="btn btn-icon btn-sm btn-active-light-primary ms-2" id="kt_drawer_example_permanent_close2">
@@ -42,9 +42,9 @@
         <div class="card-body hover-scroll-overlay-y py-10">
 
          <!--begin::Form-->
-         <form class="form d-flex flex-column flex-lg-row" id="serviceeditform" method="post" action="{{ url('partner/packages/update') }}">
+         <form class="form d-flex flex-column flex-lg-row" id="serviceeditform" method="post" action="{{ url('partner/vouchers/update') }}">
           @csrf
-          <input type="hidden" name="pp_id" id="partner_package_id">
+          <input type="hidden" name="pv_id" id="partner_voucher_id">
             <div class="d-flex flex-column gap-7 gap-lg-10">
 
                <!--begin::General options-->
@@ -148,13 +148,7 @@
                            <h2 class="required fs-3">Duration</h2>
                         </div>
                         <!--end::Card title-->
-                        <!-- <select name="duration" required="required" class="form-select mb-2 package-duration" data-placeholder="Select an option" data-control="select2" data-hide-search="true">
-                          <option></option>
-                          @foreach(durationScheduling() as $dKey => $duration)
-                          <option value="{{ $dKey }}">{{ $duration }}</option>
-                          @endforeach
-                        </select> -->
-                        <input type="text" class="form-control mb-2 package-duration" placeholder="Duration" name="duration">
+                        <input type="text" class="form-control mb-2 voucher-duration" placeholder="Duration" name="duration">
                      </div>
 
                   </div>
@@ -162,93 +156,77 @@
                </div>
 
                <div class="card card-flush p-4">
-                        
-                  <div class="card-title">
-                     <div class="d-flex flex-column gap-3 mb-4">
-                        <h2>Pricing</h2>
-                     </div>
+                    
+                <div class="card-title">
+                  <div class="d-flex flex-column gap-3 mb-4">
+                    <h2>Number of sessions and validity</h2>
+                  </div>
+                </div>
+
+                <div class="row">
+
+                  <div class="col-sm-6">
+                    <div class="d-flex flex-column gap-1">
+                      <label class="required fw-semibold fs-6">Number of sessions</label>
+                      <input type="text" name="number_session" class="form-control mb-3 mb-lg-0 number-session" placeholder="no. of sessions" onchange="numberHandler(this)" />
+                    </div>
                   </div>
 
-                  <div class="row">
-                                 
-                     <div class="col-sm-4">
-                        <div class="d-flex flex-column gap-1">
-                           <label class="required fw-semibold fs-6">Walk-in price</label>
-                           <div class="input-group mb-2">
-                               <span class="input-group-text">{{ $partner_country_config->currency_sign }}</span>
-                               <input type="text" name="walk_in_price" class="form-control package-walk-in-price" aria-label="Amount (to the nearest dollar)" onchange="numberHandler(this)"/>
-                               <span class="input-group-text">.00</span>
-                           </div>
-                           <div class="text-muted fs-7">Price for anyone who walks into the salon without an appointment</div>
-                           <!--end::Input group-->
-                        </div>
-                     </div>
-
-                     <div class="col-sm-4">
-                        <div class="d-flex flex-column gap-1">
-                           <label class="required fw-semibold fs-6">Online Price</label>
-                           <div class="input-group mb-2">
-                               <span class="input-group-text">{{ $partner_country_config->currency_sign }}</span>
-                               <input type="text" name="online_price" class="form-control package-online-price" aria-label="Amount (to the nearest dollar)" onchange="numberHandler(this)"/>
-                               <span class="input-group-text">.00</span>
-                           </div>
-                           <div class="text-muted fs-7">Price available to clients who book their services online in advance</div>
-                           <!--end::Input group-->
-                        </div>
-                     </div>
-
-                     <div class="col-sm-4">
-                        <div class="d-flex flex-column gap-1">
-                           <label class="required fw-semibold fs-6">Off Peak Price</label>
-                           <div class="input-group mb-2">
-                               <span class="input-group-text">{{ $partner_country_config->currency_sign }}</span>
-                               <input type="text" name="off_peak_price" class="form-control package-off-peak-price" aria-label="Amount (to the nearest dollar)" onchange="numberHandler(this)"/>
-                               <span class="input-group-text">.00</span>
-                           </div>
-                           <div class="text-muted fs-7">A discounted price, available to people who walk-in during the salon's off peak hours.</div>
-                           <!--end::Input group-->
-                        </div>
-                     </div>
-
+                  <div class="col-sm-6">
+                    <div class="d-flex flex-column gap-1">
+                      <label class="required fw-semibold fs-6">Validity</label>
+                      <select class="form-select form-select-solid validity" data-control="select2" data-placeholder="Select an option" data-allow-clear="true" name="validity" required="required">
+                       <option value="" selected disabled></option>
+                       @foreach(voucherValidity() as $vKey => $validity)
+                       <option value="{{ $vKey }}">{{ $validity }}</option>
+                       @endforeach
+                     </select>
+                    </div>
                   </div>
 
-               </div>
+                </div>
 
-               <div class="card card-flush p-4">
+              </div>
 
-                  <div class="card-title">
-                     <div class="d-flex flex-column gap-3">
-                        <h2>Staff pricing</h2>
-                        <span class="text-muted fs-7">Add staff to service, so that customer can book online appointment with their choice of staff</span>
-                        <span class="text-muted fs-7">A premium price for a service, available to clients who request a specific stylist who specializes in a particular service (optional)</span>
-                     </div>
+              <div class="card card-flush p-4">
+                    
+                <div class="card-title">
+                  <div class="d-flex flex-column gap-3 mb-4">
+                    <h2>Pricing</h2>
+                  </div>
+                </div>
+
+                <div class="row">
+
+                  <div class="col-sm-6">
+                    <div class="d-flex flex-column gap-1">
+                      <label class="required fw-semibold fs-6">Total service value</label>
+                      <div class="text-muted fs-7">Total of walking price of all the services included in this voucher</div>
+                      <div class="input-group mb-2">
+                          <span class="input-group-text">{{ $partner_country_config->currency_sign }}</span>
+                          <input type="text" class="form-control total-service-value" aria-label="Amount (to the nearest dollar)" name="total_service_value" onchange="numberHandler(this)"/>
+                          <span class="input-group-text">.00</span>
+                      </div>
+                      <!--end::Input group-->
+                    </div>
                   </div>
 
-                  <!--begin::Input group-->
-                  <div  data-kt-ecommerce-catalog-add-category="auto-options">
-                     <!--begin::Repeater-->
-                     <div id="kt_ecommerce_edit_packages_conditions">
-                        <!--begin::Form group-->
-                        <div class="form-group">
-                           <div data-repeater-list="kt_ecommerce_edit_packages_conditions" class="d-flex flex-column gap-0 packages-staff-pricing-list">
-                              
-                           </div>
-                        </div>
-                        <!--end::Form group-->
-                        <!--begin::Form group-->
-                        <div class="form-group mt-5">
-                           <!--begin::Button-->
-                           <button type="button" data-repeater-create="" class="btn btn-sm btn-light-primary">
-                           <i class="ki-duotone ki-plus fs-2"></i>Add another condition</button>
-                           <!--end::Button-->
-                        </div>
-                        <!--end::Form group-->
-                     </div>
-                     <!--end::Repeater-->
+                  <div class="col-sm-6">
+                    <div class="d-flex flex-column gap-1">
+                      <label class="required fw-semibold fs-6">Voucher Price</label>
+                      <div class="text-muted fs-7">Discounted price to promote voucher sale</div>
+                      <div class="input-group mb-2">
+                          <span class="input-group-text">{{ $partner_country_config->currency_sign }}</span>
+                          <input type="text" class="form-control voucher-price" aria-label="Amount (to the nearest dollar)" name="voucher_price" onchange="numberHandler(this)"/>
+                          <span class="input-group-text">.00</span>
+                      </div>
+                      <!--end::Input group-->
+                    </div>
                   </div>
-                  <!--end::Input group-->
 
-               </div>
+                </div>
+
+              </div>
 
                <div class="card card-flush p-4">
 
@@ -269,7 +247,7 @@
 
                           <!--begin::Radio-->
                           <span class="form-check form-check-custom form-check-solid form-check-sm align-items-start mt-1">
-                            <input class="form-check-input package-venues" type="checkbox" name="venues[]" value="{{ $venue_data['id'] }}" />
+                            <input class="form-check-input voucher-venues" type="checkbox" name="venues[]" value="{{ $venue_data['id'] }}" />
                           </span>
                           <!--end::Radio-->
                           @if( !empty($venue_data['venue_meta']['featured']) )

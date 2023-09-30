@@ -149,7 +149,6 @@ class PartnerPackagesController extends Controller
 	{
 		$partner_id = Auth::user()->id;
 		$validator = Validator::make($request->all(), [
-            'package_name'      => 'required',
             'venues'        	=> 'required',
             'gender_option'     => 'required',
             'walk_in_price'     => 'nullable|integer|gt:online_price',
@@ -173,29 +172,42 @@ class PartnerPackagesController extends Controller
 			$venues = implode(',', $request['venues']);
 		}
 
-		if ($request->hasFile('look_image')) {
-			$image = $request->file('look_image');
-			$look_image = time().'_look_image.'.$image->getClientOriginalExtension();
-			$destinationPath = public_path('/uploads/PartnerPackages');
-			$image->move($destinationPath, $look_image);
-			$look_image =  '/uploads/PartnerPackages/'.$look_image;
-		}else{
-			$old_look_image = $request['old_look_image'];
-			if ($old_look_image) {
-				$look_image = $old_look_image;
-			}else{
-				$look_image = "";
+
+		$service_json_val = $request->selected_services;
+	
+		if(!empty($service_json_val)){
+			$service_ids 	= [];
+			$json_data 		= json_decode($service_json_val, true);
+			foreach ($json_data as $value) {
+
+				$checkService 	= Service::where('servicename', $value["value"])->get();
+
+				if( $checkService->isEmpty() ){
+					$insertedID = Service::create([
+						'categoryid' 	=> $request->category,
+						'subcategoryid' => $request->sub_category,
+						'servicename' 	=> $value["value"],
+						'is_active' 	=> 1,
+						'created_by' 	=> $partner_id,
+					]);
+
+					$service_ids[] = $insertedID->serviceid;
+				}else{
+					$check_service_id = isset($checkService[0]->serviceid) ? $checkService[0]->serviceid : "";
+					$service_ids[]    = $check_service_id;
+				}
 			}
+			$service_ids   = implode(',', $service_ids);
+		}else{
+			$service_ids   = '';
 		}
 
 		$PartnerPackages = PartnerPackages::where('pp_id', $request->pp_id)->update([
 			'partner_id'      	=> $partner_id,
-			'package_name'     	=> $request->package_name,
 			'venues'     		=> $venues,
+			'service_ids'     	=> $service_ids,
 			'gender'      		=> $request->gender_option,
 			'duration'     		=> $request->duration,
-			'total_price'     	=> $request->total_price,
-			'total_duration'    => $request->total_duration,
 			'walk_in_price'     => $request->walk_in_price,
 			'online_price'     	=> $request->online_price,
 			'off_peak_price'    => $request->off_peak_price,
@@ -238,6 +250,9 @@ class PartnerPackagesController extends Controller
     		->leftJoin('services', 'services.serviceid', '=', 'partner_packages.service_ids')
 	    	->orderBy('partner_packages.pp_id', 'DESC')
 	    	->get();
+    	
+	    //$results = DB::select("SELECT partner_packages.*, GROUP_CONCAT(`services`.`servicename`) AS service_name FROM partner_packages LEFT JOIN services ON FIND_IN_SET(`services`.`serviceid`,`partner_packages`.`service_ids`) > 0 WHERE `partner_packages`.`partner_id` = ".$partner_id." GROUP BY `partner_packages`.`pp_id`" );
+	  
 
 	    /*$PartnerPackagessLists	= $PartnerPackages->select("partner_packages.*",\DB::raw("GROUP_CONCAT(services.servicename) as service_name"))
 	    	->leftjoin("services",\DB::raw("FIND_IN_SET(services.serviceid,partner_packages.service_ids)"),">",\DB::raw("'0'"))
@@ -271,11 +286,9 @@ class PartnerPackagesController extends Controller
 
 	public function getPackagesDetailById($pp_id)
 	{
-    	//$PartnerPackagessLists	= PartnerPackages::where('pbal_id', $id)->get();
-
-    	$PartnerPackages = PartnerPackages::where('pbal_id', $pbal_id);
-    	$partnerPackagesLists	= $PartnerPackages->select(['partner_book_a_look.*', 'services.servicename'])
-	    	->leftJoin('services', 'services.serviceid', '=', 'partner_book_a_look.service_id')
+    	$PartnerPackages = PartnerPackages::where('pp_id', $pp_id);
+    	$partnerPackagesLists	= $PartnerPackages->select(['partner_packages.*', 'services.servicename'])
+	    	->leftJoin('services', 'services.serviceid', '=', 'partner_packages.service_ids')
 	    	->get();
 
     	$partner_id 		= Auth::user()->id;
@@ -286,8 +299,20 @@ class PartnerPackagesController extends Controller
     	->orderBy('staff.staff_id', 'DESC')
     	->get();
 
-		if ( !empty($pbal_id) && !$partnerPackagesLists->isEmpty() ) {
+		if ( !empty($pp_id) && !$partnerPackagesLists->isEmpty() ) {
 			$staff_pricing = $partnerPackagesLists[0]->staff_pricing;
+			$service_ids = $partnerPackagesLists[0]->service_ids;
+			$serviceNameArr = [];
+			if ( !empty($service_ids) ) {
+				$service_ids = explode(',', $service_ids);
+				foreach ($service_ids as $skey => $service_id) {
+					$servicename 	= Service::where('serviceid', $service_id)->first()->servicename;
+					$serviceNameArr[] = $servicename;
+				}
+			}
+			if ($serviceNameArr) {
+				$serviceNameArr = implode(',', $serviceNameArr);
+			}
 			$staff_pricing_html = "";
 			if ($staff_pricing) {
 				$json_data = json_decode($staff_pricing);
@@ -345,11 +370,12 @@ class PartnerPackagesController extends Controller
 					}
 				}
 			}
-			// echo "staff_pricing <pre>"; print_r($staff_pricing); die;
+
 			$response = array(
-				"status" 		=> 1,
-				"data" 			=> $partnerPackagesLists,
-				"staff_pricing" => $staff_pricing_html,
+				"status" 			=> 1,
+				"data" 				=> $partnerPackagesLists,
+				"staff_pricing" 	=> $staff_pricing_html,
+				"serviceNameArr" 	=> $serviceNameArr,
 			);
 		}else{
 			$response = array(

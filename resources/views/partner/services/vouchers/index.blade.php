@@ -37,7 +37,7 @@
                   </li>
                   <!--end::Item-->
                   <!--begin::Item-->
-                  <li class="breadcrumb-item text-muted">Packages</li>
+                  <li class="breadcrumb-item text-muted">Vouchers</li>
                   <!--end::Item-->
                </ul>
                <!--end::Breadcrumb-->
@@ -87,8 +87,8 @@
                            <div class="d-flex flex-column">
                               <!--begin::Name-->
                               <div class="d-flex align-items-center mb-2">
-                                 <a href="{{ route('packages.index') }}" class="text-gray-900 text-hover-primary fs-2 fw-bold me-1">Packages</a>
-                                 <a href="{{ route('packages.index') }}"><i class="ki-outline ki-verify fs-1 text-primary"></i></a>
+                                 <a href="{{ route('vouchers.index') }}" class="text-gray-900 text-hover-primary fs-2 fw-bold me-1">Vouchers</a>
+                                 <a href="{{ route('vouchers.index') }}"><i class="ki-outline ki-verify fs-1 text-primary"></i></a>
                               </div>
                               <!--end::Name-->
                            </div>
@@ -161,7 +161,7 @@
                      <!--begin::Section-->
                      <div class="pt-10 pb-0">
                         <!--begin::Title-->
-                        <h3 class="text-dark text-center fw-bold">No Packages added</h3>
+                        <h3 class="text-dark text-center fw-bold">No Vouchers added</h3>
                         <!--end::Title-->
                         <!--begin::Text-->
                         <div class="text-center text-gray-600 fw-semibold pt-1">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
@@ -169,7 +169,7 @@
                         <!--end::Text-->
                         <!--begin::Action-->
                         <div class="text-center mt-5 mb-9">
-                           <a href="#" class="btn btn-sm btn-primary px-6" data-bs-toggle="modal" data-bs-target="#kt_modal_scrollable22">Add Package</a>
+                           <a href="#" class="btn btn-sm btn-primary px-6" data-bs-toggle="modal" data-bs-target="#kt_modal_scrollable22">Add Voucher</a>
                         </div>
                         <!--end::Action-->
                      </div>
@@ -190,7 +190,7 @@
                   <ul class="nav nav-custom nav-tabs nav-line-tabs nav-line-tabs-2x border-0 fs-4 fw-semibold mb-n2">
                      <!--begin:::Tab item-->
                      <li class="nav-item">
-                        <a class="nav-link text-active-primary pb-4 active" data-bs-toggle="tab" href="#managetbl">Manage Package</a>
+                        <a class="nav-link text-active-primary pb-4 active" data-bs-toggle="tab" href="#managetbl">Manage Vouchers</a>
                      </li>
                      <!--end:::Tab item-->
                      <!--begin:::Tab item-->
@@ -216,7 +216,7 @@
                            <div class="card-toolbar">
                               <div class="d-flex justify-content-end" data-kt-user-table-toolbar="base">
                                  <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#kt_modal_scrollable22">
-                                 <i class="ki-duotone ki-plus fs-2"></i>Add Package
+                                 <i class="ki-duotone ki-plus fs-2"></i>Add Voucher
                                  </button>
                               </div>
                            </div>
@@ -230,12 +230,12 @@
                            <thead>
                               <!--begin::Table row-->
                               <tr class="text-start text-gray-400 fw-bold fs-7 text-uppercase gs-0">
-                                 <th>Package Name</th>
+                                 <th>Voucher Name</th>
                                  <th>Gender</th>
                                  <th>Duration</th>
-                                 <th>Walk-in</th>
-                                 <th>Online</th>
-                                 <th>Off-Peak</th>
+                                 <th>Sessions</th>
+                                 <th>Price</th>
+                                 <th>Validity</th>
                                  <th>Qty Sold</th>
                                  <th>Status</th>
                                  <th class="text-end">Action</th>
@@ -245,10 +245,10 @@
                            <!--end::Table head-->
                            <!--begin::Table body-->
                            <tbody class="fw-bold text-gray-600 alntop">
-                              @if(!empty($packageLists))
-                               @foreach($packageLists as $key => $packageList)
+                              @if(!empty($voucherLists))
+                               @foreach($voucherLists as $key => $voucherList)
                                @php 
-                                  $status = $packageList['status']; 
+                                  $status = $voucherList['status']; 
                                   if($status){
                                      $text = "Enabled";
                                      $class = "success";
@@ -261,7 +261,7 @@
                                      $statusText = "Enable";
                                   }
 
-                                  $full_name = $packageList['servicename'];
+                                  $full_name = $voucherList['servicename'];
                                   $name_parts = explode(' ', $full_name);
                                   $shortName = '';
                                   foreach ($name_parts as $part) {
@@ -271,30 +271,30 @@
                                @endphp
                               <tr>
                                  <td>
-                                    <a href="#" id="kt_drawer_example_permanent_toggle">
+                                    <a href="javascript:void(0)" id="kt_drawer_example_permanent_toggle2" class="get-voucher-detail-by-id" voucher-id="{{ $voucherList['pv_id'] }}">
                                        <div class="d-flex gap-3">
                                           <div data-qa="color-sample-blue" class="color-ind">
                                              <div class="color-ind-single blue" title="blue">
                                              </div>
                                           </div>
                                           <div class="d-flex justify-content-start flex-column">
-                                             <span class="text-dark fw-bold text-hover-primary mb-1 fs-6">{{ $packageList['package_name'] }}</span>
+                                             <span class="text-dark fw-bold text-hover-primary mb-1 fs-6">{{ $voucherList['voucher_name'] }}</span>
                                              <span class="text-muted fw-semibold text-muted d-block fs-7">
-                                             {{ $packageList['servicename'] }}
+                                             {{ $voucherList['servicename'] }}
                                              </span>
                                           </div>
                                        </div>
                                     </a>
                                  </td>
-                                 <td>{{ $packageList['gender'] }}</td>
-                                 <td>{{ $packageList['duration'] }}</td>
+                                 <td>{{ $voucherList['gender'] }}</td>
+                                 <td>{{ $voucherList['duration'] }}</td>
                                  <td>
-                                    <span class="text-dark fw-bold text-hover-primary d-block mb-1 fs-6">{{ $partner_country_config->currency_sign }}{{ $packageList['walk_in_price'] }}</span>
+                                    <span class="text-dark fw-bold text-hover-primary d-block mb-1 fs-6">{{ $voucherList['number_session'] }}</span>
                                  </td>
                                  <td>
-                                    <span class="text-dark fw-bold text-hover-primary d-block mb-1 fs-6">{{ $partner_country_config->currency_sign }}{{ $packageList['online_price'] }}</span>
+                                    <span class="text-dark fw-bold text-hover-primary d-block mb-1 fs-6">{{ $partner_country_config->currency_sign }}{{ $voucherList['voucher_price'] }}</span>
                                  </td>
-                                 <td>{{ $partner_country_config->currency_sign }}{{ $packageList['off_peak_price'] }}</td>
+                                 <td>{{ $voucherList['validity'] }}</td>
                                  <td>30</td>
                                  <td>
                                     <span class="badge badge-light-{{$class}}">{{ $text }}</span>
@@ -306,13 +306,13 @@
                                     <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-600 menu-state-bg-light-primary fw-semibold fs-7 w-125px py-4" data-kt-menu="true">
                                        <!--begin::Menu item-->
                                        <div class="menu-item px-3">
-                                          <a href="javascript:void(0)" id="kt_drawer_example_permanent_toggle2" class="menu-link px-3 get-package-detail-by-id" package-id="{{ $packageList['pp_id'] }}">Edit</a>
+                                          <a href="javascript:void(0)" id="kt_drawer_example_permanent_toggle2" class="menu-link px-3 get-voucher-detail-by-id" voucher-id="{{ $voucherList['pv_id'] }}">Edit</a>
                                        </div>
                                        <!--end::Menu item-->
 
                                        <!--begin::Menu item-->
                                        <div class="menu-item px-3">
-                                        <a href="javascript:void(0)" class="menu-link px-3 status-change" status-value="{{ $statusVal }}" package-id="{{ $packageList['pp_id'] }}">{{ $statusText }}
+                                        <a href="javascript:void(0)" class="menu-link px-3 status-change" status-value="{{ $statusVal }}" voucher-id="{{ $voucherList['pv_id'] }}">{{ $statusText }}
                                         </a>
                                        </div>
                                     </div>
@@ -341,8 +341,8 @@
 
 <!--begin::Modals-->
 
-@include('partner.services.packages.modal.add')
-@include('partner.services.packages.modal.edit')
+@include('partner.services.vouchers.modal.add')
+@include('partner.services.vouchers.modal.edit')
 <!--end::Modals-->
 
 @endsection
@@ -475,9 +475,9 @@
 
   window.addEventListener("DOMContentLoaded", (event) => {
     ser_duration = document.querySelector('.ser_duration');
-    ser_walkin = document.querySelector('.ser_walkin');
+    /*ser_walkin = document.querySelector('.ser_walkin');
     ser_online = document.querySelector('.ser_online');
-    ser_Offpeak = document.querySelector('.ser_Offpeak');
+    ser_Offpeak = document.querySelector('.ser_Offpeak');*/
     ser_totalprice = document.querySelector('.ser_totalprice');
 
   });
@@ -508,9 +508,9 @@
     }
 
     ser_duration.value = durStr.reduce((acc, i) => acc + Number(i), 0) + ' min';
-    ser_walkin.value = walkinStr.reduce((acc, i) => acc + Number(i), 0);
+    /*ser_walkin.value = walkinStr.reduce((acc, i) => acc + Number(i), 0);
     ser_online.value = onlineStr.reduce((acc, i) => acc + Number(i), 0);
-    ser_Offpeak.value = offpeakStr.reduce((acc, i) => acc + Number(i), 0);
+    ser_Offpeak.value = offpeakStr.reduce((acc, i) => acc + Number(i), 0);*/
   }
 
   function remPackInd(e) {
@@ -519,16 +519,16 @@
       if(pos_e_Elem[i] == e.parentElement) {
         selArrNew.splice(i, 1);
         durStr.splice(i,1);
-        walkinStr.splice(i,1);
+        /*walkinStr.splice(i,1);
         onlineStr.splice(i,1);
-        offpeakStr.splice(i,1);
+        offpeakStr.splice(i,1);*/
       }
     }
 
     ser_duration.value = durStr.reduce((acc, i) => acc + Number(i), 0) + ' min';
-    ser_walkin.value = walkinStr.reduce((acc, i) => acc + Number(i), 0);
+    /*ser_walkin.value = walkinStr.reduce((acc, i) => acc + Number(i), 0);
     ser_online.value = onlineStr.reduce((acc, i) => acc + Number(i), 0);
-    ser_Offpeak.value = offpeakStr.reduce((acc, i) => acc + Number(i), 0);
+    ser_Offpeak.value = offpeakStr.reduce((acc, i) => acc + Number(i), 0);*/
 
     e.parentElement.remove();
 
@@ -567,7 +567,5 @@
 
 </script>
 
-<script src="{{asset('/public/assets/js/partner/packages.js')}}" type="text/javascript"></script>
-<script src="{{asset('/public/partner/assets/js/add_packages_staff_pricing.js')}}" type="text/javascript"></script>
-<script src="{{asset('/public/partner/assets/js/edit_packages_staff_pricing.js')}}" type="text/javascript"></script>
+<script src="{{asset('/public/assets/js/partner/voucher.js')}}" type="text/javascript"></script>
 @endpush
