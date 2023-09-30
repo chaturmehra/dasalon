@@ -38,9 +38,10 @@ class ServicesConfigController extends Controller
     public function create(Request $request)
     {
     	
-        $sc = new ServiceCategory;  
-        $sc->country =  getSelectedCountry();  
-        $sc->category = $request->get('category');  
+        $country        =getSelectedCountry();
+        $sc             = new ServiceCategory;  
+        $sc->country    = isset($country)?$country:"";  
+        $sc->category   = $request->get('category');  
 
         if($request->file('icon')){
             $file= $request->file('icon');

@@ -22,7 +22,7 @@
                <!--begin::Card toolbar-->
                <div class="card-toolbar">
                   <!--begin::Close-->
-                  <div class="btn btn-icon btn-sm btn-active-light-primary ms-2" id="kt_drawer_example_permanent_close">
+                  <div class="btn btn-icon btn-sm btn-active-light-primary ms-2 close_form" id="kt_drawer_example_permanent_close">
                      <i class="ki-duotone ki-cross fs-2x"><span class="path1"></span><span class="path2"></span></i>
                   </div>
                   <!--end::Close-->
@@ -2327,7 +2327,7 @@
                   <!--begin::Card toolbar-->
                   <div class="card-toolbar">
                      <!--begin::Close-->
-                     <div class="btn btn-icon btn-sm btn-active-light-primary ms-2" id="kt_drawer_example_permanent_close2">
+                     <div class="btn btn-icon btn-sm btn-active-light-primary ms-2 close_form" id="kt_drawer_example_permanent_close2">
                         <i class="ki-duotone ki-cross fs-2x"><span class="path1"></span><span class="path2"></span></i>
                      </div>
                      <!--end::Close-->
@@ -2404,7 +2404,7 @@
                   <!--begin::Card toolbar-->
                   <div class="card-toolbar">
                      <!--begin::Close-->
-                     <div class="btn btn-icon btn-sm btn-active-light-primary ms-2" id="kt_drawer_example_permanent_close3">
+                     <div class="btn btn-icon btn-sm btn-active-light-primary ms-2 close_form" id="kt_drawer_example_permanent_close3">
                         <i class="ki-duotone ki-cross fs-2x"><span class="path1"></span><span class="path2"></span></i>
                      </div>
                      <!--end::Close-->
@@ -2589,7 +2589,7 @@
                   <!--begin::Card toolbar-->
                   <div class="card-toolbar">
                      <!--begin::Close-->
-                     <div class="btn btn-icon btn-sm btn-active-light-primary ms-2" id="kt_drawer_example_permanent_close4">
+                     <div class="btn btn-icon btn-sm btn-active-light-primary ms-2 close_form" id="kt_drawer_example_permanent_close4">
                         <i class="ki-duotone ki-cross fs-2x"><span class="path1"></span><span class="path2"></span></i>
                      </div>
                      <!--end::Close-->

@@ -83,7 +83,7 @@
                                        $time_least_count = isset($task->time_least_count) ? $task->time_least_count : "";
                                        @endphp
                                        <select aria-label="Leastcouunt" name="time_least_count" data-control="select2" data-placeholder="Least count..." class="form-select mb-2">
-                                          <option value="" {{ ( $time_least_count == "" ) ? 'selected' : '' }}></option>
+                                          <option value="" {{ ( $time_least_count == "" ) ? 'selected' : "" }}></option>
                                           <option value="15 mins" {{ ( $time_least_count=="15 mins") ? 'selected' : '' }}>15 mins</option>
                                           <option value="30 mins" {{ ( $time_least_count=="30 mins") ? 'selected' : '' }}>30 mins</option>
                                           <option value="45 mins" {{ ( $time_least_count=="45 mins") ? 'selected' : '' }}>45 mins</option>

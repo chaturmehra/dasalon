@@ -16,9 +16,10 @@ use Illuminate\Http\RedirectResponse;
 class CountryController extends Controller
 {
    
-    public function index()
+    public function index(Request $request)
     {
         $bts=BusinessType::all();
+        //$selectedOption = $request->input('kt_docs_select2_country2');,'selectedOption'
         return view('admin/setting/country/index',compact('bts'));
     }
 
@@ -28,17 +29,16 @@ class CountryController extends Controller
     }
 	
  	public function saveCountry(Request $request){
-    //    echo "<pre>"; print_r($request->status); die;
 		 CountryConfig::create([
-            'country_id' => $request->country,
-			'country_code' => $request->country_code,
-			'currency_code' => $request->currency_code,
-			'currency_sign' => $request->currency_sign,
-			'short_name' => $request->short_name,
-			'language' => $request->language,
-			'no_length' => $request->no_lenght,
-			'pin' => $request->pin,
-			'status' => $request->status,
+            'country_id'            => $request->country,
+			'country_code'          => $request->country_code,
+			'currency_code'         => $request->currency_code,
+			'currency_sign'         => $request->currency_sign,
+			'short_name'            => $request->short_name,
+			'language'              => $request->language,
+			'no_length'             => $request->no_lenght,
+			'pin'                   => $request->pin,
+			'status'                => $request->status,
         ]);
 		return response()->json(['status'=>true]);
 	}
@@ -69,10 +69,10 @@ class CountryController extends Controller
 		
 		 $city=implode(',',$request->dis_city);
 		 DisableCity::create([
-            'country' => $request->dis_country,
-			'state' => $request->dis_state,
-			'city' => $city,
-			'status' => '1',
+            'country'    => $request->dis_country,
+			'state'      => $request->dis_state,
+			'city'       => $city,
+			'status'     => '1',
         ]);
 		return response()->json(['status'=>true]);
 	}
@@ -90,7 +90,7 @@ class CountryController extends Controller
     {
         $bt = new BusinessType;
         $bt->businesstype 		= $request->businesstype;
-        $bt->is_active 	= 1;
+        $bt->is_active 	        = 1;
         $bt->save();
         return redirect()->back()->with('message', 'Business Type created successfully.');
     }
@@ -101,7 +101,7 @@ class CountryController extends Controller
             $bt = new BusinessType;
 
             $bt->exists       = true;
-            $bt->bt_id           = $bt_id;
+            $bt->bt_id        = $bt_id;
             $bt->is_active    = 1;
             $bt->updated_at   = date('Y-m-d H:i:s');
 
@@ -120,10 +120,9 @@ class CountryController extends Controller
 
 	        $bt->exists 		= true;
 	        $bt->bt_id 			= $bt_id;
-	        $bt->is_active 	= 0;
+	        $bt->is_active 	    = 0;
 	        $bt->updated_at 	= date('Y-m-d H:i:s');
-            
-            // echo "<pre>"; print_r($s->is_active);die;
+
             
 	        $bt->save();
 
@@ -145,19 +144,19 @@ class CountryController extends Controller
 	}
 	
 	public function getAjaxList(Request $request){
-        $draw = $request->get('draw');
-        $start = $request->get("start");
-        $rowperpage = $request->get("length"); // Rows display per page
+        $draw       = $request->get('draw');
+        $start      = $request->get("start");
+        $rowperpage = $request->get("length"); 
    
-        $columnIndex_arr = $request->get('order');
-        $columnName_arr = $request->get('columns');
-        $order_arr = $request->get('order');
-        $search_arr = $request->get('search');
+        $columnIndex_arr    = $request->get('order');
+        $columnName_arr     = $request->get('columns');
+        $order_arr          = $request->get('order');
+        $search_arr         = $request->get('search');
    
-        $columnIndex = $columnIndex_arr[0]['column']; // Column index
-        $columnName = $columnName_arr[$columnIndex]['data']; // Column name
-        $columnSortOrder = $order_arr[0]['dir']; // asc or desc
-        $searchValue = $search_arr['value']; // Search value
+        $columnIndex        = $columnIndex_arr[0]['column']; 
+        $columnName         = $columnName_arr[$columnIndex]['data']; 
+        $columnSortOrder    = $order_arr[0]['dir']; // asc or desc
+        $searchValue        = $search_arr['value']; // Search value
    
         // Total records
          $totalRecords = CountryConfig::leftJoin('countries', 'country_config.country_id', '=', 'countries.id')->where('countries.name', 'like', '%' .$searchValue . '%')->skip($start)->take($rowperpage)->orderBy($columnName,$columnSortOrder)->count();
@@ -172,17 +171,18 @@ class CountryController extends Controller
 
         foreach($records as $record){
    
-            $action='<a href="#" class="btn btn-light btn-active-light-primary btn-flex btn-center btn-sm" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end">Actions
-                     <i class="ki-duotone ki-down fs-5 ms-1"></i></a>
-                  <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-600 menu-state-bg-light-primary fw-semibold fs-7 w-125px py-4" data-kt-menu="true">
-                         
-                 <div class="menu-item px-3">
-                     <a href="javascript:void(0)"  data-id="1" id="' . $record->id . '" class="menu-link px-3  on_status">Enable</a>
-                 </div>
-                 <div class="menu-item px-3">
-                 <a href="javascript:void(0)"  data-id="0" id="' . $record->id . '" class="menu-link px-3  on_status">Disable</a>
-                 </div>
-                 </div>';
+            $action='
+            <a href="javascript:void(0)" class="btn btn-light btn-active-light-primary btn-flex btn-center btn-sm" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end">Actions
+                <i class="ki-duotone ki-down fs-5 ms-1"></i>
+                </a>
+                <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-600 menu-state-bg-light-primary fw-semibold fs-7 w-125px py-4" data-kt-menu="true">
+                <div class="menu-item px-3">
+                <a href="javascript:void(0)" data-id="1" id="{{ $record->id }}" class="menu-link px-3 on_status">Enable</a>
+                </div>
+                <div class="menu-item px-3">
+                <a href="javascript:void(0)" data-id="0" id="{{ $record->id }}" class="menu-link px-3 on_status">Disable</a>
+                </div>
+            </div>';
 
             $status = '<div class="badge badge-light-danger fw-bold">Disabled</div>';
             if($record->status == '1'){
@@ -191,12 +191,12 @@ class CountryController extends Controller
 		
         
            $data_arr[] = array(
-             "country_id" => $record->name,
-			 "country_code" => $record->country_code,
+             "country_id"    => $record->name,
+			 "country_code"  => $record->country_code,
 			 "currency_code" => $record->currency_code,
 			 "currency_sign" => $record->currency_sign,
-			 "status" => $status,
-             "action" => $action,
+			 "status"        => $status,
+             "action"        => $action,
            );
         }
    
@@ -301,26 +301,25 @@ class CountryController extends Controller
     }
 	
 		 public function getpartnerTypeAjaxList(Request $request){
-        $draw = $request->get('draw');
-        $start = $request->get("start");
-        $rowperpage = $request->get("length"); // Rows display per page
+        $draw               = $request->get('draw');
+        $start              = $request->get("start");
+        $rowperpage         = $request->get("length"); // Rows display per page
    
-        $columnIndex_arr = $request->get('order');
-        $columnName_arr = $request->get('columns');
-        $order_arr = $request->get('order');
-        $search_arr = $request->get('search');
+        $columnIndex_arr    = $request->get('order');
+        $columnName_arr     = $request->get('columns');
+        $order_arr          = $request->get('order');
+        $search_arr         = $request->get('search');
    
-        $columnIndex = $columnIndex_arr[0]['column']; // Column index
-        $columnName = $columnName_arr[$columnIndex]['data']; // Column name
-        $columnSortOrder = $order_arr[0]['dir']; // asc or desc
-        $searchValue = $search_arr['value']; // Search value
+        $columnIndex        = $columnIndex_arr[0]['column']; // Column index
+        $columnName         = $columnName_arr[$columnIndex]['data']; // Column name
+        $columnSortOrder    = $order_arr[0]['dir']; // asc or desc
+        $searchValue        = $search_arr['value']; // Search value
    
-        // Total records
          $totalRecords = PartnerType::where('partner_name', 'like', '%' .$searchValue . '%')->skip($start)->take($rowperpage)->orderBy($columnName,$columnSortOrder)->count();
         $totalRecordswithFilter = PartnerType::where('partner_name', 'like', '%' .$searchValue . '%')->skip($start)->take($rowperpage)->orderBy($columnName,$columnSortOrder)->count();
 		
    
-        // Fetch records
+        
         $records = PartnerType::where('partner_name', 'like', '%' .$searchValue . '%')->skip($start)->take($rowperpage)->orderBy($columnName,$columnSortOrder)->get();
    
         $data_arr = array();
@@ -352,24 +351,23 @@ class CountryController extends Controller
 	public function getpartnerDetailsAjaxList(Request $request){
         $draw = $request->get('draw');
         $start = $request->get("start");
-        $rowperpage = $request->get("length"); // Rows display per page
+        $rowperpage = $request->get("length"); 
    
         $columnIndex_arr = $request->get('order');
         $columnName_arr = $request->get('columns');
         $order_arr = $request->get('order');
         $search_arr = $request->get('search');
    
-        $columnIndex = $columnIndex_arr[0]['column']; // Column index
-        $columnName = $columnName_arr[$columnIndex]['data']; // Column name
-        $columnSortOrder = $order_arr[0]['dir']; // asc or desc
-        $searchValue = $search_arr['value']; // Search value
+        $columnIndex = $columnIndex_arr[0]['column']; 
+        $columnName = $columnName_arr[$columnIndex]['data']; 
+        $columnSortOrder = $order_arr[0]['dir']; 
+        $searchValue = $search_arr['value'];
    
-        // Total records
+        
          $totalRecords = PartnerDetails::leftJoin('countries', 'partner_details.country', '=', 'countries.id')->leftJoin('partner_type', 'partner_details.partner_type', '=', 'partner_type.id')->where('countries.name', 'like', '%' .$searchValue . '%')->skip($start)->take($rowperpage)->orderBy($columnName,$columnSortOrder)->count();
         $totalRecordswithFilter = PartnerDetails::leftJoin('countries', 'partner_details.country', '=', 'countries.id')->leftJoin('partner_type', 'partner_details.partner_type', '=', 'partner_type.id')->where('countries.name', 'like', '%' .$searchValue . '%')->skip($start)->take($rowperpage)->orderBy($columnName,$columnSortOrder)->count();
 		
    
-        // Fetch records
         $records = PartnerDetails::leftJoin('countries', 'partner_details.country', '=', 'countries.id')->leftJoin('partner_type', 'partner_details.partner_type', '=', 'partner_type.id')->where('countries.name', 'like', '%' .$searchValue . '%')->skip($start)->take($rowperpage)->orderBy($columnName,$columnSortOrder)->get(['partner_details.*','countries.name','partner_type.partner_name']);
    
         $data_arr = array();

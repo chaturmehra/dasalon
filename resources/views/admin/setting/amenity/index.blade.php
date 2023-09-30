@@ -54,6 +54,7 @@ $getPartnerType = getPartnerType();
 			<!--begin::Content container-->
 			<div id="kt_app_content_container" class="app-container container-fluid">
 
+
 				@include('admin.setting.tab')
 
 				<div class="card card-flush">
@@ -121,7 +122,7 @@ $getPartnerType = getPartnerType();
 																<h5 class="modal-title">Add Amenity</h5>
 
 																<!--begin::Close-->
-																<div class="btn btn-icon btn-sm btn-active-light-primary ms-2" data-bs-dismiss="modal" aria-label="Close">
+																<div class="btn btn-icon btn-sm btn-active-light-primary ms-2 close_form close_form" data-bs-dismiss="modal" aria-label="Close">
 																	<i class="ki-duotone ki-cross fs-2x"><span class="path1"></span><span class="path2"></span></i>
 																</div>
 																<!--end::Close-->
@@ -160,7 +161,7 @@ $getPartnerType = getPartnerType();
 																		<!--begin::Input group-->
 																		<div class="fv-row mb-7 d-flex flex-column">
 																			<label class="required fw-semibold fs-6 mb-2">Amenity icon</label>
-																			<div class="image-input image-input-empty" data-kt-image-input="true">
+																			<div class="image-input image-input-empty image_amentiy" data-kt-image-input="true">
 																				<!--begin::Image preview wrapper-->
 																				<div class="image-input-wrapper w-125px h-125px"></div>
 																				<!--end::Image preview wrapper-->
@@ -320,7 +321,7 @@ $getPartnerType = getPartnerType();
 													<h5 class="modal-title">Add Special attribute</h5>
 
 													<!--begin::Close-->
-													<div class="btn btn-icon btn-sm btn-active-light-primary ms-2" data-bs-dismiss="modal" aria-label="Close">
+													<div class="btn btn-icon btn-sm btn-active-light-primary ms-2 close_form close_form" data-bs-dismiss="modal" aria-label="Close">
 														<i class="ki-duotone ki-cross fs-2x"><span class="path1"></span><span class="path2"></span></i>
 													</div>
 													<!--end::Close-->
@@ -350,7 +351,7 @@ $getPartnerType = getPartnerType();
 																<label class="required fw-semibold fs-6 mb-2">Amenity icon</label>
 																<div class="image-input image-input-empty" data-kt-image-input="true">
 																	<!--begin::Image preview wrapper-->
-																	<div class="image-input-wrapper w-125px h-125px"></div>
+																	<div class="image-input-wrapper  special_amenity w-125px h-125px"></div>
 																	<!--end::Image preview wrapper-->
 
 																	<!--begin::Edit button-->
@@ -601,9 +602,6 @@ $getPartnerType = getPartnerType();
 		var input_add_category = document.querySelector("#amenity_category");
 		var service_list = "@php echo implode(',', getAmenityCategory()); @endphp";
 		service_list = service_list.split(",");
-//    service_list = [service_list];
-//   console.log("getAmenityCategory", service_list)
-	//var service_list = amenity_cat;
 
 
 		function productDrp(input, list) {
@@ -611,10 +609,10 @@ $getPartnerType = getPartnerType();
 				whitelist: list,
 				maxTags: 1,
 				dropdown: {
-		        maxItems: 40,           // <- mixumum allowed rendered suggestions
-		        classname: "tagify__inline__suggestions", // <- custom classname for this dropdown, so it could be targeted
-		        enabled: 0,             // <- show suggestions on focus
-		        closeOnSelect: true    // <- do not hide the suggestions dropdown once an item has been selected
+		        maxItems: 40,           
+		        classname: "tagify__inline__suggestions", 
+		        enabled: 0,             
+		        closeOnSelect: true 
 		     }
 		  });
 		}
@@ -696,9 +694,9 @@ $getPartnerType = getPartnerType();
 
 	$(document).on('click', '.on_status', function(){
 		event.preventDefault();
-		var id = $(this).attr('id');
+		var id      = $(this).attr('id');
 		var data_id = $(this).attr('data-id');
-		var ajaxurl = '{{ url('admin/setting/edit-amenity-status/')}}'+'/' + id+'/'+data_id;
+		var ajaxurl = '{{ url("admin/setting/edit-amenity-status/")}}'+'/' + id+'/'+data_id;
 		swal({
 			title: "Are you sure?",
 			text: "To change status this amenity?",
@@ -759,5 +757,81 @@ $getPartnerType = getPartnerType();
 			}
 		});
 	});
+</script>
+<script type="text/javascript">
+	$(document).ready(function () {
+    var maxImageSize 	        = 20480; 
+    var imageInput 			       	= document.getElementById('amenity_icon');
+    var imageInput_special 			= document.getElementById('special_amenity_icon');   
+    var imagePreview 				= document.querySelector('.image-input-wrapper');
+    var imagePreview2 				= document.querySelector('.special_amenity');
+    var blankImageUrl 				= '{{ asset("public/assets/media/avatars/blank.png") }}';
+    
+
+    imageInput.addEventListener('change', function () {
+        if (this.files && this.files[0]) {
+            var imageFile = this.files[0];
+            if (imageFile.size > maxImageSize) {
+            	imagePreview.style.backgroundImage = 'url(' + blankImageUrl + ')';
+                showWarningPopup();
+            }
+
+        }
+    });
+
+
+    imageInput_special.addEventListener('change', function () {
+        if (this.files && this.files[0]) {
+            var imageFile = this.files[0];
+            if (imageFile.size > maxImageSize) {
+            	imagePreview2.style.backgroundImage = 'url(' + blankImageUrl + ')';
+                showWarningPopup_special();
+            }
+
+        }
+    });
+
+    function showWarningPopup() {
+        Swal.fire({
+            icon: 'warning',
+            title: 'Image Size Warning',
+            text: 'The selected image size exceeds 20 KB.',
+            confirmButtonText: 'Ok, got it!',
+            customClass: {
+                confirmButton: 'btn btn-primary'
+            }
+        }).then((result) => {
+            if (result.isConfirmed) {
+                imageInput.value = '';
+                imagePreview.style.backgroundImage = 'url(' + blankImageUrl + ')'; 
+            } 
+        });
+    }
+
+
+    function showWarningPopup_special() {
+        Swal.fire({
+            icon: 'warning',
+            title: 'Image Size Warning',
+            text: 'The selected image size exceeds 20 KB.',
+            confirmButtonText: 'Ok, got it!',
+            customClass: {
+                confirmButton: 'btn btn-primary'
+            }
+        }).then((result) => {
+            if (result.isConfirmed) {
+                imageInput_special.value = '';
+                imagePreview2.style.backgroundImage = 'url(' + blankImageUrl + ')'; 
+            } 
+        });
+    }
+
+
+    // var closeFormButton = document.querySelector('.close_form');
+    // closeFormButton.addEventListener('click', function () {
+    //     location.reload();
+    // });
+});
+
 </script>
 @endpush
