@@ -1,44 +1,11 @@
 $(document).ready(function(){
-	$(".service-category").change(function(event){
-		event.preventDefault();
-        var category_id = $(this).val();
-        var ajaxurl = baseurl+'partner/bookalook/get-subcategory'+'/' + category_id;
-        $.ajax({
-        	url:ajaxurl,
-        	type:'GET',
-        	beforeSend:function(){
-        		$('.spinner-cls').show();
-        	},
-        	success:function(data)
-        	{
-        		$('#add-service-sub-category').html(data);
-        	}
-        });
-    });
-	$(".edit-service-category").change(function(event){
-		event.preventDefault();
-        var category_id = $(this).val();
-        var ajaxurl = baseurl+'partner/bookalook/get-subcategory'+'/' + category_id;
-        $.ajax({
-        	url:ajaxurl,
-        	type:'GET',
-        	beforeSend:function(){
-        		$('.spinner-cls').show();
-        	},
-        	success:function(data)
-        	{
-        		$('#edit-service-sub-category').html(data);
-        	}
-        });
-    });
-
 	$(document).on('click', '.status-change', function(event){
 		event.preventDefault();
 		var status_val  = $(this).attr('status-value');
-		var bookalook_id    = $(this).attr('bookalook-id');
-		var ajaxurl     = baseurl+'partner/bookalook/edit-bookalook-status'+'/' + bookalook_id+'/'+status_val;
+		var package_id  = $(this).attr('package-id');
+		var ajaxurl     = baseurl+'partner/packages/edit-packages-status'+'/' + package_id+'/'+status_val;
 		Swal.fire({
-			text: "Are you sure you want to change this book a look status?",
+			text: "Are you sure you want to change this package status?",
 			icon: "warning",
 			showCancelButton: !0,
 			buttonsStyling: !1,
@@ -61,7 +28,7 @@ $(document).ready(function(){
 					{
 						$('.spinner-cls').hide();
 						Swal.fire({
-							title: "Your have successfully changed book a look status!",
+							title: "Your have successfully changed package status!",
 							icon: "success",
 							buttonsStyling: !1,
 							confirmButtonText: "Ok, got it!",
@@ -76,11 +43,11 @@ $(document).ready(function(){
 		});
 	});
 
-	$(document).on('click', '.get-bookalook-detail-by-id', function(event){
+	$(document).on('click', '.get-package-detail-by-id', function(event){
 		event.preventDefault();
-		var bookalook_id    = $(this).attr('bookalook-id');
-		if(bookalook_id){
-			var ajaxurl = baseurl+'partner/bookalook/get-bookalook-detail-by-id'+'/' + bookalook_id;
+		var package_id    = $(this).attr('package-id');
+		if(package_id){
+			var ajaxurl = baseurl+'partner/packages/get-package-detail-by-id'+'/' + package_id;
 			$.ajax({
 				url: ajaxurl,
 				type:'GET',
@@ -98,42 +65,29 @@ $(document).ready(function(){
 
 						var service_data = response.data[0];
 
-						$("#partner_book_a_look").val(service_data.pbal_id);
-
-						$(".service-name").text(service_data.servicename);
-
-						if (service_data.look_image) {
-							var look_image = publicurl+service_data.look_image;
-							$("#old_look_image").val(service_data.look_image);
-							$(".book-alook-image").css('background-image', 'url('+look_image+')');
-						}else{
-							var look_image = publicurl+'partner/assets/media/svg/files/blank-image.svg';
-							$("#old_look_image").val("");
-							$(".book-alook-image").css('background-image', 'url('+look_image+')');
+						$("#partner_package_id").val(service_data.pp_id);
+						$(".package-name").text(service_data.package_name);
+						$(".package-description").text(service_data.description);
+						
+						if (response.serviceNameArr) {
+							$(".edit-service-option").val(response.serviceNameArr);
 						}
-
 						if(service_data.status){
-							$(".service-status").text("Active");
+							$(".package-status").text("Active");
 						}else{
-							$(".service-status").text("Inactive");
+							$(".package-status").text("Inactive");
 						}
 						if(service_data.online_price){
-							$(".service-online-price").val(service_data.online_price);
+							$(".package-online-price").val(service_data.online_price);
 						}
 						if(service_data.off_peak_price){
-							$(".service-off-peak-price").val(service_data.off_peak_price);
+							$(".package-off-peak-price").val(service_data.off_peak_price);
 						}
 						if(service_data.walk_in_price){
-							$(".service-walk-in-price").val(service_data.walk_in_price);
-						}
-						if(service_data.category_id){
-							$(".service-category").val(service_data.category_id).trigger('change');
-						}
-						if(service_data.sub_category_id){
-							$(".edit-service-sub-category").val(service_data.sub_category_id).trigger('change');
+							$(".package-walk-in-price").val(service_data.walk_in_price);
 						}
 						if(service_data.duration){
-							$(".service-duration").val(service_data.duration).trigger('change');
+							$(".package-duration").val(service_data.duration);
 						}
 
 						if (service_data.gender == "Female"){
@@ -148,14 +102,14 @@ $(document).ready(function(){
 						if (venues) {
 							var split_venues = venues.split(",");
 							$.each(split_venues, function(index, value) {
-								$(".service-venues[value="+value+"]").prop("checked", true);
+								$(".package-venues[value="+value+"]").prop("checked", true);
 							});
 						}
 
 						var staff_pricing      = response.staff_pricing;
-						$('.booklook-staff-pricing-list').html('');
+						$('.packages-staff-pricing-list').html('');
 						if (staff_pricing) {
-							$('.booklook-staff-pricing-list').append(staff_pricing);
+							$('.packages-staff-pricing-list').append(staff_pricing);
 						}
 
 					}

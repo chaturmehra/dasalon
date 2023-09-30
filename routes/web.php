@@ -37,6 +37,8 @@ use App\Http\Controllers\Partner\ExportController;
 use App\Http\Controllers\Partner\BookAlookController;
 use App\Http\Controllers\Admin\OfferManagementVoucherController;
 use App\Http\Controllers\Partner\PartnerPackagesController;
+use App\Http\Controllers\Partner\PartnerVouchersController;
+use App\Http\Controllers\Partner\PartnerMembershipsController;
 
 
 /*
@@ -66,10 +68,13 @@ Route::get("user/book-a-service", [UserController::class, 'bookService'])->name(
 Route::get("user/signup/{id}", [UserController::class, 'signinFormProvided'])->name('service-provided');
 Route::get("user/signup-service-provided", [UserController::class, 'signupServiceProvided'])->name('signup-service-provided');
 Route::middleware(['auth', 'user-role:admin'])->group(function () {
-    Route::get("/admin/dashboard", [HomeController::class, 'userHome'])->name('home');
+    Route::get("/admin/dashboard", [HomeController::class, 'userHome'])->name('admin.dashboard');
 });
 Route::middleware(['auth', 'user-role:partner'])->group(function () {
-    Route::get("/partner/dashboard", [HomeController::class, 'userHome'])->name('home');
+    Route::get("/partner/dashboard", [HomeController::class, 'userHome'])->name('partner.dashboard');
+});
+Route::middleware(['auth', 'user-role:manager'])->group(function () {
+    Route::get("/manager/dashboard", [HomeController::class, 'userHome'])->name('manager.dashboard');
 });
 
 Route::middleware(['auth'])->group(function () {
@@ -191,6 +196,22 @@ Route::middleware(['auth'])->group(function () {
     Route::get('partner/bookalook/get-bookalook-detail-by-id/{id}', [BookAlookController::class, 'getBookalookDetailById']);
 
     Route::get('partner/packages', [PartnerPackagesController::class, 'index'])->name('packages.index');
+    Route::post('partner/packages/store', [PartnerPackagesController::class, 'packagesStore']);
+    Route::post('partner/packages/update', [PartnerPackagesController::class, 'packagesUpdate']);
+    Route::get('partner/packages/edit-packages-status/{id}/{status}', [PartnerPackagesController::class, 'changePackagesStatus']);
+    Route::get('partner/packages/get-package-detail-by-id/{id}', [PartnerPackagesController::class, 'getPackagesDetailById']);
+
+    Route::get('partner/vouchers', [PartnerVouchersController::class, 'index'])->name('vouchers.index');
+    Route::post('partner/vouchers/store', [PartnerVouchersController::class, 'vouchersStore']);
+    Route::post('partner/vouchers/update', [PartnerVouchersController::class, 'vouchersUpdate']);
+    Route::get('partner/vouchers/edit-vouchers-status/{id}/{status}', [PartnerVouchersController::class, 'changeVouchersStatus']);
+    Route::get('partner/vouchers/get-voucher-detail-by-id/{id}', [PartnerVouchersController::class, 'getVouchersDetailById']);
+
+    Route::get('partner/memberships', [PartnerMembershipsController::class, 'index'])->name('memberships.index');
+    Route::post('partner/memberships/store', [PartnerMembershipsController::class, 'membershipsStore']);
+    Route::post('partner/memberships/update', [PartnerMembershipsController::class, 'membershipsUpdate']);
+    Route::get('partner/memberships/edit-memberships-status/{id}/{status}', [PartnerMembershipsController::class, 'changeMembershipsStatus']);
+    Route::get('partner/memberships/get-membership-detail-by-id/{id}', [PartnerMembershipsController::class, 'getMembershipsDetailById']);
 
     Route::get('partner/promote', [PromoteController::class, 'index'])->name('promote.index');
     Route::get('partner/reports', [ReportsController::class, 'index'])->name('reports.index');
@@ -251,8 +272,8 @@ Route::middleware(['auth'])->group(function () {
     Route::get('partner/staff/export-staff-by-role/{id}/{type}', [ExportController::class, 'exportStaffByRole']);
 
     Route::post('admin/settings/onboarding', [SubscriptionController::class, 'createOnboarding']);
- Route::post('admin/settings/onboarding/typeone', [SubscriptionController::class, 'createGraceOne']);
-Route::post('admin/settings/onboarding/typetwo', [SubscriptionController::class, 'createGraceTwo']);
+    Route::post('admin/settings/onboarding/typeone', [SubscriptionController::class, 'createGraceOne']);
+    Route::post('admin/settings/onboarding/typetwo', [SubscriptionController::class, 'createGraceTwo']);
 
 
     Route::get('admin/settings/subscription/get-typeone/{id}', [SubscriptionController::class, 'gettypeOneAjax']);

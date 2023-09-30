@@ -77,7 +77,7 @@
             <label class="required fw-semibold fs-6 mb-2">Business name</label>
             <!--end::Label-->
             <!--begin::Input-->
-            <input type="text" name="business_name" id="business_name" class="form-control form-control-solid mb-3 mb-lg-0" placeholder="Business name" >
+            <input type="text" name="business_name" id="business_name" class="form-control form-control-solid mb-3 mb-lg-0" placeholder="Business name" required="required">
             <!--end::Input-->
           </div>
         </div>
@@ -90,7 +90,7 @@
             <!--begin::Input-->
             <input type="email" name="business_email" id="business_email" class="form-control form-control-solid mb-3 mb-lg-0" placeholder="email" readonly>
             <!--end::Input-->
-            <a href="#" data-bs-toggle="modal" data-bs-target="#changeemail" data-bs-dismiss="modal">change</a>
+            <a href="#" class="old-email-send-otp">change</a>
           </div>
         </div>
 
@@ -100,9 +100,10 @@
             <label class="required fw-semibold fs-6 mb-2">Phone</label>
             <!--end::Label-->
             <!--begin::Input-->
-            <input type="text" name="business_phone" id="business_phone" class="form-control form-control-solid mb-3 mb-lg-0" placeholder="phone" readonly>
+            <input type="text" name="business_phone" id="business_phone" class="form-control form-control-solid mb-3 mb-lg-0 phone-number-intl" placeholder="phone" readonly>
+            <input type="hidden" class="country-code-intl" name="country_code">
             <!--end::Input-->
-            <a href="#" data-bs-toggle="modal" data-bs-target="#changephone" data-bs-dismiss="modal">change</a>
+            <a href="#" class="old-phone-send-otp">change</a>
           </div>
         </div>
 

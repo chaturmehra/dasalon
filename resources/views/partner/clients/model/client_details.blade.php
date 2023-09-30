@@ -77,10 +77,7 @@
                                  <div class="text-gray-600" id="dob">
                                     </div>
                               </div>
-                              <div class="d-flex gap-5">
-                                 <div class="fw-bold mt-5" >Address</div>
-                                 <div class="text-gray-600" id="address">
-                                 </div>
+                              <div class="address-view-detail">
                               </div>
                            </div>
                         </div>

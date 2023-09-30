@@ -26,6 +26,8 @@
 		<link href="{{ asset('/public/partner/assets/css/style.bundle.css') }}" rel="stylesheet" type="text/css" />
 		<link href="{{ asset('/public/partner/assets/css/style.css') }}" rel="stylesheet" type="text/css" />
 		<link href="{{ asset('/public/assets/css/custom.css') }}" rel="stylesheet" type="text/css" />
+		<link rel="stylesheet" href="{{ asset('/public/assets/plugins/custom/intlTelInput/css/intlTelInput.css') }}">
+		<!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/intl-tel-input@18.2.1/build/css/intlTelInput.css"> -->
 		<!--end::Global Stylesheets Bundle-->
 		<script type="text/javascript">var baseurl="{{ asset('/') }}";</script>
 		<script type="text/javascript">var publicurl="{{ asset('/public') }}";</script>
@@ -853,9 +855,9 @@
 													<!--end::Avatar-->
 													<!--begin::Username-->
 													<div class="d-flex flex-column">
-														<div class="fw-bold d-flex align-items-center fs-5">{{@Auth::user()->name}}
-														<span class="badge badge-light-success fw-bold fs-8 px-2 py-1 ms-2">Pro</span></div>
-														<a href="#" class="fw-semibold text-muted text-hover-primary fs-7">{{@Auth::user()->email}}</a>
+														<div class="fw-bold d-flex align-items-center fs-5">{{ ucwords(@Auth::user()->name) }}
+														<span class="badge badge-light-success fw-bold fs-8 px-2 py-1 ms-2">{{ ucwords(@Auth::user()->role) }}</span></div>
+														<a href="#" class="fw-semibold text-muted text-hover-primary fs-7">{{ @Auth::user()->email }}</a>
 													</div>
 													<!--end::Username-->
 												</div>

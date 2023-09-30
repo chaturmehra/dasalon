@@ -144,10 +144,12 @@ class PartnerController extends Controller
                 $check_status = isset($check_record->is_active) ? $check_record->is_active : "";
                 if ($check_record) {
                     $check_role = isset($check_record->role) ? $check_record->role : "";
-
+                    
                     Auth::login($check_record);
-                    if ($check_role) {
+                    if ($check_role == "partner") {
                         return redirect()->intended('/partner/dashboard');   
+                    }else if ($check_role == "manager") {
+                        return redirect()->intended('/manager/dashboard');   
                     }else{
                         return redirect()->intended('/admin/dashboard');
                     }
@@ -223,7 +225,7 @@ class PartnerController extends Controller
                 'name'      => $request->businessname,
                 'email'     => $email,
                 'phone'     => $request->phone,
-                'country'   => "",
+                'country'   => isset($request->country_code) ? $request->country_code : "",
                 'role'      => 1,
                 'is_active' => 1,
             ]);
@@ -301,7 +303,7 @@ class PartnerController extends Controller
             'name'      => $request->name,
             'email'     => $email,
             'phone'     => $request->phone,
-            'country'   => "",
+            'country'   => isset($request->country_code) ? $request->country_code : "",
             'role'      => 2,
             'is_active' => 1,
         ]);

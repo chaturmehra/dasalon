@@ -23,7 +23,7 @@ class StaffAttendanceController extends Controller
 		$today_date 	= date('Y-m-d');
 
 		$staff 		= Staff::where('partner_id', $partner_id);
-		$getStaff 	= $staff->select(['staff.staff_id', 'staff.user_id', 'users.name', 'users.email', 'users.phone', 'role.role_name', 'staff_attendance.check_in', 'staff_attendance.check_out', 'staff_attendance.check_in', 'staff_attendance.date'])
+		$getStaff 	= $staff->select(['staff.staff_id', 'staff.user_id', 'users.name', 'users.email', 'users.phone', 'role.role_name', 'staff_attendance.check_in', 'staff_attendance.check_out', 'staff_attendance.check_in', 'staff_attendance.date', 'staff.staff_working_days'])
                 ->leftJoin('users', 'users.id', '=', 'staff.user_id')
                 ->leftJoin('role', 'role.id', '=', 'staff.staff_role')
                 ->leftJoin('staff_attendance', 'staff_attendance.staff_id', '=', 'staff.user_id')
@@ -31,6 +31,20 @@ class StaffAttendanceController extends Controller
                 ->where('users.is_active', 1)
                 ->orWhere('staff_attendance.date', $today_date)
                 ->get();
+
+		/*$staffList 	= Staff::where('partner_id', $partner_id)->select(['staff.staff_id', 'staff.user_id', 'users.name', 'users.email', 'users.phone', 'staff.staff_working_days'])
+                ->leftJoin('users', 'users.id', '=', 'staff.user_id')
+                ->orderBy('staff.staff_id', 'DESC')
+                ->where('users.is_active', 1)
+                ->get()->toArray();
+
+		$attendanceList = StaffAttendance::select(['staff_attendance.*'])
+				->leftJoin('staff', 'staff_attendance.staff_id', '=', 'staff.user_id')
+                ->orderBy('staff.staff_id', 'DESC')
+                ->where('staff.partner_id', $partner_id)
+                ->get()->toArray();
+
+echo "<pre>"; print_r($attendanceList); die;*/
 
        	$staffs 		= Staff::where('partner_id', $partner_id);
 		$staffAttendance 	= $staffs->select(['staff.staff_id', 'staff.user_id', 'users.name', 'users.email', 'users.phone', 'staff_attendance.date', 'staff_attendance.check_in', 'staff_attendance.check_out'])
@@ -41,7 +55,6 @@ class StaffAttendanceController extends Controller
                 ->get();
 
         // By default get last 30 days data of Attendance Analytics 
-        
         $last_30_date 	= date('Y-m-d', strtotime('today - 30 days'));
        	$Apexstaff 		= Staff::where('partner_id', $partner_id);
 
@@ -311,22 +324,38 @@ class StaffAttendanceController extends Controller
 		if ( !$staffAttendance->isEmpty() ) {
 			foreach($staffAttendance as $key => $value){
 				$date = $value->date; 
-				$formatted_date = date("d M, D", strtotime($date));
+				if($date){
+					$formatted_date = date("d M, D", strtotime($date));
+					$date = $date;
+				}else{
+					$formatted_date = "";
+					$date = date('Y-m-d');
+				}
+
 				$ts1 = strtotime($value->check_in);
 				$ts2 = strtotime($value->check_out);    
 				if($ts1 && $ts2){
-					$seconds_diff = $ts2 - $ts1;                            
-					$time = ($seconds_diff/3600)." hr";
+					$seconds_diff = $ts2 - $ts1;         
+					$time = round($seconds_diff / 3600, 2)." hr";
 				}else{
 					$time = "NA";
 				}
 
 				$html.= '<tr class="staff_'.$value->user_id.'">
 				<td>'.$value->name.'</td>
+				<td></td>
 				<td>'.$formatted_date.'</td>
 				<td>'.$value->check_in.'</td>
 				<td>'.$value->check_out.'</td>
 				<td>'.$time.'</td>
+				<td>
+					<button type="button" class="btn btn-primary modal_attendance_check_update" data-bs-toggle="modal" data-bs-target="#modal_attendance_admin_check_update" staff-id="'.$value->user_id.'" staff-attendance-date="'.$date.'">
+					Check in
+					</button>
+					<button type="button" class="btn btn-primary modal_attendance_check_update" data-bs-toggle="modal" data-bs-target="#modal_attendance_admin_check_out_update" staff-id="'.$value->user_id.'" staff-attendance-date="'.$date.'">
+					Check Out
+					</button>
+				</td>
 				</tr>';
 			}
 			$response = array(

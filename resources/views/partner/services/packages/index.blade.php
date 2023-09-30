@@ -18,7 +18,7 @@
                <ul class="breadcrumb breadcrumb-separatorless fw-semibold fs-7 my-0 pt-1">
                   <!--begin::Item-->
                   <li class="breadcrumb-item text-muted">
-                     <a href="/dasalon/partners/home.html" class="text-muted text-hover-primary">Home</a>
+                     <a href="{{ url('partner/dashboard') }}" class="text-muted text-hover-primary">Home</a>
                   </li>
                   <!--end::Item-->
                   <!--begin::Item-->
@@ -27,7 +27,9 @@
                   </li>
                   <!--end::Item-->
                   <!--begin::Item-->
-                  <li class="breadcrumb-item text-muted">Services</li>
+                  <li class="breadcrumb-item text-muted">
+                     <a href="{{ route('services.index') }}" class="text-muted text-hover-primary">Services</a>
+                  </li>
                   <!--end::Item-->
                   <!--begin::Item-->
                   <li class="breadcrumb-item">
@@ -57,13 +59,36 @@
                      <!--begin::Info-->
                      <div class="flex-grow-1">
                         <!--begin::Title-->
+                        @if(session()->has('success'))
+                        <div class="card-header display-message">
+                           <div class="alert alert-success">
+                              {{ session()->get('success') }}
+                           </div>
+                        </div>
+                        @endif
+                        @if(session()->has('error'))
+                        <div class="card-header display-message">
+                           <div class="alert alert-danger">
+                              {{ session()->get('error') }}
+                           </div>
+                        </div>
+                        @endif
+                        @if ($errors->any())
+                        <div class="alert alert-danger">
+                           <ul>
+                              @foreach ($errors->all() as $error)
+                              <li>{{ $error }}</li>
+                              @endforeach
+                           </ul>
+                        </div>
+                        @endif
                         <div class="d-flex justify-content-between align-items-start flex-wrap mb-2">
                            <!--begin::User-->
                            <div class="d-flex flex-column">
                               <!--begin::Name-->
                               <div class="d-flex align-items-center mb-2">
-                                 <a href="packages.html" class="text-gray-900 text-hover-primary fs-2 fw-bold me-1">Packakges</a>
-                                 <a href="#"><i class="ki-outline ki-verify fs-1 text-primary"></i></a>
+                                 <a href="{{ route('packages.index') }}" class="text-gray-900 text-hover-primary fs-2 fw-bold me-1">Packages</a>
+                                 <a href="{{ route('packages.index') }}"><i class="ki-outline ki-verify fs-1 text-primary"></i></a>
                               </div>
                               <!--end::Name-->
                            </div>
@@ -125,49 +150,7 @@
                      <!--end::Info-->
                   </div>
                   <!--end::Details-->
-                  <ul class="nav nav-stretch nav-line-tabs nav-line-tabs-2x border-transparent fs-5 fw-bold">
-                     <li class="nav-item mt-2">
-                        <a class="nav-link text-active-primary ms-0 me-10 py-5 " href="services.html">
-                        Services                    
-                        </a>
-                     </li>
-                     <!--end::Nav item-->
-                     <!--begin::Nav item-->
-                     <li class="nav-item mt-2">
-                        <a class="nav-link text-active-primary ms-0 me-10 py-5 " href="add-book-a-look-service.html">
-                        Book a look                    
-                        </a>
-                     </li>
-                     <!--end::Nav item-->
-                     <!--begin::Nav item-->
-                     <li class="nav-item mt-2">
-                        <a class="nav-link text-active-primary ms-0 me-10 py-5 active" href="packages.html">
-                        Packages             
-                        </a>
-                     </li>
-                     <!--end::Nav item-->
-                     <!--begin::Nav item-->
-                     <li class="nav-item mt-2">
-                        <a class="nav-link text-active-primary ms-0 me-10 py-5 " href="vouchers.html">
-                        Vouchers                  
-                        </a>
-                     </li>
-                     <!--end::Nav item-->
-                     <!--begin::Nav item-->
-                     <li class="nav-item mt-2">
-                        <a class="nav-link text-active-primary ms-0 me-10 py-5 " href="memberships.html">
-                        Memberships                    
-                        </a>
-                     </li>
-                     <!--end::Nav item-->
-                     <!--begin::Nav item-->
-                     <li class="nav-item mt-2">
-                        <a class="nav-link text-active-primary ms-0 me-10 py-5 " href="products.html">
-                        Products                    
-                        </a>
-                     </li>
-                     <!--end::Nav item-->
-                  </ul>
+                  @include('partner.services.tab')
                </div>
             </div>
             <!--end::Navbar-->
@@ -193,7 +176,7 @@
                      <!--end::Section-->
                      <!--begin::Illustration-->
                      <div class="text-center px-4">
-                        <img class="mw-100 mh-200px" alt="image" src="/dasalon/partners/assets/media/illustrations/sketchy-1/1.png" />
+                        <img class="mw-100 mh-200px" alt="image" src="{{ asset('/public/partner/assets/media/illustrations/sketchy-1/1.png') }}" />
                      </div>
                      <!--end::Illustration-->
                   </div>
@@ -262,6 +245,30 @@
                            <!--end::Table head-->
                            <!--begin::Table body-->
                            <tbody class="fw-bold text-gray-600 alntop">
+                              @if(!empty($packageLists))
+                               @foreach($packageLists as $key => $packageList)
+                               @php 
+                                  $status = $packageList['status']; 
+                                  if($status){
+                                     $text = "Enabled";
+                                     $class = "success";
+                                     $statusVal = 0;
+                                     $statusText = "Disable";
+                                  }else{
+                                     $text = "Disabled";
+                                     $class = "danger";
+                                     $statusVal = 1;
+                                     $statusText = "Enable";
+                                  }
+
+                                  $full_name = $packageList['servicename'];
+                                  $name_parts = explode(' ', $full_name);
+                                  $shortName = '';
+                                  foreach ($name_parts as $part) {
+                                    $shortName .= substr($part, 0, 1);
+                                  }
+
+                               @endphp
                               <tr>
                                  <td>
                                     <a href="#" id="kt_drawer_example_permanent_toggle">
@@ -271,209 +278,49 @@
                                              </div>
                                           </div>
                                           <div class="d-flex justify-content-start flex-column">
-                                             <span class="text-dark fw-bold text-hover-primary mb-1 fs-6">Package1</span>
+                                             <span class="text-dark fw-bold text-hover-primary mb-1 fs-6">{{ $packageList['package_name'] }}</span>
                                              <span class="text-muted fw-semibold text-muted d-block fs-7">
-                                             Hair cut, shampoo, blow dye
+                                             {{ $packageList['servicename'] }}
                                              </span>
                                           </div>
                                        </div>
                                     </a>
                                  </td>
-                                 <td>Male</td>
-                                 <td>60 min</td>
+                                 <td>{{ $packageList['gender'] }}</td>
+                                 <td>{{ $packageList['duration'] }}</td>
                                  <td>
-                                    <span class="text-dark fw-bold text-hover-primary d-block mb-1 fs-6">$100</span>
+                                    <span class="text-dark fw-bold text-hover-primary d-block mb-1 fs-6">{{ $partner_country_config->currency_sign }}{{ $packageList['walk_in_price'] }}</span>
                                  </td>
                                  <td>
-                                    <span class="text-dark fw-bold text-hover-primary d-block mb-1 fs-6">$95</span>
+                                    <span class="text-dark fw-bold text-hover-primary d-block mb-1 fs-6">{{ $partner_country_config->currency_sign }}{{ $packageList['online_price'] }}</span>
                                  </td>
-                                 <td>$90</td>
+                                 <td>{{ $partner_country_config->currency_sign }}{{ $packageList['off_peak_price'] }}</td>
                                  <td>30</td>
                                  <td>
-                                    <span class="badge badge-light-success">Enabled</span>
+                                    <span class="badge badge-light-{{$class}}">{{ $text }}</span>
                                  </td>
                                  <td class="text-end">
-                                    <a href="#" class="btn btn-light btn-active-light-primary btn-flex btn-center btn-sm" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end">Actions
+                                    <a href="javascript:void(0)" class="btn btn-light btn-active-light-primary btn-flex btn-center btn-sm" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end">Actions
                                     <i class="ki-duotone ki-down fs-5 ms-1"></i></a>
                                     <!--begin::Menu-->
                                     <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-600 menu-state-bg-light-primary fw-semibold fs-7 w-125px py-4" data-kt-menu="true">
                                        <!--begin::Menu item-->
                                        <div class="menu-item px-3">
-                                          <a href="#" id="kt_drawer_example_permanent_toggle2" class="menu-link px-3">Edit</a>
+                                          <a href="javascript:void(0)" id="kt_drawer_example_permanent_toggle2" class="menu-link px-3 get-package-detail-by-id" package-id="{{ $packageList['pp_id'] }}">Edit</a>
                                        </div>
                                        <!--end::Menu item-->
+
                                        <!--begin::Menu item-->
                                        <div class="menu-item px-3">
-                                          <a href="" class="menu-link px-3">Enable</a>
-                                       </div>
-                                       <!--end::Menu item-->
-                                       <!--begin::Menu item-->
-                                       <div class="menu-item px-3">
-                                          <a href="" class="menu-link px-3">Disable</a>
+                                        <a href="javascript:void(0)" class="menu-link px-3 status-change" status-value="{{ $statusVal }}" package-id="{{ $packageList['pp_id'] }}">{{ $statusText }}
+                                        </a>
                                        </div>
                                     </div>
                                     <!--end::Menu-->
                                  </td>
                               </tr>
-                              <tr>
-                                 <td>
-                                    <a href="#" id="kt_drawer_example_permanent_toggle">
-                                       <div class="d-flex gap-3">
-                                          <div data-qa="color-sample-dark" class="color-ind">
-                                             <div class="color-ind-single dark" title="dark">
-                                             </div>
-                                          </div>
-                                          <div class="d-flex justify-content-start flex-column">
-                                             <span class="text-dark fw-bold text-hover-primary mb-1 fs-6">Package2</span>
-                                             <span class="text-muted fw-semibold text-muted d-block fs-7">
-                                             Facial, D tan
-                                             </span>
-                                          </div>
-                                       </div>
-                                    </a>
-                                 </td>
-                                 <td>Male</td>
-                                 <td>60 min</td>
-                                 <td>
-                                    <span class="text-dark fw-bold text-hover-primary d-block mb-1 fs-6">$100</span>
-                                 </td>
-                                 <td>
-                                    <span class="text-dark fw-bold text-hover-primary d-block mb-1 fs-6">$95</span>
-                                 </td>
-                                 <td>$90</td>
-                                 <td>30</td>
-                                 <td>
-                                    <span class="badge badge-light-success">Enabled</span>
-                                 </td>
-                                 <td class="text-end">
-                                    <a href="#" class="btn btn-light btn-active-light-primary btn-flex btn-center btn-sm" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end">Actions
-                                    <i class="ki-duotone ki-down fs-5 ms-1"></i></a>
-                                    <!--begin::Menu-->
-                                    <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-600 menu-state-bg-light-primary fw-semibold fs-7 w-125px py-4" data-kt-menu="true">
-                                       <!--begin::Menu item-->
-                                       <div class="menu-item px-3">
-                                          <a href="#" id="kt_drawer_example_permanent_toggle2" class="menu-link px-3">Edit</a>
-                                       </div>
-                                       <!--end::Menu item-->
-                                       <!--begin::Menu item-->
-                                       <div class="menu-item px-3">
-                                          <a href="" class="menu-link px-3">Enable</a>
-                                       </div>
-                                       <!--end::Menu item-->
-                                       <!--begin::Menu item-->
-                                       <div class="menu-item px-3">
-                                          <a href="" class="menu-link px-3">Disable</a>
-                                       </div>
-                                    </div>
-                                    <!--end::Menu-->
-                                 </td>
-                              </tr>
-                              <tr>
-                                 <td>
-                                    <a href="#" id="kt_drawer_example_permanent_toggle">
-                                       <div class="d-flex gap-3">
-                                          <div data-qa="color-sample-green" class="color-ind">
-                                             <div class="color-ind-single green" title="green">
-                                             </div>
-                                          </div>
-                                          <div class="d-flex justify-content-start flex-column">
-                                             <span class="text-dark fw-bold text-hover-primary mb-1 fs-6">package3</span>
-                                             <span class="text-muted fw-semibold text-muted d-block fs-7">
-                                             Manicure, Pedicure, Makeup
-                                             </span>
-                                          </div>
-                                       </div>
-                                    </a>
-                                 </td>
-                                 <td>Female</td>
-                                 <td>60 min</td>
-                                 <td>
-                                    <span class="text-dark fw-bold text-hover-primary d-block mb-1 fs-6">$100</span>
-                                 </td>
-                                 <td>
-                                    <span class="text-dark fw-bold text-hover-primary d-block mb-1 fs-6">$95</span>
-                                 </td>
-                                 <td>$90</td>
-                                 <td>30</td>
-                                 <td>
-                                    <span class="badge badge-light-success">Enabled</span>
-                                 </td>
-                                 <td class="text-end">
-                                    <a href="#" class="btn btn-light btn-active-light-primary btn-flex btn-center btn-sm" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end">Actions
-                                    <i class="ki-duotone ki-down fs-5 ms-1"></i></a>
-                                    <!--begin::Menu-->
-                                    <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-600 menu-state-bg-light-primary fw-semibold fs-7 w-125px py-4" data-kt-menu="true">
-                                       <!--begin::Menu item-->
-                                       <div class="menu-item px-3">
-                                          <a href="#" id="kt_drawer_example_permanent_toggle2" class="menu-link px-3">Edit</a>
-                                       </div>
-                                       <!--end::Menu item-->
-                                       <!--begin::Menu item-->
-                                       <div class="menu-item px-3">
-                                          <a href="" class="menu-link px-3">Enable</a>
-                                       </div>
-                                       <!--end::Menu item-->
-                                       <!--begin::Menu item-->
-                                       <div class="menu-item px-3">
-                                          <a href="" class="menu-link px-3">Disable</a>
-                                       </div>
-                                    </div>
-                                    <!--end::Menu-->
-                                 </td>
-                              </tr>
-                              <tr>
-                                 <td>
-                                    <a href="#" id="kt_drawer_example_permanent_toggle">
-                                       <div class="d-flex gap-3">
-                                          <div data-qa="color-sample-orange" class="color-ind">
-                                             <div class="color-ind-single orange" title="orange">
-                                             </div>
-                                          </div>
-                                          <div class="d-flex justify-content-start flex-column">
-                                             <span class="text-dark fw-bold text-hover-primary mb-1 fs-6">Package4</span>
-                                             <span class="text-muted fw-semibold text-muted d-block fs-7">
-                                             Straightening, Rebonding
-                                             </span>
-                                          </div>
-                                       </div>
-                                    </a>
-                                 </td>
-                                 <td>Unisex</td>
-                                 <td>60 min</td>
-                                 <td>
-                                    <span class="text-dark fw-bold text-hover-primary d-block mb-1 fs-6">$100</span>
-                                 </td>
-                                 <td>
-                                    <span class="text-dark fw-bold text-hover-primary d-block mb-1 fs-6">$95</span>
-                                 </td>
-                                 <td>$90</td>
-                                 <td>30</td>
-                                 <td>
-                                    <span class="badge badge-light-danger">Disabled</span>
-                                 </td>
-                                 <td class="text-end">
-                                    <a href="#" class="btn btn-light btn-active-light-primary btn-flex btn-center btn-sm" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end">Actions
-                                    <i class="ki-duotone ki-down fs-5 ms-1"></i></a>
-                                    <!--begin::Menu-->
-                                    <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-600 menu-state-bg-light-primary fw-semibold fs-7 w-125px py-4" data-kt-menu="true">
-                                       <!--begin::Menu item-->
-                                       <div class="menu-item px-3">
-                                          <a href="#" id="kt_drawer_example_permanent_toggle2" class="menu-link px-3">Edit</a>
-                                       </div>
-                                       <!--end::Menu item-->
-                                       <!--begin::Menu item-->
-                                       <div class="menu-item px-3">
-                                          <a href="" class="menu-link px-3">Enable</a>
-                                       </div>
-                                       <!--end::Menu item-->
-                                       <!--begin::Menu item-->
-                                       <div class="menu-item px-3">
-                                          <a href="" class="menu-link px-3">Disable</a>
-                                       </div>
-                                    </div>
-                                    <!--end::Menu-->
-                                 </td>
-                              </tr>
+                              @endforeach
+                              @endif
                            </tbody>
                            <!--end::Table body-->
                         </table>
@@ -502,8 +349,9 @@
 @push('scripts')
 <script type="text/javascript">
   var input_add_service = document.querySelector("#kt_tagify_service");
-  var service_list = ['Service1', 'Service2', 'Service3', 'Service4', 'Service5', 'Service6', 'Service7', 'Service8', 'Service9', 'Service10'];
-  
+  var service_list = "@php echo implode(',', getServices()); @endphp";
+  service_list = service_list.split(",");
+
 
   function productDrp(input, list) {
     new Tagify(input, {
@@ -520,7 +368,7 @@
 
   productDrp(input_add_service, service_list);
 
-  let pack_arr = [
+  let pack_array = [
           {
             name: 'Service1',
             duration: 25,
@@ -612,6 +460,11 @@
           }
   ]
 
+
+  var packArr = {!! $partnerServicesArr !!};
+
+  let pack_arr = packArr;
+
   let packageserind = document.querySelector('.packageserind');
   let packageserindPar = packageserind.parentElement;
   let clonepackageserind = packageserind.cloneNode(true);
@@ -693,7 +546,8 @@
 
 <script type="text/javascript">
   var input_add_service_edit = document.querySelector("#kt_tagify_service_edit");
-  var service_list_edit = ['Service1', 'Service2', 'Service3', 'Service4', 'Service5', 'Service6', 'Service7', 'Service8', 'Service9', 'Service10'];
+  var service_list_edit = "@php echo implode(',', getServices()); @endphp";
+  service_list_edit = service_list_edit.split(",");
   
 
   function productDrp(input, list) {

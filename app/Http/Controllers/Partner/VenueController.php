@@ -821,9 +821,19 @@ class VenueController extends Controller
 	{
 		$partner_id = Auth::user()->id;
 
+		$validator = Validator::make($request->all(), [
+            'business_name' => 'required',
+            'email'     	=> 'required',
+        ]);
+ 
+        if ($validator->fails()) {
+            return redirect()->back()->withErrors($validator)->withInput();
+        }
+
 		User::where('id', $partner_id)->update([
-			'phone' 	=> $request->business_phone,
+			'phone' 	=> isset($request->business_phone) ? $request->business_phone : "",
 			'email' 	=> $request->business_email,
+			'country' 	=> isset($request->country_code) ? $request->country_code : "",
 		]);
 
 		if ($request->hasFile('business_logo')) {

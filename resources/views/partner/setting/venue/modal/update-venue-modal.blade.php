@@ -174,7 +174,7 @@
                            <div class="col-12 mb-7">
                               <div class="fv-row">
                                  <h3 class="card-title align-items-start flex-column">
-                                    <span class="card-label fw-bold text-gray-800 mb-4">Venue name</span>
+                                    <span class="card-label fw-bold text-gray-800 mb-4 required">Venue name</span>
                                     <span class="text-gray-400 fw-semibold d-block fs-6 my-3">This is the location name of your business. <br>  
                                        Recommended to enter your location name if you have multiple venues
                                     </span>
@@ -188,19 +188,19 @@
                            <div class="col-12 mb-7">
                               <div class="fv-row">
                                  <h3 class="card-title align-items-start flex-column">
-                                    <span class="card-label fw-bold text-gray-800 mb-4">Phone number</span>
+                                    <span class="card-label fw-bold text-gray-800 mb-4 required">Phone number</span>
                                     <span class="text-gray-400 fw-semibold d-block fs-6 my-3">Phone number of this venue which will appear on the Business profile of this venue
                                     </span>
                                  </h3>
                                  <!--begin::Input-->
-                                 <input type="text" name="phone_number" class="form-control form-control-solid mb-3 mb-lg-0" placeholder="Phone Number" id="edit_venue_phone" required>
+                                 <input type="text" name="phone_number" class="form-control form-control-solid mb-3 mb-lg-0 phone-number-intl" placeholder="Phone Number" id="edit_venue_phone" required>
                                  <!--end::Input-->
                               </div>
                            </div>
                            <div class="col-12 mb-7">
                               <div class="fv-row">
                                  <h3 class="card-title align-items-start flex-column">
-                                    <span class="card-label fw-bold text-gray-800 mb-4">Email address</span>
+                                    <span class="card-label fw-bold text-gray-800 mb-4 required">Email address</span>
                                     <span class="text-gray-400 fw-semibold d-block fs-6 my-3">Venue manager email address
                                     </span>
                                  </h3>
@@ -227,7 +227,7 @@
                               <!--begin::Input group-->
                               <div class="fv-row mb-7">
                                  <!--begin::Label-->
-                                 <label class="required fw-semibold fs-6 mb-2">Where's your business located?</label>
+                                 <label class="required fw-semibold fs-6 mb-2 required">Where's your business located?</label>
                                  <!--end::Label-->
                                  <!--begin::Input-->
                                  <input type="text" name="business_location" class="form-control form-control-solid mb-3 mb-lg-0 business-location" placeholder="business locationn" id="edit_venue_business_location" required/>
@@ -1816,16 +1816,17 @@ title="Remove avatar">
                   <!--begin::Scroll-->
                   <div class="d-flex flex-column me-n7 pe-7 gap-7 amenities-tab">
                      @if(!empty($amenities))
+                     @php $i=0; @endphp
                      @foreach($amenities as $key => $amenity)
                      @if($key == $amenity[0]['amenity_category_id'])
                      <span class="card-label fw-bold text-gray-800 mb-4">{{ $amenity[0]['amenity_category'] }}</span>
                      <div class="row">
                         @foreach($amenity as $am_val)
                         <div class="col-md-4 mb-5">
-                           <label class="btn btn-outline btn-outline-dashed btn-active-light-primary d-flex text-start p-6 align-items-center" for="flexCheckammenity1">
+                           <label class="btn btn-outline btn-outline-dashed btn-active-light-primary d-flex text-start p-6 align-items-center" for="flexCheckammenity{{$i}}">
                               <!--begin::Radio-->
                               <span class="form-check form-check-custom form-check-solid form-check-sm align-items-start mt-1">
-                                 <input class="form-check-input edit_venue_amenity" type="checkbox" value="{{ $am_val['id'] }}" id="flexCheckammenity{{$key}}" name="amenity[]" />
+                                 <input class="form-check-input edit_venue_amenity" type="checkbox" value="{{ $am_val['id'] }}" id="flexCheckammenity{{$i}}" name="amenity[]" />
                               </span>
                               <!--end::Radio-->
                               <div class="icn ms-3">
@@ -1840,6 +1841,7 @@ title="Remove avatar">
                               <!--end::Info-->
                            </label>
                         </div>
+                        @php $i++; @endphp
                         @endforeach
                      </div>
                      @endif

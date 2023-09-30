@@ -16,8 +16,8 @@
             <!--begin::Title-->
             <div class="card-title">
             <div class="d-flex flex-column gap-3 mb-4">
-               <h2>Haircut and Highlight</h2>
-               <span class="text-gray-400 fs-6">This package includes a haircut and hair highlights</span>
+               <h2><span class="package-name"></span></h2>
+               <span class="text-gray-400 fs-6"><span class="package-description"></span></span>
             </div>
          </div>
             <!--end::Title-->
@@ -26,7 +26,7 @@
             <div class="card-toolbar">
                <div class="d-flex gap-3 me-3">
                   <span class="text-gray-800 fs-6">Status:</span>
-                  <span class="text-gray-400 fs-6">Active</span>
+                  <span class="text-gray-400 fs-6"><span class="package-status"></span></span>
                </div>
                 <!--begin::Close-->
                 <div class="btn btn-icon btn-sm btn-active-light-primary ms-2 close_form" id="kt_drawer_example_permanent_close2">
@@ -42,8 +42,9 @@
         <div class="card-body hover-scroll-overlay-y py-10">
 
          <!--begin::Form-->
-         <form class="form d-flex flex-column flex-lg-row" id="serviceeditform">
-
+         <form class="form d-flex flex-column flex-lg-row" id="serviceeditform" method="post" action="{{ url('partner/packages/update') }}">
+          @csrf
+          <input type="hidden" name="pp_id" id="partner_package_id">
             <div class="d-flex flex-column gap-7 gap-lg-10">
 
                <!--begin::General options-->
@@ -59,7 +60,7 @@
                   <div class="card-body pt-0">
                      <!--begin::Input group-->
                      <div class="fv-row">
-                        <input class="form-control d-flex align-items-center" value="service1, service2, service3" placeholder="Add service" id="kt_tagify_service_edit" />
+                        <input class="form-control d-flex align-items-center edit-service-option" placeholder="Add service" id="kt_tagify_service_edit" name="selected_services"/>
                      </div>
                      <!--end::Input group-->
                   </div>
@@ -85,7 +86,7 @@
                               <label class="btn btn-outline btn-outline-dashed btn-active-light-primary d-flex text-start py-5 px-4">
                                  <!--begin::Radio-->
                                  <span class="form-check form-check-custom form-check-solid form-check-sm align-items-start mt-1">
-                                    <input class="form-check-input" type="radio" name="gender_option" value="1" />
+                                    <input class="form-check-input gender-option" type="radio" name="gender_option" value="Female" />
                                  </span>
                                  <!--end::Radio-->
                                  <!--begin::Info-->
@@ -104,7 +105,7 @@
                               <label class="btn btn-outline btn-outline-dashed btn-active-light-primary d-flex text-start py-5 px-4">
                                  <!--begin::Radio-->
                                  <span class="form-check form-check-custom form-check-solid form-check-sm align-items-start mt-1">
-                                    <input class="form-check-input" type="radio" name="gender_option" value="2" checked="checked" />
+                                    <input class="form-check-input gender-option" type="radio" name="gender_option" value="Male" checked="checked" />
                                  </span>
                                  <!--end::Radio-->
                                  <!--begin::Info-->
@@ -123,7 +124,7 @@
                               <label class="btn btn-outline btn-outline-dashed btn-active-light-primary d-flex text-start py-5 px-4">
                                  <!--begin::Radio-->
                                  <span class="form-check form-check-custom form-check-solid form-check-sm align-items-start mt-1">
-                                    <input class="form-check-input" type="radio" name="gender_option" value="3" />
+                                    <input class="form-check-input gender-option" type="radio" name="gender_option" value="Unisex" />
                                  </span>
                                  <!--end::Radio-->
                                  <!--begin::Info-->
@@ -147,10 +148,13 @@
                            <h2 class="required fs-3">Duration</h2>
                         </div>
                         <!--end::Card title-->
-
-                        
-                        <input type="text" name="" class="form-control mb-3 mb-lg-0" placeholder="Duration" value="" />
-
+                        <!-- <select name="duration" required="required" class="form-select mb-2 package-duration" data-placeholder="Select an option" data-control="select2" data-hide-search="true">
+                          <option></option>
+                          @foreach(durationScheduling() as $dKey => $duration)
+                          <option value="{{ $dKey }}">{{ $duration }}</option>
+                          @endforeach
+                        </select> -->
+                        <input type="text" class="form-control mb-2 package-duration" placeholder="Duration" name="duration">
                      </div>
 
                   </div>
@@ -171,8 +175,8 @@
                         <div class="d-flex flex-column gap-1">
                            <label class="required fw-semibold fs-6">Walk-in price</label>
                            <div class="input-group mb-2">
-                               <span class="input-group-text">$</span>
-                               <input type="text" class="form-control" aria-label="Amount (to the nearest dollar)"/>
+                               <span class="input-group-text">{{ $partner_country_config->currency_sign }}</span>
+                               <input type="text" name="walk_in_price" class="form-control package-walk-in-price" aria-label="Amount (to the nearest dollar)" onchange="numberHandler(this)"/>
                                <span class="input-group-text">.00</span>
                            </div>
                            <div class="text-muted fs-7">Price for anyone who walks into the salon without an appointment</div>
@@ -184,8 +188,8 @@
                         <div class="d-flex flex-column gap-1">
                            <label class="required fw-semibold fs-6">Online Price</label>
                            <div class="input-group mb-2">
-                               <span class="input-group-text">$</span>
-                               <input type="text" class="form-control" aria-label="Amount (to the nearest dollar)"/>
+                               <span class="input-group-text">{{ $partner_country_config->currency_sign }}</span>
+                               <input type="text" name="online_price" class="form-control package-online-price" aria-label="Amount (to the nearest dollar)" onchange="numberHandler(this)"/>
                                <span class="input-group-text">.00</span>
                            </div>
                            <div class="text-muted fs-7">Price available to clients who book their services online in advance</div>
@@ -197,8 +201,8 @@
                         <div class="d-flex flex-column gap-1">
                            <label class="required fw-semibold fs-6">Off Peak Price</label>
                            <div class="input-group mb-2">
-                               <span class="input-group-text">$</span>
-                               <input type="text" class="form-control" aria-label="Amount (to the nearest dollar)"/>
+                               <span class="input-group-text">{{ $partner_country_config->currency_sign }}</span>
+                               <input type="text" name="off_peak_price" class="form-control package-off-peak-price" aria-label="Amount (to the nearest dollar)" onchange="numberHandler(this)"/>
                                <span class="input-group-text">.00</span>
                            </div>
                            <div class="text-muted fs-7">A discounted price, available to people who walk-in during the salon's off peak hours.</div>
@@ -226,66 +230,8 @@
                      <div id="kt_ecommerce_edit_packages_conditions">
                         <!--begin::Form group-->
                         <div class="form-group">
-                           <div data-repeater-list="kt_ecommerce_edit_packages_conditions" class="d-flex flex-column gap-0">
-                              <div data-repeater-item="" class="form-group d-flex align-items-end gap-5">
-
-
-                                 <div class="row mt-7">
-                                 
-                                    <div class="col-sm-4">
-                                       <!--begin::Label-->
-                                       <label class="required fw-semibold fs-6 mb-2">Staff</label>
-                                       <!--end::Label-->
-                                       <div class="form-floating border rounded">
-                                          <select class="form-select form-select-transparent kt_docs_select2_users" data-placeholder="Select an option">
-                                             <option></option>
-                                             <option value="0" data-kt-select2-user="assets/media/avatars/300-25.jpg">Brian Cox</option>
-                                             <option value="1" data-kt-select2-user="assets/media/avatars/300-9.jpg">Francis Mitcham</option>
-                                             <option value="0" data-kt-select2-user="assets/media/avatars/300-23.jpg">Dan Wilson</option>
-                                             <option value="1" data-kt-select2-user="assets/media/avatars/300-12.jpg">Ana Crown</option>
-                                             <option value="0" data-kt-select2-user="assets/media/avatars/300-13.jpg">John Miller</option>
-                                             <option value="1" data-kt-select2-user="assets/media/avatars/300-21.jpg">Ethan Wilder</option>
-                                             <option value="0" data-kt-select2-user="assets/media/avatars/300-6.jpg">Emma Smith</option>
-                                             <option value="1" data-kt-select2-user="assets/media/avatars/300-1.jpg">Max Smith</option>
-                                          </select>
-                                       </div>
-                                    </div>   
-
-                                    <div class="col-sm-4">
-                                       <div class="d-flex flex-column gap-1">
-                                          <label class="fw-semibold fs-6 mb-2">Online Price</label>
-                                          <div class="input-group mb-0">
-                                              <span class="input-group-text">$</span>
-                                              <input type="text" class="form-control" aria-label="Amount (to the nearest dollar)"/>
-                                              <span class="input-group-text">.00</span>
-                                          </div>
-                                          <!--end::Input group-->
-                                       </div>
-                                    </div>
-
-                                    <div class="col-sm-4">
-                                       <div class="d-flex flex-column gap-1">
-                                          <label class="fw-semibold fs-6 mb-2">Off Peak Price</label>
-                                          <div class="input-group mb-0">
-                                              <span class="input-group-text">$</span>
-                                              <input type="text" class="form-control" aria-label="Amount (to the nearest dollar)"/>
-                                              <span class="input-group-text">.00</span>
-                                          </div>
-                                          <!--end::Input group-->
-                                       </div>
-                                    </div>
-
-                                 </div>
-
-                                 <!--begin::Button-->
-                                 <button type="button" data-repeater-delete="" class="btn btn-sm btn-icon btn-light-danger">
-                                    <i class="ki-duotone ki-cross fs-2">
-                                       <span class="path1"></span>
-                                       <span class="path2"></span>
-                                    </i>
-                                 </button>
-                                 <!--end::Button-->
-                              </div>
+                           <div data-repeater-list="kt_ecommerce_edit_packages_conditions" class="d-flex flex-column gap-0 packages-staff-pricing-list">
+                              
                            </div>
                         </div>
                         <!--end::Form group-->
@@ -314,125 +260,39 @@
 
                   <div class="row align-items-end">
 
-                     <!--begin::Col-->
-                         <div class="col-md-6 mb-4">
-                             <!--begin::Option-->
-                             <label class="btn btn-outline btn-outline-dashed btn-active-light-primary d-flex text-start p-6 align-items-center" for="flexCheckVenue1">
-                              
-                                 <!--begin::Radio-->
-                                 <span class="form-check form-check-custom form-check-solid form-check-sm align-items-start mt-1">
-                                     <input class="form-check-input" type="checkbox" value="" id="flexCheckVenue1" checked/>
-                                 </span>
-                                 <!--end::Radio-->
+                     @if($venue_data_arr)
+                      @foreach($venue_data_arr as $key => $venue_data)
+                      <!--begin::Col-->
+                      <div class="col-md-6 mb-4">
+                        <!--begin::Option-->
+                        <label class="btn btn-outline btn-outline-dashed btn-active-light-primary d-flex text-start p-6 align-items-center" for="flexCheckVenue1">
 
-                                 <div class="quantity-icn ms-3">
-                              <img src="assets/media/svg/salon.svg">
-                           </div>
+                          <!--begin::Radio-->
+                          <span class="form-check form-check-custom form-check-solid form-check-sm align-items-start mt-1">
+                            <input class="form-check-input package-venues" type="checkbox" name="venues[]" value="{{ $venue_data['id'] }}" />
+                          </span>
+                          <!--end::Radio-->
+                          @if( !empty($venue_data['venue_meta']['featured']) )
+                          <div class="quantity-icn ms-3">
+                            <img src="{{ asset('/public/'. $venue_data['venue_meta']['featured']) }}">
+                          </div>
+                          @endif
+                          <!--begin::Info-->
+                          <span class="ms-3">
+                            <h3 class="card-title align-items-start flex-column">
+                              <span class="card-label fw-bold text-gray-800 fs-4 mb-4">{{ isset($venue_data['name']) ? $venue_data['name'] : "" }}</span>
+                              <span class="text-muted d-block fw-light fs-7 mt-1">{{ isset($venue_data['venue_meta']['business_address']) ? $venue_data['venue_meta']['business_address'] : "" }}
+                              </span>
+                            </h3>
+                          </span>
+                          <!--end::Info-->
 
-                                 <!--begin::Info-->
-                                 <span class="ms-3">
-                                    <h3 class="card-title align-items-start flex-column">
-                                 <span class="card-label fw-bold text-gray-800 fs-4 mb-4">Alexandra road</span>
-                                 <span class="text-muted d-block fw-light fs-7 mt-1">Alexandra Central Mall, 321 Alexandra Road, Singapore (Bukit Merah)
-                                 </span>
-                              </h3>
-                                 </span>
-                                 <!--end::Info-->
-
-                             </label>
-                             <!--end::Option-->
-                         </div>
-                         <!--end::Col-->
-
-                         <!--begin::Col-->
-                         <div class="col-md-6 mb-4">
-                             <!--begin::Option-->
-                             <label class="btn btn-outline btn-outline-dashed btn-active-light-primary d-flex text-start p-6 align-items-center" for="flexCheckVenue2">
-                              
-                                 <!--begin::Radio-->
-                                 <span class="form-check form-check-custom form-check-solid form-check-sm align-items-start mt-1">
-                                     <input class="form-check-input" type="checkbox" value="" id="flexCheckVenue2" checked/>
-                                 </span>
-                                 <!--end::Radio-->
-
-                                 <div class="quantity-icn ms-3">
-                              <img src="assets/media/svg/salon.svg">
-                           </div>
-
-                                 <!--begin::Info-->
-                                 <span class="ms-3">
-                                    <h3 class="card-title align-items-start flex-column">
-                                 <span class="card-label fw-bold text-gray-800 fs-4 mb-4">YJ Salons - Punggol</span>
-                                 <span class="text-muted d-block fw-light fs-7 mt-1">Punggol Park, Hougang Avenue 10, Singapore (Hougang)
-                                 </span>
-                              </h3>
-                                 </span>
-                                 <!--end::Info-->
-
-                             </label>
-                             <!--end::Option-->
-                         </div>
-                         <!--end::Col-->
-
-                         <!--begin::Col-->
-                         <div class="col-md-6 mb-4">
-                             <!--begin::Option-->
-                             <label class="btn btn-outline btn-outline-dashed btn-active-light-primary d-flex text-start p-6 align-items-center" for="flexCheckVenue1">
-                              
-                                 <!--begin::Radio-->
-                                 <span class="form-check form-check-custom form-check-solid form-check-sm align-items-start mt-1">
-                                     <input class="form-check-input" type="checkbox" value="" id="flexCheckVenue1" checked/>
-                                 </span>
-                                 <!--end::Radio-->
-
-                                 <div class="quantity-icn ms-3">
-                              <img src="assets/media/svg/salon.svg">
-                           </div>
-
-                                 <!--begin::Info-->
-                                 <span class="ms-3">
-                                    <h3 class="card-title align-items-start flex-column">
-                                 <span class="card-label fw-bold text-gray-800 fs-4 mb-4">Alexandra road</span>
-                                 <span class="text-muted d-block fw-light fs-7 mt-1">Alexandra Central Mall, 321 Alexandra Road, Singapore (Bukit Merah)
-                                 </span>
-                              </h3>
-                                 </span>
-                                 <!--end::Info-->
-
-                             </label>
-                             <!--end::Option-->
-                         </div>
-                         <!--end::Col-->
-
-                         <!--begin::Col-->
-                         <div class="col-md-6 mb-4">
-                             <!--begin::Option-->
-                             <label class="btn btn-outline btn-outline-dashed btn-active-light-primary d-flex text-start p-6 align-items-center" for="flexCheckVenue2">
-                              
-                                 <!--begin::Radio-->
-                                 <span class="form-check form-check-custom form-check-solid form-check-sm align-items-start mt-1">
-                                     <input class="form-check-input" type="checkbox" value="" id="flexCheckVenue2" checked/>
-                                 </span>
-                                 <!--end::Radio-->
-
-                                 <div class="quantity-icn ms-3">
-                              <img src="assets/media/svg/salon.svg">
-                           </div>
-
-                                 <!--begin::Info-->
-                                 <span class="ms-3">
-                                    <h3 class="card-title align-items-start flex-column">
-                                 <span class="card-label fw-bold text-gray-800 fs-4 mb-4">YJ Salons - Punggol</span>
-                                 <span class="text-muted d-block fw-light fs-7 mt-1">Punggol Park, Hougang Avenue 10, Singapore (Hougang)
-                                 </span>
-                              </h3>
-                                 </span>
-                                 <!--end::Info-->
-
-                             </label>
-                             <!--end::Option-->
-                         </div>
-                         <!--end::Col-->
+                        </label>
+                        <!--end::Option-->
+                      </div>
+                      <!--end::Col-->
+                      @endforeach
+                      @endif
 
                   </div>
 

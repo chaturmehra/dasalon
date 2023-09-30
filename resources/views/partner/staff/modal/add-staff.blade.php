@@ -276,7 +276,8 @@
                                     </div>
                                     <div class="fv-row">
                                        <!--begin::Input-->
-                                       <input type="text" class="form-control form-control-solid" name="phone" placeholder="Phone no." required="required"/>
+                                       <input type="text" class="form-control form-control-solid phone-number-intl" name="phone" placeholder="Phone no." required="required" id="phone-number-intl"/>
+                                       <input type="hidden" class="country-code-intl" name="country_code">
                                        <!--end::Input-->
                                     </div>
                                  </div>

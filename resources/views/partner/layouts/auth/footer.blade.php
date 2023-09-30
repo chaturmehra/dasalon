@@ -2276,7 +2276,7 @@
    <!--end::Vendors Javascript-->
    <!--begin::Custom Javascript(used for this page only)-->
    <script src="{{ asset('/public/partner/assets/js/custom/apps/ecommerce/reports/sales/sales.js')}}"></script>
-   <script src="{{ asset('/public/partner/assets/js/custom/apps/user-management/users/list/table.js')}}"></script>
+   <!-- <script src="{{ asset('/public/partner/assets/js/custom/apps/user-management/users/list/table.js')}}"></script> -->
    <script src="{{ asset('/public/partner/assets/js/custom/apps/ecommerce/catalog/save-category.js')}}"></script>
    <!-- <script src="{{ asset('/public/partner/assets/js/custom/apps/user-management/users/list/export-users.js')}}"></script> -->
    <!-- <script src="{{ asset('/public/partner/assets/js/custom/apps/user-management/users/list/add.js')}}"></script> -->
@@ -2289,8 +2289,35 @@
    <script src="{{ asset('/public/partner/assets/js/custom/utilities/modals/users-search.js')}}"></script>
    <script src="{{ asset('/public/partner/assets/js/custom/utilities/modals/create-campaign.js')}}"></script>
    <script src="{{ asset('/public/partner/assets/js/custom/utilities/modals/create-app.js')}}"></script>
+
+   <script src="{{ asset('/public/assets/plugins/custom/intlTelInput/js/intlTelInput-jquery.min.js') }}"></script>
+   <script src="{{ asset('/public/assets/plugins/custom/intlTelInput/js/intlTelInput.js') }}"></script>
+   
    <!--end::Custom Javascript-->
    <!--end::Javascript-->
+
+   <script>
+    jQuery(document).ready(function() { 
+      var browserUser = "{{ getUserCountry() }}";
+      var input = jQuery('.phone-number-intl');
+      var countryCodeInput = jQuery('.country-code-intl');
+
+      // Set the initial country
+      countryCodeInput.val(browserUser);
+
+      // Initialize intlTelInput on the phone input field with initialCountry
+      input.intlTelInput({
+          initialCountry: browserUser,
+      });
+
+      jQuery('.iti__country-list li').click(function(){
+        // jQuery(".dialCode-intl").val(jQuery(this).data('dial-code'));
+        var country_code = jQuery(this).data('country-code');
+        jQuery(".country-code-intl").val(country_code.toUpperCase());
+      })
+    });
+  </script>
+
    <script>
       // Define colors
       var green =  KTUtil.getCssVariableValue("--kt-success-active");

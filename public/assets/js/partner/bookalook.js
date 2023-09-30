@@ -101,6 +101,7 @@ $(document).ready(function(){
 						$("#partner_book_a_look").val(service_data.pbal_id);
 
 						$(".service-name").text(service_data.servicename);
+						$(".service-description").text(service_data.description);
 
 						if (service_data.look_image) {
 							var look_image = publicurl+service_data.look_image;

@@ -13,22 +13,28 @@
             <!--begin::Page title-->
             <div class="page-title d-flex flex-column justify-content-center flex-wrap me-3">
                <!--begin::Title-->
-               <h1 class="page-heading d-flex text-dark fw-bold fs-3 flex-column justify-content-center my-0">Settings</h1>
+               <h1 class="page-heading d-flex text-dark fw-bold fs-3 flex-column justify-content-center my-0">Services</h1>
                <!--end::Title-->
                <!--begin::Breadcrumb-->
                <ul class="breadcrumb breadcrumb-separatorless fw-semibold fs-7 my-0 pt-1">
                   <!--begin::Item-->
                   <li class="breadcrumb-item text-muted">
-                     <a href="/dasalon/partners/home.html" class="text-muted text-hover-primary">Home</a>
+                     <a href="{{ url('partner/dashboard') }}" class="text-muted text-hover-primary">Home</a>
                   </li>
                   <!--end::Item-->
                   <!--begin::Item-->
                   <li class="breadcrumb-item">
                      <span class="bullet bg-gray-400 w-5px h-2px"></span>
                   </li>
+                  <li class="breadcrumb-item text-muted">
+                     <a href="{{ route('services.index') }}" class="text-muted text-hover-primary">Services</a>
+                  </li>
+                  <li class="breadcrumb-item">
+                     <span class="bullet bg-gray-400 w-5px h-2px"></span>
+                  </li>
                   <!--end::Item-->
                   <!--begin::Item-->
-                  <li class="breadcrumb-item text-muted">Settings</li>
+                  <li class="breadcrumb-item text-muted">Book A Look</li>
                   <!--end::Item-->
                </ul>
                <!--end::Breadcrumb-->
@@ -302,13 +308,13 @@
                            <td>{{ $bookaLookList['gender'] }}</td>
                            <td>{{ $bookaLookList['duration'] }}</td>
                            <td>
-                              <span class="text-dark fw-bold text-hover-primary d-block mb-1 fs-6">{{ $bookaLookList['walk_in_price'] }}</span>
+                              <span class="text-dark fw-bold text-hover-primary d-block mb-1 fs-6">{{ $partner_country_config->currency_sign }}{{ $bookaLookList['walk_in_price'] }}</span>
                            </td>
                            <td>
-                              <span class="text-dark fw-bold text-hover-primary d-block mb-1 fs-6">{{ $bookaLookList['online_price'] }}</span>
+                              <span class="text-dark fw-bold text-hover-primary d-block mb-1 fs-6">{{ $partner_country_config->currency_sign }}{{ $bookaLookList['online_price'] }}</span>
                            </td>
                            <td>
-                              <span class="text-dark fw-bold text-hover-primary d-block mb-1 fs-6">{{ $bookaLookList['off_peak_price'] }}</span>
+                              <span class="text-dark fw-bold text-hover-primary d-block mb-1 fs-6">{{ $partner_country_config->currency_sign }}{{ $bookaLookList['off_peak_price'] }}</span>
                            </td>
                            <td>
                               <span class="badge badge-light-{{$class}}">{{ $text }}</span>

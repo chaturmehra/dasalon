@@ -32,14 +32,24 @@ class LoginController extends Controller
         $role = Auth::user()->role;
         switch ($role) {
             case 'admin':
-                return '/admin/dashboard';
+                return route('admin.dashboard');
+                //return redirect('/admin/dashboard');
                 break;
+            case 'system manager':
+                return route('admin.dashboard');
+                //return redirect('/admin/dashboard');
+                break; 
             case 'partner':
-                return '/partner/dashboard';
+                return route('partner.dashboard');
+                //return redirect('/partner/dashboard');
+                break; 
+            case 'manager':
+                return route('manager.dashboard');
+                //return redirect('/manager/dashboard');
                 break; 
 
             default:
-                return '/home'; 
+                return '/'; 
                 break;
         }
     }

@@ -10,6 +10,7 @@ use App\Models\Partner\Venue;
 use App\Models\Partner\VenueMeta;
 use App\Models\Admin\Role;
 use App\Models\User;
+use App\Models\UserDetails;
 use Validator;
 use Illuminate\Support\Facades\Auth;
 
@@ -75,7 +76,7 @@ class StaffController extends Controller
 			'email'     => $request->email,
 			'phone'     => $request->phone,
 			'is_active' => isset($request->staff_status) ? 1 : 0,
-			'country'   => "",
+			'country'   => isset($request->country_code) ? $request->country_code : "",
 			'role'      => 4,
 		]);
 
@@ -238,7 +239,7 @@ class StaffController extends Controller
 	{
 		$user_id 	= $request->user_id;
 		$staff_id 	= $request->staff_id;
-		
+
 		$partner_id = Auth::user()->id;
 		$validator = Validator::make($request->all(), [
             'name'  		=> 'required|max:30',
@@ -257,7 +258,7 @@ class StaffController extends Controller
 			'email'     => $request->email,
 			'phone'     => $request->phone,
 			'is_active' => isset($request->staff_status) ? 1 : 0,
-			'country'   => "",
+			'country'   => isset($request->country_code) ? $request->country_code : "",
 		]);
 		
 		$monday_hours = $tuesday_hours = $wednesday_hours = $thursday_hours = $friday_hours = $saturday_hours = $sunday_hours = "";
@@ -381,9 +382,10 @@ class StaffController extends Controller
 		$staff 		= Staff::where('user_id', $id);
 		$getStaff 	= $staff->select('*')
                 ->leftJoin('users', 'users.id', '=', 'staff.user_id')
+                ->leftJoin('staff_commission', 'staff.user_id', '=', 'staff_commission.staff_id')
                 ->get();
-
-		if ( !empty($id) && !empty($getStaff) ) {
+                
+		if ( !empty($id) && !$getStaff->isEmpty() ) {
 			$response = array(
 				"status" 	=> 1,
 				"data" 		=> $getStaff,

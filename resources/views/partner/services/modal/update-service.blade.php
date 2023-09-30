@@ -201,7 +201,7 @@ data-kt-drawer-width="{default:'300px', 'md': '700px', 'xl': '950px'}"
               <div class="d-flex flex-column gap-1">
                 <label class="required fw-semibold fs-6">Walk-in price</label>
                 <div class="input-group mb-2">
-                  <span class="input-group-text">$</span>
+                  <span class="input-group-text">{{ $partner_country_config->currency_sign }}</span>
                   <input type="text" class="form-control service-walk-in-price" aria-label="Amount (to the nearest dollar)" name="walk_in_price" required="required"/>
                   <span class="input-group-text">.00</span>
                 </div>
@@ -214,7 +214,7 @@ data-kt-drawer-width="{default:'300px', 'md': '700px', 'xl': '950px'}"
               <div class="d-flex flex-column gap-1">
                 <label class="required fw-semibold fs-6">Online Price</label>
                 <div class="input-group mb-2">
-                  <span class="input-group-text">$</span>
+                  <span class="input-group-text">{{ $partner_country_config->currency_sign }}</span>
                   <input type="text" class="form-control service-online-price" aria-label="Amount (to the nearest dollar)" name="online_price" required="required"/>
                   <span class="input-group-text">.00</span>
                 </div>
@@ -227,7 +227,7 @@ data-kt-drawer-width="{default:'300px', 'md': '700px', 'xl': '950px'}"
               <div class="d-flex flex-column gap-1">
                 <label class="required fw-semibold fs-6">Off Peak Price</label>
                 <div class="input-group mb-2">
-                  <span class="input-group-text">$</span>
+                  <span class="input-group-text">{{ $partner_country_config->currency_sign }}</span>
                   <input type="text" class="form-control service-off-peak-price" aria-label="Amount (to the nearest dollar)" name="off_peak_price" required="required"/>
                   <span class="input-group-text">.00</span>
                 </div>

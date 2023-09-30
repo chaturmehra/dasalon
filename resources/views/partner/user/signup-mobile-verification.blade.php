@@ -98,7 +98,8 @@
 							<div class="fv-row mb-8">
 								<div class="d-flex gap-3">
 									<!--begin::Email-->
-									<input type="text" placeholder="Mobile Number" id="signup_mobile" name="phone" autocomplete="off" class="form-control bg-transparent" required="required" value="{{ old('phone') }}" />
+									<input type="text" placeholder="Mobile Number" id="signup_mobile" name="phone" autocomplete="off" class="form-control bg-transparent phone-number-intl" required="required" value="{{ old('phone') }}" />
+									<input type="hidden" class="country-code-intl" name="country_code">
 									<!--end::Email-->
 									<a href="javascript:void(0)" class="btn btn-sm btn-light btn-active-light-primary px-2 w-100px d-flex align-items-center justify-content-center signup_send_otp">Send OTP</a>
 								</div>

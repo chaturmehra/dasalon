@@ -197,12 +197,12 @@
                         </div>
                         <!--end::Toolbar-->
                         <!--begin::Group actions-->
-                        <!-- <div class="d-flex justify-content-end align-items-center d-none" data-kt-user-table-toolbar="selected">
+                        <div class="d-flex justify-content-end align-items-center d-none" data-kt-user-table-toolbar="selected">
                            <div class="fw-bold me-5">
                               <span class="me-2" data-kt-user-table-select="selected_count"></span>Selected
                            </div>
                            <button type="button" class="btn btn-danger" data-kt-user-table-select="delete_selected">Delete Selected</button>
-                        </div> -->
+                        </div>
                         <!--end::Group actions-->
                         <!--begin::Modal - Adjust Balance-->
                         <div class="modal fade" id="kt_modal_export_users" tabindex="-1" aria-hidden="true">
@@ -603,4 +603,5 @@
 	$("#kt_daterangepicker_1").daterangepicker();
 </script>
 <script src="{{asset('/public/assets/js/partner/staff.js')}}" type="text/javascript"></script>
+<script src="{{ asset('/public/partner/assets/js/custom/apps/user-management/users/list/table.js')}}"></script>
 @endpush()
