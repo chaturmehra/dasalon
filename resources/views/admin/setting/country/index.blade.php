@@ -127,7 +127,7 @@
 															<h5 class="modal-title">Add Country</h5>
 
 															<!--begin::Close-->
-															<div class="btn btn-icon btn-sm btn-active-light-primary ms-2" data-bs-dismiss="modal" aria-label="Close">
+															<div class="btn btn-icon btn-sm btn-active-light-primary ms-2 close_form close_form" data-bs-dismiss="modal" aria-label="Close">
 																<i class="ki-duotone ki-cross fs-2x"><span class="path1"></span><span class="path2"></span></i>
 															</div>
 															<!--end::Close-->
@@ -144,7 +144,7 @@
 																		<!--begin::Label-->
 																		<label for="kt_docs_select2_country2" class="form-label">Select a country</label>
 																		<div class="form-floating border rounded">
-																			<select class="form-select" name="country" placeholder="..." data-kt-filter="search" id="kt_docs_select2_country2"  tabindex="-1" aria-hidden="true">
+																			<select class="form-select country" name="country" placeholder="..." data-kt-filter="search" id="kt_docs_select2_country2" tabindex="-1" aria-hidden="true">
 																				<option value="">Select Country</option>
 																				@foreach(getCountryList() as $con_val)
 																				<option value="{{$con_val->id}}" data-kt-select2-country="{{asset('/public/assets/media/flags/'.strtolower(str_replace(' ','-',$con_val->name.'.svg')))}}">{{$con_val->name}}</option>
@@ -321,7 +321,7 @@
 								<!--begin::Card body-->
 								<div class="card-body pt-0">
 									<!--begin::Table-->
-									<table class="table align-middle table-row-dashed fs-6 gy-5" id="country-table">
+									<table class="table align-middle table-row-dashed fs-6 gy-5 country_table" id="country-table">
 										<thead>
 											<tr class="text-start text-muted fw-bold fs-7 text-uppercase gs-0">
 												<th class="min-w-125px">Country</th>
@@ -387,7 +387,7 @@
 															<h5 class="modal-title">Add Partner type</h5>
 
 															<!--begin::Close-->
-															<div class="btn btn-icon btn-sm btn-active-light-primary ms-2" data-bs-dismiss="modal" aria-label="Close">
+															<div class="btn btn-icon btn-sm btn-active-light-primary ms-2 close_form close_form" data-bs-dismiss="modal" aria-label="Close">
 																<i class="ki-duotone ki-cross fs-2x"><span class="path1"></span><span class="path2"></span></i>
 															</div>
 															<!--end::Close-->
@@ -499,7 +499,7 @@
 															<h5 class="modal-title">Add Venue - business type</h5>
 
 															<!--begin::Close-->
-															<div class="btn btn-icon btn-sm btn-active-light-primary ms-2" data-bs-dismiss="modal" aria-label="Close">
+															<div class="btn btn-icon btn-sm btn-active-light-primary ms-2 close_form close_form" data-bs-dismiss="modal" aria-label="Close">
 																<i class="ki-duotone ki-cross fs-2x"><span class="path1"></span><span class="path2"></span></i>
 															</div>
 															<!--end::Close-->
@@ -678,7 +678,7 @@
 														<h5 class="modal-title">Add Partner details</h5>
 
 														<!--begin::Close-->
-														<div class="btn btn-icon btn-sm btn-active-light-primary ms-2" data-bs-dismiss="modal" aria-label="Close">
+														<div class="btn btn-icon btn-sm btn-active-light-primary ms-2 close_form close_form" data-bs-dismiss="modal" aria-label="Close">
 															<i class="ki-duotone ki-cross fs-2x"><span class="path1"></span><span class="path2"></span></i>
 														</div>
 														<!--end::Close-->
@@ -929,7 +929,7 @@
 															<h5 class="modal-title">Add Franchise</h5>
 
 															<!--begin::Close-->
-															<div class="btn btn-icon btn-sm btn-active-light-primary ms-2" data-bs-dismiss="modal" aria-label="Close">
+															<div class="btn btn-icon btn-sm btn-active-light-primary ms-2 close_form close_form" data-bs-dismiss="modal" aria-label="Close">
 																<i class="ki-duotone ki-cross fs-2x"><span class="path1"></span><span class="path2"></span></i>
 															</div>
 															<!--end::Close-->
@@ -1046,7 +1046,8 @@
 
 <script>
 // Wait for the DOM to be ready
-$(function() {
+$(function() 
+{
 
 $.ajaxSetup({
 	headers: {
@@ -1124,6 +1125,7 @@ submitHandler: function(form) {
 }
 });
 });
+
 $(document).on('click', '.on_status', function(){
 event.preventDefault();
 var id = $(this).attr('id');
@@ -1138,7 +1140,7 @@ swal({
 .then((willDelete) => {
 	if(willDelete){
 		$.ajax({
-			url:'{{ url('admin/setting/edit-country-status')}}'+'/' + id+'/'+data_id,
+			url:'{{ url("admin/setting/edit-country-status")}}'+'/' + id+'/'+data_id,
 			type:'GET',
 			beforeSend:function(){
 				$('.spinner-cls').show();
@@ -1388,7 +1390,7 @@ swal({
 .then((willDelete) => {
 	if(willDelete){
 		$.ajax({
-			url:'{{ url('admin/setting/edit-partnerdetails-status')}}'+'/' + id+'/'+data_id,
+			url:'{{ url("admin/setting/edit-partnerdetails-status")}}'+'/' + id+'/'+data_id,
 			type:'GET',
 			beforeSend:function(){
 				$('.spinner-cls').show();
@@ -1426,7 +1428,7 @@ $('#disable-table').DataTable({
 	{ data: 'status' },
 	]
 });
-oTable5 = $('#disable-table').DataTable();   //pay attention to capital D, which is mandatory to retrieve "api" datatables' object, as @Lionel said
+oTable5 = $('#disable-table').DataTable();  
 $('#search_disablecity').keyup(function(){
 oTable5.search($(this).val()).draw() ;
 })
@@ -1474,7 +1476,7 @@ swal({
 .then((willDelete) => {
 	if(willDelete){
 		$.ajax({
-			url:'{{ url('admin/setting/edit-disablecity-status')}}'+'/' + id+'/'+data_id,
+			url:'{{ url("admin/setting/edit-disablecity-status")}}'+'/' + id+'/'+data_id,
 			type:'GET',
 			beforeSend:function(){
 				$('.spinner-cls').show();
@@ -1495,7 +1497,7 @@ swal({
 $(document).ready(function(){
 $(".select_country").change(function(){
 	var country_id = $(this).val();
-	var ajaxurl = '{{ url('admin/setting/get-state')}}'+'/' + country_id;
+	var ajaxurl = '{{ url("admin/setting/get-state")}}'+'/' + country_id;
 	$.ajax({
 		url:ajaxurl,
 		type:'GET',
@@ -1511,7 +1513,7 @@ $(".select_country").change(function(){
 
 $(".select_state").change(function(){
 	var state_id = $(this).val();
-	var ajaxurl = '{{ url('admin/setting/get-city')}}'+'/' + state_id;
+	var ajaxurl = '{{ url("admin/setting/get-city")}}'+'/' + state_id;
 	$.ajax({
 		url:ajaxurl,
 		type:'GET',
@@ -1526,4 +1528,6 @@ $(".select_state").change(function(){
 });
 });
 </script>
+
+
 @endpush

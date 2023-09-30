@@ -449,7 +449,7 @@
          <!--begin::Card toolbar-->
          <div class="card-toolbar">
             <!--begin::Close-->
-            <div class="btn btn-icon btn-sm btn-active-light-primary ms-2" id="kt_drawer_example_permanent_close5">
+            <div class="btn btn-icon btn-sm btn-active-light-primary ms-2 close_form" id="kt_drawer_example_permanent_close5">
                <i class="ki-duotone ki-cross fs-2x"><span class="path1"></span><span class="path2"></span></i>
             </div>
             <!--end::Close-->
@@ -863,7 +863,7 @@
          <!--begin::Card toolbar-->
          <div class="card-toolbar">
             <!--begin::Close-->
-            <div class="btn btn-icon btn-sm btn-active-light-primary ms-2" id="kt_drawer_example_permanent_close8">
+            <div class="btn btn-icon btn-sm btn-active-light-primary ms-2 close_form" id="kt_drawer_example_permanent_close8">
                <i class="ki-duotone ki-cross fs-2x"><span class="path1"></span><span class="path2"></span></i>
             </div>
             <!--end::Close-->
@@ -1930,7 +1930,7 @@
          <!--begin::Card toolbar-->
          <div class="card-toolbar">
             <!--begin::Close-->
-            <div class="btn btn-icon btn-sm btn-active-light-primary ms-2" id="kt_drawer_example_permanent_close6">
+            <div class="btn btn-icon btn-sm btn-active-light-primary ms-2 close_form" id="kt_drawer_example_permanent_close6">
                <i class="ki-duotone ki-cross fs-2x"><span class="path1"></span><span class="path2"></span></i>
             </div>
             <!--end::Close-->
@@ -5433,7 +5433,7 @@
          <!--begin::Card toolbar-->
          <div class="card-toolbar">
             <!--begin::Close-->
-            <div class="btn btn-icon btn-sm btn-active-light-primary ms-2" id="kt_drawer_example_permanent_close7">
+            <div class="btn btn-icon btn-sm btn-active-light-primary ms-2 close_form" id="kt_drawer_example_permanent_close7">
                <i class="ki-duotone ki-cross fs-2x"><span class="path1"></span><span class="path2"></span></i>
             </div>
             <!--end::Close-->
@@ -5681,7 +5681,7 @@
             </div>
             <!--end::Card header-->
             <!--begin::Close-->
-            <div class="btn btn-icon btn-sm btn-active-light-primary ms-2" data-bs-dismiss="modal" aria-label="Close">
+            <div class="btn btn-icon btn-sm btn-active-light-primary ms-2 close_form" data-bs-dismiss="modal" aria-label="Close">
                <i class="ki-duotone ki-cross fs-2x"><span class="path1"></span><span class="path2"></span></i>
             </div>
             <!--end::Close-->

@@ -4,7 +4,7 @@
          <div class="modal-header">
             <h1 class="fw-bold text-dark">Add package</h1>
             <!--begin::Close-->
-            <div class="btn btn-icon btn-sm btn-active-light-primary ms-2" data-bs-dismiss="modal" aria-label="Close">
+            <div class="btn btn-icon btn-sm btn-active-light-primary ms-2 close_form" data-bs-dismiss="modal" aria-label="Close">
                <i class="ki-duotone ki-cross fs-2x"><span class="path1"></span><span class="path2"></span></i>
             </div>
             <!--end::Close-->
@@ -187,7 +187,7 @@
                                     <div class="packageserind">
                                        <span class="ser_name card-label fw-bold text-gray-800"></span>
                                        <!--begin::Close-->
-                                       <div class="btn btn-icon btn-sm btn-active-light-primary ms-2" onclick="remPackInd(this)">
+                                       <div class="btn btn-icon btn-sm btn-active-light-primary ms-2 close_form" onclick="remPackInd(this)">
                                           <i class="ki-duotone ki-cross fs-2x"><span class="path1"></span><span class="path2"></span></i>
                                        </div>
                                        <!--end::Close-->

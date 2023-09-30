@@ -29,7 +29,7 @@ data-kt-drawer-width="{default:'300px', 'md': '700px', 'xl': '950px'}"
         <span class="text-gray-400 fs-6"><span class="service-status"></span></span>
       </div>
       <!--begin::Close-->
-      <div class="btn btn-icon btn-sm btn-active-light-primary ms-2" id="kt_drawer_example_permanent_close2">
+      <div class="btn btn-icon btn-sm btn-active-light-primary ms-2 close_form" id="kt_drawer_example_permanent_close2">
         <i class="ki-duotone ki-cross fs-2x"><span class="path1"></span><span class="path2"></span></i>
       </div>
       <!--end::Close-->

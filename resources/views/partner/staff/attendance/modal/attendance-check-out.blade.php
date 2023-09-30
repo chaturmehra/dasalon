@@ -8,7 +8,7 @@
             @endphp
             <h5 class="modal-title">{{ date("j F, Y", strtotime($date)) }}</h5>
             <!--begin::Close-->
-            <div class="btn btn-icon btn-sm btn-active-light-primary ms-2" data-bs-dismiss="modal" aria-label="Close">
+            <div class="btn btn-icon btn-sm btn-active-light-primary ms-2 close_form" data-bs-dismiss="modal" aria-label="Close">
                <i class="ki-duotone ki-cross fs-2x"><span class="path1"></span><span class="path2"></span></i>
             </div>
             <!--end::Close-->

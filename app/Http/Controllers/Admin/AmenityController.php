@@ -43,14 +43,8 @@ class AmenityController extends Controller
         }
 
         if($request->amenity_type == 1){
-            // DB::enableQueryLog();
             $acat_name= AmenityCategory::where('amenity_category', $request->amenity_category);
-            // $querylog =  DB::getQueryLog();
-            // dd($querylog);  
-            // echo "<pre>";print_r($acat_name->count());die();
             
-            
-
 
             if( !$acat_name->count() ) {
                 $acat_id = AmenityCategory::create([
@@ -65,9 +59,6 @@ class AmenityController extends Controller
             $acat_id = "";
         }
 
-        // echo "<pre>";print_r($acat_id);die();
-
-        //    echo "<pre>";print_r();die();
         Amenity::create([
             'amenity_name' => $request->amenity_name,
             'amenity_category' => isset($acat_id) ? $acat_id : "",
@@ -91,24 +82,24 @@ class AmenityController extends Controller
 
 public function getAjaxAmenityList(Request $request)
 {
-    $draw = $request->get('draw');
-    $start = $request->get("start");
-        $rowperpage = $request->get("length"); // Rows display per page
+        $draw               = $request->get('draw');
+        $start              = $request->get("start");
+        $rowperpage         = $request->get("length");
 
-        $columnIndex_arr = $request->get('order');
-        $columnName_arr = $request->get('columns');
-        $order_arr = $request->get('order');
-        $search_arr = $request->get('search');
+        $columnIndex_arr    = $request->get('order');
+        $columnName_arr     = $request->get('columns');
+        $order_arr          = $request->get('order');
+        $search_arr         = $request->get('search');
 
-        $columnIndex = $columnIndex_arr[0]['column']; // Column index
-        $columnName = $columnName_arr[$columnIndex]['data']; // Column name
-        $columnSortOrder = $order_arr[0]['dir']; // asc or desc
-        $searchValue = $search_arr['value']; // Search value
+        $columnIndex        = $columnIndex_arr[0]['column']; 
+        $columnName         = $columnName_arr[$columnIndex]['data']; 
+        $columnSortOrder    = $order_arr[0]['dir']; 
+        $searchValue        = $search_arr['value']; 
 
-                // Total records
-        $totalRecords = Amenity::select('count(*) as allcount')->where('amenities.amenity_type', '=', '1')->count();
+        $totalRecords       = Amenity::select('count(*) as allcount')->where('amenities.amenity_type', '=', '1')->count();
 
-        $totalRecordswithFilter = Amenity::select('count(*) as allcount')->where('amenity_name', 'like', '%' .$searchValue . '%')->count();
+
+        $totalRecordswithFilter = Amenity::select('count(*) as allcount')->where('amenity_name', 'like', '%' .$searchValue . '%')->where('amenities.amenity_type', '=', '1')->count();
 
         $records = Amenity::leftJoin('partner_type', 'amenities.partner_type', '=', 'partner_type.id')
         ->leftJoin('amenity_categories', 'amenities.amenity_category', '=', 'amenity_categories.id')
@@ -119,6 +110,7 @@ public function getAjaxAmenityList(Request $request)
         ->orderBy('id','desc')
         ->get(['amenities.*','partner_type.partner_name','amenity_categories.amenity_category']);
 
+       
         $data_arr = array();
         $i=0;
 
@@ -129,7 +121,7 @@ public function getAjaxAmenityList(Request $request)
             if($record->amenity_icon){
                 $amenity_icon = '<img src="'.asset('public'.$record->amenity_icon).'" height="95px" widht="95px">';
             }else{
-                $amenity_icon = '<img src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460__340.png" height="95px" widht="95px">';
+                $amenity_icon = '<img src="' . asset("public/assets/media/avatars/blank.png") . '"  height="95px" width="95px"';
             }
 
             $status = '<button type="button" class="badge badge-danger on_status" data-id="1" id="' . $id . '">Disabled</button>';
@@ -140,19 +132,19 @@ public function getAjaxAmenityList(Request $request)
             ++$i;
             $data_arr[] = array(
                "id" => $i,
-               "amenity_name" => $record->amenity_name,
+               "amenity_name"     => $record->amenity_name,
                "amenity_category" => $record->amenity_category,
-               "partner_type" => $record->partner_name,
-               "amenity_icon" => $amenity_icon,
-               "status" => $status,
+               "partner_type"     => $record->partner_name,
+               "amenity_icon"     => $amenity_icon,
+               "status"           => $status,
            );
         }
 
         $response = array(
-         "draw" => intval($draw),
-         "iTotalRecords" => $totalRecords,
+         "draw"                 => intval($draw),
+         "iTotalRecords"        => $totalRecords,
          "iTotalDisplayRecords" => $totalRecordswithFilter,
-         "aaData" => $data_arr
+         "aaData"               => $data_arr
      );
 
         echo json_encode($response);
@@ -170,24 +162,22 @@ public function getAjaxAmenityList(Request $request)
 
     public function getAjaxSpecialAmenityList(Request $request)
     {
-        $draw = $request->get('draw');
-        $start = $request->get("start");
-        $rowperpage = $request->get("length"); // Rows display per page
+        $draw               = $request->get('draw');
+        $start              = $request->get("start");
+        $rowperpage         = $request->get("length"); 
+        $columnIndex_arr    = $request->get('order');
+        $columnName_arr     = $request->get('columns');
+        $order_arr          = $request->get('order');
+        $search_arr         = $request->get('search');
+       
+        $columnIndex        = $columnIndex_arr[0]['column']; 
+        $columnName         = $columnName_arr[$columnIndex]['data']; 
+        $columnSortOrder    = $order_arr[0]['dir']; 
+        $searchValue        = $search_arr['value']; 
+              
+        $totalRecords = Amenity::where('amenities.amenity_type', '=', '2')->count();
 
-        $columnIndex_arr = $request->get('order');
-        $columnName_arr = $request->get('columns');
-        $order_arr = $request->get('order');
-        $search_arr = $request->get('search');
-
-        $columnIndex = $columnIndex_arr[0]['column']; // Column index
-        $columnName = $columnName_arr[$columnIndex]['data']; // Column name
-        $columnSortOrder = $order_arr[0]['dir']; // asc or desc
-        $searchValue = $search_arr['value']; // Search value
-
-                // Total records
-        $totalRecords = Amenity::select('count(*) as allcount')->where('amenities.amenity_type', '=', '2')->count();
-
-        $totalRecordswithFilter = Amenity::select('count(*) as allcount')->where('amenity_name', 'like', '%' .$searchValue . '%')->count();
+        $totalRecordswithFilter = Amenity::select('count(*) as allcount')->where('amenity_name', 'like', '%' .$searchValue . '%')->where('amenities.amenity_type', '=', '2')->count();
 
         $records = Amenity::leftJoin('partner_type', 'amenities.partner_type', '=', 'partner_type.id')
         ->where('amenities.amenity_name', 'like', '%' .$searchValue . '%')
@@ -197,6 +187,7 @@ public function getAjaxAmenityList(Request $request)
         ->orderBy('id','desc')
         ->get(['amenities.*','partner_type.partner_name']);
 
+         
         $data_arr = array();
         $i=0;
 
@@ -207,7 +198,7 @@ public function getAjaxAmenityList(Request $request)
             if($record->amenity_icon){
                 $amenity_icon = '<img src="'.asset('public'.$record->amenity_icon).'" height="95px" widht="95px">';
             }else{
-                $amenity_icon = '<img src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460__340.png" height="95px" widht="95px">';
+                $amenity_icon = '<img src="' . asset("public/assets/media/avatars/blank.png") . '"  height="95px" width="95px"';
             }
 
             $status = '<button type="button" class="badge badge-danger special_on_status" data-id="1" id="' . $id . '">Disabled</button>';
@@ -224,10 +215,12 @@ public function getAjaxAmenityList(Request $request)
                "status" => $status,
            );
         }
+      
+
 
         $response = array(
-         "draw" => intval($draw),
-         "iTotalRecords" => $totalRecords,
+         "draw"                 => intval($draw),
+         "iTotalRecords"        => $totalRecords,
          "iTotalDisplayRecords" => $totalRecordswithFilter,
          "aaData" => $data_arr
      );
